@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "buildCommand": "bun run build",
+  "outputDirectory": "dist",
+  "framework": "astro",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    }
+  ]
+}

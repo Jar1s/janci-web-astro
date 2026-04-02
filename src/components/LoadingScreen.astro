@@ -1,0 +1,44 @@
+---
+// Loading screen - guaranteed to disappear
+---
+
+<div id="loading-screen" style="position:fixed;inset:0;z-index:99999;background:#0a1628;display:flex;align-items:center;justify-content:center;transition:opacity 0.5s ease;">
+  <div style="text-align:center;">
+    <div style="font-size:2.5rem;font-weight:800;letter-spacing:0.04em;margin-bottom:1.5rem;background:linear-gradient(135deg,#0066cc,#0099ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">JP Control</div>
+    <div style="display:flex;gap:0.5rem;justify-content:center;">
+      <span class="ld"></span><span class="ld"></span><span class="ld"></span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ld {
+    width: 10px; height: 10px; border-radius: 50%; background: #0066cc;
+    animation: ldb 1.4s ease-in-out infinite;
+  }
+  .ld:nth-child(2) { animation-delay: 0.16s; }
+  .ld:nth-child(3) { animation-delay: 0.32s; }
+  @keyframes ldb {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+  }
+</style>
+
+<script is:inline>
+  // Guaranteed hide - no dependency on load event
+  (function(){
+    if (sessionStorage.getItem('jpl')) {
+      var s = document.getElementById('loading-screen');
+      if (s) s.style.display = 'none';
+      return;
+    }
+    setTimeout(function(){
+      var s = document.getElementById('loading-screen');
+      if (s) {
+        s.style.opacity = '0';
+        s.style.pointerEvents = 'none';
+        setTimeout(function(){ s.style.display='none'; sessionStorage.setItem('jpl','1'); }, 500);
+      }
+    }, 1500);
+  })();
+</script>

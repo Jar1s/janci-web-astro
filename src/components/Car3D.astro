@@ -1,0 +1,315 @@
+---
+/**
+ * Car3D.astro
+ * CSS 3D isometric car illustration with auto-rotation and hover labels.
+ * Uses pure CSS transforms with perspective for 3D effect.
+ */
+---
+
+<div class="car3d-container" aria-hidden="true">
+  <div class="car3d-scene">
+    <div class="car3d-rotator">
+      <div class="car3d-body">
+        <!-- Car base/floor -->
+        <div class="car3d-part car3d-base"></div>
+        <!-- Car lower body -->
+        <div class="car3d-part car3d-lower">
+          <div class="car3d-lower-front"></div>
+          <div class="car3d-lower-back"></div>
+          <div class="car3d-lower-left"></div>
+          <div class="car3d-lower-right"></div>
+          <div class="car3d-lower-top"></div>
+        </div>
+        <!-- Car cabin/roof -->
+        <div class="car3d-part car3d-cabin">
+          <div class="car3d-cabin-front"></div>
+          <div class="car3d-cabin-back"></div>
+          <div class="car3d-cabin-left"></div>
+          <div class="car3d-cabin-right"></div>
+          <div class="car3d-cabin-top"></div>
+        </div>
+        <!-- Wheels -->
+        <div class="car3d-wheel car3d-wheel--fl"></div>
+        <div class="car3d-wheel car3d-wheel--fr"></div>
+        <div class="car3d-wheel car3d-wheel--rl"></div>
+        <div class="car3d-wheel car3d-wheel--rr"></div>
+        <!-- Headlights -->
+        <div class="car3d-headlight car3d-headlight--left"></div>
+        <div class="car3d-headlight car3d-headlight--right"></div>
+      </div>
+
+      <!-- Labels (visible on hover) -->
+      <div class="car3d-label car3d-label--brakes">
+        <span class="car3d-label-line"></span>
+        <span class="car3d-label-text">Brzdy</span>
+      </div>
+      <div class="car3d-label car3d-label--engine">
+        <span class="car3d-label-line"></span>
+        <span class="car3d-label-text">Motor</span>
+      </div>
+      <div class="car3d-label car3d-label--chassis">
+        <span class="car3d-label-line"></span>
+        <span class="car3d-label-text">Podvozok</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .car3d-container {
+    width: 300px;
+    height: 200px;
+    margin: 2rem auto;
+    position: relative;
+  }
+
+  .car3d-scene {
+    width: 100%;
+    height: 100%;
+    perspective: 600px;
+    perspective-origin: 50% 40%;
+  }
+
+  .car3d-rotator {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: car-auto-rotate 12s linear infinite;
+    transform: rotateX(-20deg) rotateY(-30deg);
+  }
+
+  .car3d-container:hover .car3d-rotator {
+    animation: car-auto-rotate 4s linear infinite;
+  }
+
+  @keyframes car-auto-rotate {
+    from { transform: rotateX(-20deg) rotateY(0deg); }
+    to   { transform: rotateX(-20deg) rotateY(360deg); }
+  }
+
+  .car3d-body {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform-style: preserve-3d;
+  }
+
+  /* ===== Car base ===== */
+  .car3d-base {
+    position: absolute;
+    width: 140px;
+    height: 60px;
+    background: rgba(0, 102, 204, 0.1);
+    border: 1px solid rgba(0, 102, 204, 0.2);
+    transform: translate(-50%, -50%) rotateX(90deg) translateZ(-15px);
+    border-radius: 4px;
+  }
+
+  /* ===== Lower body (box) ===== */
+  .car3d-lower {
+    transform-style: preserve-3d;
+  }
+
+  .car3d-lower-front,
+  .car3d-lower-back,
+  .car3d-lower-left,
+  .car3d-lower-right,
+  .car3d-lower-top {
+    position: absolute;
+    background: linear-gradient(135deg, #0066cc, #004d99);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.15);
+  }
+
+  .car3d-lower-front {
+    width: 60px;
+    height: 30px;
+    transform: translate(-30px, -30px) translateZ(70px);
+    border-radius: 3px 3px 0 0;
+  }
+
+  .car3d-lower-back {
+    width: 60px;
+    height: 30px;
+    transform: translate(-30px, -30px) translateZ(-70px) rotateY(180deg);
+    border-radius: 3px 3px 0 0;
+  }
+
+  .car3d-lower-left {
+    width: 140px;
+    height: 30px;
+    transform: translate(-70px, -30px) translateX(40px) rotateY(90deg) translateZ(30px) translateX(-40px);
+    transform: translate(0, -30px) rotateY(-90deg) translateZ(30px);
+  }
+
+  .car3d-lower-right {
+    width: 140px;
+    height: 30px;
+    transform: translate(0, -30px) rotateY(90deg) translateZ(30px);
+  }
+
+  .car3d-lower-top {
+    width: 60px;
+    height: 140px;
+    transform: translate(-30px, -30px) rotateX(90deg) translateZ(0);
+    background: linear-gradient(135deg, #0077ee, #0066cc);
+  }
+
+  /* ===== Cabin (smaller box on top) ===== */
+  .car3d-cabin {
+    transform-style: preserve-3d;
+  }
+
+  .car3d-cabin-front,
+  .car3d-cabin-back,
+  .car3d-cabin-left,
+  .car3d-cabin-right,
+  .car3d-cabin-top {
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .car3d-cabin-front {
+    width: 50px;
+    height: 22px;
+    background: rgba(173, 216, 255, 0.6);
+    transform: translate(-25px, -52px) translateZ(30px);
+    border-radius: 2px 2px 0 0;
+  }
+
+  .car3d-cabin-back {
+    width: 50px;
+    height: 22px;
+    background: rgba(173, 216, 255, 0.6);
+    transform: translate(-25px, -52px) translateZ(-30px) rotateY(180deg);
+    border-radius: 2px 2px 0 0;
+  }
+
+  .car3d-cabin-left {
+    width: 60px;
+    height: 22px;
+    background: rgba(173, 216, 255, 0.5);
+    transform: translate(0, -52px) rotateY(-90deg) translateZ(25px);
+  }
+
+  .car3d-cabin-right {
+    width: 60px;
+    height: 22px;
+    background: rgba(173, 216, 255, 0.5);
+    transform: translate(0, -52px) rotateY(90deg) translateZ(25px);
+  }
+
+  .car3d-cabin-top {
+    width: 50px;
+    height: 60px;
+    background: linear-gradient(135deg, #3399ff, #0077ee);
+    transform: translate(-25px, -52px) rotateX(90deg) translateZ(0);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* ===== Wheels ===== */
+  .car3d-wheel {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: #1a1a2e;
+    border: 2px solid #333;
+    border-radius: 50%;
+  }
+
+  .car3d-wheel--fl {
+    transform: translate(-35px, -8px) translateZ(45px) rotateY(90deg);
+  }
+
+  .car3d-wheel--fr {
+    transform: translate(19px, -8px) translateZ(45px) rotateY(90deg);
+  }
+
+  .car3d-wheel--rl {
+    transform: translate(-35px, -8px) translateZ(-45px) rotateY(90deg);
+  }
+
+  .car3d-wheel--rr {
+    transform: translate(19px, -8px) translateZ(-45px) rotateY(90deg);
+  }
+
+  /* ===== Headlights ===== */
+  .car3d-headlight {
+    position: absolute;
+    width: 8px;
+    height: 6px;
+    background: #ffdd44;
+    border-radius: 2px;
+    box-shadow: 0 0 8px rgba(255, 221, 68, 0.6);
+  }
+
+  .car3d-headlight--left {
+    transform: translate(-22px, -20px) translateZ(71px);
+  }
+
+  .car3d-headlight--right {
+    transform: translate(14px, -20px) translateZ(71px);
+  }
+
+  /* ===== Labels (visible on hover) ===== */
+  .car3d-label {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .car3d-container:hover .car3d-label {
+    opacity: 1;
+  }
+
+  .car3d-label-text {
+    display: inline-block;
+    background: rgba(0, 102, 204, 0.9);
+    color: white;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+  }
+
+  .car3d-label-line {
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: #0066cc;
+    vertical-align: middle;
+    margin-right: 4px;
+  }
+
+  .car3d-label--brakes {
+    bottom: 30%;
+    right: 5%;
+  }
+
+  .car3d-label--engine {
+    top: 15%;
+    left: 10%;
+  }
+
+  .car3d-label--chassis {
+    bottom: 15%;
+    left: 5%;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .car3d-rotator {
+      animation: none !important;
+      transform: rotateX(-20deg) rotateY(-30deg);
+    }
+
+    .car3d-label {
+      opacity: 1;
+    }
+  }
+</style>

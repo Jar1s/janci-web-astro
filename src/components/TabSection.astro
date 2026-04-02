@@ -1,0 +1,82 @@
+---
+interface Tab {
+  id: string;
+  label: string;
+}
+
+interface Props {
+  tabs: Tab[];
+  ariaLabel?: string;
+}
+
+const { tabs, ariaLabel = 'Prepínač obsahu' } = Astro.props;
+---
+
+<div>
+  <div class="flex justify-center gap-2 mb-10 flex-wrap" role="tablist" aria-label={ariaLabel}>
+    {tabs.map((tab, i) => (
+      <button
+        class:list={[
+          'px-6 py-3 bg-transparent border-2 border-slate-200 rounded-full font-semibold text-slate-500 cursor-pointer transition-all duration-300 hover:border-blue-500 hover:text-blue-600 min-h-[44px]',
+          { '!bg-blue-600 !border-blue-600 !text-white': i === 0 }
+        ]}
+        role="tab"
+        aria-selected={i === 0 ? 'true' : 'false'}
+        aria-controls={`panel-${tab.id}`}
+        id={`tab-${tab.id}`}
+        data-tab-target={tab.id}
+        tabindex={i === 0 ? '0' : '-1'}
+      >
+        {tab.label}
+      </button>
+    ))}
+  </div>
+
+  <slot />
+</div>
+
+<script>
+  const tabButtons = document.querySelectorAll('[role="tab"]');
+  const tabPanels = document.querySelectorAll('[role="tabpanel"]');
+
+  tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = (btn as HTMLElement).dataset.tabTarget;
+      if (!targetId) return;
+
+      // Deactivate all
+      tabButtons.forEach(b => {
+        b.classList.remove('!bg-blue-600', '!border-blue-600', '!text-white');
+        b.classList.add('bg-transparent', 'border-slate-200', 'text-slate-500');
+        b.setAttribute('aria-selected', 'false');
+        b.setAttribute('tabindex', '-1');
+      });
+      tabPanels.forEach(p => p.classList.add('hidden'));
+
+      // Activate clicked
+      btn.classList.add('!bg-blue-600', '!border-blue-600', '!text-white');
+      btn.classList.remove('bg-transparent', 'border-slate-200', 'text-slate-500');
+      btn.setAttribute('aria-selected', 'true');
+      btn.setAttribute('tabindex', '0');
+
+      const panel = document.getElementById(`panel-${targetId}`);
+      if (panel) panel.classList.remove('hidden');
+    });
+
+    // Keyboard navigation
+    btn.addEventListener('keydown', (e: Event) => {
+      const ke = e as KeyboardEvent;
+      const buttons = Array.from(tabButtons);
+      const idx = buttons.indexOf(btn);
+      let nextIdx = idx;
+
+      if (ke.key === 'ArrowRight') nextIdx = (idx + 1) % buttons.length;
+      else if (ke.key === 'ArrowLeft') nextIdx = (idx - 1 + buttons.length) % buttons.length;
+      else return;
+
+      ke.preventDefault();
+      (buttons[nextIdx] as HTMLElement).click();
+      (buttons[nextIdx] as HTMLElement).focus();
+    });
+  });
+</script>

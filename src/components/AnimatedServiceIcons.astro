@@ -1,0 +1,326 @@
+---
+/**
+ * AnimatedServiceIcons.astro
+ * Three CSS-animated SVG icons for services:
+ * 1. Car icon (TK) — car drives in, checkmark appears
+ * 2. Gauge icon (EK) — gauge needle sweeps, turns green
+ * 3. Shield icon (KO) — shield draws itself, check fills in
+ * Triggered by IntersectionObserver (.is-visible class).
+ */
+---
+
+<div class="animated-icons-grid">
+  <!-- 1. Car Icon — Technická kontrola -->
+  <div class="animated-icon-wrapper" data-animate-icon>
+    <svg class="animated-icon animated-icon--car" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Car body -->
+      <g class="car-group">
+        <!-- Car body shape -->
+        <path class="car-body" d="M15 60 L20 45 L35 35 L65 35 L80 45 L85 60 L85 65 L15 65 Z"
+              stroke="#0066cc" stroke-width="2" fill="none"
+              stroke-dasharray="250" stroke-dashoffset="250"/>
+        <!-- Car roof -->
+        <path class="car-roof" d="M30 45 L38 35 L62 35 L70 45"
+              stroke="#0066cc" stroke-width="2" fill="none"
+              stroke-dasharray="100" stroke-dashoffset="100"/>
+        <!-- Front wheel -->
+        <circle class="car-wheel car-wheel--front" cx="30" cy="68" r="7"
+                stroke="#0066cc" stroke-width="2" fill="none"
+                stroke-dasharray="44" stroke-dashoffset="44"/>
+        <!-- Rear wheel -->
+        <circle class="car-wheel car-wheel--rear" cx="70" cy="68" r="7"
+                stroke="#0066cc" stroke-width="2" fill="none"
+                stroke-dasharray="44" stroke-dashoffset="44"/>
+        <!-- Headlight -->
+        <rect class="car-light" x="80" y="50" width="5" height="5" rx="1"
+              fill="#0066cc" opacity="0"/>
+      </g>
+      <!-- Checkmark -->
+      <path class="car-check" d="M42 52 L48 58 L62 44"
+            stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"
+            stroke-dasharray="35" stroke-dashoffset="35"/>
+    </svg>
+    <span class="animated-icon-label">TK</span>
+  </div>
+
+  <!-- 2. Gauge Icon — Emisná kontrola -->
+  <div class="animated-icon-wrapper" data-animate-icon>
+    <svg class="animated-icon animated-icon--gauge" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Gauge arc -->
+      <path class="gauge-arc" d="M20 70 A30 30 0 0 1 80 70"
+            stroke="#0066cc" stroke-width="3" fill="none" stroke-linecap="round"
+            stroke-dasharray="95" stroke-dashoffset="95"/>
+      <!-- Gauge ticks -->
+      <line class="gauge-tick" x1="25" y1="55" x2="28" y2="58" stroke="#0066cc" stroke-width="1.5" opacity="0"/>
+      <line class="gauge-tick" x1="35" y1="44" x2="37" y2="48" stroke="#0066cc" stroke-width="1.5" opacity="0"/>
+      <line class="gauge-tick" x1="50" y1="40" x2="50" y2="44" stroke="#0066cc" stroke-width="1.5" opacity="0"/>
+      <line class="gauge-tick" x1="65" y1="44" x2="63" y2="48" stroke="#0066cc" stroke-width="1.5" opacity="0"/>
+      <line class="gauge-tick" x1="75" y1="55" x2="72" y2="58" stroke="#0066cc" stroke-width="1.5" opacity="0"/>
+      <!-- Gauge needle -->
+      <line class="gauge-needle" x1="50" y1="68" x2="28" y2="52"
+            stroke="#0066cc" stroke-width="2.5" stroke-linecap="round"
+            transform-origin="50 68"/>
+      <!-- Center dot -->
+      <circle class="gauge-center" cx="50" cy="68" r="4" fill="#0066cc" opacity="0"/>
+      <!-- Green zone highlight -->
+      <path class="gauge-green" d="M60 43 A30 30 0 0 1 80 70"
+            stroke="#22c55e" stroke-width="4" fill="none" stroke-linecap="round"
+            stroke-dasharray="50" stroke-dashoffset="50" opacity="0.7"/>
+    </svg>
+    <span class="animated-icon-label">EK</span>
+  </div>
+
+  <!-- 3. Shield Icon — Kontrola originality -->
+  <div class="animated-icon-wrapper" data-animate-icon>
+    <svg class="animated-icon animated-icon--shield" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Shield outline -->
+      <path class="shield-outline" d="M50 15 L75 25 L75 50 C75 65 65 78 50 85 C35 78 25 65 25 50 L25 25 Z"
+            stroke="#0066cc" stroke-width="2.5" fill="none" stroke-linejoin="round"
+            stroke-dasharray="200" stroke-dashoffset="200"/>
+      <!-- Shield fill -->
+      <path class="shield-fill" d="M50 15 L75 25 L75 50 C75 65 65 78 50 85 C35 78 25 65 25 50 L25 25 Z"
+            fill="#0066cc" opacity="0"/>
+      <!-- Fingerprint lines (simplified) -->
+      <path class="fingerprint fingerprint-1" d="M44 45 Q50 40 56 45"
+            stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"
+            stroke-dasharray="20" stroke-dashoffset="20" opacity="0"/>
+      <path class="fingerprint fingerprint-2" d="M42 50 Q50 43 58 50"
+            stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"
+            stroke-dasharray="25" stroke-dashoffset="25" opacity="0"/>
+      <path class="fingerprint fingerprint-3" d="M40 55 Q50 46 60 55"
+            stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"
+            stroke-dasharray="30" stroke-dashoffset="30" opacity="0"/>
+      <path class="fingerprint fingerprint-4" d="M42 60 Q50 51 58 60"
+            stroke="white" stroke-width="1.5" fill="none" stroke-linecap="round"
+            stroke-dasharray="25" stroke-dashoffset="25" opacity="0"/>
+      <!-- Check inside shield -->
+      <path class="shield-check" d="M40 52 L47 59 L62 44"
+            stroke="#22c55e" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"
+            stroke-dasharray="38" stroke-dashoffset="38"/>
+    </svg>
+    <span class="animated-icon-label">KO</span>
+  </div>
+</div>
+
+<style>
+  .animated-icons-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+
+  @media (max-width: 640px) {
+    .animated-icons-grid {
+      gap: 1rem;
+      max-width: 360px;
+    }
+  }
+
+  .animated-icon-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .animated-icon {
+    width: 100px;
+    height: 100px;
+  }
+
+  @media (max-width: 640px) {
+    .animated-icon {
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  .animated-icon-label {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #0066cc;
+  }
+
+  /* ===== CAR ICON ANIMATIONS ===== */
+  .animated-icon-wrapper.is-visible .car-body {
+    animation: draw-line 1s ease-out 0.2s forwards;
+  }
+
+  .animated-icon-wrapper.is-visible .car-roof {
+    animation: draw-line 0.6s ease-out 0.5s forwards;
+  }
+
+  .animated-icon-wrapper.is-visible .car-wheel--front {
+    animation: draw-line 0.5s ease-out 0.8s forwards;
+  }
+
+  .animated-icon-wrapper.is-visible .car-wheel--rear {
+    animation: draw-line 0.5s ease-out 0.9s forwards;
+  }
+
+  .animated-icon-wrapper.is-visible .car-light {
+    animation: fade-in 0.3s ease-out 1.1s forwards;
+  }
+
+  .animated-icon-wrapper.is-visible .car-group {
+    animation: car-drive-in 0.8s ease-out 0s forwards;
+  }
+
+  .animated-icon-wrapper.is-visible .car-check {
+    animation: draw-line 0.4s ease-out 1.3s forwards;
+  }
+
+  /* ===== GAUGE ICON ANIMATIONS ===== */
+  .animated-icon-wrapper.is-visible .gauge-arc {
+    animation: draw-line 0.8s ease-out 0.2s forwards;
+  }
+
+  .animated-icon-wrapper.is-visible .gauge-tick {
+    animation: fade-in 0.3s ease-out forwards;
+  }
+  .animated-icon-wrapper.is-visible .gauge-tick:nth-child(2) { animation-delay: 0.4s; }
+  .animated-icon-wrapper.is-visible .gauge-tick:nth-child(3) { animation-delay: 0.5s; }
+  .animated-icon-wrapper.is-visible .gauge-tick:nth-child(4) { animation-delay: 0.6s; }
+  .animated-icon-wrapper.is-visible .gauge-tick:nth-child(5) { animation-delay: 0.7s; }
+  .animated-icon-wrapper.is-visible .gauge-tick:nth-child(6) { animation-delay: 0.8s; }
+
+  .animated-icon-wrapper.is-visible .gauge-center {
+    animation: fade-in 0.4s ease-out 0.3s forwards;
+  }
+
+  .animated-icon-wrapper.is-visible .gauge-needle {
+    animation: needle-sweep 1.2s ease-in-out 0.5s forwards;
+  }
+
+  .animated-icon-wrapper.is-visible .gauge-green {
+    animation: draw-line-fade 0.6s ease-out 1.4s forwards;
+  }
+
+  /* ===== SHIELD ICON ANIMATIONS ===== */
+  .animated-icon-wrapper.is-visible .shield-outline {
+    animation: draw-line 1.2s ease-out 0.2s forwards;
+  }
+
+  .animated-icon-wrapper.is-visible .shield-fill {
+    animation: shield-fill-in 0.5s ease-out 1s forwards;
+  }
+
+  .animated-icon-wrapper.is-visible .fingerprint-1 {
+    animation: draw-line-fade 0.4s ease-out 1.3s forwards;
+  }
+  .animated-icon-wrapper.is-visible .fingerprint-2 {
+    animation: draw-line-fade 0.4s ease-out 1.45s forwards;
+  }
+  .animated-icon-wrapper.is-visible .fingerprint-3 {
+    animation: draw-line-fade 0.4s ease-out 1.6s forwards;
+  }
+  .animated-icon-wrapper.is-visible .fingerprint-4 {
+    animation: draw-line-fade 0.4s ease-out 1.75s forwards;
+  }
+
+  .animated-icon-wrapper.is-visible .shield-check {
+    animation: draw-line 0.5s ease-out 2s forwards;
+  }
+
+  /* ===== KEYFRAMES ===== */
+  @keyframes draw-line {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes draw-line-fade {
+    to {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-in {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes car-drive-in {
+    0% {
+      transform: translateX(-30px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes needle-sweep {
+    0% {
+      transform: rotate(-60deg);
+    }
+    60% {
+      transform: rotate(70deg);
+    }
+    80% {
+      transform: rotate(40deg);
+    }
+    100% {
+      transform: rotate(50deg);
+    }
+  }
+
+  @keyframes shield-fill-in {
+    to {
+      opacity: 0.12;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .animated-icon-wrapper .car-body,
+    .animated-icon-wrapper .car-roof,
+    .animated-icon-wrapper .car-wheel--front,
+    .animated-icon-wrapper .car-wheel--rear,
+    .animated-icon-wrapper .car-light,
+    .animated-icon-wrapper .car-group,
+    .animated-icon-wrapper .car-check,
+    .animated-icon-wrapper .gauge-arc,
+    .animated-icon-wrapper .gauge-tick,
+    .animated-icon-wrapper .gauge-center,
+    .animated-icon-wrapper .gauge-needle,
+    .animated-icon-wrapper .gauge-green,
+    .animated-icon-wrapper .shield-outline,
+    .animated-icon-wrapper .shield-fill,
+    .animated-icon-wrapper .fingerprint,
+    .animated-icon-wrapper .shield-check {
+      animation: none !important;
+      stroke-dashoffset: 0 !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+</style>
+
+<script>
+  (function () {
+    const icons = document.querySelectorAll('[data-animate-icon]');
+    if (icons.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    icons.forEach((icon) => observer.observe(icon));
+  })();
+</script>

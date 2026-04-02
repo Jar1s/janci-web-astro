@@ -1,0 +1,68 @@
+---
+// Bokeh effect - soft floating lights in hero background
+---
+
+<div class="bokeh-container" aria-hidden="true">
+  <div class="bokeh bokeh-1"></div>
+  <div class="bokeh bokeh-2"></div>
+  <div class="bokeh bokeh-3"></div>
+  <div class="bokeh bokeh-4"></div>
+  <div class="bokeh bokeh-5"></div>
+  <div class="bokeh bokeh-6"></div>
+  <div class="bokeh bokeh-7"></div>
+  <div class="bokeh bokeh-8"></div>
+  <div class="bokeh bokeh-9"></div>
+  <div class="bokeh bokeh-10"></div>
+  <div class="bokeh bokeh-11"></div>
+  <div class="bokeh bokeh-12"></div>
+</div>
+
+<style>
+  .bokeh-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .bokeh {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 70%);
+    filter: blur(2px);
+    animation: bokeh-float linear infinite;
+  }
+
+  .bokeh-1  { width: 25px; height: 25px; top: 15%; left: 10%; animation-duration: 18s; opacity: 0.4; }
+  .bokeh-2  { width: 40px; height: 40px; top: 60%; left: 80%; animation-duration: 22s; opacity: 0.2; filter: blur(4px); }
+  .bokeh-3  { width: 15px; height: 15px; top: 30%; left: 45%; animation-duration: 15s; opacity: 0.5; }
+  .bokeh-4  { width: 50px; height: 50px; top: 75%; left: 20%; animation-duration: 25s; opacity: 0.15; filter: blur(6px); }
+  .bokeh-5  { width: 20px; height: 20px; top: 10%; left: 70%; animation-duration: 20s; opacity: 0.35; }
+  .bokeh-6  { width: 35px; height: 35px; top: 50%; left: 55%; animation-duration: 19s; opacity: 0.2; filter: blur(3px); }
+  .bokeh-7  { width: 12px; height: 12px; top: 85%; left: 40%; animation-duration: 16s; opacity: 0.45; }
+  .bokeh-8  { width: 45px; height: 45px; top: 25%; left: 90%; animation-duration: 23s; opacity: 0.12; filter: blur(5px); }
+  .bokeh-9  { width: 18px; height: 18px; top: 45%; left: 15%; animation-duration: 17s; opacity: 0.3; }
+  .bokeh-10 { width: 30px; height: 30px; top: 70%; left: 65%; animation-duration: 21s; opacity: 0.18; filter: blur(3px); }
+  .bokeh-11 { width: 22px; height: 22px; top: 5%;  left: 35%; animation-duration: 24s; opacity: 0.25; }
+  .bokeh-12 { width: 55px; height: 55px; top: 40%; left: 5%;  animation-duration: 26s; opacity: 0.1; filter: blur(8px); }
+
+  @keyframes bokeh-float {
+    0%   { transform: translate(0, 0) scale(1); }
+    25%  { transform: translate(15px, -20px) scale(1.1); }
+    50%  { transform: translate(-10px, -35px) scale(0.9); }
+    75%  { transform: translate(20px, -15px) scale(1.05); }
+    100% { transform: translate(0, 0) scale(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bokeh { animation: none; }
+  }
+
+  @media (max-width: 768px) {
+    .bokeh-4, .bokeh-8, .bokeh-12 { display: none; }
+  }
+</style>

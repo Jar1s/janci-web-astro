@@ -1,0 +1,750 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import Hero from '@/components/Hero.astro';
+import CTASection from '@/components/CTASection.astro';
+---
+
+<MainLayout
+  title="Cennik | STK JP Control Pezinok"
+  description="Cennik sluzbieb STK JP Control Pezinok. Transparentne ceny za technicku kontrolu, emisnu kontrolu a kontrolu originality vozidiel."
+  canonical="/cennik"
+>
+  <Header slot="header" currentPath="/cennik" />
+
+  <Hero
+    title="Cenník služieb"
+    subtitle="Transparentné ceny pre všetky naše služby"
+    ctaText="KONTAKTOVAŤ NÁS"
+    ctaHref="/kontakt"
+  />
+
+  <!-- Pricing Section -->
+  <section class="pricing-section">
+    <div class="pricing-container">
+      <!-- Intro -->
+      <div class="pricing-intro">
+        <p>Cenník za služby vykonania technickej kontroly (STK) a emisnej kontroly (EK).</p>
+        <p>Cena za opakovanú kontrolu platí iba vtedy, ak bola predchádzajúca kontrola vykonaná na našej STK.</p>
+        <p>V prípade nejasností volajte <a href="tel:+421948888088" class="pricing-phone-link">0948 888 088</a>.</p>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="tabs-scroll-container">
+        <div class="tabs-nav" role="tablist">
+          <button class="tab-btn active" data-tab="common" role="tab" aria-selected="true" aria-controls="panel-common">Najčastejšie vozidlá</button>
+          <button class="tab-btn" data-tab="personal" role="tab" aria-selected="false" aria-controls="panel-personal">Osobné vozidlá</button>
+          <button class="tab-btn" data-tab="motorcycles" role="tab" aria-selected="false" aria-controls="panel-motorcycles">Motocykle</button>
+          <button class="tab-btn" data-tab="trailers" role="tab" aria-selected="false" aria-controls="panel-trailers">Prípojné vozidlá</button>
+          <button class="tab-btn" data-tab="trucks" role="tab" aria-selected="false" aria-controls="panel-trucks">Nákladné vozidlá</button>
+          <button class="tab-btn" data-tab="tractors" role="tab" aria-selected="false" aria-controls="panel-tractors">Traktory</button>
+          <button class="tab-btn" data-tab="other" role="tab" aria-selected="false" aria-controls="panel-other">Ostatné</button>
+          <button class="tab-btn" data-tab="extra" role="tab" aria-selected="false" aria-controls="panel-extra">Extra služby</button>
+        </div>
+      </div>
+
+      <!-- Tab Panels -->
+
+      <!-- TAB 1: Najčastejšie vozidlá -->
+      <div class="tab-panel active" id="panel-common" role="tabpanel">
+        <h3 class="table-title">Povinná kontrola vyplývajúca zo zákona v SR - najčastejšie vozidlá na našej STK</h3>
+        <div class="table-wrapper">
+          <table class="pricing-table">
+            <tbody>
+              <tr>
+                <td class="service-cell">Osobné vozidlo (M1, N1) TK+EK</td>
+                <td class="price-cell">99 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Osobné vozidlo - opakovaná kontrola TK (všetky úkony bez brzdenia vozidla)</td>
+                <td class="price-cell">24 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Osobné vozidlo - opakovaná kontrola TK (úkony s brzdením vozidla)</td>
+                <td class="price-cell">24 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola EK (všetky závady týkajúce sa pripojenia OBD)</td>
+                <td class="price-cell">24 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola EK (všetky závady okrem pripojenia OBD)</td>
+                <td class="price-cell">24 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Nákladné vozidlo a autobusy (N2,N3, M2, M3) TK+EK</td>
+                <td class="price-cell">134 &euro;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 2: Osobné vozidlá -->
+      <div class="tab-panel" id="panel-personal" role="tabpanel">
+        <h3 class="table-title">Osobné vozidlo (M1, N1)</h3>
+        <div class="table-wrapper">
+          <table class="pricing-table">
+            <tbody>
+              <tr>
+                <td class="service-cell">TK (platí aj pri LPG, CNG)</td>
+                <td class="price-cell">54 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">EK</td>
+                <td class="price-cell">45 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">EK LPG, CNG</td>
+                <td class="price-cell">55 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Administratívna kontrola TK</td>
+                <td class="price-cell">14 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Administratívna kontrola EK</td>
+                <td class="price-cell">14 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Kontrola originality (dovoz, vývoz, nestihol prihlásiť, zmena farby)</td>
+                <td class="price-cell">99 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">TK pri neprihlásenom vozidle v SR</td>
+                <td class="price-cell">49 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">EK pri neprihlásenom vozidle v SR</td>
+                <td class="price-cell">40 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Komplet KO+TK+EK</td>
+                <td class="price-cell">188 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola TK (bez brzdenia)</td>
+                <td class="price-cell">24 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola TK (s brzdením)</td>
+                <td class="price-cell">24 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola EK (OBD)</td>
+                <td class="price-cell">24 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola EK (okrem OBD)</td>
+                <td class="price-cell">24 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola EK (LPG, CNG)</td>
+                <td class="price-cell">24 &euro;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 3: Motocykle -->
+      <div class="tab-panel" id="panel-motorcycles" role="tabpanel">
+        <h3 class="table-title">Motocykle, trojkolky, štvorkolky (L1e-L7e)</h3>
+        <div class="table-wrapper">
+          <table class="pricing-table">
+            <tbody>
+              <tr class="note-row">
+                <td colspan="2" class="note-cell">L1E, L2E - nepodlieha TK!</td>
+              </tr>
+              <tr>
+                <td class="service-cell">TK</td>
+                <td class="price-cell">42 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Administratívna kontrola</td>
+                <td class="price-cell">14 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Kontrola originality</td>
+                <td class="price-cell">73 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">TK pri kontrole originality</td>
+                <td class="price-cell">37 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="price-cell">24 &euro;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 4: Prípojné vozidlá -->
+      <div class="tab-panel" id="panel-trailers" role="tabpanel">
+        <!-- Sub-section: O1 -->
+        <h3 class="table-title">Vozík malý prípojný do 750 kg (O1)</h3>
+        <div class="table-wrapper">
+          <table class="pricing-table">
+            <tbody>
+              <tr class="note-row">
+                <td colspan="2" class="note-cell">TK - od 20.05.2018 nepodlieha TK!</td>
+              </tr>
+              <tr>
+                <td class="service-cell">TK</td>
+                <td class="price-cell">17 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Administratívna kontrola</td>
+                <td class="price-cell">14 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Kontrola originality</td>
+                <td class="price-cell">63 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">TK pri neprihlásenom vozidle</td>
+                <td class="price-cell">12 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="price-cell">17 &euro;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Sub-section: O2 -->
+        <h3 class="table-title subsection-title">Prípojné vozidlo nad 750 kg (O2)</h3>
+        <div class="table-wrapper">
+          <table class="pricing-table">
+            <tbody>
+              <tr>
+                <td class="service-cell">TK</td>
+                <td class="price-cell">37 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Administratívna kontrola</td>
+                <td class="price-cell">14 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Kontrola originality</td>
+                <td class="price-cell">93 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">TK pri neprihlásenom vozidle</td>
+                <td class="price-cell">32 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="price-cell">37 &euro;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Sub-section: O3/O4 -->
+        <h3 class="table-title subsection-title">Prípojné vozidlo O3 alebo O4</h3>
+        <div class="table-wrapper">
+          <table class="pricing-table">
+            <tbody>
+              <tr>
+                <td class="service-cell">TK</td>
+                <td class="price-cell">67 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Administratívna kontrola</td>
+                <td class="price-cell">14 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Kontrola originality</td>
+                <td class="price-cell">120 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">TK pri neprihlásenom vozidle</td>
+                <td class="price-cell">62 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="price-cell">67 &euro;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 5: Nákladné vozidlá -->
+      <div class="tab-panel" id="panel-trucks" role="tabpanel">
+        <h3 class="table-title">Nákladné vozidlo a autobusy (N2,N3, M2, M3)</h3>
+        <div class="table-wrapper">
+          <table class="pricing-table">
+            <tbody>
+              <tr>
+                <td class="service-cell">TK</td>
+                <td class="price-cell">80 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">EK</td>
+                <td class="price-cell">54 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Administratívna kontrola TK</td>
+                <td class="price-cell">14 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Administratívna kontrola EK</td>
+                <td class="price-cell">14 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Kontrola originality ťahač, nákladné a autobusy</td>
+                <td class="price-cell">140 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">TK pri neprihlásenom vozidle</td>
+                <td class="price-cell">75 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">EK pri neprihlásenom vozidle</td>
+                <td class="price-cell">49 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="price-cell">80 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola EK</td>
+                <td class="price-cell">54 &euro;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 6: Traktory -->
+      <div class="tab-panel" id="panel-tractors" role="tabpanel">
+        <!-- Sub: Traktory kolesové -->
+        <h3 class="table-title">Traktory kolesové (T1-T5)</h3>
+        <div class="table-wrapper">
+          <table class="pricing-table">
+            <tbody>
+              <tr>
+                <td class="service-cell">TK</td>
+                <td class="price-cell">58 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">EK</td>
+                <td class="price-cell">55 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="price-cell">58 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola EK</td>
+                <td class="price-cell">55 &euro;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Sub: Traktory prípojné -->
+        <h3 class="table-title subsection-title">Traktory prípojné (R2-R4)</h3>
+        <div class="table-wrapper">
+          <table class="pricing-table">
+            <tbody>
+              <tr>
+                <td class="service-cell">TK</td>
+                <td class="price-cell">45 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="price-cell">45 &euro;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Sub: Traktory pásové -->
+        <h3 class="table-title subsection-title">Traktory pásové a pracovné stroje (C1-C5, Ps)</h3>
+        <div class="table-wrapper">
+          <table class="pricing-table">
+            <tbody>
+              <tr>
+                <td class="service-cell">TK</td>
+                <td class="price-cell">69 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="price-cell">69 &euro;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Sub: Snežné skútre -->
+        <h3 class="table-title subsection-title">Snežné skútre (Ls)</h3>
+        <div class="table-wrapper">
+          <table class="pricing-table">
+            <tbody>
+              <tr>
+                <td class="service-cell">TK</td>
+                <td class="price-cell">45 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="price-cell">45 &euro;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 7: Ostatné -->
+      <div class="tab-panel" id="panel-other" role="tabpanel">
+        <h3 class="table-title">Ostatné služby</h3>
+        <div class="table-wrapper">
+          <table class="pricing-table">
+            <tbody>
+              <tr>
+                <td class="service-cell">Zaťaženie do 2. náprav</td>
+                <td class="price-cell">20 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Zaťaženie do 3. náprav</td>
+                <td class="price-cell">30 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Zaťaženie do 4. náprav a viac</td>
+                <td class="price-cell">40 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Preklady dokumentov pri dovoze</td>
+                <td class="price-cell price-dash">-</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Kompletné prihlásenie vozidla pri dovoze (bez správnych poplatkov)</td>
+                <td class="price-cell">100 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Zvláštna kontrola EK - zápis LPG/CNG</td>
+                <td class="price-cell">50 &euro;</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 8: Extra služby -->
+      <div class="tab-panel" id="panel-extra" role="tabpanel">
+        <h3 class="table-title">Extra služby</h3>
+        <div class="table-wrapper">
+          <table class="pricing-table">
+            <tbody>
+              <tr>
+                <td class="service-cell">Vyzdvihnutie vozidla v rámci Pezinka</td>
+                <td class="price-cell price-free">ZADARMO</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Vyzdvihnutie vozidla okolité mestá do 10km</td>
+                <td class="price-cell">+20 &euro;</td>
+              </tr>
+              <tr>
+                <td class="service-cell">Zapožičanie prevozných EČV</td>
+                <td class="price-cell price-complex">20 &euro;/deň + 100 &euro; vratná kaucia</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <CTASection
+    title="Máte otázky k cenníku?"
+    subtitle="Kontaktujte nás a radi vám poradíme s výberom správnej služby."
+  />
+
+  <Footer slot="footer" />
+</MainLayout>
+
+<style>
+  /* ===== Pricing Section ===== */
+  .pricing-section {
+    background: #ffffff;
+    padding: 5rem 0;
+  }
+
+  .pricing-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+
+  /* Intro */
+  .pricing-intro {
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .pricing-intro p {
+    color: #4b5563;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin: 0 0 0.5rem;
+  }
+
+  .pricing-intro p:last-child {
+    margin-bottom: 0;
+  }
+
+  .pricing-phone-link {
+    color: #0066cc;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .pricing-phone-link:hover {
+    color: #004d99;
+    text-decoration: underline;
+  }
+
+  /* ===== Tabs Navigation ===== */
+  .tabs-scroll-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 2rem;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+  }
+
+  .tabs-scroll-container::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .tabs-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .tabs-scroll-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 2px;
+  }
+
+  .tabs-nav {
+    display: flex;
+    gap: 0.5rem;
+    min-width: max-content;
+    padding: 0.25rem;
+  }
+
+  .tab-btn {
+    padding: 0.625rem 1.25rem;
+    border: 1.5px solid #d1d5db;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #6b7280;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    font-family: inherit;
+  }
+
+  .tab-btn:hover {
+    border-color: #0066cc;
+    color: #0066cc;
+    background: #f0f7ff;
+  }
+
+  .tab-btn.active {
+    background: #0066cc;
+    color: #ffffff;
+    border-color: #0066cc;
+    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.3);
+  }
+
+  /* ===== Tab Panels ===== */
+  .tab-panel {
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .tab-panel.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ===== Table Titles ===== */
+  .table-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1e3a5f;
+    margin: 0 0 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #0066cc;
+  }
+
+  .table-title.subsection-title {
+    margin-top: 2.5rem;
+  }
+
+  /* ===== Table Wrapper ===== */
+  .table-wrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ===== Pricing Table ===== */
+  .pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+
+  .pricing-table tr {
+    transition: background-color 0.15s ease;
+  }
+
+  .pricing-table tr:hover {
+    background-color: #f8fafc;
+  }
+
+  .pricing-table tr:not(:last-child) td {
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .service-cell {
+    padding: 0.875rem 1.25rem;
+    color: #374151;
+    line-height: 1.5;
+  }
+
+  .price-cell {
+    padding: 0.875rem 1.25rem;
+    text-align: right;
+    font-weight: 700;
+    color: #0066cc;
+    white-space: nowrap;
+    min-width: 100px;
+  }
+
+  .price-cell.price-free {
+    color: #00a651;
+  }
+
+  .price-cell.price-dash {
+    color: #9ca3af;
+    font-weight: 400;
+  }
+
+  .price-cell.price-complex {
+    font-size: 0.85rem;
+    white-space: normal;
+    min-width: 160px;
+  }
+
+  /* ===== Note Row ===== */
+  .note-row td {
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .note-cell {
+    padding: 0.75rem 1.25rem;
+    background: #fef3c7;
+    border-left: 3px solid #f59e0b;
+    color: #92400e;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 640px) {
+    .pricing-section {
+      padding: 3rem 0;
+    }
+
+    .pricing-intro p {
+      font-size: 0.95rem;
+    }
+
+    .tab-btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.8rem;
+    }
+
+    .table-title {
+      font-size: 1rem;
+    }
+
+    .service-cell {
+      padding: 0.75rem 0.875rem;
+      font-size: 0.875rem;
+    }
+
+    .price-cell {
+      padding: 0.75rem 0.875rem;
+      font-size: 0.875rem;
+      min-width: 80px;
+    }
+
+    .price-cell.price-complex {
+      font-size: 0.8rem;
+      min-width: 120px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetTab = btn.getAttribute('data-tab');
+
+        // Deactivate all tabs
+        tabButtons.forEach((b) => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+
+        // Hide all panels
+        tabPanels.forEach((panel) => {
+          panel.classList.remove('active');
+        });
+
+        // Activate clicked tab
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+
+        // Show corresponding panel
+        const targetPanel = document.getElementById(`panel-${targetTab}`);
+        if (targetPanel) {
+          targetPanel.classList.add('active');
+        }
+
+        // Scroll the active tab button into view within the scrollable container
+        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      });
+    });
+  });
+</script>

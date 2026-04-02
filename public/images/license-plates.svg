@@ -1,0 +1,71 @@
+<svg width="180" height="60" xmlns="http://www.w3.org/2000/svg">
+  <!-- TK Plate -->
+  <g transform="translate(0, 0)">
+    <rect x="0" y="0" width="50" height="60" fill="#003399" rx="3"/>
+    <circle cx="25" cy="20" r="8" fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="25" cy="20" r="5" fill="none" stroke="#FFD700" stroke-width="0.3" opacity="0.2"/>
+    <circle cx="25" cy="13" r="1.5" fill="#FFD700"/>
+    <circle cx="29" cy="15" r="1.5" fill="#FFD700"/>
+    <circle cx="31" cy="20" r="1.5" fill="#FFD700"/>
+    <circle cx="29" cy="25" r="1.5" fill="#FFD700"/>
+    <circle cx="25" cy="27" r="1.5" fill="#FFD700"/>
+    <circle cx="21" cy="25" r="1.5" fill="#FFD700"/>
+    <circle cx="19" cy="20" r="1.5" fill="#FFD700"/>
+    <circle cx="21" cy="15" r="1.5" fill="#FFD700"/>
+    <circle cx="25" cy="17" r="1.5" fill="#FFD700"/>
+    <circle cx="27" cy="20" r="1.5" fill="#FFD700"/>
+    <text x="25" y="45" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white" text-anchor="middle" letter-spacing="0.1em">SK</text>
+    <rect x="50" y="0" width="10" height="60" fill="white" rx="3"/>
+    <text x="55" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#dc2626" text-anchor="middle" letter-spacing="0.1em">TK</text>
+  </g>
+  
+  <!-- EK Plate -->
+  <g transform="translate(60, 0)">
+    <rect x="0" y="0" width="50" height="60" fill="#003399" rx="3"/>
+    <circle cx="25" cy="20" r="8" fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="25" cy="20" r="5" fill="none" stroke="#FFD700" stroke-width="0.3" opacity="0.2"/>
+    <circle cx="25" cy="13" r="1.5" fill="#FFD700"/>
+    <circle cx="29" cy="15" r="1.5" fill="#FFD700"/>
+    <circle cx="31" cy="20" r="1.5" fill="#FFD700"/>
+    <circle cx="29" cy="25" r="1.5" fill="#FFD700"/>
+    <circle cx="25" cy="27" r="1.5" fill="#FFD700"/>
+    <circle cx="21" cy="25" r="1.5" fill="#FFD700"/>
+    <circle cx="19" cy="20" r="1.5" fill="#FFD700"/>
+    <circle cx="21" cy="15" r="1.5" fill="#FFD700"/>
+    <circle cx="25" cy="17" r="1.5" fill="#FFD700"/>
+    <circle cx="27" cy="20" r="1.5" fill="#FFD700"/>
+    <text x="25" y="45" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white" text-anchor="middle" letter-spacing="0.1em">SK</text>
+    <rect x="50" y="0" width="10" height="60" fill="white" rx="3"/>
+    <text x="55" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#16a34a" text-anchor="middle" letter-spacing="0.1em">EK</text>
+  </g>
+  
+  <!-- KO Plate -->
+  <g transform="translate(120, 0)">
+    <rect x="0" y="0" width="50" height="60" fill="#003399" rx="3"/>
+    <circle cx="25" cy="20" r="8" fill="none" stroke="#FFD700" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="25" cy="20" r="5" fill="none" stroke="#FFD700" stroke-width="0.3" opacity="0.2"/>
+    <circle cx="25" cy="13" r="1.5" fill="#FFD700"/>
+    <circle cx="29" cy="15" r="1.5" fill="#FFD700"/>
+    <circle cx="31" cy="20" r="1.5" fill="#FFD700"/>
+    <circle cx="29" cy="25" r="1.5" fill="#FFD700"/>
+    <circle cx="25" cy="27" r="1.5" fill="#FFD700"/>
+    <circle cx="21" cy="25" r="1.5" fill="#FFD700"/>
+    <circle cx="19" cy="20" r="1.5" fill="#FFD700"/>
+    <circle cx="21" cy="15" r="1.5" fill="#FFD700"/>
+    <circle cx="25" cy="17" r="1.5" fill="#FFD700"/>
+    <circle cx="27" cy="20" r="1.5" fill="#FFD700"/>
+    <text x="25" y="45" font-family="Arial, sans-serif" font-size="10" font-weight="bold" fill="white" text-anchor="middle" letter-spacing="0.1em">SK</text>
+    <rect x="50" y="0" width="10" height="60" fill="white" rx="3"/>
+    <text x="55" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#0066cc" text-anchor="middle" letter-spacing="0.1em">KO</text>
+  </g>
+</svg>
+
+
+
+
+
+
+
+
+
+

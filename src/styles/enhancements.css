@@ -1,0 +1,548 @@
+/* =============================================================================
+   VISUAL ENHANCEMENTS — JP Control Astro
+   Evolves the existing design with animations, separators, and polish.
+   Primary color: #0066cc
+   ============================================================================= */
+
+/* --------------------------------------------------------------------------
+   A) SECTION WAVE SEPARATORS
+   -------------------------------------------------------------------------- */
+
+.wave-separator-top,
+.wave-separator-bottom {
+  position: relative;
+}
+
+/* White-to-gray wave at the TOP of a section (section has gray bg) */
+.wave-separator-top::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'%3E%3Cpath d='M0,0 C360,50 1080,50 1440,0 L1440,0 L0,0 Z' fill='%23ffffff'/%3E%3C/svg%3E") no-repeat bottom;
+  background-size: cover;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Gray-to-white wave at the BOTTOM of a section (section has gray bg) */
+.wave-separator-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C360,10 1080,10 1440,60 L1440,60 L0,60 Z' fill='%23ffffff'/%3E%3C/svg%3E") no-repeat top;
+  background-size: cover;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Gray fill variant — for sections coming FROM a white bg INTO gray */
+.wave-separator-top.wave-gray::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'%3E%3Cpath d='M0,0 C360,50 1080,50 1440,0 L1440,0 L0,0 Z' fill='%23f8fafc'/%3E%3C/svg%3E");
+}
+
+.wave-separator-bottom.wave-gray::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 60' preserveAspectRatio='none'%3E%3Cpath d='M0,60 C360,10 1080,10 1440,60 L1440,60 L0,60 Z' fill='%23f8fafc'/%3E%3C/svg%3E");
+}
+
+/* --------------------------------------------------------------------------
+   B) GRADIENT SECTION BACKGROUNDS
+   -------------------------------------------------------------------------- */
+
+.gradient-section-blue {
+  background: linear-gradient(180deg, #e8f1fb 0%, #ffffff 100%);
+}
+
+.gradient-section-dark {
+  background: linear-gradient(135deg, #003d7a 0%, #0055b3 50%, #004d99 100%);
+  color: #fff;
+}
+
+/* Animated gradient orbs — floating blurred circles for hero backgrounds */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.18;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hero-orb--1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #0066cc 0%, transparent 70%);
+  top: -10%;
+  left: -5%;
+  animation: float-orb-1 8s ease-in-out infinite;
+}
+
+.hero-orb--2 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, #0088ff 0%, transparent 70%);
+  bottom: 10%;
+  right: -3%;
+  animation: float-orb-2 10s ease-in-out infinite;
+}
+
+.hero-orb--3 {
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, #004d99 0%, transparent 70%);
+  top: 40%;
+  left: 30%;
+  animation: float-orb-3 12s ease-in-out infinite;
+}
+
+@keyframes float-orb-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, 20px) scale(1.05); }
+  66% { transform: translate(-20px, -10px) scale(0.95); }
+}
+
+@keyframes float-orb-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-25px, -15px) scale(1.08); }
+  66% { transform: translate(15px, 25px) scale(0.93); }
+}
+
+@keyframes float-orb-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20px, -20px) scale(1.1); }
+}
+
+/* --------------------------------------------------------------------------
+   C) CARD ENHANCEMENTS
+   -------------------------------------------------------------------------- */
+
+/* 3D tilt perspective container — applied by JS to .tilt-card */
+.tilt-card {
+  transform-style: preserve-3d;
+  perspective: 800px;
+  will-change: transform;
+}
+
+/* Gradient border on hover */
+.tilt-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, #0066cc, #0088ff, #0055b3);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.tilt-card:hover::before {
+  opacity: 1;
+}
+
+/* Shine / glare sweep on hover */
+.service-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 240px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    transparent 100%
+  );
+  transition: none;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.service-card:hover::after {
+  animation: shine-sweep 0.6s ease forwards;
+}
+
+@keyframes shine-sweep {
+  0% { left: -100%; }
+  100% { left: 150%; }
+}
+
+/* Soft glow shadow on hover (blue tinted) */
+.tilt-card:hover,
+.advantage-card:hover,
+.review-card:hover {
+  box-shadow: 0 12px 40px -8px rgba(0, 102, 204, 0.22),
+              0 4px 16px -2px rgba(0, 102, 204, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   D) MICRO-ANIMATIONS
+   -------------------------------------------------------------------------- */
+
+/* Pulse glow — subtle pulsing glow for CTA buttons */
+.pulse-glow {
+  animation: pulse-glow-kf 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-glow-kf {
+  0%, 100% {
+    box-shadow: 0 6px 24px rgba(0, 102, 204, 0.5);
+  }
+  50% {
+    box-shadow: 0 6px 32px rgba(0, 102, 204, 0.75),
+                0 0 60px rgba(0, 102, 204, 0.2);
+  }
+}
+
+/* Float animation — gentle floating for decorative elements */
+.float-animation {
+  animation: float-gentle 6s ease-in-out infinite;
+}
+
+@keyframes float-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+/* Animated underline on hover for links */
+.animated-underline {
+  position: relative;
+  text-decoration: none;
+}
+
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #0066cc;
+  transition: width 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.animated-underline:hover::after {
+  width: 100%;
+}
+
+/* Counter bounce — added via JS class after counting finishes */
+.counter-bounce {
+  animation: counter-bounce-kf 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes counter-bounce-kf {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.15); }
+  70% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* Smooth hover scale for interactive elements */
+.hover-scale {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.04);
+}
+
+/* --------------------------------------------------------------------------
+   E) TYPOGRAPHY ENHANCEMENTS
+   -------------------------------------------------------------------------- */
+
+/* Gradient text for headings */
+.gradient-text {
+  background: linear-gradient(135deg, #0066cc 0%, #003d7a 60%, #004d99 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Text reveal animation for hero title */
+.text-reveal {
+  overflow: hidden;
+}
+
+.text-reveal > * {
+  animation: text-reveal-kf 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+@keyframes text-reveal-kf {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hero title entrance animation */
+.hero-title-animate {
+  animation: hero-title-entrance 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes hero-title-entrance {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+    letter-spacing: 0.08em;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: -0.03em;
+  }
+}
+
+/* Hero subtitle entrance */
+.hero-subtitle-animate {
+  animation: hero-subtitle-entrance 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+  opacity: 0;
+}
+
+@keyframes hero-subtitle-entrance {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 0.95;
+    transform: translateY(0);
+  }
+}
+
+/* Hero CTA entrance */
+.hero-cta-animate {
+  animation: hero-cta-entrance 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
+  opacity: 0;
+}
+
+@keyframes hero-cta-entrance {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Section header letter-spacing animation on scroll into view */
+.section-header-animate {
+  animation: section-header-ls 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  opacity: 0;
+}
+
+@keyframes section-header-ls {
+  0% {
+    opacity: 0;
+    letter-spacing: 0.15em;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: normal;
+    transform: translateY(0);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   F) DECORATIVE ELEMENTS (CSS-only)
+   -------------------------------------------------------------------------- */
+
+/* Dotted grid pattern background */
+.dotted-grid-bg {
+  position: relative;
+}
+
+.dotted-grid-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, #0066cc 0.8px, transparent 0.8px);
+  background-size: 28px 28px;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Diagonal stripes accent for card edges */
+.stripe-accent {
+  position: relative;
+  overflow: hidden;
+}
+
+.stripe-accent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 100%;
+  background: repeating-linear-gradient(
+    -45deg,
+    #0066cc,
+    #0066cc 3px,
+    transparent 3px,
+    transparent 6px
+  );
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.stripe-accent:hover::before {
+  opacity: 1;
+}
+
+/* Circular decorative blobs — positioned absolutely in sections */
+.decorative-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.decorative-blob--blue {
+  background: radial-gradient(circle, rgba(0, 102, 204, 0.12) 0%, transparent 70%);
+}
+
+.decorative-blob--light {
+  background: radial-gradient(circle, rgba(0, 136, 255, 0.08) 0%, transparent 70%);
+}
+
+/* --------------------------------------------------------------------------
+   G) IMPROVED RESPONSIVE ANIMATIONS
+   -------------------------------------------------------------------------- */
+
+/* Reduce animation intensity on mobile */
+@media (max-width: 768px) {
+  .hero-orb {
+    display: none;
+  }
+
+  .pulse-glow {
+    animation-duration: 3.5s;
+  }
+
+  @keyframes pulse-glow-kf {
+    0%, 100% {
+      box-shadow: 0 4px 16px rgba(0, 102, 204, 0.4);
+    }
+    50% {
+      box-shadow: 0 4px 20px rgba(0, 102, 204, 0.55);
+    }
+  }
+
+  .float-animation {
+    animation-duration: 8s;
+  }
+
+  @keyframes float-gentle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  .wave-separator-top::before,
+  .wave-separator-bottom::after {
+    height: 30px;
+  }
+
+  .decorative-blob {
+    display: none;
+  }
+
+  /* Reduce card hover transforms on touch */
+  .tilt-card:hover {
+    transform: none !important;
+  }
+
+  /* Simpler hero entrance */
+  @keyframes hero-title-entrance {
+    0% { opacity: 0; transform: translateY(15px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes hero-subtitle-entrance {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 0.95; transform: translateY(0); }
+  }
+}
+
+/* Disable parallax and heavy effects on mobile / touch */
+@media (hover: none) {
+  .tilt-card:hover::before {
+    opacity: 0;
+  }
+
+  .service-card:hover::after {
+    animation: none;
+  }
+
+  .magnetic-btn {
+    transform: none !important;
+  }
+}
+
+/* Respect prefers-reduced-motion globally */
+@media (prefers-reduced-motion: reduce) {
+  .pulse-glow,
+  .float-animation,
+  .hero-orb,
+  .hero-title-animate,
+  .hero-subtitle-animate,
+  .hero-cta-animate,
+  .counter-bounce {
+    animation: none !important;
+  }
+
+  .service-card::after {
+    display: none;
+  }
+
+  .animated-underline::after {
+    transition: none;
+  }
+
+  .wave-separator-top::before,
+  .wave-separator-bottom::after {
+    display: none;
+  }
+
+  .tilt-card {
+    transform: none !important;
+  }
+
+  .hover-scale {
+    transition: none;
+  }
+
+  .hero-title-animate,
+  .hero-subtitle-animate,
+  .hero-cta-animate,
+  .section-header-animate {
+    opacity: 1;
+    transform: none;
+    letter-spacing: normal;
+  }
+}

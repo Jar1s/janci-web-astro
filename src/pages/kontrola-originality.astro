@@ -1,0 +1,697 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import Hero from '@/components/Hero.astro';
+import CTASection from '@/components/CTASection.astro';
+---
+
+<MainLayout
+  title="Kontrola originality | STK JP Control Pezinok"
+  description="Kontrola originality (KO) vozidiel v STK JP Control Pezinok. Základná, skrátená, administratívna, evidenčná a opakovaná kontrola originality."
+  canonical="/kontrola-originality"
+>
+  <Header slot="header" currentPath="/kontrola-originality" />
+
+  <Hero
+    title="Kontrola originality"
+    subtitle="Overenie originality a zhodnosti vozidla meraním a nedeštruktívnym skúmaním"
+    ctaText="REZERVOVAŤ TERMÍN"
+    ctaHref="https://www.kontrolavozidiel.sk/rezervovat-cez-internet"
+  />
+
+  <!-- Čo je kontrola originality -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Čo je kontrola originality?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="space-y-5 text-slate-700 text-lg leading-relaxed max-w-4xl mx-auto">
+        <p>Kontrolou originality (KO) je kontrola originality a zhodnosti vozidla vykonávaná meraním a nedeštruktívnym skúmaním zameraná na zisťovanie stôp neoprávneného vonkajšieho zásahu do identifikátorov vozidla, do konštrukcie vozidla alebo do dokladov vozidla.</p>
+        <p>Kontrola originality na pracovisku kontroly originality sa vykonáva podľa jednotlivých druhov kontrol v rozsahu kontrolných úkonov ustanovených <a href="/legislativa" class="text-blue-600 hover:underline">zákonom č. 106/2018 Z. z.</a> o prevádzke vozidiel v cestnej premávke, vykonávacím právnym predpisom podľa § 136 ods. 3 písm. i) a podľa metodík vydaných typovým schvaľovacím orgánom.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Druhy kontroly originality -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Druhy kontroly originality</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Druhy kontroly originality, ktoré vykonávame:</p>
+      </div>
+      <div class="space-y-6 max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-xl font-bold text-blue-600 mb-3">Kontrola originality ZÁKLADNÁ</h3>
+          <p class="text-slate-700 leading-relaxed mb-3">Vykonáva sa v rozsahu:</p>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>merania a nedeštruktívneho skúmania stôp, neoprávneného vonkajšieho zásahu do identifikátorov vozidla, konštrukcie vozidla alebo dokladov vozidla,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>porovnania údajov nachádzajúcich sa na vozidle s údajmi uvedenými v dokladoch a v dostupných databázach,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>kontroly a posúdenia stavu identifikátorov vozidla podľa kontrolných úkonov ustanovených metodikou na vykonávanie kontroly originality základnej,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>porovnania údajov nachádzajúcich sa na vozidle a údajov uvedených v dokladoch vozidla s údajmi v evidencii vozidiel, ak ide o vozidlo prihlásené do evidencie,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>overenia údajov o vozidle v pátracích evidenciách na účel zistenia jeho odcudzenia alebo odcudzenia dokladov vozidla alebo na účel, či sa na vozidle nepoužila tabuľka alebo tabuľky s evidenčným číslom alebo s osobitným evidenčným číslom, po ktorom je vyhlásené pátranie.</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-xl font-bold text-blue-600 mb-3">Kontrola originality SKRÁTENÁ</h3>
+          <p class="text-slate-700 leading-relaxed">Vykonáva sa v skrátenom rozsahu ako kontrola originality základná. Skrátený rozsah kontroly originality je v kontrole a posúdení stavu identifikátorov vozidla podľa kontrolných úkonov určených metodikou na vykonávanie kontroly originality skrátenej.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-xl font-bold text-blue-600 mb-3">Kontrola originality ADMINISTRATÍVNA</h3>
+          <p class="text-slate-700 leading-relaxed">Vykonáva sa v čiastočnom rozsahu kontroly originality základnej alebo kontroly originality skrátenej a podľa kontrolných úkonov určených metodikou na vykonávanie kontroly originality administratívnej.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-xl font-bold text-blue-600 mb-3">Kontrola originality EVIDENČNÁ</h3>
+          <p class="text-slate-700 leading-relaxed">Vykonáva sa v čiastočnom rozsahu kontroly originality základnej alebo kontroly originality skrátenej a podľa kontrolných úkonov určených metodikou na vykonávanie kontroly originality evidenčnej.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-xl font-bold text-blue-600 mb-3">Kontrola originality OPAKOVANÁ</h3>
+          <p class="text-slate-700 leading-relaxed">Vykonáva sa v čiastočnom rozsahu so zameraním na kontrolu odstránenia chýb zistených pri kontrole originality základnej, skrátenej, administratívnej a evidenčnej, a to do 30 dní odo dňa vykonania pôvodnej kontroly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Účel kontroly originality -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aký je účel kontroly originality?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto space-y-4">
+        <div class="bg-blue-50 rounded-2xl p-6 border border-blue-100 text-slate-700 space-y-3">
+          <p>Účelom kontroly originality je overenie stavu spôsobilosti vozidla pre premávku na pozemných komunikáciách.</p>
+          <p>Výsledok kontroly originality je zaznamenaný do informačného systému kontroly originality a Odborného posudku o kontrole originality vozidla.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Čo sa kontroluje pri KO -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Čo sa kontroluje pri kontrole originality?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto">
+        <p class="text-slate-600 mb-4">Kontrolou originality sa kontrolujú:</p>
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <ul class="space-y-3 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>identifikátory vozidla (identifikačné číslo vozidla VIN a iné označenia vozidla),</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>komponenty určujúce identitu vozidla s dokladmi vozidla, ich originalita a pravosť, ako aj vyhodnotenie údajov v príslušných informačných systémoch.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kedy sa vyžaduje kontrola originality -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Kedy sa vyžaduje kontrola originality?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Odborný posudok o kontrole originality sa vyžaduje v nasledovných prípadoch:</p>
+      </div>
+      <div class="space-y-6 max-w-4xl mx-auto">
+        <!-- Podľa zákona č. 106/2018 -->
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">Podľa <a href="/legislativa" class="text-blue-600 hover:underline">zákona č. 106/2018 Z. z.</a></h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pre jednotlivo dovezené vozidlo zo zahraničia (vozidlá evidované) v plnom rozsahu,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>na základe rozkazu alebo rozhodnutia schvaľovacieho orgánu,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri vydaní duplikátu technického osvedčenia vozidla z dôvodu jeho poškodenia, zničenia, straty alebo odcudzenia okrem vozidiel kategórie S, PN a výmenných nadstavieb,</span></li>
+          </ul>
+        </div>
+
+        <!-- Podľa vyhlášky č. 131/2018 -->
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">Podľa vyhlášky č. 131/2018 Z. z. k <a href="/legislativa" class="text-blue-600 hover:underline">zákonu č. 106/2018 Z. z.</a></h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start">
+              <span class="text-blue-600 mt-1 shrink-0">&#9679;</span>
+              <div>
+                <span>pri podaní návrhu na jednotlivé uznanie typového schválenia EÚ jednotlivo dovezeného vozidla z členského štátu alebo zmluvného štátu, ak ide o:</span>
+                <ul class="list-disc list-inside ml-4 mt-2 space-y-1 text-sm">
+                  <li>nové vozidlo, ktoré nebolo prihlásené do evidencie vozidiel v členskom štáte,</li>
+                  <li>nové vozidlo, ktoré bolo prihlásené do evidencie vozidiel v členskom štáte,</li>
+                  <li>ojazdené vozidlo,</li>
+                </ul>
+              </div>
+            </li>
+            <li class="flex gap-3 items-start">
+              <span class="text-blue-600 mt-1 shrink-0">&#9679;</span>
+              <div>
+                <span>pri podaní návrhu na jednotlivé uznanie schválenia jednotlivo dovezeného vozidla z členského štátu alebo zmluvného štátu, ak ide o:</span>
+                <ul class="list-disc list-inside ml-4 mt-2 space-y-1 text-sm">
+                  <li>nové vozidlo, ktoré nebolo prihlásené do evidencie vozidiel v členskom štáte,</li>
+                  <li>nové vozidlo, ktoré bolo prihlásené do evidencie vozidiel v členskom štáte,</li>
+                  <li>ojazdené vozidlo.</li>
+                </ul>
+              </div>
+            </li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri podaní návrhu na jednotlivé schválenie EÚ jednotlivo dovezeného vozidla z členského štátu alebo zmluvného štátu,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri podaní návrhu na vnútroštátne jednotlivé schválenie jednotlivo dovezeného vozidla z členského štátu alebo zmluvného štátu,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri podaní návrhu na jednotlivé uznanie typového schválenia EÚ jednotlivo dovezeného vozidla z tretieho štátu,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri podaní návrhu na vnútroštátne jednotlivé schválenie jednotlivo dovezeného vozidla z tretieho štátu,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri podaní návrhu na opätovné schválenie jednotlivého vozidla na prevádzku v cestnej premávke,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri podaní návrhu na dodatočné schválenie jednotlivého vozidla,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri podaní návrhu na vydanie nového osvedčenia o evidencii časti II alebo nového technického osvedčenia vozidla po vykonaní hromadnej prestavby; odborný posudok o kontrole originality nie je potrebný, ak ide o prestavbu montážou plynového zariadenia,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri podaní návrhu na schválenie prestavby jednotlivého vozidla po vykonaní prestavby; odborný posudok o kontrole originality nie je potrebný, ak ide o prestavbu montážou plynového zariadenia,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri podaní návrhu na zmenu údajov v osvedčení o evidencii časti II alebo v technickom osvedčení vozidla z dôvodu výmeny karosérie alebo rámu, po vykonaní výmeny karosérie alebo rámu,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri podaní návrhu na zmenu údajov v osvedčení o evidencii časti II alebo v technickom osvedčení vozidla z dôvodu výmeny motora, po vykonaní výmeny motora,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri podaní návrhu na pridelenie náhradného identifikačného čísla vozidla VIN,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri podaní návrhu na vydanie osvedčenia o evidencii časti II, to neplatí pre vozidlá kategórie L1e vyrobené pred 1. januárom 2000,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri podaní návrhu na povolenie výnimky z technických požiadaviek pre vozidlá,</span></li>
+          </ul>
+        </div>
+
+        <!-- Podľa zákona č. 8/2009 -->
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">Podľa zákona č. 8/2009 Z. z.</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri oznámení trvalej zmeny farby vozidla v evidencii vozidiel,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri oznámení odhlásenia vozidla do cudziny v evidencii vozidiel,</span></li>
+            <li class="flex gap-3 items-start">
+              <span class="text-blue-600 mt-1 shrink-0">&#9679;</span>
+              <div>
+                <span>pri oznámení prevodu držby vozidla na inú osobu alebo zmeny vlastníckeho práva k vozidlu v evidencii vozidiel ak:</span>
+                <ul class="list-disc list-inside ml-4 mt-2 space-y-1 text-sm">
+                  <li>doterajší vlastník alebo osoba, na ktorú sa držba vozidla previedla, požiada orgán Policajného zboru o zrušenie tohto oznámenia, po 30 dňoch odo dňa vykonania tejto zmeny,</li>
+                  <li>osoba, na ktorú sa držba vozidla previedla, požiada orgán Policajného zboru po 30 dňoch odo dňa, keď sa na ňu previedla držba vozidla, o zápis do dokladov vozidla,</li>
+                </ul>
+              </div>
+            </li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pri porovnaní údajov uvádzaných v osvedčení o evidencii časť II s údajmi priamo na vozidle, ak toto porovnanie nebude vykonané a na vykonanie požadovaného evidenčného úkonu žiadateľ predložil práve odborný posudok o kontrole originality.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Aké doklady treba predložiť na KO -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké doklady treba predložiť na kontrolu originality?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-3xl mx-auto">Prevádzkovateľ vozidla alebo vodič vozidla predkladá na vykonanie kontroly originality okrem preukazu totožnosti aj tieto doklady, ak ide o:</p>
+      </div>
+      <div class="space-y-6 max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">Vozidlo prihlásené do evidencie vozidiel v Slovenskej republike:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>osvedčenie o evidencii časť I a osvedčenie o evidencii časť II, ak je vydané, alebo doklad o nahlásení straty alebo odcudzenia osvedčenia vydaný orgánom Policajného zboru, alebo doklad o zadržaní osvedčenia vydaný orgánom Policajného zboru; v prípade dokladu o nahlásení straty alebo odcudzenia alebo dokladu o zadržaní osvedčenia o evidencii časti II predkladá sa tiež aktuálna kópia alebo náhrada osvedčenia o evidencii časti II opatrená odtlačkom pečiatky orgánu Policajného zboru,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad o nadobudnutí karosérie vozidla alebo rámu vozidla, ktorý sa predkladá pri výmene karosérie vozidla alebo rámu vozidla,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad o vykonaní hromadnej prestavby typu vozidla, ktorý sa predkladá, ak ide o vozidlo, na ktorom je vykonaná hromadná prestavba typu vozidla,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>rozhodnutie o povolení prestavby jednotlivého vozidla, ktoré sa predkladá, ak ide o prestavbu jednotlivého vozidla,</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">Jednotlivo dovezené vozidlo, ktoré je prihlásené do evidencie vozidiel:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad o nadobudnutí vozidla,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>osvedčenie o evidencii z krajiny pôvodu alebo zo štátu, v ktorom je evidované, pri dvoch častiach osvedčenia o evidencii musia byť predložené obidve časti; ak osvedčenia sú v inom ako slovenskom jazyku alebo českom jazyku, predkladajú sa s úradným prekladom do štátneho jazyka, pričom pri harmonizovanom osvedčení o evidencii vydanom v členskom štáte sa úradne prekladajú len časti, ktoré nepodliehajú harmonizácii,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad o vyradení vozidla z evidencie vozidiel v štáte, v ktorom je evidované, spolu s úradným prekladom do štátneho jazyka, ak doklad o vyradení je v inom ako slovenskom jazyku alebo českom jazyku; predkladá sa, len ak sa taký doklad v štáte vývozu vydáva,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad o prepustení vozidla do voľného obehu, ktorý sa predkladá, ak ide o vozidlo dovezené z tretieho štátu alebo zo zmluvného štátu,</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">Jednotlivo dovezené vozidlo, ktoré nie je prihlásené do evidencie vozidiel a má vydané technické osvedčenie vozidla:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad o nadobudnutí vozidla,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>technické osvedčenie vozidla spolu s úradným prekladom do štátneho jazyka, ak osvedčenie je v inom ako slovenskom jazyku alebo českom jazyku,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad o prepustení vozidla do voľného obehu, ktorý sa predkladá, ak ide o vozidlo dovezené z tretieho štátu alebo zo zmluvného štátu,</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">Jednotlivo dovezené vozidlo, ktoré nie je prihlásené do evidencie vozidiel:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad o nadobudnutí vozidla,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>vyhlásenie žiadateľa, že vozidlo nie je prihlásené do evidencie vozidiel v inom štáte,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>osvedčenie o zhode COC, ak má vozidlo udelené typové schválenie EÚ alebo</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>originál alebo kópiu vnútroštátneho osvedčenia o zhode vozidla potvrdzujúceho zhodu vozidla s vnútroštátnymi požiadavkami členského štátu alebo zmluvného štátu alebo</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>návrh na spracovanie základného technického opisu vozidla vydaný technickou službou overovania alebo doklad vydaný výrobcom alebo zástupcom výrobcu, z ktorého vyplýva, že tento typ vozidla má v Slovenskej republike platný základný technický opis vozidla; predkladá sa, ak vozidlo nemalo udelené typové schválenie EÚ alebo vozidlo nemalo udelené typové schválenie vozidla alebo vozidlo nemalo udelené schválenie jednotlivého vozidla udelené v členskom štáte alebo zmluvnom štáte Dohody o Európskom hospodárskom priestore a Švajčiarskej konfederácie,</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">Vozidlo vyradené z evidencie vozidiel pred opätovným schválením na prevádzku v cestnej premávke:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>osvedčenie o evidencii časť II, ak je vydané, alebo doklad o nahlásení straty alebo odcudzenia osvedčenia vydaný orgánom Policajného zboru, alebo doklad o zadržaní osvedčenia vydaný orgánom Policajného zboru; v prípade dokladu o nahlásení straty alebo odcudzenia alebo dokladu o zadržaní osvedčenia o evidencii časti II predkladá sa tiež aktuálna kópia alebo náhrada osvedčenia o evidencii časti II opatrená odtlačkom pečiatky orgánu Policajného zboru,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad orgánu Policajného zboru o oznámení odcudzenia vozidla, ak ide o vozidlo vyradené z evidencie vozidiel z dôvodu jeho odcudzenia,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad orgánu Policajného zboru o vrátení vozidla, ak ide o vozidlo vyradené z evidencie vozidiel z dôvodu jeho odcudzenia,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad orgánu Policajného zboru o vyradení vozidla z evidencie vozidiel; doklad nie je potrebné predložiť, ak sú predložené pôvodné doklady vozidla alebo pôvodná tabuľka s evidenčným číslom, ktoré preukazujú prihlásenie vozidla do evidencie vozidiel v Slovenskej republike,</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">Dodatočne schvaľované vozidlo:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad o nadobudnutí vozidla,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad vozidla z osobitnej evidencie vozidiel vydaný príslušným orgánom,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad o vyradení vozidla z osobitnej evidencie vozidiel vydaný príslušným orgánom,</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">Vozidlo, ktoré nepodliehalo prihláseniu do evidencie vozidiel:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>technické osvedčenie vozidla alebo</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad o nahlásení straty alebo odcudzenia technického osvedčenia vozidla vydaný orgánom Policajného zboru,</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">Vozidlo, ktoré nie je prihlásené do evidencie vozidiel a nie je jednotlivo dovezené:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad o nadobudnutí vozidla,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>osvedčenie o evidencii časť II, ak je vystavené alebo vydané, alebo doklad o nahlásení straty alebo odcudzenia osvedčenia vydaný orgánom Policajného zboru, alebo doklad o zadržaní osvedčenia vydaný orgánom Policajného zboru,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>osvedčenie o zhode COC, ak má vozidlo udelené typové schválenie EÚ,</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">Vozidlo záchrannej služby, na prepravu uhynutých zvierat a pohrebné vozidlo:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>okrem dokladov uvedených v predchádzajúcich odsekoch predkladá aj potvrdenie o vykonanej dezinfekcii vozidla vykonanej pred vykonaním kontroly originality.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Notársky overená kópia + preklady -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Akceptuje sa pre kontrolu originality notársky overená kópia dokladov?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto space-y-6">
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-3 text-slate-600">
+          <p>Notárske overenie potvrdzuje zhodnosť obsahu kópie dokladu s originálom. Nepotvrdzuje pravosť originálneho dokladu, pretože notár neoveruje pravosť krycích ochranných prvkov originálneho dokladu, ktoré sa overujú pri kontrole originality. Kópia dokladu samozrejme žiadne originálne ochranné prvky z pôvodného dokladu neobsahuje, preto môže slúžiť len na získanie údajov, nie na kontrolu originality.</p>
+          <p class="font-semibold text-slate-700">Pre kontrolu originality sa striktne vyžaduje predloženie originálu dokladu zo štátu dovozu.</p>
+        </div>
+
+        <div class="text-center">
+          <h3 class="text-2xl font-bold text-blue-600 mb-4">Kedy je potrebné predložiť pri kontrole originality aj preklad dokladu?</h3>
+          <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+        </div>
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 text-slate-600 space-y-4">
+          <p>Preklady registračných dokladov od vozidla do štátneho jazyka je potrebné predložiť, ak sú v inom ako slovenskom jazyku alebo českom jazyku, a to ak ide o:</p>
+          <ul class="space-y-2">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>jednotlivo dovezené vozidlo, ktoré je prihlásené do evidencie vozidiel je potrebný preklad osvedčenia o evidencii z krajiny pôvodu alebo zo štátu, v ktorom je evidované, pričom pri harmonizovanom osvedčení o evidencii vydanom v členskom štáte sa úradne prekladajú len časti, ktoré nepodliehajú harmonizácii;</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>jednotlivo dovezené vozidlo, ktoré nie je prihlásené do evidencie vozidiel a má vydané technické osvedčenie vozidla je potrebný preklad technického osvedčenia.</span></li>
+          </ul>
+          <p class="text-sm">Povinnosť predkladania prekladu dokladov bližšie upravuje § 36 vyhlášky Ministerstva dopravy a výstavby Slovenskej republiky č. 139/2018 Z. z..</p>
+          <p class="text-sm">Popis harmonizovaných položiek upravuje § 3 vyhlášky Ministerstva dopravy a výstavby Slovenskej republiky č. 133/2018 Z. z..</p>
+
+          <div class="mt-4 bg-amber-50 rounded-xl p-4 border border-amber-200">
+            <p class="font-semibold text-slate-700 text-sm mb-2">Preklady registračných dokladov sú pri kontrole originality vyžadované teda aj v prípadoch, ak</p>
+            <ul class="list-disc list-inside text-sm space-y-1 text-slate-600">
+              <li>zahraničné osvedčenie o evidencii obsahuje poznámky, ktoré sa netýkajú kontroly originality (napr. poznámky obsahujú údaje o emisnej triede, zmena konštrukčnej rýchlosti a pod.);</li>
+              <li>zahraničné osvedčenie o evidencii obsahuje textové poznámky, ktoré nadväzujú na harmonizované časti.</li>
+            </ul>
+          </div>
+
+          <div class="mt-4 bg-green-50 rounded-xl p-4 border border-green-200">
+            <p class="font-semibold text-slate-700 text-sm mb-2">Preklady registračných dokladov nie sú pri kontrole originality vyžadované v prípade, ak</p>
+            <ul class="list-disc list-inside text-sm space-y-1 text-slate-600">
+              <li>zahraničné osvedčenie o evidencii obsahuje len harmonizované časti (väčšina holandských a rakúskych dokladov);</li>
+              <li>zahraničné osvedčenie o evidencii obsahuje okrem harmonizovaných údajov iba číselné poznámky, ktoré nadväzujú na harmonizované časti;</li>
+              <li>zahraničné osvedčenie o evidencii obsahuje okrem harmonizovaných údajov iba vyznačenie odhlásenia vozidla.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Povinnosti prevádzkovateľa -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké sú povinnosti prevádzkovateľa vozidla pri kontrole originality (KO)?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto">
+        <p class="text-slate-600 mb-4">Prevádzkovateľ alebo vodič vozidla je povinný:</p>
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <ul class="space-y-3 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pred začatím KO predložiť doklady v rozsahu ustanovenom vykonávacím právnym predpisom podľa § 136 ods. 3 písm. i).</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pristaviť na KO vozidlo čisté, s povinnou výbavou a so sprístupnenými identifikátormi vozidla.</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pristaviť na KO vozidlo vydezinfikované, ak sa jedná o vozidlo záchrannej služby určené na prepravu infekčných materiálov alebo pacientov s infekčnými chorobami, vozidlo určené na prepravu uhynutých zvierat a pohrebné vozidlo, pričom dezinfekcia je vykonaná pred vykonaním KO.</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>byť prítomný pri KO, počas výkonu kontroly originality nesmie sa zdržiavať na kontrolnej linke, môže sa zdržiavať v priestoroch pracoviska kontroly originality vyhradených pre zákazníkov.</span></li>
+          </ul>
+          <div class="mt-4 bg-amber-50 rounded-xl p-4 border border-amber-200">
+            <p class="text-slate-700 font-semibold">Bez predloženia ustanovených dokladov a bez pristaveného vozidla nesmie technik kontroly originality vykonať kontrolu originality.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hodnotenie vozidla pri KO -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Ako prebieha hodnotenie vozidla pri kontrole originality?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Hodnotenie vozidla sa hodnotí štvorstupňovou klasifikáciou:</p>
+      </div>
+      <div class="max-w-4xl mx-auto space-y-8">
+        <!-- Stav identifikátorov -->
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">STAV IDENTIFIKÁTOROV VOZIDLA:</h3>
+          <div class="space-y-3">
+            <div class="flex gap-4 items-start">
+              <span class="bg-green-100 text-green-700 font-bold text-lg rounded-full w-10 h-10 flex items-center justify-center shrink-0">1</span>
+              <p class="text-slate-600">identifikátory vozidla sú nedotknuté, nie sú viditeľné stopy neoprávneného vonkajšieho zásahu alebo vonkajšie neoprávnené zásahy do konštrukcie vozidla sa nezistili, alebo zmena identifikátorov alebo konštrukcie vozidla je spôsobená povolenou prestavbou</p>
+            </div>
+            <div class="flex gap-4 items-start">
+              <span class="bg-amber-100 text-amber-700 font-bold text-lg rounded-full w-10 h-10 flex items-center justify-center shrink-0">2</span>
+              <p class="text-slate-600">na identifikátoroch vozidla nastala zmena pôsobením vonkajších vplyvov a síl, sú nečitateľné alebo ich nemožno určiť, alebo sa zistili zásahy do konštrukcie vozidla</p>
+            </div>
+            <div class="flex gap-4 items-start">
+              <span class="bg-red-100 text-red-700 font-bold text-lg rounded-full w-10 h-10 flex items-center justify-center shrink-0">3</span>
+              <p class="text-slate-600">údaje na identifikátoroch vozidla sú pozmenené následkom neoprávneného vonkajšieho zásahu alebo sa vozidlo skladá z častí s odlišnými identifikačnými údajmi, alebo sa zistili neoprávnené zásahy do konštrukcie vozidla, alebo sa zistili neoprávnené zásahy do časti, na ktorej sa nachádza identifikačné číslo vozidla VIN</p>
+            </div>
+            <div class="flex gap-4 items-start">
+              <span class="bg-slate-200 text-slate-700 font-bold text-lg rounded-full w-10 h-10 flex items-center justify-center shrink-0">0</span>
+              <p class="text-slate-600">údaje na identifikátoroch vozidla chýbajú alebo došlo k odstráneniu tej časti karosérie, na ktorej výrobca umiestnil identifikačné číslo vozidla VIN</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stav požadovaných dokladov -->
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">STAV POŽADOVANÝCH DOKLADOV:</h3>
+          <div class="space-y-3">
+            <div class="flex gap-4 items-start">
+              <span class="bg-green-100 text-green-700 font-bold text-lg rounded-full w-10 h-10 flex items-center justify-center shrink-0">1</span>
+              <p class="text-slate-600">požadované doklady nenesú žiadnu známku nepravosti a údaje v nich uvedené zodpovedajú údajom na identifikátoroch kontrolovaného vozidla alebo zmena údajov je spôsobená povolenou prestavbou vozidla</p>
+            </div>
+            <div class="flex gap-4 items-start">
+              <span class="bg-amber-100 text-amber-700 font-bold text-lg rounded-full w-10 h-10 flex items-center justify-center shrink-0">2</span>
+              <p class="text-slate-600">požadované doklady nenesú známku nepravosti, ale údaje v nich uvedené sa pravdepodobne z dôvodu chybného zápisu nezhodujú s údajmi na identifikátoroch kontrolovaného vozidla</p>
+            </div>
+            <div class="flex gap-4 items-start">
+              <span class="bg-red-100 text-red-700 font-bold text-lg rounded-full w-10 h-10 flex items-center justify-center shrink-0">3</span>
+              <p class="text-slate-600">niektorý z požadovaných dokladov vozidla má pozmeňované údaje alebo je falzifikát</p>
+            </div>
+            <div class="flex gap-4 items-start">
+              <span class="bg-slate-200 text-slate-700 font-bold text-lg rounded-full w-10 h-10 flex items-center justify-center shrink-0">0</span>
+              <p class="text-slate-600">údaje v dokladoch sú nečitateľné alebo chýbajú</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stav údajov v evidencii -->
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">STAV ÚDAJOV V EVIDENCII VOZIDIEL:</h3>
+          <div class="space-y-3">
+            <div class="flex gap-4 items-start">
+              <span class="bg-green-100 text-green-700 font-bold text-lg rounded-full w-10 h-10 flex items-center justify-center shrink-0">1</span>
+              <p class="text-slate-600">údaje v evidencii vozidiel sa zhodujú s údajmi na identifikátoroch kontrolovaného vozidla a požadovaných dokladoch v plnom rozsahu alebo zmena údajov je spôsobená povolenou prestavbou vozidla</p>
+            </div>
+            <div class="flex gap-4 items-start">
+              <span class="bg-amber-100 text-amber-700 font-bold text-lg rounded-full w-10 h-10 flex items-center justify-center shrink-0">2</span>
+              <p class="text-slate-600">údaje v evidencii vozidiel sa pravdepodobne z dôvodu chybného zápisu nezhodujú s údajmi na identifikátoroch kontrolovaného vozidla v plnom rozsahu</p>
+            </div>
+            <div class="flex gap-4 items-start">
+              <span class="bg-red-100 text-red-700 font-bold text-lg rounded-full w-10 h-10 flex items-center justify-center shrink-0">3</span>
+              <p class="text-slate-600">v informačných systémoch, ktoré vedie Policajný zbor sa našiel záznam o pátraní</p>
+            </div>
+            <div class="flex gap-4 items-start">
+              <span class="bg-slate-200 text-slate-700 font-bold text-lg rounded-full w-10 h-10 flex items-center justify-center shrink-0">0</span>
+              <p class="text-slate-600">v evidencii vozidiel sa nenašiel záznam o kontrolovanom vozidle</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trojčíslo tabuľka -->
+        <div class="bg-blue-50 rounded-2xl p-6 border border-blue-100">
+          <p class="text-slate-700 font-semibold mb-4">Výsledkom hodnotenia vozidla je TROJČÍSLO, pričom:</p>
+          <div class="overflow-x-auto">
+            <table class="w-full border-collapse bg-white rounded-xl overflow-hidden shadow-sm border border-slate-200">
+              <thead>
+                <tr class="bg-blue-600 text-white">
+                  <th class="px-4 py-3 text-center font-semibold border-r border-blue-500">PRVÉ číslo</th>
+                  <th class="px-4 py-3 text-center font-semibold border-r border-blue-500">DRUHÉ číslo</th>
+                  <th class="px-4 py-3 text-center font-semibold">TRETIE číslo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="px-4 py-3 text-center text-slate-600 border-r border-slate-200">vyjadruje stav<br><strong>identifikátorov vozidla</strong></td>
+                  <td class="px-4 py-3 text-center text-slate-600 border-r border-slate-200">vyjadruje stav<br><strong>požadovaných dokladov</strong></td>
+                  <td class="px-4 py-3 text-center text-slate-600">vyjadruje stav<br><strong>údajov v evidencii vozidiel</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Klasifikácia výsledku -->
+        <div>
+          <p class="text-slate-600 mb-4">Na základe výsledku hodnotenia vozidla pri kontrole ZÁKLADNEJ, SKRÁTENEJ, ADMINISTRATÍVNEJ a OPAKOVANEJ je vozidlo:</p>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Spôsobilé -->
+            <div class="bg-green-50 rounded-2xl p-6 border border-green-200">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-green-700">SPÔSOBILÉ</h3>
+              </div>
+              <div class="text-slate-600 text-sm space-y-2">
+                <p><strong>Vozidlo prihlásené v SR:</strong> stupeň „1" na všetkých pozíciách trojčíslia, t. j. <span class="font-bold text-green-700">111</span></p>
+                <p><strong>Vozidlo vyradené / jednotlivo dovezené / dodatočne schvaľované:</strong> stupeň „1" na prvých dvoch pozíciách a stupeň „0" na tretej pozícii, t. j. <span class="font-bold text-green-700">110</span></p>
+              </div>
+            </div>
+
+            <!-- Dočasne spôsobilé -->
+            <div class="bg-amber-50 rounded-2xl p-6 border border-amber-200">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-amber-700">DOČASNE SPÔSOBILÉ</h3>
+              </div>
+              <div class="text-slate-600 text-sm space-y-2">
+                <p><strong>Vozidlo prihlásené v SR:</strong> stupeň „2" alebo stupeň „0"</p>
+                <p><strong>Vozidlo vyradené / jednotlivo dovezené / dodatočne schvaľované:</strong> stupeň „2" alebo stupeň „0" na prvých dvoch pozíciách a stupeň „1" na tretej pozícii trojčíslia</p>
+              </div>
+            </div>
+
+            <!-- Nespôsobilé -->
+            <div class="bg-red-50 rounded-2xl p-6 border border-red-200">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </div>
+                <h3 class="text-lg font-bold text-red-700">NESPÔSOBILÉ</h3>
+              </div>
+              <div class="text-slate-600 text-sm space-y-2">
+                <p><strong>Vozidlo prihlásené v SR / vyradené / jednotlivo dovezené / dodatočne schvaľované:</strong> stupeň <span class="font-bold text-red-700">„3"</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kontrola evidenčná -->
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-3">Kontrola EVIDENČNÁ – vozidlo:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>SPĹŇA podmienky,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>SPĹŇA podmienky s chybami,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>NESPĹŇA podmienky.</span></li>
+          </ul>
+          <p class="text-slate-500 text-sm mt-3">Výsledok kontroly originality evidenčnej nemá vplyv na spôsobilosť vozidla na prevádzku v cestnej premávke.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prípady nevykonania KO -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké sú prípady nevykonania kontroly originality?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto">
+        <p class="text-slate-600 mb-4">Kontrola originality sa nevykoná, ak:</p>
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <ul class="space-y-3 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>je zistený zjavný únik prevádzkových médií,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>vozidlo má poruchu na plynovom zariadení,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>niektorá súčasť technologického vybavenia pracoviska kontroly originality chýba, nefunguje alebo neplní predpísané podmienky,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>nie sú splnené požiadavky na prevádzku všetkých zariadení tvoriacich technologické vybavenie pracoviska kontroly originality určené výrobcom, najmä teplota a vlhkosť.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prípady nariadenia KO -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké sú prípady nariadenia kontroly originality?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto">
+        <p class="text-slate-600 mb-4">Vozidlo sa musí podrobiť kontrole originality pri oznámení alebo zistení, že na vozidle</p>
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+          <ul class="space-y-3 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>sú vykonané neoprávnené zásahy do jeho identifikátorov, konštrukcie alebo jeho dokladov alebo</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>sa nachádzajú pozmenené, poškodené alebo nečitateľné identifikátory vozidla, alebo</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>je identifikačné číslo vozidla VIN, ktoré výrobca nikdy nevyrobil.</span></li>
+          </ul>
+        </div>
+        <p class="text-slate-500 text-sm mt-4">Ak ide o vozidlo, ktoré presahuje najväčšie povolené rozmery alebo najväčšie povolené hmotnosti a jeho kontrola nie je možná na kontrolnej linke kontroly originality, podmienky vykonania kontroly originality takého vozidla určí schvaľovací orgán.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Doklady po vykonaní KO -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké doklady dostanem o vykonaní kontroly originality?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-3xl mx-auto">Výsledok kontroly originality sa zapisuje podľa druhu kontroly originality prostredníctvom celoštátneho informačného systému do:</p>
+      </div>
+      <div class="overflow-x-auto max-w-4xl mx-auto">
+        <table class="w-full border-collapse bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200">
+          <thead>
+            <tr class="bg-blue-600 text-white">
+              <th class="px-4 py-3 text-left font-semibold border-r border-blue-500">Druh kontroly originality</th>
+              <th class="px-4 py-3 text-left font-semibold">Doklad o vykonaní kontroly originality</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200">
+            <tr class="bg-white">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">ZÁKLADNÁ</td>
+              <td class="px-4 py-3 text-slate-700" rowspan="4">Odborný posudok o kontrole originality vozidla</td>
+            </tr>
+            <tr class="bg-slate-50">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">SKRÁTENÁ</td>
+            </tr>
+            <tr class="bg-white">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">ADMINISTRATÍVNA</td>
+            </tr>
+            <tr class="bg-slate-50">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">OPAKOVANÁ</td>
+            </tr>
+            <tr class="bg-white">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">EVIDENČNÁ</td>
+              <td class="px-4 py-3 text-slate-700">Protokol o kontrole originality evidenčnej</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-6 text-slate-600 text-sm max-w-4xl mx-auto">Odborný posudok o kontrole originality vozidla a protokol o kontrole originality evidenčnej sa uchováva päť rokov.</p>
+
+      <!-- Dočasne spôsobilé / Nespôsobilé info -->
+      <div class="mt-8 max-w-4xl mx-auto space-y-4">
+        <p class="text-slate-600">Ak je vozidlo pri kontrole originality vyhodnotené ako:</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-amber-50 rounded-2xl p-6 border border-amber-200">
+            <h4 class="font-bold text-amber-700 mb-3">DOČASNE SPÔSOBILÉ</h4>
+            <p class="text-slate-600 text-sm">Technik kontroly originality vyznačí v odbornom posudku zistené chyby a poznámku „identifikátory vozidla sú čitateľné a bezpečne určiteľné" alebo poznámku „identifikátory vozidla nie sú čitateľné a bezpečne určiteľné".</p>
+          </div>
+          <div class="bg-red-50 rounded-2xl p-6 border border-red-200">
+            <h4 class="font-bold text-red-700 mb-3">NESPÔSOBILÉ</h4>
+            <p class="text-slate-600 text-sm">Technik kontroly originality vyznačí v odbornom posudku zistené chyby.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Čo sa deje s vozidlom, ktoré neprejde KO -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Čo sa deje s vozidlom, ktoré neprejde úspešne kontrolou originality (KO)?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-4 text-slate-600">
+          <p>Ak technici na pracovisku KO zistia stopy neoprávneného zásahu do identifikátorov vozidla, dokladov vozidla alebo zistia pátranie po vozidle, vystavia Odborný posudok s hodnotením „nespôsobilé", pričom sa do výsledku KO zaznamenajú zistené nedostatky (napr. chýba výrobný štítok, nezrovnalosť v dokladoch, nečitateľné VIN, VIN v pátraní...).</p>
+          <p>Zistenú skutočnosť musia oznámiť Policajnému zboru, pretože existuje dôvodné podozrenie zo spáchania trestného činu (napr. § 220 Trestného zákona, Falšovanie a pozmeňovanie identifikačných údajov motorového vozidla). Polícia vozidlo alebo doklady zaistí na ďalšie skúmanie.</p>
+          <p>Ak sa potvrdí manipulácia a podozrenie zo spáchania trestného činu, zisťuje sa ďalej pôvodná identita vozidla.</p>
+          <p>Ak sa podarí vozidlo identifikovať a teda zistiť pôvodné VIN, overuje sa jeho výskyt v pátraní.</p>
+          <p>Ak sa vozidlo vyskytuje v pátraní a je možné ho vrátiť (napr. nie je poskladané z niekoľkých vozidiel, pôvodný majiteľ je známy,...), vracia sa pôvodnému majiteľovi.</p>
+          <p>Ak sa v pátraní nevyskytuje a bola potvrdená neoprávnená manipulácia, vozidlo je po zabezpečení dôkazného materiálu vrátené ako nespôsobilé na prevádzku v cestnej premávke, je mu odobraté osvedčenie o evidencii a tabuľky s evidenčným číslom a vozidlo je vyradené z evidencie vozidiel.</p>
+          <p>Ak sa ale pozmeňovanie a falšovanie identifikačných údajov nepotvrdí, vozidlo je vrátené. Pretože nie je dovolené prepisovanie výsledku KO v pôvodnom Odbornom posudku, na vydanie nového Odborného posudku s hodnotením „spôsobilé" je potrebné absolvovať opakovanú KO.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Postih za pozmeňovanie -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aký je postih za pozmeňovanie identifikátorov vozidla?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
+          <p class="text-slate-600">Falšovanie a pozmeňovanie identifikačných údajov motorového vozidla je trestným činom* s trestnou sadzbou odňatia slobody až na 3 roky v základnej skutkovej podstate. Ak páchateľ spácha tento trestný čin:</p>
+          <ul class="space-y-3 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-red-500 mt-1 shrink-0">&#9679;</span><span>a už bol za taký čin odsúdený, spôsobí väčšiu škodu alebo z osobitného motívu – hrozí mu trest odňatia slobody <strong>1 rok až 5 rokov</strong>,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-red-500 mt-1 shrink-0">&#9679;</span><span>závažnejším spôsobom konania alebo spôsobí značnú škodu – hrozí mu trest odňatia slobody <strong>3 roky až 8 rokov</strong>,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-red-500 mt-1 shrink-0">&#9679;</span><span>a spôsobí škodu veľkého rozsahu alebo ako člen nebezpečného zoskupenia – hrozí mu trest odňatia slobody <strong>4 roky až 10 rokov</strong>.</span></li>
+          </ul>
+          <p class="text-slate-500 text-sm italic">* Zákon č. 300/2005 Z. z. TRESTNÝ ZÁKON: § 220 Falšovanie a pozmeňovanie identifikačných údajov motorového vozidla</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blokácia vozidla -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Je pravdou, že kontrola originality rieši problém blokácie vozidla?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-blue-50 rounded-2xl p-6 border border-blue-100 space-y-4 text-slate-600">
+          <p>Áno. S cieľom zamedzenia podvodov súvisiacich so zneužívaním oneskorených zápisov blokácií vozidla začala Slovenská komora exekútorov v októbri 2011 využívať informačný systém, ktorý umožňuje exekútorom zapisovať blokácie priamo on-line do evidencie vozidiel. Aby si záujemca mohol ešte pred kúpou overiť, či nie je na konkrétne vozidlo vedená blokácia, stalo sa overenie blokácie vozidla v evidencii vozidiel neoddeliteľnou súčasťou kontroly originality vozidla a výsledok overenia je automaticky zapísaný aj do Odborného posudku o kontrole originality vozidla.</p>
+          <p>Verejnosť si môže overiť blokáciu vozidla v čase vykonania kontroly originality priamo cez Overenie výsledku KO. Overenie sa vzťahuje na dátum a čas kontroly originality, preto ak vozidlo kupujete s odstupom, je dôležité overiť si blokáciu v reálnom čase. To je možné na webovej stránke Registra prevádzkových záznamov vozidiel <a href="https://rpzv.sk/" class="text-blue-600 hover:underline font-semibold" target="_blank" rel="noopener noreferrer">https://rpzv.sk/</a> prostredníctvom AUTO-Passu.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Legislatíva link -->
+  <section class="py-10 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-5 text-center">
+      <p class="text-slate-600">Kompletný prehľad zákonov nájdete na stránke <a href="/legislativa" class="text-blue-600 font-semibold hover:underline">Platná legislatíva</a>.</p>
+    </div>
+  </section>
+
+  <CTASection
+    title="Potrebujete kontrolu originality?"
+    subtitle="Objednajte sa online a vyhnite sa čakaniu. Sme tu pre vás každý pracovný deň."
+  />
+
+  <Footer slot="footer" />
+</MainLayout>

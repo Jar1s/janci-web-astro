@@ -1,0 +1,116 @@
+---
+// AnnouncementBar - loads notifications from API and displays scrolling text
+---
+
+<div class="announcement-bar" id="announcement-bar" style="display: none;">
+  <div class="announcement-track" id="announcement-track"></div>
+</div>
+
+<style>
+  .announcement-bar {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    background: linear-gradient(135deg, rgba(200, 30, 30, 0.95), rgba(180, 20, 20, 0.95));
+    backdrop-filter: blur(8px);
+    color: #fff;
+    overflow: hidden;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .announcement-bar.hidden-bar {
+    opacity: 0;
+    transform: translateY(-100%);
+    pointer-events: none;
+  }
+
+  .announcement-track {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: scroll-announcement 20s linear infinite;
+    gap: 4rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  .announcement-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes scroll-announcement {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @media (max-width: 768px) {
+    .announcement-bar {
+      top: 55px;
+      height: 40px;
+    }
+    .announcement-track {
+      font-size: 0.8rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const bar = document.getElementById('announcement-bar');
+    const track = document.getElementById('announcement-track');
+    if (!bar || !track) return;
+
+    try {
+      const res = await fetch('/api/notifications');
+      if (!res.ok) throw new Error('API error');
+      const data = await res.json();
+
+      // Filter active notifications
+      const active = Array.isArray(data)
+        ? data.filter((n: any) => n.active !== false)
+        : (data.notifications || []).filter((n: any) => n.active !== false);
+
+      if (!active.length) return;
+
+      // Build scrolling content - duplicate for seamless loop
+      const texts = active.map((n: any) => n.text || n.message || '').filter(Boolean);
+      if (!texts.length) return;
+
+      const content = texts.map((t: string) => `<span class="announcement-item">${t}</span>`).join('');
+      track.innerHTML = content + content; // duplicate for seamless scroll
+
+      // Apply custom styles from first notification
+      const first = active[0];
+      if (first.backgroundColor) bar.style.background = first.backgroundColor;
+      if (first.backgroundGradient) bar.style.background = first.backgroundGradient;
+      if (first.textColor) bar.style.color = first.textColor;
+
+      bar.style.display = 'flex';
+
+      // Hide bar when scrolled past hero
+      const hero = document.getElementById('hero');
+      if (hero) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            bar.classList.toggle('hidden-bar', !entry.isIntersecting);
+          });
+        }, { threshold: 0 });
+        observer.observe(hero);
+      }
+
+      // Adjust hero margin for announcement bar
+      if (hero) {
+        hero.style.marginTop = '44px';
+      }
+    } catch (e) {
+      // API not available, hide bar silently
+      bar.style.display = 'none';
+    }
+  });
+</script>

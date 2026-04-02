@@ -1,0 +1,556 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import Hero from '@/components/Hero.astro';
+import CTASection from '@/components/CTASection.astro';
+---
+
+<MainLayout
+  title="Emisná kontrola | STK JP Control Pezinok"
+  description="Emisná kontrola (EK) motorových vozidiel v STK JP Control Pezinok. Pravidelná, zvláštna, administratívna a opakovaná emisná kontrola pre všetky typy motorov."
+  canonical="/emisna-kontrola"
+>
+  <Header slot="header" currentPath="/emisna-kontrola" />
+
+  <Hero
+    title="Emisná kontrola"
+    subtitle="Prehliadka a kontrola stavu motora vozidla a jeho emisných systémov"
+    ctaText="REZERVOVAŤ TERMÍN"
+    ctaHref="https://www.kontrolavozidiel.sk/rezervovat-cez-internet"
+  />
+
+  <!-- Čo je emisná kontrola -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Čo je emisná kontrola?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="space-y-5 text-slate-700 text-lg leading-relaxed max-w-4xl mx-auto">
+        <p>Emisnou kontrolou (EK) motorového vozidla je prehliadka a kontrola stavu motora vozidla a jeho systémov, komponentov alebo samostatných technických jednotiek, ktoré ovplyvňujú tvorbu znečisťujúcich látok vo výfukových plynoch, a meraním zistené dodržiavanie podmienok a emisných limitov motora ustanovených vykonávacím právnym predpisom § 136 ods. 3 písm. h). Emisnou kontrolou sa tiež preveruje zhodnosť vozidla so schváleným typom, ak na vozidle bola zistená nezhoda.</p>
+        <p>Emisná kontrola sa vykonáva na pracovisku emisnej kontroly podľa jednotlivých druhov kontrol v rozsahu kontrolných úkonov ustanovených <a href="/legislativa" class="text-blue-600 hover:underline">zákonom č. 106/2018 Z. z.</a> o prevádzke vozidiel v cestnej premávke, vykonávacím právnym predpisom podľa § 136 ods. 3 písm. h) a podľa metodík vydaných typovým schvaľovacím orgánom.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Druhy emisných kontrol -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Druhy emisných kontrol</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Druhy emisných kontrol, ktoré vykonávame:</p>
+      </div>
+      <div class="space-y-6 max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-xl font-bold text-blue-600 mb-3">Emisná kontrola PRAVIDELNÁ</h3>
+          <p class="text-slate-700 leading-relaxed">Vykonáva sa v rozsahu kontrolných položiek určených metodickými pokynmi ministerstva dopravy na vykonávanie emisnej kontroly pravidelnej.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-xl font-bold text-blue-600 mb-3">Emisná kontrola ZVLÁŠTNA</h3>
+          <p class="text-slate-700 leading-relaxed">Vykonáva sa v úplnom alebo čiastočnom rozsahu emisnej kontroly pravidelnej a podľa kontrolných položiek určených metodikou na vykonávanie emisných kontrol zvláštnych.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-xl font-bold text-blue-600 mb-3">Emisná kontrola ADMINISTRATÍVNA</h3>
+          <p class="text-slate-700 leading-relaxed">Vykonáva sa v čiastočnom rozsahu emisnej kontroly pravidelnej a podľa kontrolných položiek určených metodikou na vykonávanie emisných kontrol administratívnych.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-xl font-bold text-blue-600 mb-3">OPAKOVANÁ emisná kontrola</h3>
+          <p class="text-slate-700 leading-relaxed">Vykonáva sa v plnom rozsahu pôvodnej emisnej kontroly s dôrazom na kontrolu odstránenia chýb zistených pri emisnej kontrole uvedenej v predchádzajúcich bodoch, a to do 60 dní odo dňa vykonania pôvodnej kontroly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kategórie vozidiel -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Kategórie vozidiel</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Kategórie vozidiel, pre ktoré vykonávame emisné kontroly:</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
+        <div class="bg-blue-50 rounded-xl p-5 border border-blue-100 flex items-center gap-4">
+          <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <p class="text-slate-700">so zážihovým (benzínovým) motorom s nezdokonaleným emisným systémom (BEZKAT/NKAT)</p>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-5 border border-blue-100 flex items-center gap-4">
+          <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <p class="text-slate-700">so zážihovým (benzínovým) motorom so zdokonaleným emisným systémom (RKAT)</p>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-5 border border-blue-100 flex items-center gap-4">
+          <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <p class="text-slate-700">so zážihovým (benzínovým) motorom so zdokonaleným emisným systémom (RKAT), ktoré je vybavené systémom palubnej diagnostiky OBD (RKAT OBD)</p>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-5 border border-blue-100 flex items-center gap-4">
+          <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <p class="text-slate-700">so vznetovým (naftovým) motorom</p>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-5 border border-blue-100 flex items-center gap-4">
+          <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <p class="text-slate-700">so vznetovým (naftovým) motorom, ktoré je vybavené systémom palubnej diagnostiky OBD</p>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-5 border border-blue-100 flex items-center gap-4">
+          <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <p class="text-slate-700">s hybridným pohonom</p>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-5 border border-blue-100 flex items-center gap-4 sm:col-span-2 sm:max-w-md sm:mx-auto">
+          <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center shrink-0">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <p class="text-slate-700">s pohonom LPG/CNG</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Aké vozidlá podliehajú / nepodliehajú EK -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké vozidlá podliehajú vykonaniu pravidelnej emisnej kontroly?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto space-y-8">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <ul class="space-y-3 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>motorové vozidlo, ktoré je evidované v Slovenskej republike a nie je dočasne vyradené z evidencie vozidiel; to neplatí pre jednotlivé vozidlo s obmedzenou prevádzkou,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>jednotlivo dovezené motorové vozidlo z členského štátu alebo zmluvného štátu, ktoré nemá platný doklad o vykonaní emisnej kontroly, pred jeho prihlásením do evidencie vozidiel v Slovenskej republike,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>jednotlivo dovezené motorové vozidlo z tretieho štátu pred jeho prihlásením do evidencie vozidiel v Slovenskej republike,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>opätovne schvaľované jednotlivé motorové vozidlo,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>dodatočne schvaľované jednotlivé motorové vozidlo,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>motorové vozidlo pri výmene technického osvedčenia vozidla.</span></li>
+          </ul>
+        </div>
+
+        <div class="text-center">
+          <h3 class="text-2xl font-bold text-blue-600 mb-4">Aké vozidlá nepodliehajú vykonaniu pravidelnej emisnej kontroly?</h3>
+          <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+        </div>
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <ul class="space-y-3 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>motorové vozidlo so zážihovým (benzínovým) motorom mazané zmesou paliva a mazacieho oleja,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>motorové vozidlo so zážihovým (benzínovým) motorom prihláseným do evidencie vozidiel pred 01.08.1970,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>motorové vozidlo so vznetovým (naftovým) motorom prihláseným do evidencie vozidiel pred 01.12.1971,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>malé motocykle do 50 cm3 (L1e), malé trojkolky do 50 cm3 (L2e), malé prípojné vozidlá do 750 kilogramov (O1) a malé prípojné vozidlá za traktor do 1 500 kg (R1).</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Čo sa kontroluje pri EK -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Čo sa kontroluje pri emisnej kontrole?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Kontrola sa zameriava prinajmenšom na nasledujúce oblasti:</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-3">Identifikácia vozidla</h3>
+          <ul class="space-y-1 text-slate-600 text-sm">
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>tabuľky s evidenčným číslom – ak sa v požiadavkách vyžadujú,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>identifikačné číslo vozidla / podvozku / výrobné číslo,</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-3">Svietidlá, odrazové sklá a elektrické zariadenie</h3>
+          <ul class="space-y-1 text-slate-600 text-sm">
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>elektrické vedenie,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>akumulátor (batérie),</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-3">Podvozok a jeho príslušenstvo</h3>
+          <ul class="space-y-1 text-slate-600 text-sm">
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>podvozok alebo rám a príslušenstvo – výfukové potrubie a tlmiče, palivová nádrž a potrubie (vrátane palivovej nádrže a potrubia na vykurovanie), výkon motora (X),</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-3">Zaťaženie životného prostredia</h3>
+          <ul class="space-y-1 text-slate-600 text-sm">
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>emisie výfukových plynov,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>úniky kvapalín,</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 md:col-span-2 md:max-w-md md:mx-auto">
+          <h3 class="text-lg font-bold text-blue-600 mb-3">Doplňujúce skúšky pre vozidlá kategórií M2, M3 určené na prepravu osôb</h3>
+          <ul class="space-y-1 text-slate-600 text-sm">
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>systém vetrania a kúrenia (X),</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Aké doklady treba predložiť na EK -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké doklady treba predložiť na emisnú kontrolu (EK)?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Prevádzkovateľ vozidla alebo vodič vozidla predkladá na vykonanie:</p>
+      </div>
+      <div class="space-y-6 max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">EK pravidelnej, EK zvláštnej a EK administratívnej:</h3>
+          <ul class="space-y-3 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad vozidla (osvedčenie o evidencii časť I alebo časť II alebo technické osvedčenie vozidla pri vozidle, ktoré nepodlieha prihláseniu do evidencie vozidiel) alebo potvrdenie o zadržaní, ak ide o vozidlo, ktorému je doklad vozidla zadržaný, alebo výpis z karty vozidla vydaný orgánom Policajného zboru, ak je doklad vozidla stratený,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>protokol o montáži plynového zariadenia, ak ide o vozidlo s pohonom na skvapalnený ropný plyn (LPG) alebo s pohonom na zemný plyn (CNG), ak montáž plynového zariadenia je vykonaná v rámci prestavby vozidla,</span></li>
+            <li class="flex gap-3 items-start">
+              <span class="text-blue-600 mt-1 shrink-0">&#9679;</span>
+              <div>
+                <span>protokol o inšpekcii CNG, LNG nádrže:</span>
+                <ul class="list-disc list-inside ml-4 mt-2 space-y-1 text-sm">
+                  <li>nádrž na CNG podlieha inšpekcii, ak uplynuli 4 roky od prvej evidencie vozidla a potom periodicky v 4-ročných intervaloch,</li>
+                  <li>nádrž na LNG podlieha inšpekcii, ak uplynul rok od prvej evidencie vozidla a potom periodicky v ročných intervaloch,</li>
+                </ul>
+              </div>
+            </li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>osvedčenie o schválení jednotlivo dovezeného vozidla a základný technický opis vozidla vydaný schvaľovacím orgánom, ak ide o emisnú kontrolu administratívnu jednotlivo dovezeného vozidla, ktoré má byť podrobené takej kontrole v lehote do 15 dní od prihlásenia vozidla do evidencie vozidiel a prevádzkovateľ pri schvaľovaní jednotlivo dovezeného vozidla predložil doklad o vykonaní EK pravidelnej v členskom štáte alebo zmluvnom štáte,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>potvrdenie o vykonanej dezinfekcii vozidla, ak ide o vozidlo záchrannej služby určeného na prepravu infekčných materiálov alebo pacientov s infekčnými chorobami, vozidlo určeného na prepravu uhynutých zvierat a vozidlo pohrebnej služby.</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">Opakovanej EK:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklady pre príslušný druh emisnej kontroly (už spomenuté v odseku a)),</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">EK pravidelnej – v súvislosti s vydaním nového dokladu vozidla po hromadnej prestavbe:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklady spomenuté v odseku a),</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad o vykonaní hromadnej prestavby,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>kópia schválenia hromadnej prestavby vrátane kópie základného technického opisu vozidla,</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">EK pravidelnej – z dôvodu povolenia výnimky z technických požiadaviek:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklady spomenuté v odseku a),</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>opis žiadanej výnimky,</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">EK zvláštnej – v súvislosti s vnútroštátnym schválením jednotlivo vyrobeného vozidla s obmedzenou prevádzkou:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>identifikačné údaje a technické údaje vozidla v rozsahu uvádzanom v dokladoch vozidla,</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">EK pravidelnej – v súvislosti s uznaním typového schválenia EÚ jednotlivo dovezeného vozidla z členského štátu alebo zmluvného štátu, uznaním schválenia jednotlivo dovezeného vozidla z členského štátu alebo zmluvného štátu, alebo vnútroštátnym jednotlivým schválením jednotlivo dovezeného vozidla z tretieho štátu:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>osvedčenie o evidencii z krajiny pôvodu alebo zo štátu, v ktorom je vozidlo evidované, pri dvoch častiach osvedčenia o evidencii sa predkladajú obidve časti; ak osvedčenia sú v inom ako slovenskom jazyku alebo českom jazyku, predkladajú sa s úradne osvedčeným prekladom do štátneho jazyka, pričom pri harmonizovanom osvedčení o evidencii vydanom v členskom štáte alebo zmluvnom štáte sa úradne prekladajú len časti, ktoré nepodliehajú harmonizácii,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>odborný posudok o kontrole originality vozidla základnej,</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">EK pravidelnej – v súvislosti s opätovným schválením jednotlivého vozidla na prevádzku v cestnej premávke:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad orgánu Policajného zboru o vyradení vozidla z evidencie vozidiel alebo doklad o schválení vozidla na prevádzku v cestnej premávke, ak vozidlo nepodliehalo prihláseniu do evidencie vozidiel,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span>
+              <div>
+                <span>v prípade vozidla po odcudzení:</span>
+                <ul class="list-disc list-inside ml-4 mt-2 space-y-1 text-sm">
+                  <li>doklad orgánu Policajného zboru o oznámení odcudzenia vozidla,</li>
+                  <li>doklad orgánu Policajného zboru o vrátení vozidla,</li>
+                  <li>doklady preukazujúce identifikáciu vozidla, najmä posudok kriminalisticko-expertízneho skúmania vozidla, oznámení odcudzenia vozidla,</li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">EK pravidelnej – v súvislosti s dodatočným schválením jednotlivého vozidla na prevádzku v cestnej premávke:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad vozidla z osobitnej evidencie vozidiel vydaný príslušným orgánom,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad o vyradení vozidla z osobitnej evidencie vozidiel vydaný príslušným orgánom,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>protokol o skúškach jednotlivého vozidla vydaný technickou službou overovania, z ktorého vyplýva, že vozidlo spĺňa ustanovené podmienky a technické požiadavky platné v čase výroby vozidla,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>návrh na spracovanie základného technického opisu vozidla vydaný technickou službou overovania.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kedy ísť na EK - Lehoty -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Kedy ísť na emisnú kontrolu (EK)?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="overflow-x-auto max-w-4xl mx-auto">
+        <table class="w-full border-collapse bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200">
+          <thead>
+            <tr class="bg-blue-600 text-white">
+              <th class="px-4 py-3 text-left font-semibold border-r border-blue-500">Druh / kategória vozidla</th>
+              <th class="px-4 py-3 text-left font-semibold">Lehoty EK</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200">
+            <tr class="bg-white">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">Ta – traktory</td>
+              <td class="px-4 py-3 text-slate-700">
+                <span class="font-bold text-blue-600">4 – 4 – 4 ...</span><br>
+                <span class="text-sm text-slate-500">(prvá EK do 4 rokov po prvom prihlásení do evidencie a potom periodicky každé 4 roky)</span>
+              </td>
+            </tr>
+            <tr class="bg-slate-50">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">M1, N1 – osobné a nákladné vozidlá (okrem vozidla kategórie M1 a N1 so zážihovým motorom s nezdokonaleným emisným systémom)<br>Tb – traktory</td>
+              <td class="px-4 py-3 text-slate-700">
+                <span class="font-bold text-blue-600">4 – 2 – 2 ...</span><br>
+                <span class="text-sm text-slate-500">(prvá EK do 4 rokov po prvom prihlásení do evidencie a potom periodicky každé 2 roky)</span>
+              </td>
+            </tr>
+            <tr class="bg-white">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">
+                M1, N1 – osobné a nákladné vozidlá so zážihovým motorom s nezdokonaleným emisným systémom<br>
+                M2, M3, N2, N3 – vozidlá na prepravu cestujúcich a prepravu tovaru<br>
+                vozidlá používané na taxislužbu<br>
+                vozidlá používané v autoškole ako výcvikové vozidlá<br>
+                M, N – používané na zdravotnícku záchrannú službu, na banskú záchrannú službu, ako sanitné vozidlá, na poruchovú službu plynárenských zariadení, ak ide o vozidlá s právom prednostnej jazdy
+              </td>
+              <td class="px-4 py-3 text-slate-700">
+                <span class="font-bold text-blue-600">1 – 1 – 1 ...</span><br>
+                <span class="text-sm text-slate-500">(prvá EK do 1 roka po prvom prihlásení do evidencie a potom periodicky každý 1 rok)</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Prvé prihlásenie -->
+      <div class="mt-8 space-y-4 max-w-4xl mx-auto">
+        <h3 class="text-lg font-bold text-blue-600">Prvé prihlásenie vozidla do evidencie?</h3>
+        <div class="bg-blue-50 rounded-2xl p-6 border border-blue-100 text-slate-600 space-y-3">
+          <p>Ak sa dátum prvého prihlásenia vozidla do evidencie nedá zistiť, ale známy je rok výroby vozidla, za prvé prihlásenie vozidla do evidencie sa považuje prvý deň roku výroby vozidla.</p>
+          <p>Ak sa rok prvého prihlásenia vozidla do evidencie uvedený v osvedčení o evidencii časti I a v osvedčení o evidencii časti II nezhoduje s rokom výroby vozidla, pričom medzi rokom výroby vozidla a rokom prvého prihlásenia vozidla do evidencie je rozdiel väčší ako 12 mesiacov, za prvé prihlásenie vozidla do evidencie sa považuje prvý deň roku výroby vozidla.</p>
+          <p>Ak rok výroby vozidla nie je známy, považuje sa zaň modelový rok vozidla.</p>
+        </div>
+      </div>
+
+      <!-- Kedy končí lehota -->
+      <div class="mt-8 space-y-4 max-w-4xl mx-auto">
+        <h3 class="text-lg font-bold text-blue-600">Kedy končí lehota platnosti emisnej kontroly (EK) pravidelnej?</h3>
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>uplynutím lehoty platnosti,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>vykonaním novej EK pravidelnej,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>vykonaním novej EK administratívnej.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Povinnosti prevádzkovateľa -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké sú povinnosti prevádzkovateľa vozidla pri emisnej kontrole (EK)?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto">
+        <p class="text-slate-600 mb-4">Prevádzkovateľ alebo vodič vozidla je povinný:</p>
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <ul class="space-y-3 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pred začatím EK predložiť doklady v rozsahu ustanovenom vykonávacím právnym predpisom podľa § 136 ods. 3 písm. h).</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pristaviť na EK vozidlo čisté, udržiavané v technickom stave, v ktorom spĺňa ustanovené technické požiadavky na prevádzkovanie vozidla v cestnej premávke podľa pokynov na obsluhu a údržbu ustanovených výrobcom a v technickom stave umožňujúcom vykonať emisnú kontrolu bez poškodenia vozidla, pracoviska emisnej kontroly alebo zdravia osôb prítomných pri emisnej kontrole,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pristaviť na EK vozidlo vydezinfikované, ak sa jedná o vozidlo záchrannej služby určené na prepravu infekčných materiálov alebo pacientov s infekčnými chorobami, vozidlo určené na prepravu uhynutých zvierat a pohrebné vozidlo, pričom dezinfekcia je vykonaná pred vykonaním EK.</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>byť prítomný pri EK.</span></li>
+          </ul>
+          <div class="mt-4 bg-amber-50 rounded-xl p-4 border border-amber-200">
+            <p class="text-slate-700 font-semibold">Bez predloženia ustanovených dokladov a bez pristaveného vozidla nesmie technik emisnej kontroly vykonať emisnú kontrolu.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hodnotenie technického stavu -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Ako prebieha hodnotenie technického stavu vozidla pri emisnej kontrole?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto space-y-6">
+        <p class="text-slate-600 leading-relaxed">Pri emisnej kontrole sa emisný stav motorového vozidla alebo funkcia a činnosti jednotlivých systémov, komponentov alebo samostatných technických jednotiek, ktoré ovplyvňujú tvorbu znečisťujúcich látok vo výfukových plynoch vozidla, hodnotia trojstupňovou klasifikáciou.</p>
+        <p class="text-slate-600 leading-relaxed">Vozidlo sa hodnotí podľa zoznamu možných chýb a úrovne ich závažnosti. Chybami sa rozumejú technické poruchy a iné prípady nesúladu zistené počas emisnej kontroly, a to:</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Spôsobilé -->
+          <div class="bg-green-50 rounded-2xl p-6 border border-green-200">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <h3 class="text-lg font-bold text-green-700">SPÔSOBILÉ</h3>
+            </div>
+            <p class="text-slate-600 text-sm leading-relaxed"><strong>Ľahké chyby</strong>, ktoré nemajú výrazný vplyv na životné prostredie alebo na bezpečnosť a prevádzku vozidla, ako aj iné menej významné prípady nezhody, vozidlo je SPÔSOBILÉ na prevádzku v cestnej premávke – prevádzkovateľ vozidla je povinný ich odstrániť.</p>
+          </div>
+
+          <!-- Dočasne spôsobilé -->
+          <div class="bg-amber-50 rounded-2xl p-6 border border-amber-200">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+              </div>
+              <h3 class="text-lg font-bold text-amber-700">DOČASNE SPÔSOBILÉ</h3>
+            </div>
+            <p class="text-slate-600 text-sm leading-relaxed"><strong>Vážne chyby</strong>, ktoré môžu ovplyvniť bezpečnosť vozidla alebo životné prostredie alebo ohroziť iných účastníkov cestnej premávky, ako aj iné významnejšie prípady nezhody, vozidlo je DOČASNE SPÔSOBILÉ na prevádzku v cestnej premávke – prevádzkovateľ vozidla je povinný do 60 kalendárnych dní podrobiť vozidlo opakovanej EK. Ak sa opakovanou emisnou kontrolou opätovne zistí tá istá vážna chyba, vozidlo je nespôsobilé na prevádzku v cestnej premávke. Ak prevádzkovateľ vozidla nepodrobí vozidlo v ustanovenej lehote opakovanej EK, vozidlo je nespôsobilé na prevádzku v cestnej premávke.</p>
+          </div>
+
+          <!-- Nespôsobilé -->
+          <div class="bg-red-50 rounded-2xl p-6 border border-red-200">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              </div>
+              <h3 class="text-lg font-bold text-red-700">NESPÔSOBILÉ</h3>
+            </div>
+            <p class="text-slate-600 text-sm leading-relaxed"><strong>Nebezpečné chyby</strong>, ktoré predstavujú priame a bezprostredné riziko pre bezpečnosť cestnej premávky alebo majú vplyv na životné prostredie a je potrebné zakázať používanie vozidla v cestnej premávke, vozidlo je NESPÔSOBILÉ na prevádzku v cestnej premávke.</p>
+          </div>
+        </div>
+
+        <div class="bg-amber-50 rounded-xl p-4 border border-amber-200">
+          <p class="text-slate-700 font-semibold text-sm">Ak sa pri emisnej kontrole zistia nebezpečné chyby a vozidlo je hodnotené ako „NESPÔSOBILÉ na prevádzku v cestnej premávke", prevádzka vozidla sa pozastaví – prevádzkovateľ vozidla alebo vodič vozidla je povinný na vlastné náklady zabezpečiť odtiahnutie vozidla z pracoviska emisnej kontroly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prípady nevykonania EK -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké sú prípady nevykonania emisnej kontroly?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <ul class="space-y-3 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>nemožno naštartovať motor vozidla,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>vozidlo má zjavne neúplné výfukové potrubie,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>je zistený zjavný únik prevádzkových médií,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>prevádzkovateľ motorového vozidla pred emisnou kontrolou nepredloží ustanovené doklady.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Doklady po vykonaní EK -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké doklady dostanem po vykonaní emisnej kontroly?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="overflow-x-auto max-w-4xl mx-auto">
+        <table class="w-full border-collapse bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200">
+          <thead>
+            <tr class="bg-blue-600 text-white">
+              <th class="px-4 py-3 text-left font-semibold border-r border-blue-500">Evidencia vozidiel v SR</th>
+              <th class="px-4 py-3 text-left font-semibold border-r border-blue-500">Druh emisnej kontroly</th>
+              <th class="px-4 py-3 text-left font-semibold">Doklad o vykonaní emisnej kontroly</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200">
+            <tr class="bg-white">
+              <td class="px-4 py-3 text-slate-700 font-semibold border-r border-slate-200" rowspan="3">prihlásené vozidlo</td>
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">EK pravidelná</td>
+              <td class="px-4 py-3 text-slate-700" rowspan="3">
+                Vyznačený protokol o kontrole technického stavu časť B – emisná kontrola,<br>
+                Vyznačené osvedčenie o kontrole technického stavu časť B – emisná kontrola
+              </td>
+            </tr>
+            <tr class="bg-slate-50">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">EK administratívna</td>
+            </tr>
+            <tr class="bg-white">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">EK opakovaná</td>
+            </tr>
+            <tr class="bg-slate-50">
+              <td class="px-4 py-3 text-slate-700 font-semibold border-r border-slate-200" rowspan="3">neprihlásené vozidlo</td>
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">EK pravidelná</td>
+              <td class="px-4 py-3 text-slate-700" rowspan="3">
+                Vyznačený protokol o kontrole technického stavu časť B – emisná kontrola
+              </td>
+            </tr>
+            <tr class="bg-white">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">EK opakovaná</td>
+            </tr>
+            <tr class="bg-slate-50">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">EK zvláštna</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-6 text-slate-600 text-sm max-w-4xl mx-auto">Protokol o vykonanej emisnej kontrole sa na pracovisku emisnej kontroly uchováva štyri roky od vydania protokolu.</p>
+    </div>
+  </section>
+
+  <!-- Preukazovanie platnosti EK -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Ako sa preukazuje platnosť emisnej kontroly?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4 text-slate-600">
+          <p>Vyznačeným osvedčením o kontrole technického stavu časť B – emisná kontrola preukazuje vodič vozidla kontrolným orgánom vykonávajúcim dohľad nad bezpečnosťou a plynulosťou cestnej premávky splnenie povinnosti podrobiť vozidlo emisnej kontrole pravidelnej alebo administratívnej v lehotách, spôsobom a v rozsahu ustanovenými vykonávacím právnym predpisom.</p>
+          <p>Ak ide o vozidlo evidované v inom členskom štáte alebo zmluvnom štáte, dokladmi o vykonaní technickej kontroly sú rovnocenné doklady vydané v tomto členskom štáte alebo zmluvnom štáte.</p>
+          <p>Prevod držby vozidla alebo zmena vlastníctva vozidla nemá vplyv na platnosť dokladov o vykonaní emisnej kontroly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Legislatíva link -->
+  <section class="py-10 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-5 text-center">
+      <p class="text-slate-600">Kompletný prehľad zákonov nájdete na stránke <a href="/legislativa" class="text-blue-600 font-semibold hover:underline">Platná legislatíva</a>.</p>
+    </div>
+  </section>
+
+  <CTASection
+    title="Potrebujete emisnú kontrolu?"
+    subtitle="Objednajte sa online a vyhnite sa čakaniu. Sme tu pre vás každý pracovný deň."
+  />
+
+  <Footer slot="footer" />
+</MainLayout>

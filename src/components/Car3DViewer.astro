@@ -1,0 +1,442 @@
+---
+// Three.js 3D Car Viewer - Professional procedural car with PBR materials
+---
+
+<div class="car3d-wrapper">
+  <div class="car3d-canvas" id="car3d-canvas"></div>
+  <div class="car3d-controls">
+    <span class="car3d-hint">Potiahnite myšou pre rotáciu</span>
+  </div>
+  <div class="car3d-labels" id="car3d-labels">
+    <button class="car3d-label" data-part="brakes">Brzdy</button>
+    <button class="car3d-label" data-part="engine">Motor</button>
+    <button class="car3d-label" data-part="chassis">Podvozok</button>
+    <button class="car3d-label" data-part="exhaust">Výfuk</button>
+  </div>
+</div>
+
+<style>
+  .car3d-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: 350px;
+    margin: 0 auto;
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #0a1628 0%, #0d2847 50%, #0a1628 100%);
+    box-shadow: 0 20px 60px rgba(0, 30, 80, 0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+
+  .car3d-canvas {
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+  }
+
+  .car3d-canvas:active { cursor: grabbing; }
+
+  .car3d-canvas canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+  }
+
+  .car3d-controls {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+  }
+
+  .car3d-hint {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    background: rgba(0,0,0,0.3);
+    padding: 4px 12px;
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+  }
+
+  .car3d-labels {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 5;
+  }
+
+  .car3d-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    background: rgba(0, 102, 204, 0.15);
+    border: 1px solid rgba(0, 102, 204, 0.3);
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .car3d-label:hover, .car3d-label.active {
+    background: rgba(0, 102, 204, 0.4);
+    border-color: #0066cc;
+    color: #fff;
+  }
+
+  @media (max-width: 768px) {
+    .car3d-wrapper { height: 250px; }
+    .car3d-labels { display: none; }
+  }
+</style>
+
+<script is:inline src="/three.min.js"></script>
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    var container = document.getElementById('car3d-canvas');
+    if (!container || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (typeof THREE === 'undefined') return;
+
+    // Scene
+    var scene = new THREE.Scene();
+
+    // Camera
+    var camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 100);
+    camera.position.set(4, 2.5, 5);
+    camera.lookAt(0, 0.5, 0);
+
+    // Renderer
+    var renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.2;
+    container.appendChild(renderer.domElement);
+
+    // Lights
+    var ambientLight = new THREE.AmbientLight(0x4488cc, 0.6);
+    scene.add(ambientLight);
+
+    var mainLight = new THREE.DirectionalLight(0xffffff, 1.5);
+    mainLight.position.set(5, 8, 5);
+    mainLight.castShadow = true;
+    mainLight.shadow.mapSize.set(1024, 1024);
+    scene.add(mainLight);
+
+    var fillLight = new THREE.DirectionalLight(0x6699ff, 0.4);
+    fillLight.position.set(-5, 3, -3);
+    scene.add(fillLight);
+
+    var rimLight = new THREE.DirectionalLight(0x0066cc, 0.6);
+    rimLight.position.set(0, 2, -5);
+    scene.add(rimLight);
+
+    // Ground
+    var groundGeo = new THREE.CircleGeometry(6, 64);
+    var groundMat = new THREE.MeshStandardMaterial({
+      color: 0x0a1628,
+      metalness: 0.8,
+      roughness: 0.3,
+    });
+    var ground = new THREE.Mesh(groundGeo, groundMat);
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.y = -0.01;
+    ground.receiveShadow = true;
+    scene.add(ground);
+
+    // Grid helper (subtle)
+    var gridHelper = new THREE.GridHelper(8, 20, 0x0066cc, 0x0066cc);
+    (gridHelper.material).opacity = 0.08;
+    (gridHelper.material).transparent = true;
+    scene.add(gridHelper);
+
+    // Car group
+    var car = new THREE.Group();
+
+    // Materials
+    var bodyMat = new THREE.MeshStandardMaterial({
+      color: 0x0066cc,
+      metalness: 0.7,
+      roughness: 0.2,
+    });
+    var darkMat = new THREE.MeshStandardMaterial({
+      color: 0x1a1a2e,
+      metalness: 0.5,
+      roughness: 0.4,
+    });
+    var glassMat = new THREE.MeshStandardMaterial({
+      color: 0x88ccff,
+      metalness: 0.9,
+      roughness: 0.05,
+      transparent: true,
+      opacity: 0.4,
+    });
+    var chromeMat = new THREE.MeshStandardMaterial({
+      color: 0xdddddd,
+      metalness: 1.0,
+      roughness: 0.05,
+    });
+    var lightMat = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      emissive: 0xffffcc,
+      emissiveIntensity: 0.5,
+    });
+    var tailLightMat = new THREE.MeshStandardMaterial({
+      color: 0xff2222,
+      emissive: 0xff0000,
+      emissiveIntensity: 0.4,
+    });
+    var wheelMat = new THREE.MeshStandardMaterial({
+      color: 0x222222,
+      metalness: 0.3,
+      roughness: 0.8,
+    });
+    var rimMat = new THREE.MeshStandardMaterial({
+      color: 0xaaaaaa,
+      metalness: 0.9,
+      roughness: 0.1,
+    });
+
+    // Body - lower
+    var bodyLower = new THREE.Mesh(
+      new THREE.BoxGeometry(3.6, 0.6, 1.6),
+      bodyMat
+    );
+    bodyLower.position.y = 0.55;
+    bodyLower.castShadow = true;
+
+    // Round edges with bevel
+    var bodyUpperShape = new THREE.Shape();
+    bodyUpperShape.moveTo(-1.2, 0);
+    bodyUpperShape.lineTo(1.2, 0);
+    bodyUpperShape.lineTo(1.0, 0.55);
+    bodyUpperShape.lineTo(-0.8, 0.55);
+    bodyUpperShape.lineTo(-1.2, 0);
+
+    var bodyUpper = new THREE.Mesh(
+      new THREE.ExtrudeGeometry(bodyUpperShape, { depth: 1.3, bevelEnabled: true, bevelThickness: 0.05, bevelSize: 0.05, bevelSegments: 3 }),
+      bodyMat
+    );
+    bodyUpper.position.set(-0.15, 0.85, -0.65);
+    bodyUpper.castShadow = true;
+
+    // Windshield
+    var windshield = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.25, 0.5),
+      glassMat
+    );
+    windshield.position.set(-0.82, 1.15, 0);
+    windshield.rotation.y = 0;
+    windshield.rotation.z = -0.35;
+
+    // Rear window
+    var rearWindow = new THREE.Mesh(
+      new THREE.PlaneGeometry(1.25, 0.45),
+      glassMat
+    );
+    rearWindow.position.set(0.95, 1.12, 0);
+    rearWindow.rotation.z = 0.25;
+
+    // Headlights
+    var headlightL = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 16), lightMat);
+    headlightL.position.set(-1.82, 0.6, 0.5);
+    var headlightR = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 16), lightMat);
+    headlightR.position.set(-1.82, 0.6, -0.5);
+
+    // Taillights
+    var taillightL = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.15, 0.2), tailLightMat);
+    taillightL.position.set(1.82, 0.6, 0.55);
+    var taillightR = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.15, 0.2), tailLightMat);
+    taillightR.position.set(1.82, 0.6, -0.55);
+
+    // Bumpers
+    var frontBumper = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.25, 1.7), chromeMat);
+    frontBumper.position.set(-1.87, 0.38, 0);
+    var rearBumper = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.25, 1.7), chromeMat);
+    rearBumper.position.set(1.87, 0.38, 0);
+
+    // Wheels
+    function createWheel(x, z) {
+      var wheelGroup = new THREE.Group();
+      var tire = new THREE.Mesh(new THREE.TorusGeometry(0.28, 0.12, 16, 32), wheelMat);
+      tire.rotation.y = Math.PI / 2;
+      var rim = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.15, 16), rimMat);
+      rim.rotation.x = Math.PI / 2;
+      var hubcap = new THREE.Mesh(new THREE.CircleGeometry(0.14, 16), chromeMat);
+      hubcap.position.z = 0.08;
+      wheelGroup.add(tire, rim, hubcap);
+      wheelGroup.position.set(x, 0.28, z);
+      return wheelGroup;
+    }
+
+    var wheels = [
+      createWheel(-1.15, 0.85),
+      createWheel(-1.15, -0.85),
+      createWheel(1.15, 0.85),
+      createWheel(1.15, -0.85),
+    ];
+
+    // Underbody
+    var underbody = new THREE.Mesh(
+      new THREE.BoxGeometry(3.4, 0.08, 1.4),
+      darkMat
+    );
+    underbody.position.y = 0.2;
+
+    // Exhaust
+    var exhaust = new THREE.Mesh(
+      new THREE.CylinderGeometry(0.05, 0.06, 0.2, 12),
+      chromeMat
+    );
+    exhaust.rotation.x = Math.PI / 2;
+    exhaust.position.set(1.7, 0.2, -0.5);
+
+    // Assemble
+    car.add(bodyLower, bodyUpper, windshield, rearWindow);
+    car.add(headlightL, headlightR, taillightL, taillightR);
+    car.add(frontBumper, rearBumper);
+    car.add(underbody, exhaust);
+    wheels.forEach(w => car.add(w));
+    car.position.y = 0;
+    scene.add(car);
+
+    // Highlight parts
+    var partGroups: Object = {
+      brakes: wheels,
+      engine: [bodyLower],
+      chassis: [underbody],
+      exhaust: [exhaust],
+    };
+
+    var labels = document.querySelectorAll('.car3d-label');
+    labels.forEach(label => {
+      label.addEventListener('click', () => {
+        var part = (label).dataset.part || '';
+        labels.forEach(l => l.classList.remove('active'));
+        label.classList.add('active');
+
+        // Reset all materials
+        bodyLower.material = bodyMat;
+        underbody.material = darkMat;
+        exhaust.material = chromeMat;
+
+        // Highlight selected
+        var highlightMat = new THREE.MeshStandardMaterial({
+          color: 0x00cc66,
+          emissive: 0x00cc66,
+          emissiveIntensity: 0.3,
+          metalness: 0.5,
+          roughness: 0.3,
+        });
+
+        if (part === 'brakes') {
+          wheels.forEach(w => {
+            (w.children[1]).material = highlightMat;
+          });
+        } else if (part === 'engine') {
+          bodyLower.material = highlightMat;
+        } else if (part === 'chassis') {
+          underbody.material = highlightMat;
+        } else if (part === 'exhaust') {
+          exhaust.material = highlightMat;
+        }
+
+        setTimeout(() => {
+          // Reset after 3s
+          labels.forEach(l => l.classList.remove('active'));
+          bodyLower.material = bodyMat;
+          underbody.material = darkMat;
+          exhaust.material = chromeMat;
+          wheels.forEach(w => {
+            (w.children[1]).material = rimMat;
+          });
+        }, 3000);
+      });
+    });
+
+    // Mouse drag rotation
+    var isDragging = false;
+    var prevX = 0;
+    var autoRotate = true;
+    var targetRotation = 0;
+
+    container.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      prevX = e.clientX;
+      autoRotate = false;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      var delta = e.clientX - prevX;
+      targetRotation += delta * 0.01;
+      prevX = e.clientX;
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+      setTimeout(() => { autoRotate = true; }, 2000);
+    });
+
+    // Touch support
+    container.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      prevX = e.touches[0].clientX;
+      autoRotate = false;
+    }, { passive: true });
+
+    container.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      var delta = e.touches[0].clientX - prevX;
+      targetRotation += delta * 0.01;
+      prevX = e.touches[0].clientX;
+    }, { passive: true });
+
+    container.addEventListener('touchend', () => {
+      isDragging = false;
+      setTimeout(() => { autoRotate = true; }, 2000);
+    });
+
+    // Resize
+    var resizeObserver = new ResizeObserver(() => {
+      var w = container.clientWidth;
+      var h = container.clientHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    });
+    resizeObserver.observe(container);
+
+    // Animate
+    function animate() {
+      requestAnimationFrame(animate);
+
+      if (autoRotate) {
+        targetRotation += 0.003;
+      }
+      car.rotation.y += (targetRotation - car.rotation.y) * 0.05;
+
+      // Spin wheels
+      wheels.forEach(w => {
+        w.children[0].rotation.x += 0.02;
+      });
+
+      renderer.render(scene, camera);
+    }
+
+    // Start only when visible
+    var observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        animate();
+        observer.disconnect();
+      }
+    }, { threshold: 0.1 });
+    observer.observe(container);
+  });
+</script>

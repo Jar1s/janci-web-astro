@@ -1,0 +1,42 @@
+---
+// ScrollProgress — thin blue bar at top showing scroll position
+---
+
+<div id="scroll-progress" aria-hidden="true"></div>
+
+<style>
+  #scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, #0066cc, #0099ff);
+    z-index: 9999;
+    pointer-events: none;
+    transition: none;
+    will-change: width;
+  }
+</style>
+
+<script is:inline>
+(function() {
+  var bar = document.getElementById('scroll-progress');
+  if (!bar) return;
+  var ticking = false;
+  function update() {
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    bar.style.width = progress + '%';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive: true });
+  update();
+})();
+</script>

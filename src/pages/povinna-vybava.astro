@@ -1,0 +1,363 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import Hero from '@/components/Hero.astro';
+---
+
+<MainLayout
+  title="Povinná výbava vozidiel | STK JP Control Pezinok"
+  description="Kompletný prehľad povinnej výbavy vozidiel pre STK kontrolu. Zistite, čo musíte mať vo vozidle pred návštevou STK."
+  canonical="/povinna-vybava"
+>
+  <Header slot="header" currentPath="/povinna-vybava" />
+
+  <Hero
+    title="Povinná výbava vozidiel"
+    subtitle="Čo musíte mať vo vozidle pred návštevou STK"
+    ctaText="REZERVOVAŤ TERMÍN"
+    ctaHref="https://www.kontrolavozidiel.sk/rezervovat-cez-internet"
+  />
+
+  <!-- Section 1: Povinná výbava podľa kategórie vozidla -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-5">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-blue-700 mb-4">Povinná výbava podľa kategórie vozidla</h2>
+        <div class="w-16 h-1 bg-blue-600 rounded mb-6 mx-auto"></div>
+        <p class="text-gray-600 text-lg">Nezabudnite si skontrolovať povinnú výbavu vozidla:</p>
+      </div>
+
+      <!-- Kategória M1 a N1 -->
+      <div class="mb-10 bg-blue-50 rounded-2xl border-l-4 border-blue-600 p-6 md:p-8 shadow-sm">
+        <h3 class="text-xl font-bold text-blue-800 mb-6">Kategória M1 a N1 <span class="text-base font-normal text-blue-600">(osobné a úžitkové vozidlá)</span></h3>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-gray-700"><strong class="text-gray-900">a)</strong> autolekárnička – skontrolujte úplnosť a stav obsahu,</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-gray-700"><strong class="text-gray-900">b)</strong> bezpečnostný reflexný odev (napr. vesta, overal, nohavice alebo pláštenka) – umiestňuje sa v dosahu zo sedadla vodiča vozidla,</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-gray-700"><strong class="text-gray-900">c)</strong> homologizovaný prenosný výstražný trojuholník,</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-gray-700"><strong class="text-gray-900">d)</strong> náhradné koleso (disk s pneumatikou) predpísaného druhu a rozmeru,</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-gray-700"><strong class="text-gray-900">e)</strong> kľúč na matice alebo na skrutky kolies a príručný zdvihák,</span>
+          </li>
+        </ul>
+        <div class="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-4">
+          <div class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+            <p class="text-sm text-amber-800">
+              <strong>Výnimka:</strong> povinná výbava podľa odsekov d) a e) sa nevzťahuje na vozidlá, ktoré: majú vybavené všetky kolesá pneumatikami zvláštnej konštrukcie umožňujúcej dočasné použitie po defekte s indikáciou defektu v ktorejkoľvek z pneumatík, sú vybavené prostriedkami na bezdemontážnu opravu poškodenej pneumatiky umožňujúcej dočasné použitie.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kategória M2, M3, N2, N3, T, C, a PS -->
+      <div class="mb-10 bg-sky-50 rounded-2xl border-l-4 border-sky-600 p-6 md:p-8 shadow-sm">
+        <h3 class="text-xl font-bold text-sky-800 mb-6">Kategória M2, M3, N2, N3, T, C, a PS <span class="text-base font-normal text-sky-600">(autobusy, nákladné, traktory)</span></h3>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-sky-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-gray-700"><strong class="text-gray-900">a)</strong> autolekárnička – resp. dve autolekárničky (M2/M3 nad 22 miest),</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-sky-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-gray-700"><strong class="text-gray-900">b)</strong> bezpečnostný reflexný odev,</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-sky-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-gray-700"><strong class="text-gray-900">c)</strong> homologizovaný prenosný výstražný trojuholník,</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-sky-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-gray-700"><strong class="text-gray-900">d)</strong> náhradné koleso – jazdná súprava zložená z ťahača a prípojného vozidla môže mať jedno spoločné náhradné koleso,</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-sky-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-gray-700"><strong class="text-gray-900">e)</strong> kľúč na matice alebo na skrutky kolies a príručný zdvihák,</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-sky-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <div class="text-gray-700">
+              <strong class="text-gray-900">f)</strong> hasiace prístroje:
+              <ul class="mt-2 ml-4 space-y-1 text-sm">
+                <li class="flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 bg-sky-500 rounded-full flex-shrink-0"></span>
+                  6 kg (M2/M3 do 22 miest)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 bg-sky-500 rounded-full flex-shrink-0"></span>
+                  12 kg (M2/M3 nad 22 miest)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 bg-sky-500 rounded-full flex-shrink-0"></span>
+                  6 kg (N2, N3, T, C, PS)
+                </li>
+                <li class="flex items-center gap-2">
+                  <span class="w-1.5 h-1.5 bg-sky-500 rounded-full flex-shrink-0"></span>
+                  1,3 kg (záchranná/banská/plynárenská služba)
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-sky-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-gray-700"><strong class="text-gray-900">g)</strong> snehové reťaze (15.11 – 31.3, pre N3),</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-sky-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-gray-700"><strong class="text-gray-900">h)</strong> zakladacie kliny (1 klin pre mc > 3.5t, 2 kliny pre 3+ náprav),</span>
+          </li>
+        </ul>
+        <div class="mt-6 bg-amber-50 border border-amber-200 rounded-xl p-4">
+          <div class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+            </svg>
+            <p class="text-sm text-amber-800">
+              <strong>Výnimka:</strong> povinná výbava podľa odsekov d) a e) sa nevzťahuje na vozidlá, ktoré: majú vybavené všetky kolesá pneumatikami zvláštnej konštrukcie umožňujúcej dočasné použitie po defekte s indikáciou defektu v ktorejkoľvek z pneumatík, sú vybavené prostriedkami na bezdemontážnu opravu poškodenej pneumatiky umožňujúcej dočasné použitie. Ďalej sa nevzťahuje na mestské autobusy, špeciálne vozidlá v operatívnom dosahu servisných služieb.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kategória L3e, L4e, L5e a L7e -->
+      <div class="mb-10 bg-emerald-50 rounded-2xl border-l-4 border-emerald-600 p-6 md:p-8 shadow-sm">
+        <h3 class="text-xl font-bold text-emerald-800 mb-6">Kategória L3e, L4e, L5e a L7e <span class="text-base font-normal text-emerald-600">(motocykle)</span></h3>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-emerald-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-gray-700">motolekárnička – skontrolujte úplnosť a stav obsahu</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Kategória O2 až Q4 a RB2 až RB4 -->
+      <div class="mb-10 bg-amber-50 rounded-2xl border-l-4 border-amber-500 p-6 md:p-8 shadow-sm">
+        <h3 class="text-xl font-bold text-amber-800 mb-6">Kategória O2 až Q4 a RB2 až RB4 <span class="text-base font-normal text-amber-600">(prípojné vozidlá)</span></h3>
+        <ul class="space-y-4">
+          <li class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-gray-700">náhradné koleso predpísaného druhu a rozmeru</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+            </svg>
+            <span class="text-gray-700">zakladacie kliny (1 klin pre mc > 750 kg, 2 kliny pre 3+ náprav)</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Čo ďalšie skontrolovať pred návštevou STK? -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-5">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-blue-700 mb-4">Čo ďalšie skontrolovať pred návštevou STK?</h2>
+        <div class="w-16 h-1 bg-blue-600 rounded mb-6 mx-auto"></div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- 1. Ostrekovače, stierače a klaksón -->
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-900 mb-2">Ostrekovače, stierače a klaksón</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">Preskúšajte funkčnosť ostrekovačov, stieračov a klaksónu.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Osvetlenie -->
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-900 mb-2">Osvetlenie</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">Preverte si vonkajšie osvetlenie vozidla (obrysové, stretávacie a diaľkové svetlá, svetlá do hmly, smerové a spätné svetlá), signalizáciu porúch. Vyskúšajte funkčnosť znižovania sklonu predných svetlometov.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Motorový priestor -->
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-900 mb-2">Motorový priestor</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">Skontrolujte či je motorový priestor suchý, či neunikajú prevádzkové kvapaliny.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Brzdy -->
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-900 mb-2">Brzdy</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">Skontrolujte funkčnosť bŕzd, vrátane výšky zdvihu páky parkovacej brzdy.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Riadenie -->
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-900 mb-2">Riadenie</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">Preverte si riadenie, či vozidlo reaguje plynulo na natočenie volantu a či sa volant po prejdení zákrutou vracia do východiskovej polohy.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Pneumatiky -->
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="9" />
+                <circle cx="12" cy="12" r="4" />
+                <path stroke-linecap="round" d="M12 3v4m0 10v4M3 12h4m10 0h4" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-900 mb-2">Pneumatiky</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">Premerajte si dezén pneumatík (predpísaná hĺbka dezénu je minimálne 3 mm na letných a 1,6 mm na zimných pneumatikách), presvedčte sa či máte predpísaný rozmer pneumatík podľa osvedčenia o evidencii.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Zasklenie -->
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-900 mb-2">Zasklenie</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">Skontrolujte zasklenie vozidla – na prednom skle a na predných bočných sklách nesmú byť umiestnené tieniace fólie. Tieniaca fólia nesmie prekrývať zadné brzdové svetlo, tzv. tretie brzdové svetlo. Skontrolujte si či nie je prasknuté predné sklo – za narušený výhľad z miesta vodiča cez zónu čistenia stieračmi čelného skla sa považuje stav, ak sa v zóne bezprostredne pred vodičom nenachádza žiadne poškodenie alebo sa mimo zóny bezprostredne pred vodičom nachádzajú najviac 3 poškodenia akéhokoľvek typu veľkosti menšej ako 20 mm.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. Výfuk -->
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-900 mb-2">Výfuk</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">Presvedčte sa či nie je výfukové potrubie uvoľnené, netesné a či nevydáva nadmerný hluk.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 9. Identifikačné údaje -->
+        <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow duration-300 md:col-span-2">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-bold text-gray-900 mb-2">Identifikačné údaje</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">Skontrolujte si či sa zhodujú identifikačné údaje v dokladoch so skutočným stavom na vozidle (farba, výrobný štítok, VIN, EČV).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: CTA -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-5 text-center">
+      <a
+        href="/technicka-kontrola"
+        class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-semibold text-lg transition-colors duration-300 group"
+      >
+        Viac o technickej kontrole
+        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</MainLayout>

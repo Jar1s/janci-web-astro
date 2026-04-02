@@ -1,0 +1,659 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import Hero from '@/components/Hero.astro';
+import CTASection from '@/components/CTASection.astro';
+---
+
+<MainLayout
+  title="Technická kontrola | STK JP Control Pezinok"
+  description="Technická kontrola (TK) vozidiel v STK JP Control Pezinok. Pravidelná, zvláštna, administratívna a opakovaná TK pre všetky kategórie vozidiel."
+  canonical="/technicka-kontrola"
+>
+  <Header slot="header" currentPath="/technicka-kontrola" />
+
+  <Hero
+    title="Technická kontrola"
+    subtitle="Komplexná prehliadka a posúdenie technického stavu vášho vozidla"
+    ctaText="REZERVOVAŤ TERMÍN"
+    ctaHref="https://www.kontrolavozidiel.sk/rezervovat-cez-internet"
+  />
+
+  <!-- Čo je technická kontrola -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Čo je technická kontrola?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="space-y-5 text-slate-700 text-lg leading-relaxed max-w-4xl mx-auto">
+        <p>Technickou kontrolou (TK) je prehliadka a posúdenie technického stavu vozidla, systémov, komponentov alebo samostatných technických jednotiek v stanici technickej kontroly (STK). Technickou kontrolou sa tiež preveruje zhodnosť vozidla so schváleným typom, ak na vozidle bola zistená nezhoda. Pri technickej kontrole sa prostredníctvom celoštátneho informačného systému technických kontrol vykonáva zber údajov získaných za skutočných jazdných podmienok podľa osobitného predpisu.</p>
+        <p>Technická kontrola v STK sa vykonáva podľa jednotlivých druhov kontrol v rozsahu kontrolných úkonov ustanovených <a href="/legislativa" class="text-blue-600 hover:underline">zákonom č. 106/2018 Z. z.</a> o prevádzke vozidiel v cestnej premávke a o zmene a doplnení niektorých zákonov, vykonávacím právnym predpisom podľa § 136 ods. 3 písm. g) a podľa metodík vydaných typovým schvaľovacím orgánom.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Druhy technických kontrol -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Druhy technických kontrol</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Druhy technických kontrol, ktoré vykonávame:</p>
+      </div>
+      <div class="space-y-6 max-w-4xl mx-auto">
+        <!-- Pravidelná -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-xl font-bold text-blue-600 mb-3">Technická kontrola PRAVIDELNÁ</h3>
+          <p class="text-slate-700 leading-relaxed mb-3">Vykonáva sa v rozsahu kontrolných položiek určených metodickými pokynmi Ministerstva dopravy Slovenskej republiky, ktoré sa vzťahujú na kontrolované vozidlo s ohľadom na jeho:</p>
+          <ul class="list-disc list-inside text-slate-600 space-y-1 ml-4">
+            <li>kategóriu,</li>
+            <li>spôsob použitia alebo</li>
+            <li>konštrukčné riešenie.</li>
+          </ul>
+        </div>
+
+        <!-- Zvláštna -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-xl font-bold text-blue-600 mb-3">Technická kontrola ZVLÁŠTNA</h3>
+          <p class="text-slate-700 leading-relaxed mb-3">Vykonáva sa v úplnom alebo čiastočnom rozsahu technickej kontroly pravidelnej a podľa kontrolných položiek určených metodikou na vykonávanie technickej kontroly zvláštnej:</p>
+          <ul class="space-y-2 text-slate-600 ml-4">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>na žiadosť prevádzkovateľa alebo vodiča vozidla – v rozsahu ich ústnej požiadavky,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>ak tak uložil na to príslušný orgán verejnej alebo štátnej správy alebo iná inštitúcia s obdobnou právomocou – v rozsahu ich písomného rozhodnutia alebo obdobného dokumentu,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>v prípadoch ustanovených osobitnými predpismi, napr. § 17 alebo 29 § vyhlášky Ministerstva dopravy a výstavby Slovenskej republiky č. 131/2018 Z. z., ktorou sa ustanovujú podrobnosti v oblasti schvaľovania vozidiel – v rozsahu príslušných ustanovení predmetného osobitného predpisu,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>súčasťou je vykonanie kontrolných položiek týkajúcich sa identifikácie (tabuľky s evidenčným číslom, identifikačné číslo vozidla / podvozku / výrobné číslo, farba vozidla).</span></li>
+          </ul>
+        </div>
+
+        <!-- Administratívna -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-xl font-bold text-blue-600 mb-3">Technická kontrola ADMINISTRATÍVNA</h3>
+          <p class="text-slate-700 leading-relaxed">Vykonáva sa v čiastočnom rozsahu technickej kontroly pravidelnej a podľa kontrolných položiek určených metodikou na vykonávanie technickej kontroly administratívnej.</p>
+        </div>
+
+        <!-- Opakovaná -->
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-xl font-bold text-blue-600 mb-3">OPAKOVANÁ technická kontrola</h3>
+          <p class="text-slate-700 leading-relaxed">Vykonáva sa v čiastočnom rozsahu so zameraním na kontrolu odstránenia chýb zistených pri technickej kontrole uvedenej v predchádzajúcich bodoch, a to do 60 dní odo dňa vykonania pôvodnej technickej kontroly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kategórie vozidiel -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Kategórie vozidiel</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Kategórie vozidiel, pre ktoré vykonávame technické kontroly:</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
+        <div class="bg-blue-50 rounded-xl p-5 text-center border border-blue-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mx-auto mb-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M5 17h14M5 17a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2M5 17l-1 3h16l-1-3"/></svg>
+          <p class="text-slate-700 font-medium">osobné a úžitkové vozidlá</p>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-5 text-center border border-blue-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mx-auto mb-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          <p class="text-slate-700 font-medium">nákladné vozidlá všetkých kategórií</p>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-5 text-center border border-blue-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mx-auto mb-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="7" cy="20" r="2"/><circle cx="17" cy="20" r="2"/></svg>
+          <p class="text-slate-700 font-medium">traktory, autobusy a iné stavebné a poľnohospodárske stroje a vozidlá</p>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-5 text-center border border-blue-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mx-auto mb-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="18" r="3"/><path d="M12 15V4l4 3"/></svg>
+          <p class="text-slate-700 font-medium">motocykle všetkých kategórií</p>
+        </div>
+        <div class="bg-blue-50 rounded-xl p-5 text-center border border-blue-100">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mx-auto mb-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="18" height="10" rx="2"/><circle cx="8" cy="18" r="2"/><circle cx="16" cy="18" r="2"/><line x1="1" y1="11" x2="3" y2="11"/></svg>
+          <p class="text-slate-700 font-medium">prípojné vozidlá všetkých kategórií</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Čo odporúčame skontrolovať pred návštevou STK -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Čo odporúčame skontrolovať pred návštevou STK?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+
+      <h3 class="text-xl font-bold text-blue-600 mb-4 max-w-4xl mx-auto">Nezabudnite si skontrolovať povinnú výbavu vozidla:</h3>
+
+      <!-- Kategória M1 a N1 -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm mb-6 max-w-4xl mx-auto">
+        <h4 class="text-lg font-semibold text-slate-800 mb-3">Kategória vozidiel M1 a N1:</h4>
+        <ul class="space-y-2 text-slate-600">
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>autolekárnička – skontrolujte úplnosť a stav obsahu,</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>bezpečnostný reflexný odev (napr. vesta, overal, nohavice alebo pláštenka) – umiestňuje sa v dosahu zo sedadla vodiča vozidla,</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>homologizovaný prenosný výstražný trojuholník,</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>náhradné koleso (disk s pneumatikou) predpísaného druhu a rozmeru,</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>kľúč na matice alebo na skrutky kolies a príručný zdvihák,</span></li>
+        </ul>
+        <div class="mt-4 bg-blue-50 rounded-xl p-4 text-slate-600 text-sm">
+          <p class="font-semibold mb-2">Povinná výbava podľa odsekov d) a e) sa nevzťahuje na vozidlá, ktoré:</p>
+          <ul class="list-disc list-inside space-y-1 ml-2">
+            <li>majú vybavené všetky kolesá pneumatikami zvláštnej konštrukcie umožňujúcej dočasné použitie po defekte s indikáciou defektu v ktorejkoľvek z pneumatík,</li>
+            <li>sú vybavené prostriedkami na bezdemontážnu opravu poškodenej pneumatiky umožňujúcej dočasné použitie.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Kategória M2, M3, N2, N3, T, C, PS -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm mb-6 max-w-4xl mx-auto">
+        <h4 class="text-lg font-semibold text-slate-800 mb-3">Kategória vozidiel M2, M3, N2, N3, T, C, a PS:</h4>
+        <ul class="space-y-2 text-slate-600">
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>autolekárnička – skontrolujte úplnosť a stav obsahu, resp. dve autolekárničky (pre kategóriu vozidiel M2 a M3 s počtom nad 22 miest na sedenie okrem miesta pre vodiča),</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>bezpečnostný reflexný odev (napr. vesta, overal, nohavice alebo pláštenka) – umiestňuje sa v dosahu zo sedadla vodiča vozidla,</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>homologizovaný prenosný výstražný trojuholník,</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>náhradné koleso (disk s pneumatikou) predpísaného druhu a rozmeru – jazdná súprava zložená z ťahača a prípojného vozidla môže mať pri rovnakých rozmeroch pneumatík a pri rovnakom vyhotovení kolies jedno spoločné náhradné koleso, to sa nevzťahuje na pneumatiky pre núdzový dojazd, ak pri schválení nie je určené inak, náhradné koleso musí byť v držiaku počas prevádzky v cestnej premávke riadne pripevnené,</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>kľúč na matice alebo na skrutky kolies a príručný zdvihák,</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>jeden alebo viac hasiacich prístrojov, ktorých celková hmotnosť náplní je najmenej 6 kg (pre kategóriu M2 a M3 s počtom do 22 miest na sedenie okrem miesta pre vodiča), resp. 12 kg (pre kategóriu M2 a M3 s počtom nad 22 miest na sedenie okrem miesta pre vodiča),</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>jeden alebo viac hasiacich prístrojov, ktorých celková hmotnosť náplní je najmenej 6 kg (pre kategóriu N2, N3, T, C a PS okrem nosičov pracovných adaptérov odvodených od kategórie L7e),</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>jeden alebo viac hasiacich prístrojov, ktorých celková hmotnosť náplne je najmenej 1,3 kg (pre kategóriu M a N používané na zdravotnícku záchrannú službu, banskú záchrannú službu a poruchovú službu plynárenských zariadení),</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>snehové reťaze svojimi rozmermi určené aspoň pre jednu z hnacích náprav v čase od 15. novembra do 31. marca (pre kategóriu N3),</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>najmenej jeden zakladací klin, ktorý účinne zabezpečí vozidlo proti samovoľnému pohybu a je ľahko prístupný, bezpečný a spoľahlivo upevnený (motorové vozidlo s najväčšou technicky prípustnou celkovou hmotnosťou prevyšujúcou 3,5 t a prípojné vozidlo s najväčšou technicky prípustnou celkovou hmotnosťou prevyšujúcou 750 kg), resp. najmenej dva zakladacie kliny (motorové vozidlo a prípojné vozidlo s tromi a viacerými nápravami, jednonápravový príves s najväčšou technicky prípustnou celkovou hmotnosťou prevyšujúcou 750 kg a náves),</span></li>
+        </ul>
+        <div class="mt-4 bg-blue-50 rounded-xl p-4 text-slate-600 text-sm">
+          <p class="font-semibold mb-2">Povinná výbava podľa odsekov d) a e) sa nevzťahuje na:</p>
+          <ul class="list-disc list-inside space-y-1 ml-2">
+            <li>vozidlá, ktoré majú vybavené všetky kolesá pneumatikami zvláštnej konštrukcie umožňujúcej dočasné použitie po defekte s indikáciou defektu v ktorejkoľvek z pneumatík,</li>
+            <li>vozidlá, ktoré sú vybavené prostriedkami na bezdemontážnu opravu poškodenej pneumatiky umožňujúcej dočasné použitie, pri vozidlách kategórie M2, M3, N2 a N3 vybavenie prostriedkami na bezdemontážnu opravu môže byť nahradené zmluvným vzťahom, na základe ktorého je zabezpečená oprava poškodenej pneumatiky nepretržite na celom území Slovenskej republiky,</li>
+            <li>mestské autobusy, nákladné vozidlá špeciálne, špeciálne vozidlá, ktoré sú prevádzkované na obmedzenom území v operatívnom dosahu servisných služieb svojho prevádzkovateľa.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Kategória L3e, L4e, L5e, L7e -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm mb-6 max-w-4xl mx-auto">
+        <h4 class="text-lg font-semibold text-slate-800 mb-3">Kategória vozidiel L3e, L4e, L5e a L7e:</h4>
+        <ul class="space-y-2 text-slate-600">
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>motolekárnička – skontrolujte úplnosť a stav obsahu,</span></li>
+        </ul>
+      </div>
+
+      <!-- Kategória O2-Q4, RB2-RB4 -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm mb-8 max-w-4xl mx-auto">
+        <h4 class="text-lg font-semibold text-slate-800 mb-3">Kategória vozidiel O2 až Q4 a RB2 až RB4:</h4>
+        <ul class="space-y-2 text-slate-600">
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>náhradné koleso (disk s pneumatikou) predpísaného druhu a rozmeru – jazdná súprava zložená z ťahača a prípojného vozidla môže mať pri rovnakých rozmeroch pneumatík a pri rovnakom vyhotovení kolies jedno spoločné náhradné koleso – nevzťahuje sa na vozidlá s prostriedkami na bezdemontážnu opravu defektu a na prevádzkovateľov vozidiel, ktorí majú zmluvne zabezpečenú nepretržitú možnosť opravy poškodenej pneumatiky v SR,</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>jeden zakladací klin pri prípojnom vozidle s mc &gt; 750 kg, resp. najmenej dva zakladacie kliny pri prípojnom vozidle s troma a viacerými nápravami, jednonápravovom prívese s mc &gt; 750 kg a návese.</span></li>
+        </ul>
+      </div>
+
+      <!-- Ďalšie odporúčania -->
+      <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm max-w-4xl mx-auto">
+        <h4 class="text-lg font-semibold text-slate-800 mb-4">Ďalšie odporúčania pred návštevou STK:</h4>
+        <ul class="space-y-3 text-slate-600">
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>Preskúšajte funkčnosť ostrekovačov, stieračov a klaksónu.</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>Preverte si vonkajšie osvetlenie vozidla (obrysové, stretávacie a diaľkové svetlá, svetlá do hmly, smerové a spätné svetlá), signalizáciu porúch. Vyskúšajte funkčnosť znižovania sklonu predných svetlometov.</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>Skontrolujte či je motorový priestor suchý, či neunikajú prevádzkové kvapaliny.</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>Skontrolujte funkčnosť bŕzd, vrátane výšky zdvihu páky parkovacej brzdy.</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>Preverte si riadenie, či vozidlo reaguje plynulo na natočenie volantu a či sa volant po prejdení zákrutou vracia do východiskovej polohy.</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>Premerajte si dezén pneumatík (predpísaná hĺbka dezénu je minimálne 3 mm na letných a 1,6 mm na zimných pneumatikách), presvedčte sa či máte predpísaný rozmer pneumatík podľa osvedčenia o evidencii.</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>Skontrolujte zasklenie vozidla – na prednom skle a na predných bočných sklách nesmú byť umiestnené tieniace fólie. Tieniaca fólia nesmie prekrývať zadné brzdové svetlo, tzv. tretie brzdové svetlo. Skontrolujte si či nie je prasknuté predné sklo – za narušený výhľad z miesta vodiča cez zónu čistenia stieračmi čelného skla sa považuje stav, ak sa v zóne bezprostredne pred vodičom nenachádza žiadne poškodenie alebo sa mimo zóny bezprostredne pred vodičom nachádzajú najviac 3 poškodenia akéhokoľvek typu veľkosti menšej ako 20 mm.</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>Presvedčte sa či nie je výfukové potrubie uvoľnené, netesné a či nevydáva nadmerný hluk.</span></li>
+          <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>Skontrolujte si či sa zhodujú identifikačné údaje v dokladoch so skutočným stavom na vozidle (farba, výrobný štítok, VIN, EČV).</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Čo sa kontroluje pri technickej kontrole -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Čo sa kontroluje pri technickej kontrole?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Kontrola sa zameriava prinajmenšom na nasledujúce oblasti:</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <!-- Identifikácia vozidla -->
+        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-3">Identifikácia vozidla</h3>
+          <ul class="space-y-1 text-slate-600 text-sm">
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>tabuľky s evidenčným číslom – ak sa v požiadavkách vyžadujú,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>identifikačné číslo vozidla / podvozku / výrobné číslo,</span></li>
+          </ul>
+        </div>
+
+        <!-- Brzdové zariadenie -->
+        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-3">Brzdové zariadenie</h3>
+          <ul class="space-y-1 text-slate-600 text-sm">
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>mechanický stav a funkcia,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>pôsobenie a účinok prevádzkovej brzdy,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>pôsobenie a účinok núdzovej brzdy – ak ide o samostatný systém,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>pôsobenie a účinok parkovacej brzdy,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>činnosť systému odľahčovacej brzdy,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>protiblokovací brzdový systém (ABS),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>elektronický brzdový systém (EBS),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>brzdová kvapalina,</span></li>
+          </ul>
+        </div>
+
+        <!-- Riadenie -->
+        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-3">Riadenie</h3>
+          <ul class="space-y-1 text-slate-600 text-sm">
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>mechanický stav,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>volant, stĺpik riadenia, riadidlá,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>vôľa riadenia,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>geometria kolies (X),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>točnica riaditeľnej nápravy prívesu,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>elektronický posilňovač riadenia (EPS),</span></li>
+          </ul>
+        </div>
+
+        <!-- Výhľad -->
+        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-3">Výhľad</h3>
+          <ul class="space-y-1 text-slate-600 text-sm">
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>zorné pole,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>stav zasklenia,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>spätné zrkadlá alebo zariadenia,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>stierače čelného skla,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>ostrekovače čelného skla,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>systém na odhmlievanie (X),</span></li>
+          </ul>
+        </div>
+
+        <!-- Svietidlá -->
+        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 md:col-span-2">
+          <h3 class="text-lg font-bold text-blue-600 mb-3">Svietidlá, odrazové sklá a elektrické zariadenie</h3>
+          <ul class="space-y-1 text-slate-600 text-sm grid grid-cols-1 md:grid-cols-2 gap-x-6">
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>svetlomety,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>predné a zadné obrysové svietidlá, bočné obrysové svietidlá, doplnkové obrysové svietidlá a denné prevádzkové svetlá,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>brzdové svietidlá,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>smerové a výstražné svietidlá,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>predné hmlové svetlomety a zadné hmlové svietidlá,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>spätné svetlomety,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>svietidlo na osvetlenie zadnej tabuľky s evidenčným číslom,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>odrazové sklá, označenia na zvýšenie viditeľnosti a rozoznateľnosti a zadné tabuľky,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>povinné kontrolky osvetľovacieho zariadenia,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>elektrické spojenie medzi ťažným vozidlom a prívesom alebo návesom,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>elektrické vedenie,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>nepovinné svietidlá a odrazové sklá (X),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>akumulátor (batérie),</span></li>
+          </ul>
+        </div>
+
+        <!-- Nápravy, kolesá, pneumatiky -->
+        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-3">Nápravy, kolesá, pneumatiky a zavesenie nápravy</h3>
+          <ul class="space-y-1 text-slate-600 text-sm">
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>nápravy,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>kolesá a pneumatiky,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>systém zavesenia,</span></li>
+          </ul>
+        </div>
+
+        <!-- Podvozok -->
+        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-3">Podvozok a jeho príslušenstvo</h3>
+          <ul class="space-y-1 text-slate-600 text-sm">
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>podvozok alebo rám a príslušenstvo,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>kabína a karoséria,</span></li>
+          </ul>
+        </div>
+
+        <!-- Ostatné vybavenie -->
+        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-3">Ostatné vybavenie</h3>
+          <ul class="space-y-1 text-slate-600 text-sm">
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>bezpečnostné pásy/spony a zadržiavacie systémy,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>hasiaci prístroj (X),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>zámky a zariadenie proti neoprávnenému použitiu,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>výstražný trojuholník – ak sa vyžaduje (X),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>lekárnička – ak sa vyžaduje (X),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>zakladacie klíny – ak sa vyžadujú (X),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>výstražné zvukové zariadenie,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>rýchlomer,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>tachograf – ak je namontovaný/požadovaný,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>obmedzovač rýchlosti – ak je namontovaný/požadovaný,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>počítadlo celkovej prejdenej vzdialenosti – ak je k dispozícii (X),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>elektronická kontrola stability (ESC) – ak je namontovaná/požadovaná,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>eCall – ak je nainštalovaný v súlade s právnymi predpismi o typovom schválení EÚ,</span></li>
+          </ul>
+        </div>
+
+        <!-- Zaťaženie životného prostredia -->
+        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+          <h3 class="text-lg font-bold text-blue-600 mb-3">Zaťaženie životného prostredia</h3>
+          <ul class="space-y-1 text-slate-600 text-sm">
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>systém obmedzovania zvuku,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>rádiové rušenie (X),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>úniky kvapalín,</span></li>
+          </ul>
+        </div>
+
+        <!-- Doplňujúce skúšky M2, M3 -->
+        <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 md:col-span-2">
+          <h3 class="text-lg font-bold text-blue-600 mb-3">Doplňujúce skúšky pre vozidlá kategórií M2, M3 určené na prepravu osôb</h3>
+          <ul class="space-y-1 text-slate-600 text-sm grid grid-cols-1 md:grid-cols-2 gap-x-6">
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>dvere,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>systém na odhmlievanie a odmrazovanie skiel (X),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>systém vetrania a kúrenia (X),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>sedadlá,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>vnútorné osvetlenie a zariadenia na zobrazenie cieľa jazdy (smerové tabuľky) (X),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>uličky medzi sedadlami, plochy na státie,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>schody a stupienky,</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>komunikačný systém pre cestujúcich (X),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>upozornenia (X),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>požiadavky týkajúce sa prepravy detí (X),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>požiadavky týkajúce sa prepravy osôb so zdravotným postihnutím (X),</span></li>
+            <li class="flex gap-2 items-start"><span class="text-blue-600 shrink-0">&#8226;</span><span>iné špeciálne vybavenie (X).</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Aké doklady treba predložiť na TK -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké doklady treba predložiť na technickú kontrolu (TK)?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Prevádzkovateľ vozidla alebo vodič vozidla predkladá na vykonanie:</p>
+      </div>
+      <div class="space-y-6 max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">TK pravidelnej, TK zvláštnej a TK administratívnej:</h3>
+          <ul class="space-y-3 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklad vozidla (osvedčenie o evidencii časť I alebo časť II alebo technické osvedčenie vozidla pri vozidle, ktoré nepodlieha prihláseniu do evidencie vozidiel) alebo potvrdenie o zadržaní, ak ide o vozidlo, ktorému je doklad vozidla zadržaný, alebo výpis z karty vozidla vydaný orgánom Policajného zboru, ak je doklad vozidla stratený,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>protokol o montáži plynového zariadenia, ak ide o vozidlo s pohonom na skvapalnený ropný plyn (LPG) alebo s pohonom na zemný plyn (CNG), ak montáž plynového zariadenia je vykonaná v rámci prestavby vozidla,</span></li>
+            <li class="flex gap-3 items-start">
+              <span class="text-blue-600 mt-1 shrink-0">&#9679;</span>
+              <div>
+                <span>protokol o inšpekcii CNG, LNG nádrže:</span>
+                <ul class="list-disc list-inside ml-4 mt-2 space-y-1 text-sm">
+                  <li>nádrž na CNG podlieha inšpekcii, ak uplynuli 4 roky od prvej evidencie vozidla a potom periodicky v 4-ročných intervaloch,</li>
+                  <li>nádrž na LNG podlieha inšpekcii, ak uplynul rok od prvej evidencie vozidla a potom periodicky v ročných intervaloch,</li>
+                </ul>
+              </div>
+            </li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>základný technický opis vozidla vydaný schvaľovacím orgánom, ak ide o technickú kontrolu administratívnu jednotlivo dovezeného vozidla, ktoré má byť podrobené takej kontrole v lehote do 15 dní od prihlásenia vozidla do evidencie vozidiel a prevádzkovateľ pri schvaľovaní jednotlivo dovezeného vozidla predložil doklad o vykonaní TK pravidelnej v členskom štáte alebo zmluvnom štáte,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>písomný doklad o vykonaní opravy vozidla vydaný autorizovanou opravovňou alebo nezávislou opravovňou, ak ide o vozidlo kategórie M1 a N1 po dopravnej nehode alebo škodovej udalosti, ktorá mala vplyv na hlavné bezpečnostné prvky vozidla, ktorými sú zavesenie kolies, deformačné zóny, systémy airbagov, riadenie alebo brzdy (platí pre vozidlá s dátumom prvej evidencie po 01.01.2005),</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>potvrdenie o vykonanej dezinfekcii vozidla, ak ide o vozidlo záchrannej služby určeného na prepravu infekčných materiálov alebo pacientov s infekčnými chorobami, vozidlo určeného na prepravu uhynutých zvierat a vozidlo pohrebnej služby.</span></li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <h3 class="text-lg font-bold text-blue-600 mb-4">Opakovanej TK:</h3>
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>doklady pre príslušný druh technickej kontroly (už spomenuté v odseku a)).</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kedy ísť na TK - Lehoty -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Kedy ísť na technickú kontrolu (TK)?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-3xl mx-auto">Lehoty technických kontrol určuje vyhláška Ministerstva dopravy a výstavby Slovenskej republiky č. 137/2018 Z. z., ktorou sa ustanovujú podrobnosti v oblasti technickej kontroly.</p>
+      </div>
+      <div class="overflow-x-auto max-w-4xl mx-auto">
+        <table class="w-full border-collapse bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200">
+          <thead>
+            <tr class="bg-blue-600 text-white">
+              <th class="px-4 py-3 text-left font-semibold border-r border-blue-500">Druh / kategória vozidla</th>
+              <th class="px-4 py-3 text-left font-semibold">Lehoty TK</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200">
+            <tr class="bg-white">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">L3e, L4e, L5e, L6e, L7e – motocykle, trojkolky, štvorkolky<br>O2, R2 – prípojné vozidlá<br>Ta, R3a, R4a – traktory a prípojné vozidlá za traktor</td>
+              <td class="px-4 py-3 text-slate-700">
+                <span class="font-bold text-blue-600">4 – 4 – 4 ...</span><br>
+                <span class="text-sm text-slate-500">(prvá TK do 4 rokov po prvom prihlásení do evidencie a potom periodicky každé 4 roky)</span>
+              </td>
+            </tr>
+            <tr class="bg-slate-50">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">M1, N1 – osobné a nákladné vozidlá<br>Tb, R3b, R4b – traktory a prípojné vozidlá za traktor</td>
+              <td class="px-4 py-3 text-slate-700">
+                <span class="font-bold text-blue-600">4 – 2 – 2 ...</span><br>
+                <span class="text-sm text-slate-500">(prvá TK do 4 rokov po prvom prihlásení do evidencie a potom periodicky každé 2 roky)</span>
+              </td>
+            </tr>
+            <tr class="bg-white">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">
+                M2, N2, N3 – vozidlá na prepravu cestujúcich a prepravu tovaru<br>
+                M3 do 8 rokov od prvého prihlásenia do evidencie – vozidlá na prepravu cestujúcich<br>
+                O3, O4 – prípojné vozidlá<br>
+                vozidlá používané na taxislužbu<br>
+                L3e, M1, N1, T – používané v autoškole ako výcvikové vozidlo<br>
+                M, N – používané na zdravotnícku záchrannú službu, na banskú záchrannú službu, ako sanitné vozidlá, na poruchovú službu plynárenských zariadení, ak ide o vozidlá s právom prednostnej jazdy
+              </td>
+              <td class="px-4 py-3 text-slate-700">
+                <span class="font-bold text-blue-600">1 – 1 – 1 ...</span><br>
+                <span class="text-sm text-slate-500">(prvá TK do 1 roka po prvom prihlásení do evidencie a potom periodicky každý 1 rok)</span>
+              </td>
+            </tr>
+            <tr class="bg-slate-50">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">M3 po 8 rokoch od prvého prihlásenia do evidencie – vozidlá na prepravu cestujúcich</td>
+              <td class="px-4 py-3 text-slate-700">
+                <span class="font-bold text-blue-600">6 mesiacov – 6 mesiacov ...</span><br>
+                <span class="text-sm text-slate-500">(periodicky v polročných lehotách)</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Prvé prihlásenie -->
+      <div class="mt-8 space-y-4 max-w-4xl mx-auto">
+        <h3 class="text-lg font-bold text-blue-600">Prvé prihlásenie vozidla do evidencie?</h3>
+        <div class="bg-blue-50 rounded-2xl p-6 border border-blue-100 text-slate-600 space-y-3">
+          <p>Ak sa dátum prvého prihlásenia vozidla do evidencie nedá zistiť, ale známy je rok výroby vozidla, za prvé prihlásenie vozidla do evidencie sa považuje prvý deň roku výroby vozidla.</p>
+          <p>Ak sa rok prvého prihlásenia vozidla do evidencie uvedený v osvedčení o evidencii časti I a v osvedčení o evidencii časti II nezhoduje s rokom výroby vozidla, pričom medzi rokom výroby vozidla a rokom prvého prihlásenia vozidla do evidencie je rozdiel väčší ako 12 mesiacov, za prvé prihlásenie vozidla do evidencie sa považuje prvý deň roku výroby vozidla.</p>
+          <p>Ak rok výroby vozidla nie je známy, považuje sa zaň modelový rok vozidla.</p>
+        </div>
+      </div>
+
+      <!-- Kedy končí lehota -->
+      <div class="mt-8 space-y-4 max-w-4xl mx-auto">
+        <h3 class="text-lg font-bold text-blue-600">Kedy končí lehota platnosti technickej kontroly (TK) pravidelnej?</h3>
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <ul class="space-y-2 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>uplynutím lehoty platnosti,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>vykonaním novej TK pravidelnej,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>vykonaním novej TK administratívnej.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Povinnosti prevádzkovateľa -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké sú povinnosti prevádzkovateľa vozidla pri technickej kontrole (TK)?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto">
+        <p class="text-slate-600 mb-4">Prevádzkovateľ alebo vodič vozidla je povinný:</p>
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <ul class="space-y-3 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pred začatím TK predložiť doklady v rozsahu ustanovenom vykonávacím právnym predpisom podľa § 136 ods. 3 písm. g).</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pristaviť na TK vozidlo čisté, s povinnou výbavou a vozidlá určitých kategórií aj zaťažené v miere ustanovenej vykonávacím právnym predpisom podľa § 136 ods. 3 písm. g).</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>pristaviť na TK vozidlo vydezinfikované, ak sa jedná o vozidlo záchrannej služby určené na prepravu infekčných materiálov alebo pacientov s infekčnými chorobami, vozidlo určené na prepravu uhynutých zvierat a pohrebné vozidlo, pričom dezinfekcia je vykonaná pred vykonaním TK.</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>byť prítomný pri TK, na kontrolnej linke vedie vozidlo technik TK alebo na jeho pokyn prevádzkovateľ vozidla alebo vodič vozidla; rovnako to platí, aj ak niektorý z kontrolných úkonov je potrebné vykonať mimo kontrolnej linky alebo ak ide o TK jednotlivého vozidla s obmedzenou prevádzkou podľa § 26 ods. 3, ktorú je možné vykonať aj mimo priestorov STK.</span></li>
+          </ul>
+          <div class="mt-4 bg-amber-50 rounded-xl p-4 border border-amber-200">
+            <p class="text-slate-700 font-semibold">Bez predloženia ustanovených dokladov a bez pristaveného vozidla nesmie technik technickej kontroly vykonať technickú kontrolu.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hodnotenie technického stavu -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Ako prebieha hodnotenie technického stavu vozidla pri technickej kontrole (TK)?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto space-y-6">
+        <p class="text-slate-600 leading-relaxed">Každá kontrolovaná oblasť v rámci technickej kontroly obsahuje jednu alebo viacero kontrolných položiek. Každá kontrolná oblasť obsahuje zoznam možných chýb a úroveň ich závažnosti. Pri technickej kontrole sa technický stav vozidla alebo funkcia a činnosti jednotlivých systémov, komponentov alebo samostatných technických jednotiek hodnotia chybami, ktoré patria do týchto skupín chýb:</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Spôsobilé -->
+          <div class="bg-green-50 rounded-2xl p-6 border border-green-200">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              </div>
+              <h3 class="text-lg font-bold text-green-700">SPÔSOBILÉ</h3>
+            </div>
+            <p class="text-slate-600 text-sm leading-relaxed"><strong>Ľahké chyby</strong> – nemajú výrazný vplyv na bezpečnosť vozidla ani na životné prostredie, ako aj iné menej významné prípady nezhody, vozidlo je SPÔSOBILÉ na prevádzku v cestnej premávke – prevádzkovateľ vozidla je povinný ich odstrániť.</p>
+          </div>
+
+          <!-- Dočasne spôsobilé -->
+          <div class="bg-amber-50 rounded-2xl p-6 border border-amber-200">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"/></svg>
+              </div>
+              <h3 class="text-lg font-bold text-amber-700">DOČASNE SPÔSOBILÉ</h3>
+            </div>
+            <p class="text-slate-600 text-sm leading-relaxed"><strong>Vážne chyby</strong> – môžu ovplyvniť bezpečnosť vozidla alebo životné prostredie, alebo ohroziť iných účastníkov cestnej premávky, ako aj iné významnejšie prípady nezhody, vozidlo je DOČASNE SPÔSOBILÉ na prevádzku v cestnej premávke – prevádzkovateľ vozidla je povinný do 60 kalendárnych dní podrobiť vozidlo opakovanej TK. Ak sa opakovanou technickou kontrolou opätovne zistí tá istá vážna chyba, vozidlo je technicky nespôsobilé na prevádzku v cestnej premávke. Ak prevádzkovateľ vozidla nepodrobí vozidlo v ustanovenej lehote opakovanej TK, vozidlo je technicky nespôsobilé na prevádzku v cestnej premávke.</p>
+          </div>
+
+          <!-- Nespôsobilé -->
+          <div class="bg-red-50 rounded-2xl p-6 border border-red-200">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              </div>
+              <h3 class="text-lg font-bold text-red-700">NESPÔSOBILÉ</h3>
+            </div>
+            <p class="text-slate-600 text-sm leading-relaxed"><strong>Nebezpečné chyby</strong> – predstavujú priame a bezprostredné riziko pre bezpečnosť cestnej premávky alebo majú vplyv na životné prostredie a je potrebné zakázať používanie vozidla v cestnej premávke, vozidlo je NESPÔSOBILÉ na prevádzku v cestnej premávke.</p>
+          </div>
+        </div>
+
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200 space-y-3 text-slate-600 text-sm">
+          <p>Vozidlo, na ktorom sa zistia chyby patriace do viac než jednej skupiny chýb, sa vyhodnotí podľa chyby, ktorá zodpovedá najzávažnejšej chybe. Vozidlo vykazujúce viacero chýb v rámci rovnakej oblasti kontroly podľa vymedzenia rozsahu kontroly možno zaradiť do najbližšej skupiny závažnejších chýb, ak možno preukázať, že kombinovaný účinok týchto chýb vyúsťuje do vyššieho stupňa ohrozenia bezpečnosti cestnej premávky.</p>
+          <p>Technický stav vozidla sa pri TK nevyhodnotí, ak nemožno vykonať všetky predpísané kontrolné položky z dôvodu poruchy niektorého predpísaného zariadenia z technologického vybavenia STK a táto situácia nebola spôsobená chybou vozidla alebo konaním vodiča vozidla.</p>
+          <p class="font-semibold text-slate-700">Ak sa pri technickej kontrole zistia nebezpečné chyby a vozidlo je hodnotené ako „NESPÔSOBILÉ na prevádzku v cestnej premávke", prevádzka vozidla sa pozastaví - prevádzkovateľ vozidla alebo vodič vozidla je povinný na vlastné náklady zabezpečiť odtiahnutie vozidla zo stanice technickej kontroly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prípady nevykonania TK -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké sú prípady nevykonania technickej kontroly?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto">
+        <p class="text-slate-600 mb-4">Technická kontrola sa nevykoná, ak:</p>
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
+          <ul class="space-y-3 text-slate-600">
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>nemožno naštartovať motor vozidla,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>vozidlo má zjavne neúplné výfukové potrubie,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>je zistený zjavný únik prevádzkových médií,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>vozidlo má poruchu na plynovom zariadení,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>niektorá súčasť technologického vybavenia STK chýba, nefunguje alebo neplní predpísané podmienky,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>nie sú splnené požiadavky na prevádzku všetkých zariadení tvoriacich technologické vybavenie STK určené výrobcom, najmä teplota a vlhkosť,</span></li>
+            <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>prevádzkovateľ vozidla pred technickou kontrolou nepredloží ustanovené doklady.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Doklady po vykonaní TK -->
+  <section class="py-16 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké doklady dostanem po vykonaní technickej kontroly?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="overflow-x-auto max-w-4xl mx-auto">
+        <table class="w-full border-collapse bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200">
+          <thead>
+            <tr class="bg-blue-600 text-white">
+              <th class="px-4 py-3 text-left font-semibold border-r border-blue-500">Evidencia vozidiel v SR</th>
+              <th class="px-4 py-3 text-left font-semibold border-r border-blue-500">Druh technickej kontroly</th>
+              <th class="px-4 py-3 text-left font-semibold">Doklad o vykonaní technickej kontroly</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-200">
+            <tr class="bg-white">
+              <td class="px-4 py-3 text-slate-700 font-semibold border-r border-slate-200" rowspan="3">prihlásené vozidlo</td>
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">TK pravidelná</td>
+              <td class="px-4 py-3 text-slate-700" rowspan="3">
+                Vyznačený protokol o kontrole technického stavu časť A – technická kontrola,<br>
+                Vyznačené osvedčenie o kontrole technického stavu časť A – technická kontrola
+              </td>
+            </tr>
+            <tr class="bg-slate-50">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">TK administratívna</td>
+            </tr>
+            <tr class="bg-white">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">TK opakovaná</td>
+            </tr>
+            <tr class="bg-slate-50">
+              <td class="px-4 py-3 text-slate-700 font-semibold border-r border-slate-200" rowspan="3">neprihlásené vozidlo</td>
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">TK pravidelná</td>
+              <td class="px-4 py-3 text-slate-700" rowspan="3">
+                Vyznačený protokol o kontrole technického stavu časť A – technická kontrola
+              </td>
+            </tr>
+            <tr class="bg-white">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">TK opakovaná</td>
+            </tr>
+            <tr class="bg-slate-50">
+              <td class="px-4 py-3 text-slate-700 border-r border-slate-200">TK zvláštna</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="mt-6 text-slate-600 text-sm max-w-4xl mx-auto">Protokol o vykonanej technickej kontrole sa na stanici technickej kontroly uchováva štyri roky od vydania protokolu.</p>
+    </div>
+  </section>
+
+  <!-- Preukazovanie platnosti TK -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-blue-600 mb-4">Ako sa preukazuje platnosť technickej kontroly?</h2>
+        <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
+      </div>
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4 text-slate-600">
+          <p>Vyznačeným osvedčením o kontrole technického stavu časť A – technická kontrola preukazuje vodič vozidla kontrolným orgánom vykonávajúcim dohľad nad bezpečnosťou a plynulosťou cestnej premávky splnenie povinnosti podrobiť vozidlo technickej kontrole pravidelnej alebo administratívnej v lehotách, spôsobom a v rozsahu ustanovenými vykonávacím právnym predpisom.</p>
+          <p>Ak ide o vozidlo evidované v inom štáte ako v Slovenskej republike, dokladmi o vykonaní technickej kontroly sú rovnocenné doklady vydané v tomto štáte.</p>
+          <p>Prevod držby vozidla alebo zmena vlastníctva vozidla nemá vplyv na platnosť dokladov o vykonaní technickej kontroly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Legislatíva link -->
+  <section class="py-10 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-5 text-center">
+      <p class="text-slate-600">Kompletný prehľad zákonov nájdete na stránke <a href="/legislativa" class="text-blue-600 font-semibold hover:underline">Platná legislatíva</a>.</p>
+    </div>
+  </section>
+
+  <CTASection
+    title="Potrebujete technickú kontrolu?"
+    subtitle="Objednajte sa online a vyhnite sa čakaniu. Sme tu pre vás každý pracovný deň."
+  />
+
+  <Footer slot="footer" />
+</MainLayout>

@@ -1,0 +1,218 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import Hero from '@/components/Hero.astro';
+---
+
+<MainLayout
+  title="O nás | STK JP Control Pezinok"
+  description="Spoznajte náš tím. JP Control s.r.o. - technické kontroly, emisné kontroly a kontroly originality v Pezinku."
+  canonical="/o-nas"
+>
+  <Header slot="header" currentPath="/o-nas" />
+
+  <Hero
+    title="JP Control s.r.o."
+    subtitle="Spoznajte náš tím profesionálov"
+    ctaText="KONTAKTOVAŤ NÁS"
+    ctaHref="/kontakt"
+  />
+
+  <!-- O spoločnosti -->
+  <section class="py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-5">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold text-primary mb-4">O spoločnosti</h2>
+        <div class="w-16 h-1 bg-primary rounded mb-10 mx-auto"></div>
+      </div>
+      <div class="space-y-5 text-gray-700 text-lg leading-relaxed max-w-3xl mx-auto">
+        <p>Spoločnosť JP Control s.r.o. je mladá dynamická spoločnosť, pôsobiaca v oblasti služieb spojených s registráciou vozidiel, kontrolami originality, emisnými kontrolami a technickými kontrolami vozidiel.</p>
+        <p>Pracujeme s moderným technologickým vybavením, ktoré sa s našimi bohatými skúsenosťami a odbornými znalosťami podpisuje pod dôslednú kontrolu.</p>
+        <p>V záujme dosahovania a zachovania vysokého kvalitatívneho štandardu má spoločnosť JP Control s.r.o. zavedený systém manažérstva kvality v zmysle požiadaviek normy ISO 9001:2015 a normy ISO 37001:2016.</p>
+        <p class="font-semibold">Garantujeme spoľahlivosť, zodpovednosť, flexibilitu a precíznosť.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifikáty -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-5">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl font-bold text-primary mb-4">Certifikáty</h2>
+        <div class="w-16 h-1 bg-primary rounded mx-auto mb-6"></div>
+        <p class="text-slate-600 max-w-2xl mx-auto">Naše pracovisko je certifikované podľa medzinárodných noriem kvality a protikorupčného správania.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-sm p-8 border border-slate-100 hover:shadow-md transition-shadow duration-300 text-center group">
+          <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5 group-hover:bg-primary/20 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-primary" aria-hidden="true"><circle cx="12" cy="8" r="6"></circle><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"></path></svg>
+          </div>
+          <h3 class="text-lg font-bold text-primary mb-2">ISO 9001:2015</h3>
+          <p class="text-slate-600 text-sm">Systém manažérstva kvality</p>
+          <div class="mt-4 pt-4 border-t border-slate-100">
+            <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              Certifikované
+            </span>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl shadow-sm p-8 border border-slate-100 hover:shadow-md transition-shadow duration-300 text-center group">
+          <div class="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5 group-hover:bg-primary/20 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-primary" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 12 15 16 10"></polyline></svg>
+          </div>
+          <h3 class="text-lg font-bold text-primary mb-2">ISO 37001:2016</h3>
+          <p class="text-slate-600 text-sm">Systém manažérstva proti korupcii</p>
+          <div class="mt-4 pt-4 border-t border-slate-100">
+            <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-primary bg-primary/10 px-3 py-1 rounded-full">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              Certifikované
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Náš tím -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-5">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl font-bold text-primary mb-4">Náš tím</h2>
+        <div class="w-16 h-1 bg-primary rounded mb-10 mx-auto"></div>
+      </div>
+
+      <!-- ADMINISTRATÍVA -->
+      <div class="mb-16">
+        <h3 class="text-xl font-bold text-primary uppercase tracking-wider text-center mb-8 pb-3 border-b-2 border-primary/20">Administratíva</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+          <div class="team-card">
+            <div class="team-card__photo team-card__placeholder"><span>AH</span></div>
+            <h4 class="team-card__name">Andrea Hrnčírová</h4>
+          </div>
+          <div class="team-card">
+            <div class="team-card__photo"><img src="/team/sona-machova.jpg" alt="Soňa Machová" loading="lazy" /></div>
+            <h4 class="team-card__name">Soňa Machová</h4>
+          </div>
+          <div class="team-card">
+            <div class="team-card__photo"><img src="/team/liudmyla-luchkiv.jpg" alt="Liudmyla Luchkiv" loading="lazy" /></div>
+            <h4 class="team-card__name">Liudmyla Luchkiv</h4>
+          </div>
+          <div class="team-card">
+            <div class="team-card__photo"><img src="/team/ivana-burdanova.jpg" alt="Ivana Burdanová" loading="lazy" /></div>
+            <h4 class="team-card__name">Ivana Burdanová</h4>
+          </div>
+        </div>
+      </div>
+
+      <!-- TECHNICI -->
+      <div class="mb-16">
+        <h3 class="text-xl font-bold text-primary uppercase tracking-wider text-center mb-8 pb-3 border-b-2 border-primary/20">Technici</h3>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+          <div class="team-card">
+            <div class="team-card__photo"><img src="/team/darina-krockova.jpg" alt="Darina Kročková" loading="lazy" /></div>
+            <h4 class="team-card__name">Darina Kročková</h4>
+            <p class="team-card__role">Technická kontrola</p>
+          </div>
+          <div class="team-card">
+            <div class="team-card__photo"><img src="/team/jozef-jakubik.jpg" alt="Jozef Jakubík" loading="lazy" /></div>
+            <h4 class="team-card__name">Jozef Jakubík</h4>
+            <p class="team-card__role">(vedúci)<br/>Technická kontrola, kontrola originality</p>
+          </div>
+          <div class="team-card">
+            <div class="team-card__photo"><img src="/team/patrik-bohunicky.jpg" alt="Patrik Bohunický" loading="lazy" /></div>
+            <h4 class="team-card__name">Patrik Bohunický</h4>
+            <p class="team-card__role">Technická a emisná kontrola</p>
+          </div>
+          <div class="team-card">
+            <div class="team-card__photo"><img src="/team/andrea-radicova.jpg" alt="Andrea Radičová" loading="lazy" /></div>
+            <h4 class="team-card__name">Andrea Radičová</h4>
+            <p class="team-card__role">Technická a emisná kontrola, kontrola originality</p>
+          </div>
+          <div class="team-card">
+            <div class="team-card__photo"><img src="/team/jakub-kucera.jpg" alt="Jakub Kučera" loading="lazy" /></div>
+            <h4 class="team-card__name">Jakub Kučera</h4>
+            <p class="team-card__role">Technická a emisná kontrola</p>
+          </div>
+          <div class="team-card">
+            <div class="team-card__photo"><img src="/team/igor-chochula.jpg" alt="Igor Chochula" loading="lazy" /></div>
+            <h4 class="team-card__name">Igor Chochula</h4>
+            <p class="team-card__role">Technická a emisná kontrola</p>
+          </div>
+          <div class="team-card">
+            <div class="team-card__photo"><img src="/team/lukas-cermak.jpg" alt="Lukáš Čermák" loading="lazy" /></div>
+            <h4 class="team-card__name">Lukáš Čermák</h4>
+            <p class="team-card__role">Technická a emisná kontrola, kontrola originality</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ODŤAHOVÁ SLUŽBA -->
+      <div>
+        <h3 class="text-xl font-bold text-primary uppercase tracking-wider text-center mb-8 pb-3 border-b-2 border-primary/20">Odťahová služba</h3>
+        <div class="flex justify-center">
+          <div class="team-card" style="max-width: 220px;">
+            <div class="team-card__photo"><img src="/team/karol-hipik.jpg" alt="Karol Hipík" loading="lazy" /></div>
+            <h4 class="team-card__name">Karol Hipík</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</MainLayout>
+
+<style>
+  .team-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0,102,204,0.15);
+  }
+  .team-card__photo {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background: #e6f2ff;
+  }
+  .team-card__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .team-card__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0066cc, #004d99);
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+  .team-card__name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0;
+    padding: 0.75rem 0.75rem 0.25rem;
+  }
+  .team-card__role {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin: 0;
+    padding: 0 0.75rem 0.75rem;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 480px) {
+    .team-card__photo { height: 160px; }
+    .team-card__name { font-size: 0.85rem; }
+  }
+</style>

@@ -1,0 +1,328 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import Hero from '@/components/Hero.astro';
+---
+
+<MainLayout
+  title="Kontakt | STK JP Control Pezinok"
+  description="Kontaktujte nás – STK JP Control Pezinok. Telefón 0948 888 088 (NONSTOP), Šenkvická cesta 14/F, 902 01 Pezinok. Technická kontrola, emisná kontrola, kontrola originality."
+  canonical="/kontakt"
+>
+  <Header slot="header" currentPath="/kontakt" />
+
+  <Hero
+    title="Kontaktujte nás"
+    description="Sme tu pre vás. Zavolajte nám alebo nás navštívte osobne."
+    ctaText="Zavolať teraz"
+    ctaHref="tel:+421948888088"
+    secondaryText="Rezervovať termín"
+    secondaryHref="https://www.kontrolavozidiel.sk/rezervovat-cez-internet"
+  />
+
+  <!-- Pracoviská -->
+  <section class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-5">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl font-bold text-primary mb-4">Naše pracoviská</h2>
+        <div class="w-16 h-1 bg-primary rounded mx-auto mb-6"></div>
+        <p class="text-slate-600 max-w-2xl mx-auto">Obe pracoviská sa nachádzajú na jednom mieste – Šenkvická cesta 14/F v Pezinku.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- CARD 1: Pracovisko TK a EK -->
+        <div class="bg-white rounded-2xl shadow-sm p-8 border border-slate-100 hover:shadow-md transition-shadow duration-300">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary" aria-hidden="true">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-primary">Pracovisko technickej a emisnej kontroly</h3>
+          </div>
+
+          <div class="space-y-4">
+            <!-- Company -->
+            <div class="flex gap-3 items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary shrink-0 mt-0.5" aria-hidden="true">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
+              <div>
+                <span class="text-sm text-slate-500">Spoločnosť</span>
+                <p class="font-semibold text-primary">JP Control s.r.o.</p>
+              </div>
+            </div>
+
+            <!-- Address -->
+            <div class="flex gap-3 items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary shrink-0 mt-0.5" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <div>
+                <span class="text-sm text-slate-500">Adresa</span>
+                <p class="text-slate-700">Šenkvická cesta 14/F, 902 01 Pezinok</p>
+              </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="flex gap-3 items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary shrink-0 mt-0.5" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <div>
+                <span class="text-sm text-slate-500">Telefón</span>
+                <p><a href="tel:+421948888088" class="text-primary font-semibold hover:text-primary-hover transition-colors">0948 888 088</a> <span class="text-xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full ml-1">NONSTOP</span></p>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="flex gap-3 items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary shrink-0 mt-0.5" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <div>
+                <span class="text-sm text-slate-500">E-mail</span>
+                <p><a href="mailto:stk@kontrolavozidiel.sk" class="text-primary hover:text-primary-hover transition-colors">stk@kontrolavozidiel.sk</a></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Business info -->
+          <div class="mt-6 pt-6 border-t border-slate-100">
+            <h4 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Obchodné údaje</h4>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+              <div>
+                <span class="text-slate-500">IČO:</span>
+                <span class="text-slate-700 font-medium ml-1">45 464 162</span>
+              </div>
+              <div>
+                <span class="text-slate-500">DIČ:</span>
+                <span class="text-slate-700 font-medium ml-1">2023210079</span>
+              </div>
+              <div class="col-span-2">
+                <span class="text-slate-500">IČ DPH:</span>
+                <span class="text-slate-700 font-medium ml-1">SK2023210079</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 mt-3 leading-relaxed">
+              Spoločnosť je zapísaná v Obchodnom registri Mestského súdu Bratislava III, oddiel: Sro, vložka číslo: 64139/B.
+            </p>
+          </div>
+        </div>
+
+        <!-- CARD 2: Pracovisko KO -->
+        <div class="bg-white rounded-2xl shadow-sm p-8 border border-slate-100 hover:shadow-md transition-shadow duration-300">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary" aria-hidden="true">
+                <path d="M9 11l3 3L22 4"></path>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+              </svg>
+            </div>
+            <h3 class="text-xl font-bold text-primary">Pracovisko kontroly originality</h3>
+          </div>
+
+          <div class="space-y-4">
+            <!-- Company -->
+            <div class="flex gap-3 items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary shrink-0 mt-0.5" aria-hidden="true">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
+              <div>
+                <span class="text-sm text-slate-500">Spoločnosť</span>
+                <p class="font-semibold text-primary">AUTOMARKT, s.r.o.</p>
+              </div>
+            </div>
+
+            <!-- Registered Address -->
+            <div class="flex gap-3 items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary shrink-0 mt-0.5" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <div>
+                <span class="text-sm text-slate-500">Sídlo spoločnosti</span>
+                <p class="text-slate-700">Tehelná 4, 902 01 Pezinok</p>
+              </div>
+            </div>
+
+            <!-- Operations Address -->
+            <div class="flex gap-3 items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary shrink-0 mt-0.5" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <div>
+                <span class="text-sm text-slate-500">Prevádzka</span>
+                <p class="text-slate-700">Šenkvická cesta 14/F, 902 01 Pezinok</p>
+              </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="flex gap-3 items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary shrink-0 mt-0.5" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <div>
+                <span class="text-sm text-slate-500">Telefón</span>
+                <p><a href="tel:+421948888088" class="text-primary font-semibold hover:text-primary-hover transition-colors">0948 888 088</a> <span class="text-xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full ml-1">NONSTOP</span></p>
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="flex gap-3 items-start">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary shrink-0 mt-0.5" aria-hidden="true">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <div>
+                <span class="text-sm text-slate-500">E-mail</span>
+                <p><a href="mailto:automarkt1129@gmail.com" class="text-primary hover:text-primary-hover transition-colors">automarkt1129@gmail.com</a></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Business info -->
+          <div class="mt-6 pt-6 border-t border-slate-100">
+            <h4 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Obchodné údaje</h4>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+              <div>
+                <span class="text-slate-500">IČO:</span>
+                <span class="text-slate-700 font-medium ml-1">36 284 041</span>
+              </div>
+              <div>
+                <span class="text-slate-500">DIČ:</span>
+                <span class="text-slate-700 font-medium ml-1">2022144971</span>
+              </div>
+              <div class="col-span-2">
+                <span class="text-slate-500">IČ DPH:</span>
+                <span class="text-slate-700 font-medium ml-1">SK2022144971</span>
+              </div>
+            </div>
+            <p class="text-xs text-slate-400 mt-3 leading-relaxed">
+              Spoločnosť je zapísaná v Obchodnom registri Mestského súdu Bratislava III, oddiel: Sro, vložka číslo: 39691/B.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Otváracie hodiny -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-5">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl font-bold text-primary mb-4">Otváracie hodiny</h2>
+        <div class="w-16 h-1 bg-primary rounded mx-auto mb-6"></div>
+        <p class="text-slate-600 max-w-2xl mx-auto">Navštívte nás počas pracovných dní. V pondelok máme predĺžené otváracie hodiny.</p>
+      </div>
+
+      <div class="max-w-xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+          <!-- Header -->
+          <div class="bg-primary px-8 py-5 flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <h3 class="text-lg font-bold text-white">Otváracie hodiny</h3>
+          </div>
+
+          <!-- Days -->
+          <div class="divide-y divide-slate-100">
+            <div class="flex justify-between items-center px-8 py-4 hover:bg-slate-50 transition-colors">
+              <span class="font-medium text-primary">Pondelok</span>
+              <span class="text-primary font-semibold bg-primary/10 px-3 py-1 rounded-full text-sm">06:00 – 19:00</span>
+            </div>
+            <div class="flex justify-between items-center px-8 py-4 hover:bg-slate-50 transition-colors">
+              <span class="font-medium text-primary">Utorok</span>
+              <span class="text-slate-700 font-medium text-sm">06:00 – 16:00</span>
+            </div>
+            <div class="flex justify-between items-center px-8 py-4 hover:bg-slate-50 transition-colors">
+              <span class="font-medium text-primary">Streda</span>
+              <span class="text-slate-700 font-medium text-sm">06:00 – 16:00</span>
+            </div>
+            <div class="flex justify-between items-center px-8 py-4 hover:bg-slate-50 transition-colors">
+              <span class="font-medium text-primary">Štvrtok</span>
+              <span class="text-slate-700 font-medium text-sm">06:00 – 16:00</span>
+            </div>
+            <div class="flex justify-between items-center px-8 py-4 hover:bg-slate-50 transition-colors">
+              <span class="font-medium text-primary">Piatok</span>
+              <span class="text-slate-700 font-medium text-sm">06:00 – 16:00</span>
+            </div>
+            <div class="flex justify-between items-center px-8 py-4 bg-slate-50/50">
+              <span class="font-medium text-slate-400">Sobota</span>
+              <span class="text-slate-400 font-medium text-sm">Zatvorené</span>
+            </div>
+            <div class="flex justify-between items-center px-8 py-4 bg-slate-50/50">
+              <span class="font-medium text-slate-400">Nedeľa</span>
+              <span class="text-slate-400 font-medium text-sm">Zatvorené</span>
+            </div>
+          </div>
+
+          <!-- Note -->
+          <div class="px-8 py-4 bg-primary/5 border-t border-primary/10">
+            <p class="text-sm text-primary flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+              Telefonická linka je dostupná <strong class="ml-1">NONSTOP</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Google Maps -->
+  <section class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-5">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl font-bold text-primary mb-4">Ako sa k nám dostanete?</h2>
+        <div class="w-16 h-1 bg-primary rounded mx-auto mb-6"></div>
+        <p class="text-slate-600 max-w-2xl mx-auto">Nachádzame sa na Šenkvickej ceste 14/F v Pezinku. Ľahko nás nájdete podľa mapy nižšie.</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden p-2">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2664.5!2d17.2669!3d48.2897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476c8e1a9b1b1b1b%3A0x1234567890abcdef!2s%C5%A0enkvick%C3%A1+cesta+14%2FF%2C+902+01+Pezinok!5e0!3m2!1ssk!2ssk!4v1234567890"
+          class="w-full h-96 md:h-[500px] rounded-xl"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Mapa – STK JP Control, Šenkvická cesta 14/F, 902 01 Pezinok"
+        ></iframe>
+      </div>
+
+      <!-- Address card below map -->
+      <div class="mt-8 flex flex-col md:flex-row gap-6 justify-center items-center">
+        <div class="flex items-center gap-3 text-slate-600">
+          <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary" aria-hidden="true">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <span class="font-medium">Šenkvická cesta 14/F, 902 01 Pezinok</span>
+        </div>
+        <a href="https://www.google.com/maps/dir//Šenkvická+cesta+14/F,+902+01+Pezinok" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg font-semibold hover:bg-primary-hover transition-colors min-h-[44px]">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+          </svg>
+          Navigovať
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</MainLayout>

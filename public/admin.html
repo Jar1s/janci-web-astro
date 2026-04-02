@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | JP Control</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f172a;
+      --bg-card: #1e293b;
+      --bg-card-hover: #253449;
+      --bg-input: #0f172a;
+      --border: rgba(255,255,255,0.08);
+      --border-focus: #3b82f6;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-heading: #f1f5f9;
+      --blue: #3b82f6;
+      --blue-hover: #2563eb;
+      --green: #22c55e;
+      --green-bg: rgba(34,197,94,0.1);
+      --red: #ef4444;
+      --red-bg: rgba(239,68,68,0.1);
+      --amber: #f59e0b;
+      --amber-bg: rgba(245,158,11,0.1);
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .layout { display: flex; min-height: 100vh; }
+
+    .sidebar {
+      width: 260px;
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      padding: 2rem 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-logo {
+      padding: 0 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar-logo h1 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-heading);
+      letter-spacing: -0.02em;
+    }
+
+    .sidebar-logo p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .sidebar-nav { flex: 1; }
+
+    .nav-section-title {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      padding: 1rem 1.5rem 0.5rem;
+      font-weight: 700;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.625rem 1.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-item:hover { background: rgba(255,255,255,0.03); color: var(--text); }
+    .nav-item.active { background: rgba(59,130,246,0.08); color: var(--blue); border-left-color: var(--blue); }
+
+    .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    .sidebar-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .sidebar-footer a {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    .sidebar-footer a:hover { color: var(--blue); }
+
+    /* ===== MAIN ===== */
+    .main {
+      flex: 1;
+      margin-left: 260px;
+      padding: 2rem;
+      max-width: 1100px;
+    }
+
+    /* ===== PAGE HEADER ===== */
+    .page-header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .page-header h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-heading);
+    }
+
+    .page-header p { color: var(--text-muted); font-size: 0.875rem; }
+
+    /* ===== PANELS ===== */
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-header h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-heading);
+    }
+
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+
+    /* ===== STATS CARDS ===== */
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .stat-icon.blue { background: rgba(59,130,246,0.12); color: var(--blue); }
+    .stat-icon.green { background: var(--green-bg); color: var(--green); }
+    .stat-icon.amber { background: var(--amber-bg); color: var(--amber); }
+
+    .stat-info h4 { font-size: 1.5rem; font-weight: 800; color: var(--text-heading); }
+    .stat-info p { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* ===== FORMS ===== */
+    .form-group { margin-bottom: 1rem; }
+
+    .form-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.375rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 0.625rem 0.875rem;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 0.875rem;
+      font-family: inherit;
+      transition: border-color 0.15s;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+    }
+
+    .form-textarea { min-height: 100px; resize: vertical; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .btn-primary { background: var(--blue); color: #fff; }
+    .btn-primary:hover { background: var(--blue-hover); }
+    .btn-danger { background: var(--red-bg); color: var(--red); }
+    .btn-danger:hover { background: rgba(239,68,68,0.2); }
+    .btn-ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+    .btn-ghost:hover { background: rgba(255,255,255,0.03); color: var(--text); }
+    .btn-success { background: var(--green-bg); color: var(--green); }
+    .btn-sm { padding: 0.375rem 0.625rem; font-size: 0.75rem; }
+    .btn-lg { padding: 0.625rem 1.5rem; font-size: 0.875rem; }
+
+    .btn-group { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    /* ===== LIST ITEMS ===== */
+    .list-item {
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.75rem;
+      transition: border-color 0.15s;
+    }
+
+    .list-item:hover { border-color: rgba(255,255,255,0.15); }
+
+    .list-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .list-item-title { font-weight: 600; font-size: 0.9rem; }
+
+    /* ===== BADGES ===== */
+    .badge {
+      display: inline-flex;
+      padding: 0.2rem 0.625rem;
+      border-radius: 999px;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .badge-active { background: var(--green-bg); color: var(--green); }
+    .badge-inactive { background: rgba(255,255,255,0.05); color: var(--text-muted); }
+    .badge-blue { background: rgba(59,130,246,0.12); color: var(--blue); }
+
+    /* ===== PREVIEW ===== */
+    .preview-bar {
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      z-index: 1000;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .toast.show { transform: translateY(0); opacity: 1; }
+    .toast.success { background: var(--green); color: #fff; }
+    .toast.error { background: var(--red); color: #fff; }
+
+    /* ===== AUTH SCREEN ===== */
+    .auth-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auth-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .auth-card h1 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+    .auth-card p { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 2rem; }
+
+    /* ===== MOBILE ===== */
+    .mobile-toggle {
+      display: none;
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      z-index: 200;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      padding: 0.5rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; padding: 1rem; padding-top: 4rem; }
+      .mobile-toggle { display: block; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- AUTH SCREEN -->
+  <div id="auth-screen" class="auth-screen">
+    <div class="auth-card">
+      <div style="margin-bottom:1.5rem;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      </div>
+      <h1>JP Control Admin</h1>
+      <p>Zadajte administrátorské heslo</p>
+      <div class="form-group">
+        <input type="password" id="admin-password" class="form-input" placeholder="Heslo" style="text-align:center;">
+      </div>
+      <button class="btn btn-primary btn-lg" id="login-btn" style="width:100%;justify-content:center;">Prihlásiť sa</button>
+      <div id="auth-error" style="color:var(--red);margin-top:1rem;font-size:0.8rem;"></div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="layout" style="display:none;">
+
+    <!-- Mobile Toggle -->
+    <button class="mobile-toggle" id="mobile-sidebar-toggle">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <h1>JP Control</h1>
+        <p>Admin Dashboard</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Prehľad</div>
+        <a class="nav-item active" data-panel="overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Prehľad
+        </a>
+
+        <div class="nav-section-title">Správa obsahu</div>
+        <a class="nav-item" data-panel="statistics">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          Štatistiky
+        </a>
+        <a class="nav-item" data-panel="notifications">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          Notifikácie
+        </a>
+        <a class="nav-item" data-panel="partners">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Partneri
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="/" target="_blank">← Späť na web</a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main">
+
+      <!-- OVERVIEW PANEL -->
+      <div class="panel active" id="panel-overview">
+        <div class="page-header">
+          <div>
+            <h2>Prehľad</h2>
+            <p>Aktuálny stav webu</p>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:2rem;">
+          <div class="stat-card">
+            <div class="stat-icon blue">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <div class="stat-info">
+              <h4 id="ov-inspections">–</h4>
+              <p>Kontrol</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon green">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="stat-info">
+              <h4 id="ov-years">–</h4>
+              <p>Rokov</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon amber">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+            </div>
+            <div class="stat-info">
+              <h4 id="ov-satisfaction">–</h4>
+              <p>Spokojnosť</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><h3>Aktívne notifikácie</h3></div>
+          <div id="ov-notif-list" style="color:var(--text-muted);font-size:0.875rem;">Načítavam...</div>
+        </div>
+      </div>
+
+      <!-- STATISTICS PANEL -->
+      <div class="panel" id="panel-statistics">
+        <div class="page-header">
+          <div>
+            <h2>Štatistiky</h2>
+            <p>Čísla zobrazené na hlavnej stránke</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <form id="stats-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Počet vykonaných kontrol</label>
+                <input type="number" id="stats-inspections" class="form-input" min="0" step="1" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Rok začiatku skúseností</label>
+                <input type="number" id="stats-years-start" class="form-input" min="1900" max="2100" step="1" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Spokojnosť zákazníkov (%)</label>
+                <input type="number" id="stats-satisfaction" class="form-input" min="0" max="100" step="1" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Google Place ID (voliteľné)</label>
+                <input id="stats-place" class="form-input" placeholder="ChIJ...">
+              </div>
+            </div>
+            <div class="btn-group" style="margin-top:0.5rem;">
+              <button type="submit" class="btn btn-primary btn-lg">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                Uložiť štatistiky
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- NOTIFICATIONS PANEL -->
+      <div class="panel" id="panel-notifications">
+        <div class="page-header">
+          <div>
+            <h2>Notifikácie</h2>
+            <p>Announcement bar na webe</p>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-header">
+              <h3>Existujúce notifikácie</h3>
+            </div>
+            <div id="notif-list" style="color:var(--text-muted);font-size:0.875rem;">Načítavam...</div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 id="notif-form-title">Pridať notifikáciu</h3>
+            </div>
+            <form id="notif-form">
+              <input type="hidden" id="notif-id">
+              <div class="form-group">
+                <label class="form-label">Text (HTML povolené)</label>
+                <textarea id="notif-text" class="form-textarea" required placeholder="Napr. 🔔 Akcia: TK+EK za 89€ do konca mesiaca!"></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Farba pozadia</label>
+                  <input id="notif-bg" class="form-input" value="rgba(200, 30, 30, 0.95)">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Gradient</label>
+                  <input id="notif-grad" class="form-input" value="rgba(180, 20, 20, 0.95)">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Farba borderu</label>
+                  <input id="notif-border" class="form-input" value="rgba(150, 10, 10, 0.8)">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Farba textu</label>
+                  <input id="notif-textcolor" class="form-input" value="rgba(255, 255, 255, 1)">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Stav</label>
+                <select id="notif-active" class="form-select">
+                  <option value="true" selected>Aktívna</option>
+                  <option value="false">Neaktívna</option>
+                </select>
+              </div>
+
+              <div id="notif-preview-wrap" style="margin-bottom:1rem;">
+                <label class="form-label">Náhľad</label>
+                <div id="notif-preview" class="preview-bar" style="background:rgba(200,30,30,0.95);color:rgba(255,255,255,1);">Ukážka textu notifikácie</div>
+              </div>
+
+              <div class="btn-group">
+                <button type="submit" class="btn btn-primary">Uložiť</button>
+                <button type="button" class="btn btn-ghost" id="notif-reset">Resetovať</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- PARTNERS PANEL -->
+      <div class="panel" id="panel-partners">
+        <div class="page-header">
+          <div>
+            <h2>Partneri</h2>
+            <p>Logá partnerov na hlavnej stránke</p>
+          </div>
+        </div>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-header"><h3>Zoznam partnerov</h3></div>
+            <div id="partners-list" style="color:var(--text-muted);font-size:0.875rem;">Načítavam...</div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3 id="partner-form-title">Pridať partnera</h3>
+            </div>
+            <form id="partner-form">
+              <input type="hidden" id="partner-id">
+              <div class="form-group">
+                <label class="form-label">Názov</label>
+                <input id="partner-name" class="form-input" required placeholder="Názov partnera">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Odkaz (voliteľný)</label>
+                <input id="partner-link" class="form-input" placeholder="https://...">
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Poradie</label>
+                  <input type="number" id="partner-order" class="form-input" value="0" step="1">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Stav</label>
+                  <select id="partner-active" class="form-select">
+                    <option value="true" selected>Aktívny</option>
+                    <option value="false">Neaktívny</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Logo (PNG/JPG, max 5MB)</label>
+                <input type="file" id="partner-logo" class="form-input" accept="image/*">
+              </div>
+              <div class="btn-group">
+                <button type="submit" class="btn btn-primary">Uložiť partnera</button>
+                <button type="button" class="btn btn-ghost" id="partner-reset">Resetovať</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
+  <script>
+    // ===== TOAST =====
+    function showToast(msg, type = 'success') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = `toast ${type} show`;
+      setTimeout(() => { t.classList.remove('show'); }, 3000);
+    }
+
+    // ===== NAV =====
+    document.querySelectorAll('.nav-item[data-panel]').forEach(item => {
+      item.addEventListener('click', () => {
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        item.classList.add('active');
+        const panel = document.getElementById('panel-' + item.dataset.panel);
+        if (panel) panel.classList.add('active');
+        // Close mobile sidebar
+        document.getElementById('sidebar').classList.remove('open');
+      });
+    });
+
+    // Mobile sidebar toggle
+    document.getElementById('mobile-sidebar-toggle').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('open');
+    });
+
+    // ===== LIVE PREVIEW for notification =====
+    ['notif-text','notif-bg','notif-textcolor'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', updateNotifPreview);
+    });
+
+    function updateNotifPreview() {
+      const preview = document.getElementById('notif-preview');
+      const text = document.getElementById('notif-text').value || 'Ukážka textu notifikácie';
+      const bg = document.getElementById('notif-bg').value;
+      const color = document.getElementById('notif-textcolor').value;
+      preview.style.background = bg;
+      preview.style.color = color;
+      preview.innerHTML = text;
+    }
+  </script>
+
+  <!-- Keep the original admin.js logic for API calls -->
+  <script src="admin.js?v=3"></script>
+
+  <script>
+    // ===== AUTH =====
+    const authScreen = document.getElementById('auth-screen');
+    const dashboard = document.getElementById('dashboard');
+
+    function checkAuth() {
+      const token = getToken();
+      if (token) {
+        authScreen.style.display = 'none';
+        dashboard.style.display = 'flex';
+        loadOverview();
+      }
+    }
+
+    document.getElementById('login-btn').addEventListener('click', () => {
+      const pw = document.getElementById('admin-password').value.trim();
+      if (!pw) {
+        document.getElementById('auth-error').textContent = 'Zadajte heslo';
+        return;
+      }
+      setToken(pw);
+      authScreen.style.display = 'none';
+      dashboard.style.display = 'flex';
+      loadOverview();
+      loadNotifications();
+      loadStats();
+      loadPartners();
+    });
+
+    document.getElementById('admin-password').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') document.getElementById('login-btn').click();
+    });
+
+    // ===== OVERVIEW =====
+    async function loadOverview() {
+      try {
+        const data = await apiFetch('/api/statistics');
+        const years = data.yearsExperienceStart ? (new Date().getFullYear() - data.yearsExperienceStart) : '–';
+        document.getElementById('ov-inspections').textContent = (data.performedInspections || 0).toLocaleString('sk-SK');
+        document.getElementById('ov-years').textContent = years + '+';
+        document.getElementById('ov-satisfaction').textContent = (data.satisfactionPercentage || 0) + '%';
+      } catch(e) {
+        document.getElementById('ov-inspections').textContent = '–';
+      }
+
+      try {
+        const data = await apiFetch('/api/notifications');
+        const list = document.getElementById('ov-notif-list');
+        const active = (data.notifications || []).filter(n => n.active);
+        if (active.length === 0) {
+          list.textContent = 'Žiadne aktívne notifikácie';
+        } else {
+          list.innerHTML = active.map(n =>
+            `<div class="list-item" style="margin-bottom:0.5rem;"><span class="badge badge-active">Aktívna</span> <span style="margin-left:0.5rem;">${n.text}</span></div>`
+          ).join('');
+        }
+      } catch(e) {
+        document.getElementById('ov-notif-list').textContent = 'API nedostupné';
+      }
+    }
+
+    // Override original admin.js messages to use toasts
+    const origSubmitNotif = submitNotif;
+    const origSubmitStats = submitStats;
+
+    // Override notification list rendering with better UI
+    const origLoadNotifications = loadNotifications;
+    window.loadNotifications = async function() {
+      const list = document.getElementById('notif-list');
+      const err = document.getElementById('notif-error');
+      list.innerHTML = '<div style="color:var(--text-muted);">Načítavam...</div>';
+      try {
+        const data = await apiFetch('/api/notifications');
+        list.innerHTML = '';
+        if (!data.notifications || data.notifications.length === 0) {
+          list.innerHTML = '<div style="color:var(--text-muted);">Žiadne notifikácie</div>';
+          return;
+        }
+        data.notifications.forEach((n) => {
+          const div = document.createElement('div');
+          div.className = 'list-item';
+          div.innerHTML = `
+            <div class="list-item-header">
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <span class="list-item-title">#${n.id}</span>
+                <span class="badge ${n.active ? 'badge-active' : 'badge-inactive'}">${n.active ? 'Aktívna' : 'Neaktívna'}</span>
+              </div>
+              <div class="btn-group">
+                <button type="button" class="btn btn-ghost btn-sm" data-edit="${n.id}">Upraviť</button>
+                <button type="button" class="btn btn-ghost btn-sm" data-toggle="${n.id}">${n.active ? 'Vypnúť' : 'Zapnúť'}</button>
+                <button type="button" class="btn btn-danger btn-sm" data-del="${n.id}">Zmazať</button>
+              </div>
+            </div>
+            <div style="color:var(--text-muted);font-size:0.8rem;margin-top:0.375rem;">${n.text}</div>
+          `;
+          list.appendChild(div);
+        });
+      } catch (e) {
+        list.innerHTML = '<div style="color:var(--red);">' + e.message + '</div>';
+      }
+    };
+
+    // Override partner list rendering
+    const origLoadPartners = loadPartners;
+    window.loadPartners = async function() {
+      const list = document.getElementById('partners-list');
+      list.innerHTML = '<div style="color:var(--text-muted);">Načítavam...</div>';
+      try {
+        const data = await apiFetch('/api/partners?includeInactive=true');
+        list.innerHTML = '';
+        if (!data.partners || data.partners.length === 0) {
+          list.innerHTML = '<div style="color:var(--text-muted);">Žiadni partneri</div>';
+          return;
+        }
+        data.partners.forEach((p) => {
+          const div = document.createElement('div');
+          div.className = 'list-item';
+          div.innerHTML = `
+            <div class="list-item-header">
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <span class="list-item-title">${p.name}</span>
+                <span class="badge ${p.active ? 'badge-active' : 'badge-inactive'}">${p.active ? 'Aktívny' : 'Neaktívny'}</span>
+                <span class="badge badge-blue">Poradie: ${p.sortOrder ?? 0}</span>
+              </div>
+              <div class="btn-group">
+                <button type="button" class="btn btn-ghost btn-sm" data-partner-edit="${p.id}">Upraviť</button>
+                <button type="button" class="btn btn-ghost btn-sm" data-partner-toggle="${p.id}">${p.active ? 'Vypnúť' : 'Zapnúť'}</button>
+                <button type="button" class="btn btn-danger btn-sm" data-partner-del="${p.id}">Zmazať</button>
+              </div>
+            </div>
+            ${p.logoUrl ? `<div style="margin-top:0.5rem;"><img src="${p.logoUrl}" alt="${p.name}" style="max-height:40px;border-radius:4px;background:white;padding:4px;"></div>` : ''}
+          `;
+          list.appendChild(div);
+        });
+      } catch (e) {
+        list.innerHTML = '<div style="color:var(--red);">' + e.message + '</div>';
+      }
+    };
+
+    checkAuth();
+  </script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import Hero from '@/components/Hero.astro';
+---
+
+<MainLayout
+  title="Platná legislatíva | STK JP Control Pezinok"
+  description="Zákony, vyhlášky a metodické pokyny v oblasti kontroly vozidiel. Kompletný prehľad platnej legislatívy pre technickú kontrolu, emisnú kontrolu a kontrolu originality."
+  canonical="/legislativa"
+>
+  <Header slot="header" currentPath="/legislativa" />
+
+  <Hero
+    title="Platná legislatíva"
+    subtitle="Zákony, vyhlášky a metodické pokyny v oblasti kontroly vozidiel"
+    ctaText="KONTAKTOVAŤ NÁS"
+    ctaHref="/kontakt"
+  />
+
+  <!-- Section 1: Zákon -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-primary mb-4">Zákon</h2>
+        <div class="w-16 h-1 bg-primary mx-auto rounded-full"></div>
+      </div>
+      <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200 shadow-sm">
+        <p class="text-slate-700 text-lg leading-relaxed text-center font-medium">
+          Zákon č. 106/2018 Z. z. o prevádzke vozidiel v cestnej premávke a o zmene a doplnení niektorých zákonov.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Vykonávacie vyhlášky -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-primary mb-4">Vykonávacie vyhlášky</h2>
+        <div class="w-16 h-1 bg-primary mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Vyhláška Ministerstva dopravy a výstavby Slovenskej republiky:</p>
+      </div>
+      <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+        <ul class="space-y-3">
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 131/2018 Z. z., ktorou sa ustanovujú podrobnosti v oblasti schvaľovania vozidiel,</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 132/2018 Z. z., ktorou sa ustanovujú podrobnosti o technických požiadavkách na niektoré vozidlá, systémy, komponenty a samostatné technické jednotky na účely schvaľovania,</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 133/2018 Z. z., ktorou sa ustanovujú podrobnosti o dokladoch vozidla,</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 134/2018 Z. z., ktorou sa ustanovujú podrobnosti o prevádzke vozidiel v cestnej premávke,</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 135/2018 Z. z., ktorou sa ustanovujú podrobnosti o cestnej technickej kontrole,</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 136/2018 Z. z., ktorou sa ustanovujú podrobnosti o technickej službe overovania,</span>
+          </li>
+          <!-- Highlighted: TK -->
+          <li class="flex gap-3 items-start text-slate-700 bg-primary/5 border-l-4 border-primary rounded-r-lg p-3 -ml-3 font-semibold">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 137/2018 Z. z., ktorou sa ustanovujú podrobnosti v oblasti <strong class="text-primary">TECHNICKEJ KONTROLY</strong>,</span>
+          </li>
+          <!-- Highlighted: EK -->
+          <li class="flex gap-3 items-start text-slate-700 bg-primary/5 border-l-4 border-primary rounded-r-lg p-3 -ml-3 font-semibold">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 138/2018 Z. z., ktorou sa ustanovujú podrobnosti v oblasti <strong class="text-primary">EMISNEJ KONTROLY</strong>,</span>
+          </li>
+          <!-- Highlighted: KO -->
+          <li class="flex gap-3 items-start text-slate-700 bg-primary/5 border-l-4 border-primary rounded-r-lg p-3 -ml-3 font-semibold">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 139/2018 Z. z., ktorou sa ustanovujú podrobnosti v oblasti <strong class="text-primary">KONTROLY ORIGINALITY</strong>,</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 140/2018 Z. z., ktorou sa ustanovujú podrobnosti v oblasti montáže plynových zariadení,</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 141/2018 Z. z., ktorou sa ustanovujú podrobnosti o štátnom odbornom dozore a odbornom dozore technických služieb na úseku prevádzky vozidiel v cestnej premávke.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Metodické pokyny – Technická kontrola -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-primary mb-4">Metodické pokyny – Technická kontrola</h2>
+        <div class="w-16 h-1 bg-primary mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Metodický pokyn Ministerstva dopravy a výstavby Slovenskej republiky:</p>
+      </div>
+      <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200 shadow-sm">
+        <ul class="space-y-3">
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 44/2018 na vykonávanie technických kontrol <strong>PRAVIDELNÝCH</strong>, <strong>ZVLÁŠTNYCH</strong>, <strong>ADMINISTRATÍVNYCH</strong> a <strong>OPAKOVANÝCH</strong> technických kontrol,</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 47/2018 – kontrolné položky skupiny 0 (identifikácia vozidla)</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 48/2018 – kontrolné položky skupiny 1 (brzdové zariadenie)</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 49/2018 – kontrolné položky skupiny 2 (riadenie vozidla)</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 50/2018 – kontrolné položky skupiny 3 (výhľad z vozidla)</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 51/2018 – kontrolné položky skupiny 4 (osvetlenie a svetelná signalizácia)</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 52/2018 – kontrolné položky skupiny 5 (nápravy, kolesá, pneumatiky)</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 53/2018 – kontrolné položky skupiny 6 (podvozok a príslušenstvo)</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 54/2018 – kontrolné položky skupiny 7 (ostatné vybavenie)</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 55/2018 – kontrolné položky skupiny 8 (zaťaženie životného prostredia)</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 56/2018 – kontrolné položky skupiny 9 (doplňujúce skúšky M2 a M3)</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 59/2018 – jednotlivo dovezené vozidlá</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 60/2018 – hromadná prestavba typu vozidla</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 61/2018 – dodatočné schválenie jednotlivého vozidla</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 62/2018 – zvláštne historické vozidlá</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 63/2018 – montáž spájacieho zariadenia</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 64/2018 – zápis alternatívnych rozmerov ráfikov a pneumatík</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 65/2018 – opätovné schválenie jednotlivého vozidla</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 66/2018 – zápis/zrušenie zápisu zvláštnej výbavy</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 67/2018 – výmena technického osvedčenia vozidla</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 68/2018 – výmena karosérie, rámu alebo motora</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 69/2018 – vozidlá podľa § 1 ods. 5</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 76/2018 – montáž dvojitého ovládania (autoškoly)</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 77/2018 – demontáž dvojitého ovládania (autoškoly)</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 78/2018 – montáž/demontáž zvláštnych výstražných svietidiel</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 79/2018 – montáž/demontáž plachty na valníkové vozidlo</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 82/2018 – konverzia motocyklov L3e/L4e-A2 a A3</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 41/2019 – demontáž plynového zariadenia z vozidla</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 42/2019 – vnútroštátne schválenie s obmedzenou prevádzkou</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 1/2020 – zmena vozidla kategórie O na Ra</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 57/2020 – vozidlá na prepravu nebezpečných vecí (ADR)</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 49/2021 – vydanie prepravného povolenia</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Metodické pokyny – Emisná kontrola -->
+  <section class="py-16 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold text-primary mb-4">Metodické pokyny – Emisná kontrola</h2>
+        <div class="w-16 h-1 bg-primary mx-auto rounded-full"></div>
+      </div>
+      <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
+        <ul class="space-y-3">
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 2/2020 – emisná kontrola <strong>PRAVIDELNÁ</strong> (zážihový nezdokonalený, zdokonalený, vznetový)</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 45/2019 – emisná kontrola <strong>ZVLÁŠTNA</strong></span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 34/2018 – emisná kontrola <strong>ADMINISTRATÍVNA</strong></span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 35/2018 – emisná kontrola <strong>OPAKOVANÁ</strong></span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 36/2018 – emisná kontrola <strong>PRAVIDELNÁ</strong> neprihlásených vozidiel</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 37/2018 – vozidlá podľa § 1 ods. 5</span>
+          </li>
+          <li class="flex gap-3 items-start text-slate-600">
+            <span class="text-primary mt-1 shrink-0">&#9679;</span>
+            <span>č. 38/2018 – vyznačovanie výsledku emisnej kontroly</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</MainLayout>

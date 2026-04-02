@@ -1,0 +1,481 @@
+---
+import BokehHero from './BokehHero.astro';
+
+interface Props {
+  title?: string;
+  subtitle?: string;
+  ctaText?: string;
+  ctaHref?: string;
+  stats?: { value: string; label: string }[];
+}
+
+const {
+  title = 'JP Control s.r.o.',
+  subtitle = 'Vaša spoľahlivá stanica technickej kontroly v Bratislavskom kraji',
+  ctaText = 'REZERVOVAŤ TERMÍN ONLINE',
+  ctaHref = 'https://www.kontrolavozidiel.sk/rezervovat-cez-internet',
+  stats = [
+    { value: '15 000+', label: 'VYKONANÝCH KONTROL' },
+    { value: '12+', label: 'ROKOV SKÚSENOSTÍ' },
+    { value: '98%', label: 'SPOKOJNÝCH ZÁKAZNÍKOV' },
+  ],
+} = Astro.props;
+---
+
+<section class="hero" id="hero">
+  <!-- Background Video -->
+  <video
+    class="hero-video"
+    autoplay
+    muted
+    loop
+    playsinline
+    poster="/images/hero-poster.jpg"
+    aria-hidden="true"
+  >
+    <source src="/hero-video.mp4" type="video/mp4" />
+  </video>
+
+  <!-- Gradient Overlay -->
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <!-- Animated Gradient Orbs -->
+  <div class="hero-orb hero-orb--1" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb--2" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb--3" aria-hidden="true"></div>
+
+  <!-- Grid Pattern Overlay -->
+  <div class="hero-grid" aria-hidden="true"></div>
+
+  <!-- Bokeh Effect -->
+  <BokehHero />
+
+  <!-- Hero Content -->
+  <div class="hero-content">
+    <h1 class="hero-title hero-title-animate" data-translate="hero-title">{title}</h1>
+    <p class="hero-subtitle hero-subtitle-animate" data-translate="hero-subtitle">{subtitle}</p>
+    <a href={ctaHref} class="hero-cta magnetic-btn pulse-glow hero-cta-animate" rel="noopener noreferrer" data-translate="hero-cta">
+      {ctaText}
+    </a>
+  </div>
+
+  <!-- Statistics -->
+  {stats && stats.length > 0 && (
+    <div class="hero-stats" id="hero-stats">
+      {stats.map((stat, i) => (
+        <div class="hero-stat">
+          <span class="hero-stat-value" data-target={stat.value}>0</span>
+          <span class="hero-stat-label" data-translate={`stat-label-${i}`}>{stat.label}</span>
+        </div>
+      ))}
+    </div>
+  )}
+
+  <!-- Scroll Indicator -->
+  <div class="hero-scroll" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 80px);
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: #fff;
+  }
+
+  /* Background Video */
+  .hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    filter: brightness(1.1) contrast(1.05);
+  }
+
+  /* Gradient Overlay */
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 77, 153, 0.15),
+      rgba(0, 128, 255, 0.15)
+    );
+    z-index: 1;
+  }
+
+  /* Grid Pattern */
+  .hero-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    opacity: 0.1;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M0 0h60v60H0z' fill='none' stroke='%23ffffff' stroke-width='0.5'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    pointer-events: none;
+  }
+
+  /* Hero Content */
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    padding: 0 1.5rem;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+    letter-spacing: -0.03em;
+    margin: 0 0 1rem 0;
+    line-height: 1.1;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: #fff;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.35);
+    margin: 0 0 2.5rem 0;
+    max-width: 640px;
+    line-height: 1.6;
+    opacity: 0.95;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    background: #0066cc;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 50px;
+    letter-spacing: 0.04em;
+    box-shadow: 0 6px 24px rgba(0, 102, 204, 0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+
+  .hero-cta:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 32px rgba(0, 102, 204, 0.6);
+    background: #0077ee;
+  }
+
+  .hero-cta:active {
+    transform: translateY(-1px) scale(1.02);
+  }
+
+  /* Statistics */
+  .hero-stats {
+    position: absolute;
+    bottom: 5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4rem;
+  }
+
+  .hero-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-stat-value {
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    white-space: nowrap;
+  }
+
+  .hero-stat-label {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 0.5rem;
+    white-space: nowrap;
+  }
+
+  /* Scroll Indicator */
+  .hero-scroll {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    color: rgba(255, 255, 255, 0.7);
+    animation: bounce 2s ease infinite;
+    cursor: pointer;
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    40% {
+      transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+      transform: translateX(-50%) translateY(-5px);
+    }
+  }
+
+  /* Medium screens */
+  @media (max-width: 1100px) {
+    .hero-stat-value {
+      font-size: 3.5rem;
+    }
+    .hero-stats {
+      gap: 2.5rem;
+    }
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .hero {
+      height: auto;
+      min-height: 100vh;
+      padding-top: 80px;
+      padding-bottom: 3rem;
+      justify-content: flex-start;
+      gap: 2rem;
+    }
+
+    .hero-content {
+      margin-top: auto;
+      margin-bottom: 1rem;
+    }
+
+    .hero-title {
+      font-size: 1.75rem;
+    }
+
+    .hero-subtitle {
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-cta {
+      padding: 0.85rem 2rem;
+      font-size: 0.875rem;
+    }
+
+    .hero-stats {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      transform: none;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1.5rem 2.5rem;
+      margin-top: auto;
+      padding: 0 1rem;
+      justify-content: center;
+    }
+
+    .hero-stat-value {
+      font-size: 2.25rem;
+    }
+
+    .hero-stat-label {
+      font-size: 0.65rem;
+    }
+
+    .hero-scroll {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Video fallback: if video fails, use poster as background image
+  document.addEventListener('DOMContentLoaded', async () => {
+    const video = document.querySelector('.hero-video') as HTMLVideoElement;
+    if (video) {
+      video.addEventListener('error', () => {
+        const poster = video.getAttribute('poster');
+        if (poster) {
+          const hero = document.querySelector('.hero') as HTMLElement;
+          if (hero) {
+            hero.style.backgroundImage = `url('${poster}')`;
+            hero.style.backgroundSize = 'cover';
+            hero.style.backgroundPosition = 'center';
+          }
+          video.style.display = 'none';
+        }
+      });
+
+      // Also handle source error
+      const source = video.querySelector('source');
+      if (source) {
+        source.addEventListener('error', () => {
+          const poster = video.getAttribute('poster');
+          if (poster) {
+            const hero = document.querySelector('.hero') as HTMLElement;
+            if (hero) {
+              hero.style.backgroundImage = `url('${poster}')`;
+              hero.style.backgroundSize = 'cover';
+              hero.style.backgroundPosition = 'center';
+            }
+            video.style.display = 'none';
+          }
+        });
+      }
+    }
+
+    // Load statistics from API and update data-target values
+    const statsSection = document.getElementById('hero-stats');
+    if (!statsSection) return;
+
+    try {
+      const res = await fetch('/api/statistics');
+      if (res.ok) {
+        const data = await res.json();
+        const statValues = statsSection.querySelectorAll('.hero-stat-value');
+        if (data.performedInspections && statValues[0]) {
+          const formatted = Number(data.performedInspections).toLocaleString('sk-SK').replace(/\u00a0/g, ' ');
+          statValues[0].setAttribute('data-target', formatted + '+');
+        }
+        if (data.yearsExperience && statValues[1]) {
+          statValues[1].setAttribute('data-target', data.yearsExperience + '+');
+        } else if (data.yearsExperienceStart && statValues[1]) {
+          const years = new Date().getFullYear() - Number(data.yearsExperienceStart);
+          statValues[1].setAttribute('data-target', years + '+');
+        }
+        if (data.satisfactionPercentage && statValues[2]) {
+          statValues[2].setAttribute('data-target', data.satisfactionPercentage + '%');
+        }
+      }
+    } catch (e) {
+      // API not available, use default values
+    }
+
+    // Counter animation with IntersectionObserver
+
+    let animated = false;
+
+    function parseTarget(target: string): { num: number; prefix: string; suffix: string } {
+      // Extract numeric part and any prefix/suffix (e.g. "15 000+" => 15000, suffix "+")
+      const cleaned = target.replace(/\s/g, '');
+      const match = cleaned.match(/^([^\d]*)(\d+)(.*)$/);
+      if (!match) return { num: 0, prefix: '', suffix: '' };
+      return {
+        prefix: match[1],
+        num: parseInt(match[2], 10),
+        suffix: match[3],
+      };
+    }
+
+    function formatNumber(n: number, original: string): string {
+      // If original had space-separated thousands (like "15 000"), format similarly
+      if (/\d\s\d/.test(original)) {
+        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+      }
+      return n.toString();
+    }
+
+    function animateCounters() {
+      if (animated) return;
+      animated = true;
+
+      const statValues = statsSection!.querySelectorAll('.hero-stat-value');
+      statValues.forEach((el) => {
+        const target = el.getAttribute('data-target');
+        if (!target) return;
+
+        const { num, prefix, suffix } = parseTarget(target);
+        if (num === 0) {
+          el.textContent = target;
+          return;
+        }
+
+        const duration = 2000; // 2 seconds
+        const steps = 60;
+        const stepTime = duration / steps;
+        let current = 0;
+        const increment = num / steps;
+
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= num) {
+            current = num;
+            clearInterval(timer);
+          }
+          el.textContent = prefix + formatNumber(Math.floor(current), target) + suffix;
+        }, stepTime);
+      });
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            animateCounters();
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(statsSection);
+
+    // Scroll indicator click — scroll to next section
+    const scrollIndicator = document.querySelector('.hero-scroll');
+    if (scrollIndicator) {
+      scrollIndicator.addEventListener('click', () => {
+        const hero = document.getElementById('hero');
+        if (hero && hero.nextElementSibling) {
+          hero.nextElementSibling.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+  });
+
+  // Re-init counters after View Transitions page swap
+  document.addEventListener('astro:after-swap', () => {
+    const stats = document.getElementById('hero-stats');
+    if (!stats) return;
+    const vals = stats.querySelectorAll('.hero-stat-value');
+    vals.forEach(el => {
+      const target = el.getAttribute('data-target');
+      if (target) el.textContent = target;
+    });
+  });
+</script>
