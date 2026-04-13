@@ -20,13 +20,7 @@
     height: 44px;
     display: flex;
     align-items: center;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .announcement-bar.hidden-bar {
-    opacity: 0;
-    transform: translateY(-100%);
-    pointer-events: none;
+    transition: opacity 0.2s ease;
   }
 
   .announcement-track {
@@ -93,18 +87,8 @@
 
       bar.style.display = 'flex';
 
-      // Hide bar when scrolled past hero
+      // Keep sticky bar visible and adjust hero start to avoid overlap
       const hero = document.getElementById('hero');
-      if (hero) {
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            bar.classList.toggle('hidden-bar', !entry.isIntersecting);
-          });
-        }, { threshold: 0 });
-        observer.observe(hero);
-      }
-
-      // Adjust hero margin for announcement bar
       if (hero) {
         hero.style.marginTop = '44px';
       }

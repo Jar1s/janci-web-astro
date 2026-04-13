@@ -24,7 +24,9 @@ export default async function handler(req, res) {
   const id = extractId(req);
 
   if (req.method === 'GET') {
-    const data = await getPartners(true);
+    const includeInactiveRaw = req.query?.includeInactive;
+    const includeInactive = includeInactiveRaw === 'true' || includeInactiveRaw === '1';
+    const data = await getPartners(!includeInactive);
     return res.status(200).json(data);
   }
 
