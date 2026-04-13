@@ -7,6 +7,33 @@ import ServiceCard from '@/components/ServiceCard.astro';
 import CTASection from '@/components/CTASection.astro';
 import AnnouncementBar from '@/components/AnnouncementBar.astro';
 import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
+
+const extraServices = [
+  {
+    title: 'Boutique',
+    description: 'Oblečenie a módne doplnky',
+    cta: 'Zistiť viac',
+    href: 'https://dveruze.sk/',
+    image: '/images/boutique.jpeg',
+    alt: 'Boutique služby'
+  },
+  {
+    title: 'Kontajnerová služba',
+    description: 'Prenájom kontajnerov',
+    cta: 'Zistiť viac',
+    href: '#',
+    image: '/images/about-hero-2.jpg',
+    alt: 'Kontajnerová služba'
+  },
+  {
+    title: 'Vinomat',
+    description: 'Predaj vína',
+    cta: 'Zistiť viac',
+    href: '#',
+    image: '/images/about-hero-3.jpg',
+    alt: 'Vinomat služby'
+  }
+];
 ---
 
 <MainLayout
@@ -313,7 +340,7 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
   </section>
 
   <!-- Recenzie -->
-  <section id="reviews" class="reviews-section animate-on-scroll animate-fade-up wave-separator-top wave-separator-bottom">
+  <section id="reviews" class="reviews-section animate-on-scroll animate-fade-up">
     <div class="reviews-container">
       <div class="reviews-header">
         <h2 class="reviews-title gradient-text">Napísali o nás</h2>
@@ -321,60 +348,24 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
         <p class="reviews-subtitle">Recenzie našich zákazníkov</p>
       </div>
 
-      <div class="reviews-carousel" id="reviews-carousel">
-        <button class="carousel-arrow carousel-arrow--prev" id="carousel-prev" aria-label="Predchádzajúca recenzia">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </button>
-
-        <div class="carousel-track-wrapper">
-          <div class="carousel-track" id="carousel-track">
-            <div class="review-card carousel-slide" data-slide="0">
-              <div class="review-card__stars">
-                <span class="review-star">&#9733;</span>
-                <span class="review-star">&#9733;</span>
-                <span class="review-star">&#9733;</span>
-                <span class="review-star">&#9733;</span>
-                <span class="review-star">&#9733;</span>
-              </div>
-              <p class="review-card__text">"Za mňa zatiaľ najlepšia Emisná a STK na akej som bola príjemný prístup dievčat a pani ktorá tam bola a stále nám ponúkala bud koláčik raňajky kávu ..."</p>
-              <p class="review-card__author">Kristina Martinková</p>
-            </div>
-
-            <div class="review-card carousel-slide" data-slide="1">
-              <div class="review-card__stars">
-                <span class="review-star">&#9733;</span>
-                <span class="review-star">&#9733;</span>
-                <span class="review-star">&#9733;</span>
-                <span class="review-star">&#9733;</span>
-                <span class="review-star">&#9733;</span>
-              </div>
-              <p class="review-card__text">"Veľmi príjemný zážitok. Bol som prvý krát na odporúčanie a som milo prekvapený. Prakticky o nič sa nemusíte starať, dostanete aj kávičku a štrúdlu v ..."</p>
-              <p class="review-card__author">dwarfiusislav</p>
-            </div>
-
-            <div class="review-card carousel-slide" data-slide="2">
-              <div class="review-card__stars">
-                <span class="review-star">&#9733;</span>
-                <span class="review-star">&#9733;</span>
-                <span class="review-star">&#9733;</span>
-                <span class="review-star">&#9733;</span>
-                <span class="review-star">&#9733;</span>
-              </div>
-              <p class="review-card__text">"EK a STK No lepšie sme ani nemohli spraviť ako ísť zrovna sem ..... 10/10 od vstupu až po odchod ..... Takýto servis som ešte nikde nezažil od ..."</p>
-              <p class="review-card__author">CHRÁNIME TO ČO MUSÍME</p>
-            </div>
+      <div class="slider-wrapper">
+        <div class="slider-track" id="slider-track">
+          <div class="slider-card">
+            <div class="slider-card__stars">★★★★★</div>
+            <p class="slider-card__text">"Za mňa zatiaľ najlepšia Emisná a STK na akej som bola príjemný prístup dievčat a pani ktorá tam bola a stále nám ponúkala bud koláčik raňajky kávu ..."</p>
+            <p class="slider-card__author">— Kristina Martinková</p>
+          </div>
+          <div class="slider-card">
+            <div class="slider-card__stars">★★★★★</div>
+            <p class="slider-card__text">"Veľmi príjemný zážitok. Bol som prvý krát na odporúčanie a som milo prekvapený. Prakticky o nič sa nemusíte starať, dostanete aj kávičku a štrúdlu v ..."</p>
+            <p class="slider-card__author">— dwarfiusislav</p>
+          </div>
+          <div class="slider-card">
+            <div class="slider-card__stars">★★★★★</div>
+            <p class="slider-card__text">"EK a STK No lepšie sme ani nemohli spraviť ako ísť zrovna sem ..... 10/10 od vstupu až po odchod ..... Takýto servis som ešte nikde nezažil od ..."</p>
+            <p class="slider-card__author">— CHRÁNIME TO ČO MUSÍME</p>
           </div>
         </div>
-
-        <button class="carousel-arrow carousel-arrow--next" id="carousel-next" aria-label="Nasledujúca recenzia">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-        </button>
-      </div>
-
-      <div class="carousel-dots" id="carousel-dots">
-        <button class="carousel-dot active" data-dot="0" aria-label="Recenzia 1"></button>
-        <button class="carousel-dot" data-dot="1" aria-label="Recenzia 2"></button>
-        <button class="carousel-dot" data-dot="2" aria-label="Recenzia 3"></button>
       </div>
     </div>
   </section>
@@ -428,32 +419,20 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
   <section class="services-extra-section animate-on-scroll animate-fade-up wave-separator-top wave-separator-bottom">
     <div class="services-extra-container">
       <div class="services-extra-grid">
-        <a href="#" class="service-link-card" target="_blank" rel="noopener noreferrer">
-          <div class="service-link-card__top-line"></div>
-          <h3 class="service-link-card__title">Boutique</h3>
-          <p class="service-link-card__desc">Oblečenie a módne doplnky</p>
-          <span class="service-link-card__arrow">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </span>
-        </a>
-
-        <a href="#" class="service-link-card" target="_blank" rel="noopener noreferrer">
-          <div class="service-link-card__top-line"></div>
-          <h3 class="service-link-card__title">Kontajnerová služba</h3>
-          <p class="service-link-card__desc">Prenájom kontajnerov</p>
-          <span class="service-link-card__arrow">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </span>
-        </a>
-
-        <a href="#" class="service-link-card" target="_blank" rel="noopener noreferrer">
-          <div class="service-link-card__top-line"></div>
-          <h3 class="service-link-card__title">Vinomat</h3>
-          <p class="service-link-card__desc">Predaj vína</p>
-          <span class="service-link-card__arrow">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </span>
-        </a>
+        {extraServices.map((item) => (
+          <a
+            href={item.href}
+            class="service-link-card"
+            style={`background-image: url('${item.image}')`}
+            aria-label={item.alt}
+          >
+            <div class="service-link-card__content">
+              <h3 class="service-link-card__title">{item.title}</h3>
+              <p class="service-link-card__desc">{item.description}</p>
+              <span class="service-link-card__cta">{item.cta}</span>
+            </div>
+          </a>
+        ))}
       </div>
     </div>
   </section>
@@ -656,94 +635,50 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
     color: #6b7280;
   }
 
-  /* Carousel styles */
-  .reviews-carousel {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    max-width: 700px;
-    margin: 0 auto;
-  }
-
-  .carousel-track-wrapper {
+  /* Infinite Slider */
+  .slider-wrapper {
     overflow: hidden;
-    flex: 1;
-    border-radius: 0.75rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
   }
 
-  .carousel-track {
+  .slider-track {
     display: flex;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 2rem;
+    animation: slider-scroll 18s linear infinite;
+    width: max-content;
   }
 
-  .carousel-slide {
-    min-width: 100%;
-    box-sizing: border-box;
+  .slider-track:hover {
+    animation-play-state: paused;
   }
 
-  .carousel-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid #d1d5db;
-    background: #fff;
-    color: #374151;
-    cursor: pointer;
-    transition: border-color 0.3s, color 0.3s, box-shadow 0.3s;
+  .slider-card {
     flex-shrink: 0;
-  }
-
-  .carousel-arrow:hover {
-    border-color: #0066cc;
-    color: #0066cc;
-    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
-  }
-
-  .carousel-dots {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-top: 1.5rem;
-  }
-
-  .carousel-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: none;
-    background: #d1d5db;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.3s;
-    padding: 0;
-  }
-
-  .carousel-dot.active {
-    background: #0066cc;
-    transform: scale(1.2);
-  }
-
-  .review-card {
-    background: #ffffff;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    width: 360px;
+    background: #fff;
+    border-radius: 16px;
     padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid #e5e7eb;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .review-card__stars {
-    margin-bottom: 1rem;
-    display: flex;
-    gap: 0.125rem;
+  .slider-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 102, 204, 0.12);
   }
 
-  .review-star {
+  .slider-card__stars {
     color: #fbbf24;
     font-size: 1.25rem;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
   }
 
-  .review-card__text {
+  .slider-card__text {
     font-size: 0.9375rem;
     line-height: 1.7;
     color: #4a5568;
@@ -751,21 +686,24 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
     font-style: italic;
   }
 
-  .review-card__author {
+  .slider-card__author {
     font-size: 0.875rem;
     font-weight: 600;
-    color: #1a1a1a;
+    color: #0066cc;
     margin: 0;
   }
 
+  @keyframes slider-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-50% - 1rem)); }
+  }
+
   @media (max-width: 640px) {
-    .carousel-arrow {
-      width: 32px;
-      height: 32px;
-    }
-    .reviews-carousel {
-      gap: 0.5rem;
-    }
+    .slider-card { width: 280px; padding: 1.5rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slider-track { animation: none; flex-wrap: wrap; justify-content: center; }
   }
 
   /* ===== Special Offer CTA ===== */
@@ -979,62 +917,122 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
   }
 
   .service-link-card {
-    display: block;
+    display: flex;
     position: relative;
-    background: #ffffff;
-    border: 2px solid #e5e7eb;
+    align-items: flex-end;
+    min-height: 320px;
     border-radius: 12px;
-    padding: 2.5rem;
+    border: 1px solid rgba(0, 102, 204, 0.35);
+    background-color: #dbe3ef;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     text-decoration: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 10px 22px rgba(15, 23, 42, 0.2);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s ease;
     overflow: hidden;
   }
 
-  .service-link-card__top-line {
+  .service-link-card::before {
+    content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: #0066cc;
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 20, 60, 0.82) 0%, rgba(0, 30, 80, 0.48) 45%, rgba(0, 20, 60, 0.26) 100%);
+    z-index: 1;
+    transition: background 0.4s ease;
   }
 
-  .service-link-card:hover .service-link-card__top-line {
-    transform: scaleX(1);
+  .service-link-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 2px solid rgba(59, 130, 246, 0.18);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .service-link-card__content {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    padding: 1.6rem;
+    text-align: center;
   }
 
   .service-link-card:hover {
-    border-color: #0066cc;
-    box-shadow: 0 10px 25px rgba(0, 102, 204, 0.12);
-    transform: translateY(-4px);
+    transform: translateY(-8px) scale(1.015);
+    box-shadow: 0 20px 38px rgba(0, 40, 110, 0.3);
+  }
+
+  .service-link-card:hover::before {
+    background: linear-gradient(to top, rgba(0, 20, 60, 0.72) 0%, rgba(0, 30, 80, 0.34) 45%, rgba(0, 20, 60, 0.16) 100%);
+  }
+
+  .service-link-card:hover::after {
+    opacity: 1;
+  }
+
+  .service-link-card:focus-visible {
+    outline: 3px solid #60a5fa;
+    outline-offset: 3px;
   }
 
   .service-link-card__title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1a1a1a;
-    margin-bottom: 0.5rem;
+    font-size: 2.1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 0.8rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.62);
+    line-height: 1.15;
+    letter-spacing: 0.01em;
   }
 
   .service-link-card__desc {
-    font-size: 0.9375rem;
-    color: #6b7280;
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
+    font-size: 1.12rem;
+    color: rgba(255, 255, 255, 0.92);
+    margin-bottom: 1.35rem;
+    line-height: 1.45;
+    max-width: 38ch;
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  .service-link-card__arrow {
-    display: inline-flex;
-    align-items: center;
-    color: #0066cc;
-    transition: transform 0.3s ease;
+  .service-link-card__cta {
+    display: inline-block;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.26);
+    color: #ffffff;
+    backdrop-filter: blur(4px);
+    transition: transform 0.3s ease, background 0.3s ease;
   }
 
-  .service-link-card:hover .service-link-card__arrow {
-    transform: translateX(6px);
+  .service-link-card:hover .service-link-card__cta {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.36);
+  }
+
+  @media (max-width: 768px) {
+    .service-link-card {
+      min-height: 300px;
+    }
+
+    .service-link-card__title {
+      font-size: 1.5rem;
+    }
+
+    .service-link-card__desc {
+      font-size: 1.08rem;
+      max-width: 28ch;
+    }
   }
 
   /* ===== Process Timeline Section ===== */
@@ -1199,53 +1197,12 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
 </style>
 
 <script is:inline>
-// Reviews Carousel
+// Reviews Infinite Slider - duplicate cards for seamless loop
 (function() {
-  var track = document.getElementById('carousel-track');
-  var dots = document.querySelectorAll('.carousel-dot');
-  var prevBtn = document.getElementById('carousel-prev');
-  var nextBtn = document.getElementById('carousel-next');
-  var carousel = document.getElementById('reviews-carousel');
-  if (!track || !prevBtn || !nextBtn) return;
-
-  var current = 0;
-  var total = track.children.length;
-  var autoInterval = null;
-
-  function goTo(index) {
-    if (index < 0) index = total - 1;
-    if (index >= total) index = 0;
-    current = index;
-    track.style.transform = 'translateX(-' + (current * 100) + '%)';
-    dots.forEach(function(d, i) {
-      d.classList.toggle('active', i === current);
-    });
-  }
-
-  function startAuto() {
-    stopAuto();
-    autoInterval = setInterval(function() { goTo(current + 1); }, 5000);
-  }
-
-  function stopAuto() {
-    if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
-  }
-
-  prevBtn.addEventListener('click', function() { goTo(current - 1); startAuto(); });
-  nextBtn.addEventListener('click', function() { goTo(current + 1); startAuto(); });
-
-  dots.forEach(function(dot) {
-    dot.addEventListener('click', function() {
-      goTo(parseInt(dot.getAttribute('data-dot')));
-      startAuto();
-    });
-  });
-
-  if (carousel) {
-    carousel.addEventListener('mouseenter', stopAuto);
-    carousel.addEventListener('mouseleave', startAuto);
-  }
-
-  startAuto();
+  var track = document.getElementById('slider-track');
+  if (!track) return;
+  // Clone all cards and append for seamless loop
+  var cards = track.innerHTML;
+  track.innerHTML = cards + cards;
 })();
 </script>

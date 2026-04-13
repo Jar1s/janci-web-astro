@@ -59,6 +59,12 @@ const {
     </a>
   </div>
 
+  <div class="hero-partners-wrapper" id="hero-partners-wrapper" style="display: none;">
+    <div class="hero-partners-mask">
+      <div class="hero-partners-track" id="hero-partners-track"></div>
+    </div>
+  </div>
+
   <!-- Statistics -->
   {stats && stats.length > 0 && (
     <div class="hero-stats" id="hero-stats">
@@ -244,6 +250,77 @@ const {
     cursor: pointer;
   }
 
+  .hero-partners-wrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10.5rem;
+    z-index: 3;
+    pointer-events: auto;
+  }
+
+  .hero-partners-mask {
+    overflow: hidden;
+    width: min(1200px, calc(100% - 2rem));
+    margin: 0 auto;
+    mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  }
+
+  .hero-partners-track {
+    --hero-partners-shift: 0px;
+    --hero-partners-duration: 24s;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .hero-partners-track.running {
+    animation: hero-partners-scroll var(--hero-partners-duration) linear infinite;
+  }
+
+  .hero-partners-track.running:hover {
+    animation-play-state: paused;
+  }
+
+  .hero-partners-set {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .hero-partner-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    min-width: 120px;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.42);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    text-decoration: none;
+  }
+
+  .hero-partner-item img {
+    display: block;
+    max-height: 36px;
+    max-width: 120px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+  }
+
+  @keyframes hero-partners-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-1 * var(--hero-partners-shift))); }
+  }
+
   @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
       transform: translateX(-50%) translateY(0);
@@ -307,6 +384,32 @@ const {
       margin-top: auto;
       padding: 0 1rem;
       justify-content: center;
+    }
+
+    .hero-partners-wrapper {
+      position: relative;
+      bottom: auto;
+      left: auto;
+      right: auto;
+      width: 100%;
+      margin-top: 0.5rem;
+      margin-bottom: 0.25rem;
+      padding: 0 0.5rem;
+    }
+
+    .hero-partners-mask {
+      width: 100%;
+    }
+
+    .hero-partner-item {
+      min-height: 48px;
+      min-width: 110px;
+      padding: 0.4rem 0.85rem;
+    }
+
+    .hero-partner-item img {
+      max-height: 30px;
+      max-width: 96px;
     }
 
     .hero-stat-value {
@@ -385,6 +488,65 @@ const {
     } catch (e) {
       // API not available, use default values
     }
+
+    const partnersWrapper = document.getElementById('hero-partners-wrapper');
+    const partnersTrack = document.getElementById('hero-partners-track');
+
+    function createPartnerItem(partner: any) {
+      const hasLink = typeof partner.link === 'string' && partner.link.trim().length > 0;
+      const el = document.createElement(hasLink ? 'a' : 'div');
+      el.className = 'hero-partner-item';
+
+      if (hasLink) {
+        (el as HTMLAnchorElement).href = partner.link;
+        (el as HTMLAnchorElement).target = '_blank';
+        (el as HTMLAnchorElement).rel = 'noopener noreferrer';
+        (el as HTMLAnchorElement).setAttribute('aria-label', partner.name || 'Partner');
+      }
+
+      const img = document.createElement('img');
+      img.src = partner.logoUrl || '';
+      img.alt = partner.name || 'Partner logo';
+      img.loading = 'lazy';
+      el.appendChild(img);
+      return el;
+    }
+
+    async function loadHeroPartners() {
+      if (!partnersWrapper || !partnersTrack) return;
+      try {
+        const res = await fetch('/api/partners');
+        if (!res.ok) throw new Error('Failed to load partners');
+        const data = await res.json();
+        const partners = (data.partners || []).filter((p: any) => p.active !== false && p.logoUrl);
+        if (!partners.length) return;
+
+        const firstSet = document.createElement('div');
+        firstSet.className = 'hero-partners-set';
+        partners.forEach((partner: any) => {
+          firstSet.appendChild(createPartnerItem(partner));
+        });
+
+        const secondSet = firstSet.cloneNode(true) as HTMLDivElement;
+        partnersTrack.innerHTML = '';
+        partnersTrack.appendChild(firstSet);
+        partnersTrack.appendChild(secondSet);
+
+        // Compute seamless loop shift/duration after render.
+        requestAnimationFrame(() => {
+          const shift = Math.max(firstSet.scrollWidth, 1);
+          const duration = Math.max(18, Math.min(42, Math.round(shift / 38)));
+          partnersTrack.style.setProperty('--hero-partners-shift', `${shift}px`);
+          partnersTrack.style.setProperty('--hero-partners-duration', `${duration}s`);
+          partnersTrack.classList.add('running');
+          partnersWrapper.style.display = 'block';
+        });
+      } catch (_) {
+        partnersWrapper.style.display = 'none';
+      }
+    }
+
+    await loadHeroPartners();
 
     // Counter animation with IntersectionObserver
 
