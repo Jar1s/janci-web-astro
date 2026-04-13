@@ -1,0 +1,287 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import Hero from '@/components/Hero.astro';
+
+const fallbackReviews = [
+  {
+    author_name: 'Kristina Martinková',
+    rating: 5,
+    text: 'Za mňa zatiaľ najlepšia emisná a STK. Príjemný personál, profesionálny prístup a veľmi dobrá organizácia.',
+    relative_time_description: 'pred mesiacom'
+  },
+  {
+    author_name: 'dwarfiusislav',
+    rating: 5,
+    text: 'Veľmi príjemný zážitok. Prakticky o nič sa nemusíte starať, všetko prebehlo rýchlo a bez stresu.',
+    relative_time_description: 'pred 2 mesiacmi'
+  },
+  {
+    author_name: 'CHRÁNIME TO ČO MUSÍME',
+    rating: 5,
+    text: '10/10 od vstupu až po odchod. Kvalitné služby a profesionálny tím.',
+    relative_time_description: 'pred 3 mesiacmi'
+  }
+];
+---
+
+<MainLayout
+  title="Recenzie | STK JP Control Pezinok"
+  description="Recenzie zákazníkov STK JP Control v Pezinku. Skutočné hodnotenia, priemerné skóre a skúsenosti klientov."
+  canonical="/recenzie"
+>
+  <Header slot="header" currentPath="/recenzie" />
+
+  <Hero
+    title="Recenzie zákazníkov"
+    description="Skúsenosti vodičov, ktorí absolvovali technickú, emisnú kontrolu alebo kontrolu originality u nás."
+    ctaText="Rezervovať termín"
+    ctaHref="https://www.kontrolavozidiel.sk/rezervovat-cez-internet"
+    secondaryText="Kontaktovať nás"
+    secondaryHref="/kontakt"
+  />
+
+  <section class="reviews-page">
+    <div class="reviews-page__container">
+      <div class="reviews-summary">
+        <p class="reviews-summary__label">Hodnotenie zákazníkov</p>
+        <div class="reviews-summary__metrics">
+          <span class="reviews-summary__rating" id="reviews-rating">4.9</span>
+          <span class="reviews-summary__stars" aria-hidden="true">★★★★★</span>
+          <span class="reviews-summary__count" id="reviews-count">250+ recenzií</span>
+        </div>
+        <p class="reviews-summary__source" id="reviews-source">Zdroj: overené recenzie</p>
+      </div>
+
+      <div class="reviews-grid" id="reviews-grid">
+        {fallbackReviews.map((review) => (
+          <article class="review-card">
+            <div class="review-card__head">
+              <p class="review-card__author">{review.author_name}</p>
+              <p class="review-card__time">{review.relative_time_description}</p>
+            </div>
+            <p class="review-card__stars">{'★'.repeat(review.rating)}{'☆'.repeat(Math.max(0, 5 - review.rating))}</p>
+            <p class="review-card__text">{review.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</MainLayout>
+
+<script is:inline>
+  function normalizeReviewText(text) {
+    if (!text || typeof text !== 'string') return '';
+    return text.length > 260 ? text.slice(0, 257).trim() + '...' : text;
+  }
+
+  function renderReviews(items) {
+    const grid = document.getElementById('reviews-grid');
+    if (!grid || !Array.isArray(items) || items.length === 0) return;
+
+    grid.innerHTML = '';
+    items.forEach((review) => {
+      const card = document.createElement('article');
+      card.className = 'review-card';
+
+      const head = document.createElement('div');
+      head.className = 'review-card__head';
+
+      const author = document.createElement('p');
+      author.className = 'review-card__author';
+      author.textContent = review.author_name || 'Zákazník';
+
+      const time = document.createElement('p');
+      time.className = 'review-card__time';
+      time.textContent = review.relative_time_description || '';
+
+      const stars = document.createElement('p');
+      stars.className = 'review-card__stars';
+      const rating = Number(review.rating) || 5;
+      stars.textContent = '★'.repeat(Math.max(0, Math.min(5, rating))) + '☆'.repeat(Math.max(0, 5 - rating));
+
+      const text = document.createElement('p');
+      text.className = 'review-card__text';
+      text.textContent = normalizeReviewText(review.text);
+
+      head.appendChild(author);
+      head.appendChild(time);
+      card.appendChild(head);
+      card.appendChild(stars);
+      card.appendChild(text);
+      grid.appendChild(card);
+    });
+  }
+
+  async function loadReviews() {
+    const source = document.getElementById('reviews-source');
+    const ratingEl = document.getElementById('reviews-rating');
+    const countEl = document.getElementById('reviews-count');
+
+    try {
+      const response = await fetch('/api/reviews');
+      if (!response.ok) throw new Error('Failed to load reviews');
+      const data = await response.json();
+
+      if (ratingEl && typeof data.rating === 'number') {
+        ratingEl.textContent = data.rating.toFixed(1);
+      }
+      if (countEl && typeof data.total_reviews === 'number') {
+        countEl.textContent = `${data.total_reviews}+ recenzií`;
+      }
+      if (source) {
+        source.textContent = data.source === 'google' ? 'Zdroj: Google recenzie' : 'Zdroj: lokálne recenzie';
+      }
+      if (Array.isArray(data.reviews) && data.reviews.length > 0) {
+        renderReviews(data.reviews);
+      }
+    } catch (error) {
+      if (source) source.textContent = 'Zdroj: lokálne recenzie';
+    }
+  }
+
+  loadReviews();
+</script>
+
+<style>
+  .reviews-page {
+    background: linear-gradient(180deg, #f8fafc 0%, #eef3f8 100%);
+    padding: 72px 20px 96px;
+  }
+
+  .reviews-page__container {
+    max-width: 1160px;
+    margin: 0 auto;
+  }
+
+  .reviews-summary {
+    background: #0f172a;
+    color: #e2e8f0;
+    border-radius: 18px;
+    padding: 26px 24px;
+    box-shadow: 0 20px 40px rgba(2, 6, 23, 0.2);
+    margin-bottom: 30px;
+  }
+
+  .reviews-summary__label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.8;
+    margin-bottom: 10px;
+  }
+
+  .reviews-summary__metrics {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+
+  .reviews-summary__rating {
+    font-size: 2.3rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #ffffff;
+  }
+
+  .reviews-summary__stars {
+    font-size: 1.05rem;
+    letter-spacing: 0.18em;
+    color: #facc15;
+  }
+
+  .reviews-summary__count {
+    font-size: 1rem;
+    color: #cbd5e1;
+  }
+
+  .reviews-summary__source {
+    font-size: 0.86rem;
+    color: #93c5fd;
+  }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .review-card {
+    background: #ffffff;
+    border: 1px solid #dbe6f3;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+  }
+
+  .review-card__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .review-card__author {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  .review-card__time {
+    font-size: 0.78rem;
+    color: #64748b;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .review-card__stars {
+    margin: 0 0 10px;
+    letter-spacing: 0.12em;
+    color: #eab308;
+    font-size: 0.95rem;
+  }
+
+  .review-card__text {
+    margin: 0;
+    color: #334155;
+    line-height: 1.6;
+    font-size: 0.92rem;
+  }
+
+  @media (max-width: 1024px) {
+    .reviews-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .reviews-page {
+      padding: 54px 14px 74px;
+    }
+
+    .reviews-summary {
+      padding: 20px 16px;
+      border-radius: 14px;
+    }
+
+    .reviews-summary__rating {
+      font-size: 2rem;
+    }
+
+    .reviews-grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .review-card {
+      padding: 16px;
+    }
+  }
+</style>
