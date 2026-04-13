@@ -7,13 +7,28 @@ const API = {
   partnerUpload: '/api/partners/upload'
 };
 
+function byId(id) {
+  return document.getElementById(id);
+}
+
+function setElementText(id, text) {
+  const el = byId(id);
+  if (el) el.textContent = text;
+}
+
+function showFeedback(message, type = 'success') {
+  if (typeof window !== 'undefined' && typeof window.showToast === 'function') {
+    window.showToast(message, type);
+  }
+}
+
 function getToken() {
   return localStorage.getItem('adminToken') || '';
 }
 
 function setToken(token) {
   localStorage.setItem('adminToken', token);
-  document.getElementById('auth-status').textContent = token ? 'Token uložený' : 'Token chýba';
+  setElementText('auth-status', token ? 'Token uložený' : 'Token chýba');
 }
 
 async function apiFetch(url, options = {}) {
@@ -31,10 +46,11 @@ async function apiFetch(url, options = {}) {
 
 // Notifications
 async function loadNotifications() {
-  const list = document.getElementById('notif-list');
-  const err = document.getElementById('notif-error');
+  const list = byId('notif-list');
+  const err = byId('notif-error');
+  if (!list) return;
   list.innerHTML = '<div class="muted">Načítavam...</div>';
-  err.textContent = '';
+  if (err) err.textContent = '';
   try {
     const data = await apiFetch(API.notifications);
     list.innerHTML = '';
@@ -56,7 +72,11 @@ async function loadNotifications() {
       list.appendChild(div);
     });
   } catch (e) {
-    err.textContent = e.message;
+    if (err) {
+      err.textContent = e.message;
+    } else {
+      list.innerHTML = `<div class="muted">${e.message}</div>`;
+    }
   }
 }
 
@@ -72,8 +92,8 @@ function fillNotifForm(n) {
 
 async function submitNotif(e) {
   e.preventDefault();
-  const msg = document.getElementById('notif-form-msg');
-  msg.textContent = '';
+  const msg = byId('notif-form-msg');
+  if (msg) msg.textContent = '';
   const payload = {
     text: document.getElementById('notif-text').value,
     backgroundColor: document.getElementById('notif-bg').value,
@@ -89,18 +109,21 @@ async function submitNotif(e) {
         method: 'PUT',
         body: JSON.stringify(payload)
       });
-      msg.textContent = 'Notifikácia upravená';
+      if (msg) msg.textContent = 'Notifikácia upravená';
+      showFeedback('Notifikácia upravená');
     } else {
       await apiFetch(API.notifications, {
         method: 'POST',
         body: JSON.stringify(payload)
       });
-      msg.textContent = 'Notifikácia pridaná';
+      if (msg) msg.textContent = 'Notifikácia pridaná';
+      showFeedback('Notifikácia pridaná');
     }
     fillNotifForm({});
     loadNotifications();
   } catch (err) {
-    msg.textContent = err.message;
+    if (msg) msg.textContent = err.message;
+    showFeedback(err.message, 'error');
   }
 }
 
@@ -132,8 +155,8 @@ async function handleNotifActions(e) {
 
 // Statistics
 async function loadStats() {
-  const msg = document.getElementById('stats-msg');
-  msg.textContent = '';
+  const msg = byId('stats-msg');
+  if (msg) msg.textContent = '';
   try {
     const data = await apiFetch(API.statistics);
     document.getElementById('stats-inspections').value = data.performedInspections ?? 15000;
@@ -141,14 +164,15 @@ async function loadStats() {
     document.getElementById('stats-satisfaction').value = data.satisfactionPercentage ?? 98;
     document.getElementById('stats-place').value = data.googlePlaceId ?? '';
   } catch (err) {
-    msg.textContent = err.message;
+    if (msg) msg.textContent = err.message;
+    showFeedback(err.message, 'error');
   }
 }
 
 async function submitStats(e) {
   e.preventDefault();
-  const msg = document.getElementById('stats-msg');
-  msg.textContent = '';
+  const msg = byId('stats-msg');
+  if (msg) msg.textContent = '';
   const payload = {
     performedInspections: Number(document.getElementById('stats-inspections').value || 0),
     yearsExperienceStart: Number(document.getElementById('stats-years-start').value || 2014),
@@ -157,39 +181,58 @@ async function submitStats(e) {
   };
   try {
     await apiFetch(API.statistics, { method: 'PUT', body: JSON.stringify(payload) });
-    msg.textContent = 'Štatistiky uložené';
+    if (msg) msg.textContent = 'Štatistiky uložené';
+    showFeedback('Štatistiky uložené');
   } catch (err) {
-    msg.textContent = err.message;
+    if (msg) msg.textContent = err.message;
+    showFeedback(err.message, 'error');
   }
 }
 
 // Init
-document.getElementById('save-token').addEventListener('click', () => {
-  const val = document.getElementById('admin-password').value.trim();
-  setToken(val);
-});
+const saveTokenBtn = byId('save-token');
+if (saveTokenBtn) {
+  saveTokenBtn.addEventListener('click', () => {
+    const pwInput = byId('admin-password');
+    const val = pwInput ? pwInput.value.trim() : '';
+    setToken(val);
+  });
+}
 
-document.getElementById('notif-form').addEventListener('submit', submitNotif);
-document.getElementById('notif-reset').addEventListener('click', () => fillNotifForm({}));
-document.getElementById('notif-list').addEventListener('click', (e) => handleNotifActions(e));
-document.getElementById('stats-form').addEventListener('submit', submitStats);
+const notifForm = byId('notif-form');
+if (notifForm) notifForm.addEventListener('submit', submitNotif);
 
-// Load initial state
+const notifReset = byId('notif-reset');
+if (notifReset) notifReset.addEventListener('click', () => fillNotifForm({}));
+
+const notifList = byId('notif-list');
+if (notifList) notifList.addEventListener('click', (e) => handleNotifActions(e));
+
+const statsForm = byId('stats-form');
+if (statsForm) statsForm.addEventListener('submit', submitStats);
+
 setToken(getToken());
-loadNotifications();
-loadStats();
+if (getToken()) {
+  loadNotifications();
+  loadStats();
+}
 
 // ---- Partners ----
 function partnerStatus(text) {
-  const el = document.getElementById('partner-msg');
-  el.textContent = text || '';
+  const el = byId('partner-msg');
+  if (el) {
+    el.textContent = text || '';
+    return;
+  }
+  if (text) showFeedback(text, text.toLowerCase().includes('chyb') ? 'error' : 'success');
 }
 
 async function loadPartners() {
-  const list = document.getElementById('partners-list');
-  const err = document.getElementById('partners-error');
+  const list = byId('partners-list');
+  const err = byId('partners-error');
+  if (!list) return;
   list.innerHTML = '<div class="muted">Načítavam...</div>';
-  err.textContent = '';
+  if (err) err.textContent = '';
   try {
     const data = await apiFetch(`${API.partners}?includeInactive=true`);
     list.innerHTML = '';
@@ -216,7 +259,11 @@ async function loadPartners() {
       list.appendChild(div);
     });
   } catch (e) {
-    err.textContent = e.message;
+    if (err) {
+      err.textContent = e.message;
+    } else {
+      list.innerHTML = `<div class="muted">${e.message}</div>`;
+    }
   }
 }
 
@@ -359,7 +406,15 @@ async function handlePartnerActions(e) {
   }
 }
 
-document.getElementById('partner-form').addEventListener('submit', submitPartner);
-document.getElementById('partner-reset').addEventListener('click', () => fillPartnerForm({}));
-document.getElementById('partners-list').addEventListener('click', handlePartnerActions);
-loadPartners();
+const partnerForm = byId('partner-form');
+if (partnerForm) partnerForm.addEventListener('submit', submitPartner);
+
+const partnerReset = byId('partner-reset');
+if (partnerReset) partnerReset.addEventListener('click', () => fillPartnerForm({}));
+
+const partnersList = byId('partners-list');
+if (partnersList) partnersList.addEventListener('click', handlePartnerActions);
+
+if (getToken()) {
+  loadPartners();
+}
