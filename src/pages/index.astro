@@ -658,81 +658,35 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
 
   /* Carousel styles */
   .reviews-carousel {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    max-width: 1200px;
+    max-width: 1280px;
     margin: 0 auto;
-    --visible-count: 3;
   }
 
   .carousel-track-wrapper {
     overflow: hidden;
-    flex: 1;
     border-radius: 0.75rem;
+    width: 100%;
   }
 
   .carousel-track {
     display: flex;
     gap: 1rem;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
+    transform: translate3d(0, 0, 0);
   }
 
   .carousel-slide {
-    flex: 0 0 calc((100% - (var(--visible-count) - 1) * 1rem) / var(--visible-count));
+    flex: 0 0 380px;
     box-sizing: border-box;
     min-width: 0;
   }
 
   .carousel-arrow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid #d1d5db;
-    background: #fff;
-    color: #374151;
-    cursor: pointer;
-    transition: border-color 0.3s, color 0.3s, box-shadow 0.3s;
-    flex-shrink: 0;
-  }
-
-  .carousel-arrow:hover {
-    border-color: #0066cc;
-    color: #0066cc;
-    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
-  }
-
-  .carousel-arrow:disabled {
-    opacity: 0.45;
-    cursor: default;
-    box-shadow: none;
+    display: none;
   }
 
   .carousel-dots {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-top: 1.5rem;
-  }
-
-  .carousel-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    border: none;
-    background: #d1d5db;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.3s;
-    padding: 0;
-  }
-
-  .carousel-dot.active {
-    background: #0066cc;
-    transform: scale(1.2);
+    display: none;
   }
 
   .review-card {
@@ -769,22 +723,18 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
   }
 
   @media (max-width: 640px) {
-    .carousel-arrow {
-      width: 32px;
-      height: 32px;
-    }
-    .reviews-carousel {
-      gap: 0.5rem;
-      --visible-count: 1;
-    }
     .carousel-track {
       gap: 0.5rem;
+    }
+
+    .carousel-slide {
+      flex-basis: 85vw;
     }
   }
 
   @media (max-width: 1100px) and (min-width: 641px) {
-    .reviews-carousel {
-      --visible-count: 2;
+    .carousel-slide {
+      flex-basis: 46vw;
     }
   }
 
@@ -1256,26 +1206,17 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
 </style>
 
 <script is:inline>
-// Reviews Carousel (multi-card)
+// Reviews Carousel (continuous right-to-left marquee)
 (function() {
   var track = document.getElementById('carousel-track');
-  var dotsWrap = document.getElementById('carousel-dots');
-  var prevBtn = document.getElementById('carousel-prev');
-  var nextBtn = document.getElementById('carousel-next');
   var carousel = document.getElementById('reviews-carousel');
-  if (!track || !prevBtn || !nextBtn || !carousel || !dotsWrap) return;
+  if (!track || !carousel) return;
 
-  var current = 0;
-  var total = track.children.length;
-  var visible = 3;
-  var maxIndex = 0;
-  var autoInterval = null;
-
-  function getVisibleCount() {
-    if (window.innerWidth <= 640) return 1;
-    if (window.innerWidth <= 1100) return 2;
-    return 3;
-  }
+  var offset = 0;
+  var speed = 0.45;
+  var setWidth = 0;
+  var rafId = null;
+  var paused = false;
 
   function normalizeText(text) {
     if (!text || typeof text !== 'string') return '';
@@ -1310,68 +1251,39 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
     return card;
   }
 
-  function refreshCounts() {
-    total = track.children.length;
-    visible = Math.min(getVisibleCount(), Math.max(1, total));
-    carousel.style.setProperty('--visible-count', String(visible));
-    maxIndex = Math.max(0, total - visible);
-    if (current > maxIndex) current = maxIndex;
-  }
-
-  function renderDots() {
-    dotsWrap.innerHTML = '';
-    var pages = Math.max(1, maxIndex + 1);
-    for (var i = 0; i < pages; i += 1) {
-      var dot = document.createElement('button');
-      dot.className = 'carousel-dot' + (i === current ? ' active' : '');
-      dot.setAttribute('aria-label', 'Recenzia ' + (i + 1));
-      dot.addEventListener('click', (function(index) {
-        return function() {
-          goTo(index, false);
-          startAuto();
-        };
-      })(i));
-      dotsWrap.appendChild(dot);
-    }
-  }
-
-  function updateControls() {
-    var movable = maxIndex > 0;
-    prevBtn.disabled = !movable;
-    nextBtn.disabled = !movable;
-  }
-
-  function goTo(index, wrap) {
-    if (wrap === undefined) wrap = true;
-    if (maxIndex <= 0) {
-      current = 0;
-    } else if (wrap) {
-      if (index < 0) index = maxIndex;
-      if (index > maxIndex) index = 0;
-      current = index;
-    } else {
-      current = Math.min(maxIndex, Math.max(0, index));
-    }
-
-    var first = track.children[0];
-    if (!first) return;
-    var itemWidth = first.getBoundingClientRect().width;
-    var styles = window.getComputedStyle(track);
-    var gap = parseFloat(styles.gap || styles.columnGap || '0') || 0;
-    var offset = current * (itemWidth + gap);
-    track.style.transform = 'translateX(-' + offset + 'px)';
-
-    var dots = dotsWrap.querySelectorAll('.carousel-dot');
-    dots.forEach(function(d, i) {
-      d.classList.toggle('active', i === current);
+  function clearClones() {
+    var clones = track.querySelectorAll('[data-clone="1"]');
+    clones.forEach(function(node) {
+      node.remove();
     });
-    updateControls();
   }
 
-  function rebuild() {
-    refreshCounts();
-    renderDots();
-    goTo(current, false);
+  function setupMarquee() {
+    clearClones();
+    offset = 0;
+
+    var originals = Array.from(track.children).filter(function(node) {
+      return node.getAttribute('data-clone') !== '1';
+    });
+
+    if (originals.length < 2) {
+      setWidth = 0;
+      track.style.transform = 'translate3d(0, 0, 0)';
+      return;
+    }
+
+    originals.forEach(function(node) {
+      var clone = node.cloneNode(true);
+      clone.setAttribute('data-clone', '1');
+      track.appendChild(clone);
+    });
+
+    setWidth = originals.reduce(function(sum, node) {
+      return sum + node.getBoundingClientRect().width;
+    }, 0);
+    setWidth += (originals.length - 1) * 16;
+
+    track.style.transform = 'translate3d(0, 0, 0)';
   }
 
   async function loadReviewsFromApi() {
@@ -1385,34 +1297,36 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
       data.reviews.forEach(function(item) {
         track.appendChild(buildSlide(item));
       });
-      current = 0;
-      rebuild();
+      setupMarquee();
     } catch (_) {
-      // keep static fallback slides
+      setupMarquee();
     }
   }
 
-  function startAuto() {
-    stopAuto();
-    if (maxIndex <= 0) return;
-    autoInterval = setInterval(function() { goTo(current + 1, true); }, 5000);
+  function animate() {
+    if (!paused && setWidth > 0) {
+      offset += speed;
+      if (offset >= setWidth) {
+        offset = 0;
+      }
+      track.style.transform = 'translate3d(-' + offset + 'px, 0, 0)';
+    }
+    rafId = window.requestAnimationFrame(animate);
   }
 
-  function stopAuto() {
-    if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
+  function onResize() {
+    setupMarquee();
   }
 
-  prevBtn.addEventListener('click', function() { goTo(current - 1, true); startAuto(); });
-  nextBtn.addEventListener('click', function() { goTo(current + 1, true); startAuto(); });
-  window.addEventListener('resize', rebuild);
+  carousel.addEventListener('mouseenter', function() { paused = true; });
+  carousel.addEventListener('mouseleave', function() { paused = false; });
+  carousel.addEventListener('focusin', function() { paused = true; });
+  carousel.addEventListener('focusout', function() { paused = false; });
+  window.addEventListener('resize', onResize);
 
-  if (carousel) {
-    carousel.addEventListener('mouseenter', stopAuto);
-    carousel.addEventListener('mouseleave', startAuto);
-  }
-
-  rebuild();
+  setupMarquee();
   loadReviewsFromApi();
-  startAuto();
+  if (rafId) window.cancelAnimationFrame(rafId);
+  rafId = window.requestAnimationFrame(animate);
 })();
 </script>
