@@ -437,7 +437,7 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
           </span>
         </a>
 
-        <a href="#" class="service-link-card service-link-card--image" style="background-image: url('/images/about-hero-2.jpg')" target="_blank" rel="noopener noreferrer">
+        <a href="#" class="service-link-card service-link-card--image" style="background-image: url('/images/kontajner.png')" target="_blank" rel="noopener noreferrer">
           <div class="service-link-card__top-line"></div>
           <h3 class="service-link-card__title">Kontajnerová služba</h3>
           <p class="service-link-card__desc">Prenájom kontajnerov</p>
@@ -661,8 +661,9 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
     display: flex;
     align-items: center;
     gap: 1rem;
-    max-width: 700px;
+    max-width: 1200px;
     margin: 0 auto;
+    --visible-count: 3;
   }
 
   .carousel-track-wrapper {
@@ -673,12 +674,15 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
 
   .carousel-track {
     display: flex;
+    gap: 1rem;
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
   }
 
   .carousel-slide {
-    min-width: 100%;
+    flex: 0 0 calc((100% - (var(--visible-count) - 1) * 1rem) / var(--visible-count));
     box-sizing: border-box;
+    min-width: 0;
   }
 
   .carousel-arrow {
@@ -700,6 +704,12 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
     border-color: #0066cc;
     color: #0066cc;
     box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+  }
+
+  .carousel-arrow:disabled {
+    opacity: 0.45;
+    cursor: default;
+    box-shadow: none;
   }
 
   .carousel-dots {
@@ -765,6 +775,16 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
     }
     .reviews-carousel {
       gap: 0.5rem;
+      --visible-count: 1;
+    }
+    .carousel-track {
+      gap: 0.5rem;
+    }
+  }
+
+  @media (max-width: 1100px) and (min-width: 641px) {
+    .reviews-carousel {
+      --visible-count: 2;
     }
   }
 
@@ -1236,53 +1256,163 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
 </style>
 
 <script is:inline>
-// Reviews Carousel
+// Reviews Carousel (multi-card)
 (function() {
   var track = document.getElementById('carousel-track');
-  var dots = document.querySelectorAll('.carousel-dot');
+  var dotsWrap = document.getElementById('carousel-dots');
   var prevBtn = document.getElementById('carousel-prev');
   var nextBtn = document.getElementById('carousel-next');
   var carousel = document.getElementById('reviews-carousel');
-  if (!track || !prevBtn || !nextBtn) return;
+  if (!track || !prevBtn || !nextBtn || !carousel || !dotsWrap) return;
 
   var current = 0;
   var total = track.children.length;
+  var visible = 3;
+  var maxIndex = 0;
   var autoInterval = null;
 
-  function goTo(index) {
-    if (index < 0) index = total - 1;
-    if (index >= total) index = 0;
-    current = index;
-    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+  function getVisibleCount() {
+    if (window.innerWidth <= 640) return 1;
+    if (window.innerWidth <= 1100) return 2;
+    return 3;
+  }
+
+  function normalizeText(text) {
+    if (!text || typeof text !== 'string') return '';
+    return text.length > 180 ? text.slice(0, 177).trim() + '...' : text;
+  }
+
+  function buildSlide(item) {
+    var card = document.createElement('article');
+    card.className = 'review-card carousel-slide';
+
+    var stars = document.createElement('div');
+    stars.className = 'review-card__stars';
+    var rating = Math.max(1, Math.min(5, Number(item.rating) || 5));
+    for (var i = 0; i < 5; i += 1) {
+      var star = document.createElement('span');
+      star.className = 'review-star';
+      star.innerHTML = i < rating ? '&#9733;' : '&#9734;';
+      stars.appendChild(star);
+    }
+
+    var text = document.createElement('p');
+    text.className = 'review-card__text';
+    text.textContent = '"' + normalizeText(item.text || '') + '"';
+
+    var author = document.createElement('p');
+    author.className = 'review-card__author';
+    author.textContent = item.author_name || 'Zákazník';
+
+    card.appendChild(stars);
+    card.appendChild(text);
+    card.appendChild(author);
+    return card;
+  }
+
+  function refreshCounts() {
+    total = track.children.length;
+    visible = Math.min(getVisibleCount(), Math.max(1, total));
+    carousel.style.setProperty('--visible-count', String(visible));
+    maxIndex = Math.max(0, total - visible);
+    if (current > maxIndex) current = maxIndex;
+  }
+
+  function renderDots() {
+    dotsWrap.innerHTML = '';
+    var pages = Math.max(1, maxIndex + 1);
+    for (var i = 0; i < pages; i += 1) {
+      var dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === current ? ' active' : '');
+      dot.setAttribute('aria-label', 'Recenzia ' + (i + 1));
+      dot.addEventListener('click', (function(index) {
+        return function() {
+          goTo(index, false);
+          startAuto();
+        };
+      })(i));
+      dotsWrap.appendChild(dot);
+    }
+  }
+
+  function updateControls() {
+    var movable = maxIndex > 0;
+    prevBtn.disabled = !movable;
+    nextBtn.disabled = !movable;
+  }
+
+  function goTo(index, wrap) {
+    if (wrap === undefined) wrap = true;
+    if (maxIndex <= 0) {
+      current = 0;
+    } else if (wrap) {
+      if (index < 0) index = maxIndex;
+      if (index > maxIndex) index = 0;
+      current = index;
+    } else {
+      current = Math.min(maxIndex, Math.max(0, index));
+    }
+
+    var first = track.children[0];
+    if (!first) return;
+    var itemWidth = first.getBoundingClientRect().width;
+    var styles = window.getComputedStyle(track);
+    var gap = parseFloat(styles.gap || styles.columnGap || '0') || 0;
+    var offset = current * (itemWidth + gap);
+    track.style.transform = 'translateX(-' + offset + 'px)';
+
+    var dots = dotsWrap.querySelectorAll('.carousel-dot');
     dots.forEach(function(d, i) {
       d.classList.toggle('active', i === current);
     });
+    updateControls();
+  }
+
+  function rebuild() {
+    refreshCounts();
+    renderDots();
+    goTo(current, false);
+  }
+
+  async function loadReviewsFromApi() {
+    try {
+      var res = await fetch('/api/reviews');
+      if (!res.ok) return;
+      var data = await res.json();
+      if (!data || !Array.isArray(data.reviews) || data.reviews.length < 1) return;
+
+      track.innerHTML = '';
+      data.reviews.forEach(function(item) {
+        track.appendChild(buildSlide(item));
+      });
+      current = 0;
+      rebuild();
+    } catch (_) {
+      // keep static fallback slides
+    }
   }
 
   function startAuto() {
     stopAuto();
-    autoInterval = setInterval(function() { goTo(current + 1); }, 5000);
+    if (maxIndex <= 0) return;
+    autoInterval = setInterval(function() { goTo(current + 1, true); }, 5000);
   }
 
   function stopAuto() {
     if (autoInterval) { clearInterval(autoInterval); autoInterval = null; }
   }
 
-  prevBtn.addEventListener('click', function() { goTo(current - 1); startAuto(); });
-  nextBtn.addEventListener('click', function() { goTo(current + 1); startAuto(); });
-
-  dots.forEach(function(dot) {
-    dot.addEventListener('click', function() {
-      goTo(parseInt(dot.getAttribute('data-dot')));
-      startAuto();
-    });
-  });
+  prevBtn.addEventListener('click', function() { goTo(current - 1, true); startAuto(); });
+  nextBtn.addEventListener('click', function() { goTo(current + 1, true); startAuto(); });
+  window.addEventListener('resize', rebuild);
 
   if (carousel) {
     carousel.addEventListener('mouseenter', stopAuto);
     carousel.addEventListener('mouseleave', startAuto);
   }
 
+  rebuild();
+  loadReviewsFromApi();
   startAuto();
 })();
 </script>
