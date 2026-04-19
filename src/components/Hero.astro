@@ -10,6 +10,9 @@ interface Props {
   videoSrc?: string;
   videoPoster?: string;
   showSubtitle?: boolean;
+  showTitle?: boolean;
+  showCta?: boolean;
+  showDecorations?: boolean;
 }
 
 const {
@@ -25,10 +28,15 @@ const {
   videoSrc = '/hero-video.mp4',
   videoPoster = '/images/hero-poster.jpg',
   showSubtitle = true,
+  showTitle = true,
+  showCta = true,
+  showDecorations = true,
 } = Astro.props;
+
+const hasHeroContent = showTitle || showSubtitle || showCta;
 ---
 
-<section class="hero" id="hero">
+<section class:list={['hero', { 'hero--minimal': !showDecorations }]} id="hero">
   <!-- Background Video -->
   <video
     class="hero-video"
@@ -42,36 +50,41 @@ const {
     <source src={videoSrc} type="video/mp4" />
   </video>
 
-  <!-- Gradient Overlay -->
-  <div class="hero-overlay" aria-hidden="true"></div>
-
-  <!-- Animated Gradient Orbs -->
-  <div class="hero-orb hero-orb--1" aria-hidden="true"></div>
-  <div class="hero-orb hero-orb--2" aria-hidden="true"></div>
-  <div class="hero-orb hero-orb--3" aria-hidden="true"></div>
-
-  <!-- Grid Pattern Overlay -->
-  <div class="hero-grid" aria-hidden="true"></div>
-
-  <!-- Bokeh Effect -->
-  <BokehHero />
+  {showDecorations && (
+    <>
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb--1" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb--2" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb--3" aria-hidden="true"></div>
+      <div class="hero-grid" aria-hidden="true"></div>
+      <BokehHero />
+    </>
+  )}
 
   <!-- Hero Content -->
-  <div class="hero-content">
-    <h1 class="hero-title hero-title-animate" data-translate="hero-title">{title}</h1>
-    {showSubtitle && (
-      <p class="hero-subtitle hero-subtitle-animate" data-translate="hero-subtitle">{subtitle}</p>
-    )}
-    <a href={ctaHref} class="hero-cta magnetic-btn pulse-glow hero-cta-animate" rel="noopener noreferrer" data-translate="hero-cta">
-      {ctaText}
-    </a>
-  </div>
-
-  <div class="hero-partners-wrapper" id="hero-partners-wrapper" style="display: none;">
-    <div class="hero-partners-mask">
-      <div class="hero-partners-track" id="hero-partners-track"></div>
+  {hasHeroContent && (
+    <div class="hero-content">
+      {showTitle && (
+        <h1 class="hero-title hero-title-animate" data-translate="hero-title">{title}</h1>
+      )}
+      {showSubtitle && (
+        <p class="hero-subtitle hero-subtitle-animate" data-translate="hero-subtitle">{subtitle}</p>
+      )}
+      {showCta && (
+        <a href={ctaHref} class="hero-cta magnetic-btn pulse-glow hero-cta-animate" rel="noopener noreferrer" data-translate="hero-cta">
+          {ctaText}
+        </a>
+      )}
     </div>
-  </div>
+  )}
+
+  {showDecorations && (
+    <div class="hero-partners-wrapper" id="hero-partners-wrapper" style="display: none;">
+      <div class="hero-partners-mask">
+        <div class="hero-partners-track" id="hero-partners-track"></div>
+      </div>
+    </div>
+  )}
 
   <!-- Statistics -->
   {stats && stats.length > 0 && (
@@ -85,12 +98,13 @@ const {
     </div>
   )}
 
-  <!-- Scroll Indicator -->
-  <div class="hero-scroll" aria-hidden="true">
-    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="6 9 12 15 18 9"></polyline>
-    </svg>
-  </div>
+  {showDecorations && (
+    <div class="hero-scroll" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"></polyline>
+      </svg>
+    </div>
+  )}
 </section>
 
 <style>
@@ -117,6 +131,10 @@ const {
     object-fit: cover;
     z-index: 0;
     filter: brightness(1.1) contrast(1.05);
+  }
+
+  .hero--minimal .hero-video {
+    filter: none;
   }
 
   /* Gradient Overlay */

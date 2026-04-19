@@ -13,13 +13,14 @@ import Hero from '@/components/Hero.astro';
   <Header slot="header" currentPath="/o-nas" />
 
   <Hero
-    title="JP Control s.r.o."
-    ctaText="KONTAKTOVAŤ NÁS"
-    ctaHref="/kontakt"
     videoSrc="/images/O%20NAS.mp4"
+    showTitle={false}
     showSubtitle={false}
+    showCta={false}
+    showDecorations={false}
     stats={[]}
   />
+  <h1 class="sr-only">O nás</h1>
 
   <!-- O spoločnosti -->
   <section class="py-20 bg-white">
