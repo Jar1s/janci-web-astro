@@ -9,6 +9,7 @@ interface Props {
   stats?: { value: string; label: string }[];
   videoSrc?: string;
   videoPoster?: string;
+  showSubtitle?: boolean;
 }
 
 const {
@@ -23,6 +24,7 @@ const {
   ],
   videoSrc = '/hero-video.mp4',
   videoPoster = '/images/hero-poster.jpg',
+  showSubtitle = true,
 } = Astro.props;
 ---
 
@@ -57,7 +59,9 @@ const {
   <!-- Hero Content -->
   <div class="hero-content">
     <h1 class="hero-title hero-title-animate" data-translate="hero-title">{title}</h1>
-    <p class="hero-subtitle hero-subtitle-animate" data-translate="hero-subtitle">{subtitle}</p>
+    {showSubtitle && (
+      <p class="hero-subtitle hero-subtitle-animate" data-translate="hero-subtitle">{subtitle}</p>
+    )}
     <a href={ctaHref} class="hero-cta magnetic-btn pulse-glow hero-cta-animate" rel="noopener noreferrer" data-translate="hero-cta">
       {ctaText}
     </a>
@@ -466,31 +470,31 @@ const {
       }
     }
 
-    // Load statistics from API and update data-target values
     const statsSection = document.getElementById('hero-stats');
-    if (!statsSection) return;
 
-    try {
-      const res = await fetch('/api/statistics');
-      if (res.ok) {
-        const data = await res.json();
-        const statValues = statsSection.querySelectorAll('.hero-stat-value');
-        if (data.performedInspections && statValues[0]) {
-          const formatted = Number(data.performedInspections).toLocaleString('sk-SK').replace(/\u00a0/g, ' ');
-          statValues[0].setAttribute('data-target', formatted + '+');
+    if (statsSection) {
+      try {
+        const res = await fetch('/api/statistics');
+        if (res.ok) {
+          const data = await res.json();
+          const statValues = statsSection.querySelectorAll('.hero-stat-value');
+          if (data.performedInspections && statValues[0]) {
+            const formatted = Number(data.performedInspections).toLocaleString('sk-SK').replace(/\u00a0/g, ' ');
+            statValues[0].setAttribute('data-target', formatted + '+');
+          }
+          if (data.yearsExperience && statValues[1]) {
+            statValues[1].setAttribute('data-target', data.yearsExperience + '+');
+          } else if (data.yearsExperienceStart && statValues[1]) {
+            const years = new Date().getFullYear() - Number(data.yearsExperienceStart);
+            statValues[1].setAttribute('data-target', years + '+');
+          }
+          if (data.satisfactionPercentage && statValues[2]) {
+            statValues[2].setAttribute('data-target', data.satisfactionPercentage + '%');
+          }
         }
-        if (data.yearsExperience && statValues[1]) {
-          statValues[1].setAttribute('data-target', data.yearsExperience + '+');
-        } else if (data.yearsExperienceStart && statValues[1]) {
-          const years = new Date().getFullYear() - Number(data.yearsExperienceStart);
-          statValues[1].setAttribute('data-target', years + '+');
-        }
-        if (data.satisfactionPercentage && statValues[2]) {
-          statValues[2].setAttribute('data-target', data.satisfactionPercentage + '%');
-        }
+      } catch (e) {
+        // API not available, use default values
       }
-    } catch (e) {
-      // API not available, use default values
     }
 
     const partnersWrapper = document.getElementById('hero-partners-wrapper');
@@ -552,75 +556,73 @@ const {
 
     await loadHeroPartners();
 
-    // Counter animation with IntersectionObserver
+    if (statsSection) {
+      let animated = false;
 
-    let animated = false;
-
-    function parseTarget(target: string): { num: number; prefix: string; suffix: string } {
-      // Extract numeric part and any prefix/suffix (e.g. "15 000+" => 15000, suffix "+")
-      const cleaned = target.replace(/\s/g, '');
-      const match = cleaned.match(/^([^\d]*)(\d+)(.*)$/);
-      if (!match) return { num: 0, prefix: '', suffix: '' };
-      return {
-        prefix: match[1],
-        num: parseInt(match[2], 10),
-        suffix: match[3],
-      };
-    }
-
-    function formatNumber(n: number, original: string): string {
-      // If original had space-separated thousands (like "15 000"), format similarly
-      if (/\d\s\d/.test(original)) {
-        return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+      function parseTarget(target: string): { num: number; prefix: string; suffix: string } {
+        const cleaned = target.replace(/\s/g, '');
+        const match = cleaned.match(/^([^\d]*)(\d+)(.*)$/);
+        if (!match) return { num: 0, prefix: '', suffix: '' };
+        return {
+          prefix: match[1],
+          num: parseInt(match[2], 10),
+          suffix: match[3],
+        };
       }
-      return n.toString();
-    }
 
-    function animateCounters() {
-      if (animated) return;
-      animated = true;
-
-      const statValues = statsSection!.querySelectorAll('.hero-stat-value');
-      statValues.forEach((el) => {
-        const target = el.getAttribute('data-target');
-        if (!target) return;
-
-        const { num, prefix, suffix } = parseTarget(target);
-        if (num === 0) {
-          el.textContent = target;
-          return;
+      function formatNumber(n: number, original: string): string {
+        if (/\d\s\d/.test(original)) {
+          return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
         }
+        return n.toString();
+      }
 
-        const duration = 2000; // 2 seconds
-        const steps = 60;
-        const stepTime = duration / steps;
-        let current = 0;
-        const increment = num / steps;
+      function animateCounters() {
+        if (animated) return;
+        animated = true;
 
-        const timer = setInterval(() => {
-          current += increment;
-          if (current >= num) {
-            current = num;
-            clearInterval(timer);
+        const statValues = statsSection.querySelectorAll('.hero-stat-value');
+        statValues.forEach((el) => {
+          const target = el.getAttribute('data-target');
+          if (!target) return;
+
+          const { num, prefix, suffix } = parseTarget(target);
+          if (num === 0) {
+            el.textContent = target;
+            return;
           }
-          el.textContent = prefix + formatNumber(Math.floor(current), target) + suffix;
-        }, stepTime);
-      });
-    }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            animateCounters();
-            observer.disconnect();
-          }
+          const duration = 2000;
+          const steps = 60;
+          const stepTime = duration / steps;
+          let current = 0;
+          const increment = num / steps;
+
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= num) {
+              current = num;
+              clearInterval(timer);
+            }
+            el.textContent = prefix + formatNumber(Math.floor(current), target) + suffix;
+          }, stepTime);
         });
-      },
-      { threshold: 0.3 }
-    );
+      }
 
-    observer.observe(statsSection);
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              animateCounters();
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+
+      observer.observe(statsSection);
+    }
 
     // Scroll indicator click — scroll to next section
     const scrollIndicator = document.querySelector('.hero-scroll');
