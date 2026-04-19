@@ -7,6 +7,8 @@ interface Props {
   ctaText?: string;
   ctaHref?: string;
   stats?: { value: string; label: string }[];
+  videoSrc?: string;
+  videoPoster?: string;
 }
 
 const {
@@ -19,6 +21,8 @@ const {
     { value: '12+', label: 'ROKOV SKÚSENOSTÍ' },
     { value: '98%', label: 'SPOKOJNÝCH ZÁKAZNÍKOV' },
   ],
+  videoSrc = '/hero-video.mp4',
+  videoPoster = '/images/hero-poster.jpg',
 } = Astro.props;
 ---
 
@@ -30,10 +34,10 @@ const {
     muted
     loop
     playsinline
-    poster="/images/hero-poster.jpg"
+    poster={videoPoster}
     aria-hidden="true"
   >
-    <source src="/hero-video.mp4" type="video/mp4" />
+    <source src={videoSrc} type="video/mp4" />
   </video>
 
   <!-- Gradient Overlay -->
