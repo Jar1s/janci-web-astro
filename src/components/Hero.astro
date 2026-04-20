@@ -30,7 +30,7 @@ const {
     { value: '98%', label: 'SPOKOJNÝCH ZÁKAZNÍKOV' },
   ],
   videoSrc = '/images/main.mp4',
-  videoPoster = '/images/hero-poster.jpg',
+  videoPoster = '',
   showSubtitle = true,
   showTitle = true,
   showCta = true,
@@ -48,14 +48,15 @@ const hasHeroContent =
 ---
 
 <section class:list={['hero', { 'hero--minimal': !showDecorations }]} id="hero">
-  <!-- Background Video -->
+  <!-- Background Video: skryté do canplay, aby nebol vidieť nesprávny poster / predošlý frame -->
   <video
-    class="hero-video"
+    class:list={['hero-video', 'hero-video--pending']}
     autoplay
     muted
     loop
     playsinline
-    poster={videoPoster}
+    preload="auto"
+    poster={videoPoster ? videoPoster : undefined}
     aria-hidden="true"
   >
     <source src={videoSrc} type="video/mp4" />
@@ -144,6 +145,7 @@ const hasHeroContent =
     justify-content: center;
     overflow: hidden;
     color: #fff;
+    background-color: #0a1628;
   }
 
   /* Background Video */
@@ -156,6 +158,15 @@ const hasHeroContent =
     object-fit: cover;
     z-index: 0;
     filter: brightness(1.1) contrast(1.05);
+  }
+
+  .hero-video--pending {
+    opacity: 0;
+  }
+
+  .hero-video.is-ready {
+    opacity: 1;
+    transition: opacity 0.45s ease;
   }
 
   .hero--minimal .hero-video {
@@ -499,41 +510,63 @@ const hasHeroContent =
   }
 </style>
 
-<script>
-  // Video fallback: if video fails, use poster as background image
-  document.addEventListener('DOMContentLoaded', async () => {
-    const video = document.querySelector('.hero-video') as HTMLVideoElement;
-    if (video) {
-      video.addEventListener('error', () => {
-        const poster = video.getAttribute('poster');
-        if (poster) {
-          const hero = document.querySelector('.hero') as HTMLElement;
-          if (hero) {
-            hero.style.backgroundImage = `url('${poster}')`;
-            hero.style.backgroundSize = 'cover';
-            hero.style.backgroundPosition = 'center';
-          }
-          video.style.display = 'none';
-        }
-      });
+<script lang="ts">
+  function revealHeroVideo(video: HTMLVideoElement) {
+    video.classList.remove('hero-video--pending');
+    video.classList.add('is-ready');
+  }
 
-      // Also handle source error
-      const source = video.querySelector('source');
-      if (source) {
-        source.addEventListener('error', () => {
-          const poster = video.getAttribute('poster');
-          if (poster) {
-            const hero = document.querySelector('.hero') as HTMLElement;
-            if (hero) {
-              hero.style.backgroundImage = `url('${poster}')`;
-              hero.style.backgroundSize = 'cover';
-              hero.style.backgroundPosition = 'center';
-            }
-            video.style.display = 'none';
-          }
-        });
+  function setupHeroVideoLoad() {
+    const video = document.querySelector('.hero-video') as HTMLVideoElement | null;
+    if (!video || video.dataset.heroVideoInit === '1') return;
+    video.dataset.heroVideoInit = '1';
+
+    let fallbackTimer: ReturnType<typeof setTimeout> | undefined;
+
+    const reveal = () => {
+      if (fallbackTimer !== undefined) {
+        clearTimeout(fallbackTimer);
+        fallbackTimer = undefined;
       }
+      revealHeroVideo(video);
+    };
+
+    if (video.readyState >= 2) {
+      reveal();
+    } else {
+      video.addEventListener('loadeddata', reveal, { once: true });
+      video.addEventListener('canplay', reveal, { once: true });
+      video.addEventListener('playing', reveal, { once: true });
+      fallbackTimer = setTimeout(reveal, 4000);
     }
+
+    const onVideoError = () => {
+      if (fallbackTimer !== undefined) clearTimeout(fallbackTimer);
+      fallbackTimer = undefined;
+      const poster = video.getAttribute('poster');
+      const hero = document.querySelector('.hero') as HTMLElement;
+      if (hero) {
+        if (poster) {
+          hero.style.backgroundImage = `url('${poster}')`;
+          hero.style.backgroundSize = 'cover';
+          hero.style.backgroundPosition = 'center';
+        } else {
+          hero.style.backgroundColor = '#0a1628';
+        }
+      }
+      video.style.display = 'none';
+    };
+
+    video.addEventListener('error', onVideoError, { once: true });
+
+    const source = video.querySelector('source');
+    if (source) {
+      source.addEventListener('error', onVideoError, { once: true });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    setupHeroVideoLoad();
 
     const statsSection = document.getElementById('hero-stats');
 
@@ -701,8 +734,9 @@ const hasHeroContent =
     }
   });
 
-  // Re-init counters after View Transitions page swap
+  // Re-init after View Transitions page swap
   document.addEventListener('astro:after-swap', () => {
+    setupHeroVideoLoad();
     const stats = document.getElementById('hero-stats');
     if (!stats) return;
     const vals = stats.querySelectorAll('.hero-stat-value');
