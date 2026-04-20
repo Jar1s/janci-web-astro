@@ -6,6 +6,8 @@ interface Props {
   subtitle?: string;
   ctaText?: string;
   ctaHref?: string;
+  secondaryText?: string;
+  secondaryHref?: string;
   stats?: { value: string; label: string }[];
   videoSrc?: string;
   videoPoster?: string;
@@ -20,12 +22,14 @@ const {
   subtitle = 'Vaša spoľahlivá stanica technickej kontroly v Bratislavskom kraji',
   ctaText = 'REZERVOVAŤ TERMÍN ONLINE',
   ctaHref = 'https://www.kontrolavozidiel.sk/rezervovat-cez-internet',
+  secondaryText,
+  secondaryHref,
   stats = [
     { value: '15 000+', label: 'VYKONANÝCH KONTROL' },
     { value: '12+', label: 'ROKOV SKÚSENOSTÍ' },
     { value: '98%', label: 'SPOKOJNÝCH ZÁKAZNÍKOV' },
   ],
-  videoSrc = '/hero-video.mp4',
+  videoSrc = '/main.mp4',
   videoPoster = '/images/hero-poster.jpg',
   showSubtitle = true,
   showTitle = true,
@@ -33,7 +37,14 @@ const {
   showDecorations = true,
 } = Astro.props;
 
-const hasHeroContent = showTitle || showSubtitle || showCta;
+const hasSecondaryCta =
+  typeof secondaryText === 'string' &&
+  secondaryText.trim().length > 0 &&
+  typeof secondaryHref === 'string' &&
+  secondaryHref.trim().length > 0;
+
+const hasHeroContent =
+  showTitle || showSubtitle || showCta || hasSecondaryCta;
 ---
 
 <section class:list={['hero', { 'hero--minimal': !showDecorations }]} id="hero">
@@ -70,10 +81,24 @@ const hasHeroContent = showTitle || showSubtitle || showCta;
       {showSubtitle && (
         <p class="hero-subtitle hero-subtitle-animate" data-translate="hero-subtitle">{subtitle}</p>
       )}
-      {showCta && (
-        <a href={ctaHref} class="hero-cta magnetic-btn pulse-glow hero-cta-animate" rel="noopener noreferrer" data-translate="hero-cta">
-          {ctaText}
-        </a>
+      {(showCta || hasSecondaryCta) && (
+        <div class="hero-cta-row">
+          {showCta && (
+            <a href={ctaHref} class="hero-cta magnetic-btn pulse-glow hero-cta-animate" rel="noopener noreferrer" data-translate="hero-cta">
+              {ctaText}
+            </a>
+          )}
+          {hasSecondaryCta && (
+            <a
+              href={secondaryHref}
+              class="hero-cta hero-cta--secondary magnetic-btn hero-cta-animate"
+              rel="noopener noreferrer"
+              data-translate="hero-cta-secondary"
+            >
+              {secondaryText}
+            </a>
+          )}
+        </div>
       )}
     </div>
   )}
@@ -223,6 +248,28 @@ const hasHeroContent = showTitle || showSubtitle || showCta;
 
   .hero-cta:active {
     transform: translateY(-1px) scale(1.02);
+  }
+
+  .hero-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem 1.25rem;
+    width: 100%;
+  }
+
+  .hero-cta--secondary {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.55);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+  }
+
+  .hero-cta--secondary:hover {
+    background: rgba(255, 255, 255, 0.22);
+    border-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
   }
 
   /* Statistics */

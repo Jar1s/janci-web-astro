@@ -34,13 +34,14 @@ const fallbackReviews = [
   <Header slot="header" currentPath="/recenzie" />
 
   <Hero
-    title="Recenzie zákazníkov"
-    description="Skúsenosti vodičov, ktorí absolvovali technickú, emisnú kontrolu alebo kontrolu originality u nás."
-    ctaText="Rezervovať termín"
-    ctaHref="https://www.kontrolavozidiel.sk/rezervovat-cez-internet"
-    secondaryText="Kontaktovať nás"
-    secondaryHref="/kontakt"
+    videoSrc="/recenzie.mp4"
+    showTitle={false}
+    showSubtitle={false}
+    showCta={false}
+    showDecorations={false}
+    stats={[]}
   />
+  <h1 class="sr-only">Recenzie zákazníkov</h1>
 
   <section class="reviews-page">
     <div class="reviews-page__container">
