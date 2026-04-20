@@ -6,6 +6,6 @@
 ## Learned Workspace Facts
 
 - `Hero.astro` uses `subtitle` (not `description`) for hero subtext; optional `secondaryText` and `secondaryHref` render a second CTA.
-- Default hero background video is `public/main.mp4` (`/main.mp4`); pages override with `videoSrc` (e.g. services `/sluzby.mp4`, contact `/kontakt.mp4`, reviews `/recenzie.mp4`; about uses `/images/O%20NAS.mp4` when the filename contains a space).
+- Hero videos live under `public/images/` (served as `/images/...`). Defaults: `/images/main.mp4`; overrides e.g. `/images/sluzby.mp4` (EK/KO/TK), `/images/kontakt.mp4`, `/images/Recenzie.mp4` (filename casing matters on Linux); O nás uses `/images/O%20NAS.mp4` for a space in the filename.
 - Minimal hero (video only, no overlays or stats): `showTitle={false}`, `showSubtitle={false}`, `showCta={false}`, `showDecorations={false}`, `stats={[]}`, plus an `sr-only` page heading where needed for accessibility.
 - Git remote `origin` points at `github.com/Jar1s/janci-web-astro`; default integration branch is `main`.
