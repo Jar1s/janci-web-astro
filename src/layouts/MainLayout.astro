@@ -110,11 +110,11 @@ const fullCanonical = canonical ? `${siteUrl}${canonical}` : Astro.url.href;
   <slot name="footer" />
   <CookieConsent />
   <FloatingPhone />
-  <script src="../scripts/i18n.js"></script>
-  <script src="../scripts/animations.js"></script>
-  <script src="../scripts/micro-interactions.js"></script>
-  <script is:inline src="/gsap.min.js"></script>
-  <script is:inline src="/ScrollTrigger.min.js"></script>
-  <script is:inline src="/gsap-init.js"></script>
+  <script defer src="../scripts/i18n.js"></script>
+  <script defer src="../scripts/animations.js"></script>
+  <script defer src="../scripts/micro-interactions.js"></script>
+  <script defer src="/gsap.min.js"></script>
+  <script defer src="/ScrollTrigger.min.js"></script>
+  <script defer src="/gsap-init.js"></script>
 </body>
 </html>
