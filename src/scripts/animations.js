@@ -52,27 +52,44 @@
       if (cards.length > 0) cardSets.set(el, cards);
     });
 
+    function reveal(el) {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      var cards = cardSets.get(el);
+      if (cards) {
+        cards.forEach(function (card) {
+          card.style.opacity = '1';
+          card.style.transform = 'none';
+        });
+      }
+    }
+
+    // threshold 0.1 spôsoboval neviditeľné sekcie: vysoký blok mal v okne <10 % výšky → callback nikdy
     var observer = new IntersectionObserver(
       function (entries) {
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
-          var el = entry.target;
-          el.style.opacity = '1';
-          el.style.transform = 'none';
-          var cards = cardSets.get(el);
-          if (cards) {
-            cards.forEach(function (card) {
-              card.style.opacity = '1';
-              card.style.transform = 'none';
-            });
-          }
-          observer.unobserve(el);
+          reveal(entry.target);
+          observer.unobserve(entry.target);
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0, rootMargin: '80px 0px 120px 0px' }
     );
 
-    elements.forEach(function (el) { observer.observe(el); });
+    elements.forEach(function (el) {
+      observer.observe(el);
+    });
+
+    // Okamžité odhalenie už viditeľných sekcií (niektoré prehliadače neodošlú prvý callback včas)
+    requestAnimationFrame(function () {
+      elements.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.bottom > 0 && r.top < window.innerHeight) {
+          reveal(el);
+          observer.unobserve(el);
+        }
+      });
+    });
   }
 
   // Init on first load
