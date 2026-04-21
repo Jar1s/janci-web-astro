@@ -199,8 +199,8 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
     </div>
   </section>
 
-  <!-- Naše služby -->
-  <section id="sluzby" class="py-20 bg-gray-50 wave-separator-top wave-gray dotted-grid-bg">
+  <!-- Naše služby (animate-on-scroll: karty cez animations.js, nie GSAP — inak opacity 0 z defer GSAP) -->
+  <section id="sluzby" class="py-20 bg-gray-50 wave-separator-top wave-gray dotted-grid-bg animate-on-scroll animate-fade-up">
     <div class="max-w-7xl mx-auto px-5">
       <div class="text-center mb-16">
         <h2 class="text-3xl font-bold text-primary mb-4 gradient-text" data-translate="section-services">Naše služby</h2>

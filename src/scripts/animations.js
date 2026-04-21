@@ -80,16 +80,31 @@
       observer.observe(el);
     });
 
-    // Okamžité odhalenie už viditeľných sekcií (niektoré prehliadače neodošlú prvý callback včas)
-    requestAnimationFrame(function () {
+    // Dvojité rAF: po prvom paint má správnu výšku layoutu
+    function revealIfInView() {
       elements.forEach(function (el) {
         var r = el.getBoundingClientRect();
-        if (r.bottom > 0 && r.top < window.innerHeight) {
+        var vh = window.innerHeight || document.documentElement.clientHeight;
+        if (r.bottom > 0 && r.top < vh) {
           reveal(el);
-          observer.unobserve(el);
+          try {
+            observer.unobserve(el);
+          } catch (_) {}
         }
       });
+    }
+    requestAnimationFrame(function () {
+      requestAnimationFrame(revealIfInView);
     });
+
+    // Po úplnom načítaní (fonty/obrázky) ešte raz — predchádza „zaseknutému“ opacity 0
+    window.addEventListener(
+      'load',
+      function () {
+        requestAnimationFrame(revealIfInView);
+      },
+      { once: true }
+    );
   }
 
   // Init on first load

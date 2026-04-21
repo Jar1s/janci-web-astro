@@ -1,49 +1,14 @@
-// GSAP ScrollTrigger animations (môže sa načítať až po idle — boot rieši neskorý štart)
+// GSAP len pre časovú os procesu — NIE pre .service-card / .review-card (tie rieši animations.js,
+// inak neskorý gsap.fromTo({ opacity: 0 }) prepíše už zobrazený obsah → biele „dierky“).
 (function () {
   function initAnimations() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
-    // Kill old triggers
     ScrollTrigger.getAll().forEach(function (t) {
       t.kill();
     });
 
-    // Service cards
-    gsap.utils.toArray('.service-card').forEach(function (card, i) {
-      gsap.fromTo(
-        card,
-        { opacity: 0, y: 30 },
-        {
-          scrollTrigger: { trigger: card, start: 'top 90%', once: true },
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          delay: i * 0.15,
-          ease: 'power2.out',
-          clearProps: 'all',
-        }
-      );
-    });
-
-    // Review cards
-    gsap.utils.toArray('.review-card').forEach(function (card, i) {
-      gsap.fromTo(
-        card,
-        { opacity: 0, y: 25 },
-        {
-          scrollTrigger: { trigger: card, start: 'top 90%', once: true },
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          delay: i * 0.15,
-          ease: 'power2.out',
-          clearProps: 'all',
-        }
-      );
-    });
-
-    // Process timeline
     var timeline = document.getElementById('process-timeline');
     var lineFill = document.getElementById('process-line-fill');
     var steps = timeline ? timeline.querySelectorAll('.process-step') : [];
