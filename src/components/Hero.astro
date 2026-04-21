@@ -10,6 +10,8 @@ interface Props {
   secondaryHref?: string;
   stats?: { value: string; label: string }[];
   videoSrc?: string;
+  /** Ľahší MP4 pre úzke displeje; predvolené: rovnaká cesta s príponou `-sm` pred `.mp4` */
+  videoSrcMobile?: string;
   videoPoster?: string;
   showSubtitle?: boolean;
   showTitle?: boolean;
@@ -30,12 +32,16 @@ const {
     { value: '98%', label: 'SPOKOJNÝCH ZÁKAZNÍKOV' },
   ],
   videoSrc = '/images/main.mp4',
+  videoSrcMobile,
   videoPoster = '',
   showSubtitle = true,
   showTitle = true,
   showCta = true,
   showDecorations = true,
 } = Astro.props;
+
+const heroVideoMobileSrc =
+  videoSrcMobile ?? videoSrc.replace(/\.mp4$/i, '-sm.mp4');
 
 const hasSecondaryCta =
   typeof secondaryText === 'string' &&
@@ -48,19 +54,19 @@ const hasHeroContent =
 ---
 
 <section class:list={['hero', { 'hero--minimal': !showDecorations }]} id="hero">
-  <!-- Background Video (žiadny predvolený poster — inak bliká iný obrázok ako video) -->
+  <!-- Background Video: bez <source> v HTML — načíta sa až po load (menej súťaží s textom/CSS) -->
   <video
     class="hero-video"
     autoplay
     muted
     loop
     playsinline
-    preload="metadata"
+    preload="none"
+    data-video-src={videoSrc}
+    data-video-src-mobile={heroVideoMobileSrc}
     poster={videoPoster ? videoPoster : undefined}
     aria-hidden="true"
-  >
-    <source src={videoSrc} type="video/mp4" />
-  </video>
+  ></video>
 
   {showDecorations && (
     <>
@@ -502,7 +508,73 @@ const hasHeroContent =
 </style>
 
 <script>
+  function setupLazyHeroVideo() {
+    const video = document.querySelector('.hero-video') as HTMLVideoElement | null;
+    if (!video || video.dataset.lazyInjected === '1') return;
+
+    const primary = video.dataset.videoSrc;
+    if (!primary) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    if (conn?.saveData) {
+      return;
+    }
+
+    const mobile = video.dataset.videoSrcMobile;
+
+    const inject = () => {
+      if (video.dataset.lazyInjected === '1') return;
+      video.dataset.lazyInjected = '1';
+
+      const useMobile =
+        typeof mobile === 'string' &&
+        mobile.length > 0 &&
+        window.matchMedia('(max-width: 768px)').matches;
+      const url = useMobile ? mobile : primary;
+
+      const source = document.createElement('source');
+      source.src = url;
+      source.type = 'video/mp4';
+      video.appendChild(source);
+
+      if (useMobile) {
+        video.addEventListener(
+          'error',
+          () => {
+            if (source.dataset.fallback === '1') return;
+            source.dataset.fallback = '1';
+            source.src = primary;
+            video.load();
+          },
+          { once: true }
+        );
+      }
+
+      video.load();
+    };
+
+    const schedule = () => {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(inject, { timeout: 2000 });
+      } else {
+        setTimeout(inject, 400);
+      }
+    };
+
+    if (document.readyState === 'complete') {
+      schedule();
+    } else {
+      window.addEventListener('load', schedule, { once: true });
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', async () => {
+    setupLazyHeroVideo();
+
     const video = document.querySelector('.hero-video');
     if (video) {
       const onVideoError = () => {
@@ -691,6 +763,7 @@ const hasHeroContent =
   });
 
   document.addEventListener('astro:after-swap', () => {
+    setupLazyHeroVideo();
     const stats = document.getElementById('hero-stats');
     if (!stats) return;
     const vals = stats.querySelectorAll('.hero-stat-value');
