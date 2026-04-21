@@ -3090,9 +3090,9 @@ body.about-page .about-page-section {
     }
 }
 
-/* Animation classes */
+/* Animation classes — obsah viditeľný bez JS (predtým opacity 0 + JS reveal často nechal biele sekcie) */
 .animate-on-scroll {
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
@@ -3123,8 +3123,8 @@ section {
 }
 
 .section-header {
-    opacity: 0;
-    transform: translateY(30px);
+    opacity: 1;
+    transform: translateY(0);
     transition: opacity 0.8s ease, transform 0.8s ease;
 }
 

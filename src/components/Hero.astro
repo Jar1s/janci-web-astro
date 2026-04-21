@@ -54,14 +54,14 @@ const hasHeroContent =
 ---
 
 <section class:list={['hero', { 'hero--minimal': !showDecorations }]} id="hero">
-  <!-- Dva <source>: tablety/mobil (≤1024px) ľahší -sm.mp4; preload none + load() až po load/idle -->
+  <!-- Dva <source>: tablety/mobil (≤1024px) ľahší -sm; metadata = spoľahlivé spustenie prehrávača -->
   <video
     class="hero-video"
     autoplay
     muted
     loop
     playsinline
-    preload="none"
+    preload="metadata"
     poster={videoPoster ? videoPoster : undefined}
     aria-hidden="true"
   >
@@ -509,33 +509,9 @@ const hasHeroContent =
 </style>
 
 <script>
-  /** Spustí sieťové načítanie MP4 až po dokončení stránky + idle (neblokuje prvý paint). */
-  function scheduleHeroVideoNetworkStart(video: HTMLVideoElement) {
-    const start = () => {
-      try {
-        video.load();
-      } catch (_) {
-        /* ignore */
-      }
-    };
-    const run = () => {
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(start, { timeout: 2000 });
-      } else {
-        setTimeout(start, 350);
-      }
-    };
-    if (document.readyState === 'complete') {
-      run();
-    } else {
-      window.addEventListener('load', run, { once: true });
-    }
-  }
-
   document.addEventListener('DOMContentLoaded', async () => {
     const video = document.querySelector('.hero-video') as HTMLVideoElement | null;
     if (video) {
-      scheduleHeroVideoNetworkStart(video);
       const onVideoError = () => {
         const poster = video.getAttribute('poster');
         const hero = document.querySelector('.hero');
