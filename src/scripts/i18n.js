@@ -57,9 +57,6 @@
       'closed': 'Zatvorené',
       'nonstop-note': 'NONSTOP telefón',
       'nonstop-note-desc': ' – kontaktujte nás kedykoľvek',
-      'address-short': 'Šenkvická cesta 14/F, 902 01 Pezinok',
-      'section-map': 'Kde nás nájdete',
-      'maps-open-route': 'Otvoriť trasu v Google Maps',
 
       // CTA
       'cta-title': 'Potrebujete technickú alebo emisnú kontrolu?',
@@ -131,9 +128,6 @@
       'closed': 'Closed',
       'nonstop-note': 'NONSTOP phone',
       'nonstop-note-desc': ' – contact us anytime',
-      'address-short': 'Šenkvická cesta 14/F, 902 01 Pezinok',
-      'section-map': 'Where to find us',
-      'maps-open-route': 'Open route in Google Maps',
 
       // CTA
       'cta-title': 'Need a technical or emission inspection?',
