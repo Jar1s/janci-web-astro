@@ -45,7 +45,7 @@
       'learn-more': 'Zistiť viac',
 
       // Index - Hodiny
-      'section-hours': 'Otváracie hodiny',
+      'section-hours': 'Otváracie hodiny a mapa',
       'hours-title': 'Otváracie hodiny',
       'day-mon': 'Pondelok',
       'day-tue': 'Utorok',
@@ -116,7 +116,7 @@
       'learn-more': 'Learn more',
 
       // Index - Hours
-      'section-hours': 'Opening Hours',
+      'section-hours': 'Opening Hours & Map',
       'hours-title': 'Opening Hours',
       'day-mon': 'Monday',
       'day-tue': 'Tuesday',
