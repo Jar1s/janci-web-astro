@@ -2,14 +2,14 @@
 // AnnouncementBar - loads notifications from API and displays scrolling text
 ---
 
-<div class="announcement-bar" id="announcement-bar" style="display: none;">
+<div class="announcement-bar" id="announcement-bar" style="display: none;" role="status" aria-live="polite">
   <div class="announcement-track" id="announcement-track"></div>
 </div>
 
 <style>
   .announcement-bar {
     position: fixed;
-    top: 64px;
+    top: var(--navbar-height, 64px);
     left: 0;
     width: 100%;
     z-index: 999;
@@ -38,6 +38,12 @@
     animation-play-state: paused;
   }
 
+  .announcement-item {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
   @keyframes scroll-announcement {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
@@ -45,11 +51,18 @@
 
   @media (max-width: 768px) {
     .announcement-bar {
-      top: 55px;
+      top: var(--navbar-height, 55px);
       height: 40px;
     }
     .announcement-track {
       font-size: 0.8rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .announcement-track {
+      animation-duration: 0.01ms;
+      animation-iteration-count: 1;
     }
   }
 </style>
@@ -76,22 +89,31 @@
       const texts = active.map((n: any) => n.text || n.message || '').filter(Boolean);
       if (!texts.length) return;
 
-      const content = texts.map((t: string) => `<span class="announcement-item">${t}</span>`).join('');
-      track.innerHTML = content + content; // duplicate for seamless scroll
+      const createItem = (text) => {
+        const item = document.createElement('span');
+        item.className = 'announcement-item';
+        item.textContent = text;
+        return item;
+      };
+
+      // Clear and rebuild safely to avoid injecting raw HTML from API text.
+      track.textContent = '';
+      texts.forEach((text) => track.appendChild(createItem(text)));
+      texts.forEach((text) => track.appendChild(createItem(text)));
 
       // Apply custom styles from first notification
       const first = active[0];
       if (first.backgroundColor) bar.style.background = first.backgroundColor;
       if (first.backgroundGradient) bar.style.background = first.backgroundGradient;
       if (first.textColor) bar.style.color = first.textColor;
+      if (first.borderColor) bar.style.borderBottom = `1px solid ${first.borderColor}`;
 
       bar.style.display = 'flex';
 
-      // Keep sticky bar visible and adjust hero start to avoid overlap
-      const hero = document.getElementById('hero');
-      if (hero) {
-        hero.style.marginTop = '44px';
-      }
+      // Keep global layout offsets in sync with the actual rendered bar.
+      const barHeight = Math.ceil(bar.offsetHeight || 44);
+      document.documentElement.style.setProperty('--announcement-height', `${barHeight}px`);
+      document.documentElement.style.setProperty('--header-total-height', `calc(var(--navbar-height) + ${barHeight}px)`);
     } catch (e) {
       // API not available, hide bar silently
       bar.style.display = 'none';

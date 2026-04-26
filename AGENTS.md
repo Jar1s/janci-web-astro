@@ -1,7 +1,7 @@
 ## Learned User Preferences
 
 - Prefers Slovak for on-site copy and most change requests for this project.
-- Often asks to push completed work to GitHub on `main`; local editor tooling (e.g. `.cursor/`) is usually left out of commits.
+- Often asks to push completed work to GitHub on `main`; `.cursor/` is ignored via `.gitignore` and should stay out of commits.
 
 ## Learned Workspace Facts
 
@@ -11,4 +11,5 @@
 - Hero background `<video>` uses `preload="metadata"` (not `auto`) to avoid pulling full MP4 bytes immediately; `MainLayout.astro` loads site scripts with `defer` so parsing is not blocked.
 - Avoid hiding `.hero-video` with `opacity: 0` until JS “reveal” — if the script fails or races, the video can stay invisible; keep the element visible and use a dark `.hero` background plus optional `poster` only when it matches the clip.
 - Re-encode large hero MP4s for web (e.g. `ffmpeg` H.264, `crf` ~27, max width 1920, no audio for muted loops, `+faststart`); commit optimized assets so deploys stay fast.
+- Homepage “Odvoz/dovoz zadarmo” advantage card uses `/images/odvoz-dovoz.png` in `src/pages/index.astro`.
 - Git remote `origin` points at `github.com/Jar1s/janci-web-astro`; default integration branch is `main`.

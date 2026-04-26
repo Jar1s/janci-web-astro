@@ -575,8 +575,10 @@ document.addEventListener('astro:after-swap', function() {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-decoration: none;
     gap: 0.2rem;
+    margin: 0;
   }
 
   .logo-text {
@@ -585,6 +587,7 @@ document.addEventListener('astro:after-swap', function() {
     font-weight: 700;
     white-space: nowrap;
     line-height: 1.2;
+    order: 1;
   }
 
   .logo-pti-icons {
@@ -600,6 +603,7 @@ document.addEventListener('astro:after-swap', function() {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     margin: 0;
   }
 
@@ -607,6 +611,7 @@ document.addEventListener('astro:after-swap', function() {
     display: flex;
     gap: 0.5rem;
     margin-top: 0.25rem;
+    order: 2;
   }
 
   .service-icon-link {
