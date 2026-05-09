@@ -7,6 +7,9 @@ import ServiceCard from '@/components/ServiceCard.astro';
 import CTASection from '@/components/CTASection.astro';
 import AnnouncementBar from '@/components/AnnouncementBar.astro';
 import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
+
+const mapQuery = encodeURIComponent('JP Control Ltd. - MOT, EK and KO Pezinok, Šenkvická cesta 14, 902 01 Pezinok, Slovakia');
+const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
 ---
 
 <MainLayout
@@ -301,14 +304,14 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
             <h3 class="text-white text-xl font-semibold text-center">Kde nás nájdete</h3>
           </div>
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2664.5!2d17.2669!3d48.2897!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476c8e1a9b1b1b1b%3A0x1234567890abcdef!2s%C5%A0enkvick%C3%A1+cesta+14%2FF%2C+902+01+Pezinok!5e0!3m2!1ssk!2ssk!4v1234567890"
+            src={mapEmbedUrl}
             width="100%"
             height="100%"
             style="border:0; min-height: 420px;"
             allowfullscreen
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            title="Mapa – STK JP Control, Šenkvická cesta 14/F, 902 01 Pezinok"
+            title="Mapa – JP Control Ltd. - MOT, EK and KO Pezinok, Šenkvická cesta 14, 902 01 Pezinok"
           ></iframe>
         </div>
       </div>
@@ -669,6 +672,7 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
     overflow: hidden;
     border-radius: 0.75rem;
     width: 100%;
+    padding: 0.75rem 0;
   }
 
   .carousel-track {
@@ -697,6 +701,10 @@ import AnimatedServiceIcons from '@/components/AnimatedServiceIcons.astro';
     border-radius: 0.75rem;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
     padding: 2rem;
+  }
+
+  .reviews-carousel .review-card:hover {
+    transform: translateY(-6px);
   }
 
   .review-card__stars {

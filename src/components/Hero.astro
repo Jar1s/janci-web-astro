@@ -527,7 +527,63 @@ const hasHeroContent =
         video.style.display = 'none';
       };
       video.addEventListener('error', onVideoError);
-      video.querySelectorAll('source').forEach((s) => s.addEventListener('error', onVideoError));
+
+      video.muted = true;
+      video.defaultMuted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.setAttribute('muted', '');
+      video.setAttribute('playsinline', '');
+
+      let retryCount = 0;
+      let retryTimer: ReturnType<typeof window.setTimeout> | undefined;
+
+      const schedulePlayRetry = () => {
+        if (retryCount >= 6 || retryTimer) return;
+        retryCount += 1;
+        retryTimer = window.setTimeout(() => {
+          retryTimer = undefined;
+          playHeroVideo();
+        }, retryCount === 1 ? 250 : 900);
+      };
+
+      const playHeroVideo = async () => {
+        if (!video.isConnected || document.hidden) return;
+        try {
+          if (video.readyState === 0) {
+            video.load();
+          }
+          const playPromise = video.play();
+          if (playPromise) {
+            await playPromise;
+          }
+          retryCount = 0;
+        } catch (_) {
+          schedulePlayRetry();
+        }
+      };
+
+      const resumeHeroVideo = () => {
+        if (!document.hidden && video.paused) {
+          playHeroVideo();
+        }
+      };
+
+      video.addEventListener('loadedmetadata', playHeroVideo);
+      video.addEventListener('loadeddata', playHeroVideo);
+      video.addEventListener('canplay', playHeroVideo);
+      video.addEventListener('stalled', schedulePlayRetry);
+      video.addEventListener('waiting', schedulePlayRetry);
+      document.addEventListener('visibilitychange', resumeHeroVideo);
+      window.addEventListener('pageshow', resumeHeroVideo);
+      window.addEventListener('focus', resumeHeroVideo);
+      document.addEventListener('pointerdown', resumeHeroVideo, { once: true });
+
+      requestAnimationFrame(() => {
+        playHeroVideo();
+        window.setTimeout(resumeHeroVideo, 600);
+        window.setTimeout(resumeHeroVideo, 1800);
+      });
     }
 
     const statsSection = document.getElementById('hero-stats');
