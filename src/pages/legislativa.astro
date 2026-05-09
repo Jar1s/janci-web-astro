@@ -3,6 +3,278 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import Hero from '@/components/Hero.astro';
+
+const linkClass = 'font-semibold text-primary underline underline-offset-4 hover:text-primary-hover transition-colors';
+const methodSeparator = (html: string) =>
+  html.startsWith('ktor') || html.startsWith('na vyzna') ? ', ' : ' ';
+
+const law = {
+  label: 'Zákon č. 106/2018 Z. z.',
+  href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/106/20250701',
+  text: 'o prevádzke vozidiel v cestnej premávke a o zmene a doplnení niektorých zákonov.',
+};
+
+const decrees = [
+  {
+    label: 'č. 131/2018 Z. z.',
+    href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/131/20230102',
+    text: 'ktorou sa ustanovujú podrobnosti v oblasti schvaľovania vozidiel,',
+  },
+  {
+    label: 'č. 132/2018 Z. z.',
+    href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/132/20200901',
+    text: 'ktorou sa ustanovujú podrobnosti o technických požiadavkách na niektoré vozidlá, systémy, komponenty a samostatné technické jednotky na účely schvaľovania,',
+  },
+  {
+    label: 'č. 133/2018 Z. z.',
+    href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/133/20241015',
+    text: 'ktorou sa ustanovujú podrobnosti o dokladoch vozidla,',
+  },
+  {
+    label: 'č. 134/2018 Z. z.',
+    href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/134/20250101',
+    text: 'ktorou sa ustanovujú podrobnosti o prevádzke vozidiel v cestnej premávke,',
+  },
+  {
+    label: 'č. 135/2018 Z. z.',
+    href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/135/20220927',
+    text: 'ktorou sa ustanovujú podrobnosti o cestnej technickej kontrole,',
+  },
+  {
+    label: 'č. 136/2018 Z. z.',
+    href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/136/20180520',
+    text: 'ktorou sa ustanovujú podrobnosti o technickej službe overovania,',
+  },
+  {
+    label: 'č. 137/2018 Z. z.',
+    href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/137/20240701',
+    text: 'ktorou sa ustanovujú podrobnosti v oblasti',
+    highlight: 'TECHNICKEJ KONTROLY',
+  },
+  {
+    label: 'č. 138/2018 Z. z.',
+    href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/138/20220927',
+    text: 'ktorou sa ustanovujú podrobnosti v oblasti',
+    highlight: 'EMISNEJ KONTROLY',
+  },
+  {
+    label: 'č. 139/2018 Z. z.',
+    href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/139/20211231',
+    text: 'ktorou sa ustanovujú podrobnosti v oblasti',
+    highlight: 'KONTROLY ORIGINALITY',
+  },
+  {
+    label: 'č. 140/2018 Z. z.',
+    href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/140/20210301',
+    text: 'ktorou sa ustanovujú podrobnosti v oblasti montáže plynových zariadení,',
+  },
+  {
+    label: 'č. 141/2018 Z. z.',
+    href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/141/20180520',
+    text: 'ktorou sa ustanovujú podrobnosti o štátnom odbornom dozore a odbornom dozore technických služieb na úseku prevádzky vozidiel v cestnej premávke.',
+  },
+];
+
+const tkMethods = [
+  {
+    label: 'č. 44/2018',
+    href: 'https://www.testek.sk/PDF/MP_44_2018_Vykonavanie_technickych_kontrol_uplne_znenie_po_zmene_MP_33_2021.pdf',
+    html: 'na vykonávanie technických kontrol <strong>PRAVIDELNÝCH</strong>, <strong>ZVLÁŠTNYCH</strong>, <strong>ADMINISTRATÍVNYCH</strong> a <strong>OPAKOVANÝCH</strong> technických kontrol,',
+  },
+  {
+    label: 'č. 47/2018',
+    href: 'https://testek.sk/files/MP_47_Skupina_0-po-zmene_3.pdf',
+    html: 'ktorým sa stanovujú kontrolné položky týkajúce sa identifikácie vozidla (Kontrolné položky skupiny 0),',
+  },
+  {
+    label: 'č. 48/2018',
+    href: 'https://testek.sk/PDF/MP_48_2018_uplne_znenie_po_zmene_MP_18_2023.pdf',
+    html: 'ktorým sa stanovujú kontrolné položky týkajúce sa brzdového zariadenia (Kontrolné položky skupiny 1),',
+  },
+  {
+    label: 'č. 49/2018',
+    href: 'https://www.testek.sk/files/meto/MP_skupina_2-po_zmene_38_2019.pdf',
+    html: 'ktorým sa stanovujú kontrolné položky týkajúce sa riadenia vozidla (Kontrolné položky skupiny 2),',
+  },
+  {
+    label: 'č. 50/2018',
+    href: 'https://testek.sk/PDF/uplne_znenie_MP_50_2018.pdf',
+    html: 'ktorým sa stanovujú kontrolné položky týkajúce sa výhľadu z vozidla (Kontrolné položky skupiny 3),',
+  },
+  {
+    label: 'č. 51/2018',
+    href: 'https://testek.sk/files/meto/MP_51_Skupina_4_po_zmene_34_2019.pdf',
+    html: 'ktorým sa stanovujú kontrolné položky týkajúce sa osvetlenia a svetelnej signalizácie vozidla (Kontrolné položky skupiny 4),',
+  },
+  {
+    label: 'č. 52/2018',
+    href: 'https://www.testek.sk/files/meto/novelizacia_MP_52_2018.pdf',
+    html: 'ktorým sa stanovujú kontrolné položky týkajúce sa náprav, kolies, pneumatík a zavesenia náprav (Kontrolné položky skupiny 5),',
+  },
+  {
+    label: 'č. 53/2018',
+    href: 'https://testek.sk/PDF/MP_53_Skupina_6_uplne_znenie.pdf',
+    html: 'ktorým sa stanovujú kontrolné položky týkajúce sa podvozku a jeho príslušenstva (Kontrolné položky skupiny 6),',
+  },
+  {
+    label: 'č. 54/2018',
+    href: 'https://testek.sk/PDF/MP_54_2018_zmena_2025.pdf',
+    html: 'ktorým sa stanovujú kontrolné položky týkajúce sa ostatného vybavenia vozidla (Kontrolné položky skupiny 7),',
+  },
+  {
+    label: 'č. 55/2018',
+    href: 'https://www.testek.sk/files/meto/MP_55_2018.pdf',
+    html: 'ktorým sa stanovujú kontrolné položky týkajúce sa zaťaženia životného prostredia (Kontrolné položky skupiny 8),',
+  },
+  {
+    label: 'č. 56/2018',
+    href: 'https://www.testek.sk/files/meto/MP_56_2018.pdf',
+    html: 'ktorým sa stanovujú kontrolné položky týkajúce sa doplňujúcich skúšok pre vozidlá kategórií M2 a M3 určených na prepravu osôb (Kontrolné položky skupiny 9),',
+  },
+  {
+    label: 'č. 59/2018',
+    href: 'https://testek.sk/PDF/MP_59_dovoz_uplne_znenie_po_zmene_2-21-2023-final.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti s jednotlivo dovezenými vozidlami,',
+  },
+  {
+    label: 'č. 60/2018',
+    href: 'https://testek.sk/files/meto/MP_60_2018.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti s vydaním nového osvedčenia o evidencii časť II alebo nového technického osvedčenia vozidla pri hromadnej prestavbe typu vozidla,',
+  },
+  {
+    label: 'č. 61/2018',
+    href: 'https://testek.sk/files/MP_61_dodatocne_schvalenie.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti s dodatočným schválením jednotlivého vozidla na prevádzku v cestnej premávke,',
+  },
+  {
+    label: 'č. 62/2018',
+    href: 'https://www.testek.sk/PDF/MP_62_historicke_vozidla_Zmena_2021.pdf',
+    html: 'ktorým sa upravuje postup vykonávania technických kontrol zvláštnych historických vozidiel,',
+  },
+  {
+    label: 'č. 63/2018',
+    href: 'https://testek.sk/files/meto/MP_63_2018.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti s montážou spájacieho zariadenia na vozidlo,',
+  },
+  {
+    label: 'č. 64/2018',
+    href: 'https://testek.sk/files/meto/MP_64_2018.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti so zápisom alternatívnych rozmerov ráfikov a pneumatík,',
+  },
+  {
+    label: 'č. 65/2018',
+    href: 'https://testek.sk/files/MP_65_opatovne_schvalenie.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti s opätovným schválením jednotlivého vozidla na prevádzku v cestnej premávke,',
+  },
+  {
+    label: 'č. 66/2018',
+    href: 'https://testek.sk/PDF/MP_66_zapis_zvlastnej_vybavy_po_zmene.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti so zápisom alebo zrušením zápisu zvláštnej výbavy vozidla,',
+  },
+  {
+    label: 'č. 67/2018',
+    href: 'https://testek.sk/PDF/MP_67_vymena_TOV_po_zmene.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti s výmenou technického osvedčenia vozidla,',
+  },
+  {
+    label: 'č. 68/2018',
+    href: 'https://testek.sk/files/meto/MP_68_2018.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti s výmenou karosérie, rámu alebo motora na jednotlivom vozidle,',
+  },
+  {
+    label: 'č. 69/2018',
+    href: 'https://www.testek.sk/files/meto/MP_69_2018.pdf',
+    html: 'ktorým sa upravuje vykonávanie technických kontrol na vozidlách uvedených v § 1 ods. 5 zákona č. 106/2018 Z. z.,',
+  },
+  {
+    label: 'č. 76/2018',
+    href: 'https://testek.sk/files/meto/MP_76_2018.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti s montážou dvojitého ovládania spojky a prevádzkovej brzdy výcvikových vozidiel autoškôl na vozidlo,',
+  },
+  {
+    label: 'č. 77/2018',
+    href: 'https://testek.sk/files/meto/MP_77_2018.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti s demontážou dvojitého ovládania spojky a prevádzkovej brzdy výcvikových vozidiel autoškôl na vozidlo,',
+  },
+  {
+    label: 'č. 78/2018',
+    href: 'https://testek.sk/files/meto/MP_78_2018.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti s montážou alebo demontážou zvláštnych výstražných svietidiel a zvukových výstražných znamení,',
+  },
+  {
+    label: 'č. 79/2018',
+    href: 'https://testek.sk/files/meto/MP_79_2018.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti s montážou alebo demontážou plachty na valníkové vozidlo a úpravou valníkového vozidla na plošinové vozidlo demontážou valníkovej konštrukcie,',
+  },
+  {
+    label: 'č. 82/2018',
+    href: 'https://testek.sk/files/meto/MP_82_2018.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti s konverziou motocyklov subkategórie L3e/L4e-A2 a L3e/L4e-A3,',
+  },
+  {
+    label: 'č. 41/2019',
+    href: 'https://testek.sk/files/MP_41_demontaz_plynu.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti s demontážou plynového zariadenia z vozidla,',
+  },
+  {
+    label: 'č. 42/2019',
+    href: 'https://testek.sk/PDF/MP_42-2019_obmedzena_prevadzka_po_zmene_40-2021.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti s vnútroštátnym schválením jednotlivého vozidla s obmedzenou prevádzkou,',
+  },
+  {
+    label: 'č. 1/2020',
+    href: 'https://testek.sk/files/MP_1_2020.pdf',
+    html: 'na vykonávanie technických kontrol v súvislosti so zmenou vozidla kategórie O na vozidlo kategórie Ra, ak na vozidle nedošlo k žiadnej konštrukčnej úprave alebo zmene,',
+  },
+  {
+    label: 'č. 57/2020',
+    href: 'https://testek.sk/PDF/MP_57_2020_po_zmene_MP_18_2022_uplne_znenie.pdf',
+    html: 'na vykonávanie technických kontrol vozidiel na prepravu nebezpečných vecí (ADR),',
+  },
+  {
+    label: 'č. 49/2021',
+    href: 'https://testek.sk/PDF/MP_49_2021_aktualizovane_uplne_znenie_Final.pdf',
+    html: 'na vykonávanie technických kontrol na vydanie prepravného povolenia,',
+  },
+];
+
+const ekMethods = [
+  {
+    label: 'č. 2/2020',
+    href: 'https://www.seka.sk/storage/app/media/stranky/legislativa/metodiky/2023/mp-2-2020-plne-znenie-20231202.pdf',
+    html: 'ktorý upravuje vykonávanie emisnej kontroly <strong>PRAVIDELNEJ</strong> motorových vozidiel so zážihovým motorom s nezdokonaleným emisným systémom, so zážihovým motorom so zdokonaleným emisným systémom a so vznetovým motorom,',
+  },
+  {
+    label: 'č. 45/2019',
+    href: 'https://www.seka.sk/storage/app/media/stranky/legislativa/metodiky/2019/MP_45-ek-zvlastna-2019.pdf',
+    html: 'ktorý upravuje vykonávanie emisnej kontroly <strong>ZVLÁŠTNEJ</strong>,',
+  },
+  {
+    label: 'č. 34/2018',
+    href: 'https://www.seka.sk/storage/app/media/stranky/legislativa/metodiky/2021/MP_34_2018-plne_znenie.pdf',
+    html: 'ktorý upravuje vykonávanie emisnej kontroly <strong>ADMINISTRATÍVNEJ</strong>,',
+  },
+  {
+    label: 'č. 35/2018',
+    href: 'https://www.seka.sk/storage/app/media/stranky/legislativa/metodiky/2018/MP_35_2018.pdf',
+    html: 'ktorý upravuje vykonávanie emisnej kontroly <strong>OPAKOVANEJ</strong>,',
+  },
+  {
+    label: 'č. 36/2018',
+    href: 'https://www.seka.sk/storage/app/media/stranky/legislativa/metodiky/2021/MP_36_2018_v_zneni_16_2021.pdf',
+    html: 'ktorý upravuje vykonávanie emisnej kontroly <strong>PRAVIDELNEJ</strong> motorového vozidla, ktoré nie je prihlásené do evidencie,',
+  },
+  {
+    label: 'č. 37/2018',
+    href: 'https://www.seka.sk/storage/app/media/stranky/legislativa/metodiky/2018/MP_37_2018.pdf',
+    html: 'ktorý upravuje vykonávanie emisnej kontroly na vozidlách uvedených v § 1 ods. 5 zákona č. 106/2018 Z. z.,',
+  },
+  {
+    label: 'č. 38/2018',
+    href: 'https://www.seka.sk/storage/app/media/stranky/legislativa/metodiky/2022/MP_38_2018_plne_znenie_2022.pdf',
+    html: 'na vyznačovanie výsledku emisnej kontroly do dokladov o emisnej kontrole,',
+  },
+];
 ---
 
 <MainLayout
@@ -28,7 +300,7 @@ import Hero from '@/components/Hero.astro';
       </div>
       <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200 shadow-sm">
         <p class="text-slate-700 text-lg leading-relaxed text-center font-medium">
-          Zákon č. 106/2018 Z. z. o prevádzke vozidiel v cestnej premávke a o zmene a doplnení niektorých zákonov.
+          <a href={law.href} class={linkClass} target="_blank" rel="noopener noreferrer">{law.label}</a> {law.text}
         </p>
       </div>
     </div>
@@ -44,238 +316,66 @@ import Hero from '@/components/Hero.astro';
       </div>
       <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
         <ul class="space-y-3">
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 131/2018 Z. z., ktorou sa ustanovujú podrobnosti v oblasti schvaľovania vozidiel,</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 132/2018 Z. z., ktorou sa ustanovujú podrobnosti o technických požiadavkách na niektoré vozidlá, systémy, komponenty a samostatné technické jednotky na účely schvaľovania,</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 133/2018 Z. z., ktorou sa ustanovujú podrobnosti o dokladoch vozidla,</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 134/2018 Z. z., ktorou sa ustanovujú podrobnosti o prevádzke vozidiel v cestnej premávke,</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 135/2018 Z. z., ktorou sa ustanovujú podrobnosti o cestnej technickej kontrole,</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 136/2018 Z. z., ktorou sa ustanovujú podrobnosti o technickej službe overovania,</span>
-          </li>
-          <!-- Highlighted: TK -->
-          <li class="flex gap-3 items-start text-slate-700 bg-primary/5 border-l-4 border-primary rounded-r-lg p-3 -ml-3 font-semibold">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 137/2018 Z. z., ktorou sa ustanovujú podrobnosti v oblasti <strong class="text-primary">TECHNICKEJ KONTROLY</strong>,</span>
-          </li>
-          <!-- Highlighted: EK -->
-          <li class="flex gap-3 items-start text-slate-700 bg-primary/5 border-l-4 border-primary rounded-r-lg p-3 -ml-3 font-semibold">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 138/2018 Z. z., ktorou sa ustanovujú podrobnosti v oblasti <strong class="text-primary">EMISNEJ KONTROLY</strong>,</span>
-          </li>
-          <!-- Highlighted: KO -->
-          <li class="flex gap-3 items-start text-slate-700 bg-primary/5 border-l-4 border-primary rounded-r-lg p-3 -ml-3 font-semibold">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 139/2018 Z. z., ktorou sa ustanovujú podrobnosti v oblasti <strong class="text-primary">KONTROLY ORIGINALITY</strong>,</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 140/2018 Z. z., ktorou sa ustanovujú podrobnosti v oblasti montáže plynových zariadení,</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 141/2018 Z. z., ktorou sa ustanovujú podrobnosti o štátnom odbornom dozore a odbornom dozore technických služieb na úseku prevádzky vozidiel v cestnej premávke.</span>
-          </li>
+          {decrees.map((decree) => (
+            <li class:list={[
+              'flex gap-3 items-start',
+              decree.highlight ? 'text-slate-700 bg-primary/5 border-l-4 border-primary rounded-r-lg p-3 -ml-3 font-semibold' : 'text-slate-600',
+            ]}>
+              <span class="text-primary mt-1 shrink-0">&#9679;</span>
+              <span>
+                <a href={decree.href} class={linkClass} target="_blank" rel="noopener noreferrer">{decree.label}</a>, {decree.text}
+                {decree.highlight ? <> <strong class="text-primary">{decree.highlight}</strong>,</> : null}
+              </span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- Section 3: Metodické pokyny – Technická kontrola -->
+  <!-- Section 3: Metodické pokyny - Technická kontrola -->
   <section class="py-16 bg-white">
     <div class="max-w-4xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-primary mb-4">Metodické pokyny – Technická kontrola</h2>
+        <h2 class="text-3xl font-bold text-primary mb-4">Metodické pokyny - Technická kontrola</h2>
         <div class="w-16 h-1 bg-primary mx-auto rounded-full"></div>
-        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Metodický pokyn Ministerstva dopravy a výstavby Slovenskej republiky:</p>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Metodický pokyn Ministerstva dopravy a výstavby Slovenskej republiky v oblasti <strong>TECHNICKEJ KONTROLY</strong>:</p>
       </div>
       <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200 shadow-sm">
         <ul class="space-y-3">
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 44/2018 na vykonávanie technických kontrol <strong>PRAVIDELNÝCH</strong>, <strong>ZVLÁŠTNYCH</strong>, <strong>ADMINISTRATÍVNYCH</strong> a <strong>OPAKOVANÝCH</strong> technických kontrol,</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 47/2018 – kontrolné položky skupiny 0 (identifikácia vozidla)</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 48/2018 – kontrolné položky skupiny 1 (brzdové zariadenie)</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 49/2018 – kontrolné položky skupiny 2 (riadenie vozidla)</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 50/2018 – kontrolné položky skupiny 3 (výhľad z vozidla)</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 51/2018 – kontrolné položky skupiny 4 (osvetlenie a svetelná signalizácia)</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 52/2018 – kontrolné položky skupiny 5 (nápravy, kolesá, pneumatiky)</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 53/2018 – kontrolné položky skupiny 6 (podvozok a príslušenstvo)</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 54/2018 – kontrolné položky skupiny 7 (ostatné vybavenie)</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 55/2018 – kontrolné položky skupiny 8 (zaťaženie životného prostredia)</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 56/2018 – kontrolné položky skupiny 9 (doplňujúce skúšky M2 a M3)</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 59/2018 – jednotlivo dovezené vozidlá</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 60/2018 – hromadná prestavba typu vozidla</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 61/2018 – dodatočné schválenie jednotlivého vozidla</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 62/2018 – zvláštne historické vozidlá</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 63/2018 – montáž spájacieho zariadenia</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 64/2018 – zápis alternatívnych rozmerov ráfikov a pneumatík</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 65/2018 – opätovné schválenie jednotlivého vozidla</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 66/2018 – zápis/zrušenie zápisu zvláštnej výbavy</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 67/2018 – výmena technického osvedčenia vozidla</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 68/2018 – výmena karosérie, rámu alebo motora</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 69/2018 – vozidlá podľa § 1 ods. 5</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 76/2018 – montáž dvojitého ovládania (autoškoly)</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 77/2018 – demontáž dvojitého ovládania (autoškoly)</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 78/2018 – montáž/demontáž zvláštnych výstražných svietidiel</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 79/2018 – montáž/demontáž plachty na valníkové vozidlo</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 82/2018 – konverzia motocyklov L3e/L4e-A2 a A3</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 41/2019 – demontáž plynového zariadenia z vozidla</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 42/2019 – vnútroštátne schválenie s obmedzenou prevádzkou</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 1/2020 – zmena vozidla kategórie O na Ra</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 57/2020 – vozidlá na prepravu nebezpečných vecí (ADR)</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 49/2021 – vydanie prepravného povolenia</span>
-          </li>
+          {tkMethods.map((method) => (
+            <li class="flex gap-3 items-start text-slate-600">
+              <span class="text-primary mt-1 shrink-0">&#9679;</span>
+              <span>
+                <a href={method.href} class={linkClass} target="_blank" rel="noopener noreferrer">{method.label}</a>{methodSeparator(method.html)}
+                <span set:html={method.html} />
+              </span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- Section 4: Metodické pokyny – Emisná kontrola -->
+  <!-- Section 4: Metodické pokyny - Emisná kontrola -->
   <section class="py-16 bg-slate-50">
     <div class="max-w-4xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-primary mb-4">Metodické pokyny – Emisná kontrola</h2>
+        <h2 class="text-3xl font-bold text-primary mb-4">Metodické pokyny - Emisná kontrola</h2>
         <div class="w-16 h-1 bg-primary mx-auto rounded-full"></div>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Metodický pokyn Ministerstva dopravy a výstavby Slovenskej republiky v oblasti <strong>EMISNEJ KONTROLY</strong>:</p>
       </div>
       <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
         <ul class="space-y-3">
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 2/2020 – emisná kontrola <strong>PRAVIDELNÁ</strong> (zážihový nezdokonalený, zdokonalený, vznetový)</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 45/2019 – emisná kontrola <strong>ZVLÁŠTNA</strong></span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 34/2018 – emisná kontrola <strong>ADMINISTRATÍVNA</strong></span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 35/2018 – emisná kontrola <strong>OPAKOVANÁ</strong></span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 36/2018 – emisná kontrola <strong>PRAVIDELNÁ</strong> neprihlásených vozidiel</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 37/2018 – vozidlá podľa § 1 ods. 5</span>
-          </li>
-          <li class="flex gap-3 items-start text-slate-600">
-            <span class="text-primary mt-1 shrink-0">&#9679;</span>
-            <span>č. 38/2018 – vyznačovanie výsledku emisnej kontroly</span>
-          </li>
+          {ekMethods.map((method) => (
+            <li class="flex gap-3 items-start text-slate-600">
+              <span class="text-primary mt-1 shrink-0">&#9679;</span>
+              <span>
+                <a href={method.href} class={linkClass} target="_blank" rel="noopener noreferrer">{method.label}</a>{methodSeparator(method.html)}
+                <span set:html={method.html} />
+              </span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
