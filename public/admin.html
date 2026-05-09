@@ -694,29 +694,48 @@
   </script>
 
   <!-- Keep the original admin.js logic for API calls -->
-  <script src="admin.js?v=3"></script>
+  <script src="admin.js?v=4"></script>
 
   <script>
     // ===== AUTH =====
     const authScreen = document.getElementById('auth-screen');
     const dashboard = document.getElementById('dashboard');
 
-    function checkAuth() {
+    window.showLogin = function(message) {
+      authScreen.style.display = 'flex';
+      dashboard.style.display = 'none';
+      if (message) {
+        document.getElementById('auth-error').textContent = message;
+      }
+    };
+
+    async function checkAuth() {
       const token = getToken();
       if (token) {
-        authScreen.style.display = 'none';
-        dashboard.style.display = 'flex';
-        loadOverview();
+        const valid = await verifyAdminToken(token);
+        if (valid) {
+          authScreen.style.display = 'none';
+          dashboard.style.display = 'flex';
+          loadOverview();
+        } else {
+          window.showLogin('Prihlásenie vypršalo alebo heslo nesedí.');
+        }
       }
     }
 
-    document.getElementById('login-btn').addEventListener('click', () => {
+    document.getElementById('login-btn').addEventListener('click', async () => {
       const pw = document.getElementById('admin-password').value.trim();
       if (!pw) {
         document.getElementById('auth-error').textContent = 'Zadajte heslo';
         return;
       }
       setToken(pw);
+      const valid = await verifyAdminToken(pw);
+      if (!valid) {
+        document.getElementById('auth-error').textContent = 'Nesprávne heslo';
+        return;
+      }
+      document.getElementById('auth-error').textContent = '';
       authScreen.style.display = 'none';
       dashboard.style.display = 'flex';
       loadOverview();

@@ -1,4 +1,5 @@
 const API = {
+  auth: '/api/auth',
   notifications: '/api/notifications',
   notification: (id) => `/api/notifications?id=${encodeURIComponent(id)}`,
   statistics: '/api/statistics',
@@ -27,7 +28,11 @@ function getToken() {
 }
 
 function setToken(token) {
-  localStorage.setItem('adminToken', token);
+  if (token) {
+    localStorage.setItem('adminToken', token);
+  } else {
+    localStorage.removeItem('adminToken');
+  }
   setElementText('auth-status', token ? 'Token uložený' : 'Token chýba');
 }
 
@@ -39,9 +44,28 @@ async function apiFetch(url, options = {}) {
   const res = await fetch(url, { ...options, headers });
   if (!res.ok) {
     const text = await res.text().catch(() => '');
+    if (res.status === 401) {
+      setToken('');
+      if (typeof window !== 'undefined' && typeof window.showLogin === 'function') {
+        window.showLogin('Nesprávne alebo expirované heslo. Prihláste sa znova.');
+      }
+    }
     throw new Error(`Request failed ${res.status}: ${text}`);
   }
   return res.json();
+}
+
+async function verifyAdminToken(token) {
+  const res = await fetch(API.auth, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+  if (!res.ok) {
+    setToken('');
+    return false;
+  }
+  return true;
 }
 
 // Notifications
