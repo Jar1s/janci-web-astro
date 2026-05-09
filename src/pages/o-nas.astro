@@ -170,21 +170,25 @@ import Hero from '@/components/Hero.astro';
   .team-card {
     background: #fff;
     border-radius: 12px;
-    overflow: hidden;
+    overflow: visible;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: min(100%, 150px);
+    margin: 0 auto;
+    padding-top: 0.875rem;
   }
   .team-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 24px rgba(0,102,204,0.15);
   }
   .team-card__photo {
-    width: 100%;
-    aspect-ratio: 2 / 3;
-    max-height: 210px;
+    width: 100px;
+    height: 150px;
+    margin: 0 auto;
     overflow: hidden;
     background: #eef2f7;
+    border-radius: 8px;
   }
   .team-card__photo img {
     width: 100%;
@@ -196,7 +200,7 @@ import Hero from '@/components/Hero.astro';
     font-weight: 700;
     color: #1a1a1a;
     margin: 0;
-    padding: 0.75rem 0.75rem 0.25rem;
+    padding: 0.75rem 0.65rem 0.25rem;
   }
   .team-card__role {
     font-size: 0.8rem;
@@ -207,6 +211,11 @@ import Hero from '@/components/Hero.astro';
   }
 
   @media (max-width: 480px) {
+    .team-card { width: min(100%, 136px); }
+    .team-card__photo {
+      width: 92px;
+      height: 138px;
+    }
     .team-card__name { font-size: 0.85rem; }
   }
 </style>
