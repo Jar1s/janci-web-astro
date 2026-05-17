@@ -102,8 +102,10 @@ const fullCanonical = canonical ? `${siteUrl}${canonical}` : Astro.url.href;
     Preskočiť na hlavný obsah
   </a>
 
-  <slot name="header" />
-  <slot name="announcement" />
+  <div class="site-top" id="site-top">
+    <slot name="header" />
+    <slot name="announcement" />
+  </div>
   <main id="main">
     <slot />
   </main>

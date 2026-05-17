@@ -562,36 +562,58 @@
   border-color: #e5e7eb;
 }
 
+/* Desktop: wrapper is invisible to layout */
+.site-top {
+  display: contents;
+}
+
 @media (max-width: 768px) {
   :root {
-    --navbar-height: 68px;
-    --mobile-header-gap: 0.75rem;
+    --site-top-height: 108px;
+    --mobile-header-gap: 0.5rem;
   }
 
-  /* Fixed header stack: navbar → announcement bar → page content */
+  /* One fixed block: navbar + announcement (no overlapping fixed layers) */
+  .site-top {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    background: linear-gradient(180deg, #0066cc 0%, #005aad 100%);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .site-top .navbar {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .site-top .navbar.scrolled {
+    background: transparent;
+    box-shadow: none;
+  }
+
   #main {
-    padding-top: calc(var(--navbar-height, 68px) + var(--mobile-header-gap));
-  }
-
-  body.has-announcement-bar #main {
-    padding-top: calc(
-      var(--header-total-height, calc(var(--navbar-height) + var(--announcement-height, 40px))) +
-        var(--mobile-header-gap)
-    );
+    padding-top: calc(var(--site-top-height, 108px) + var(--mobile-header-gap));
   }
 
   #hero.hero {
-    padding-top: 0.5rem !important;
-    min-height: calc(100dvh - var(--header-total-height, var(--navbar-height)) - var(--mobile-header-gap));
+    padding-top: 0.75rem !important;
+    min-height: calc(100dvh - var(--site-top-height, 108px) - var(--mobile-header-gap));
     box-sizing: border-box;
   }
 
-  body:not(.has-announcement-bar) #hero.hero {
-    min-height: calc(100dvh - var(--navbar-height, 68px) - var(--mobile-header-gap));
-  }
-
   #hero .hero-content {
-    padding-top: 1.35rem;
+    padding-top: 1rem;
   }
 
   /* Legacy original.css forces partners absolute at bottom on small phones */
@@ -608,10 +630,6 @@
 }
 
 @media (max-width: 480px) and (orientation: portrait) {
-  :root {
-    --navbar-height: 52px;
-  }
-
   #hero .hero-partners-wrapper {
     position: relative !important;
     bottom: auto !important;

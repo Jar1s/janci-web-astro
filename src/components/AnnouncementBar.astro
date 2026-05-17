@@ -3,7 +3,9 @@
 ---
 
 <div class="announcement-bar" id="announcement-bar" style="display: none;" role="status" aria-live="polite">
-  <div class="announcement-track" id="announcement-track"></div>
+  <div class="announcement-viewport">
+    <div class="announcement-track" id="announcement-track"></div>
+  </div>
 </div>
 
 <style>
@@ -17,22 +19,32 @@
     backdrop-filter: blur(8px);
     color: #fff;
     overflow: hidden;
+    min-height: 44px;
     height: 44px;
     display: flex;
     align-items: center;
     transition: opacity 0.2s ease;
+    box-sizing: border-box;
+  }
+
+  .announcement-viewport {
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+    overflow: hidden;
   }
 
   .announcement-track {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     white-space: nowrap;
-    width: fit-content;
+    width: max-content;
     will-change: transform;
-    gap: 4rem;
+    gap: 3rem;
     font-size: 0.875rem;
     font-weight: 500;
     letter-spacing: 0.02em;
+    padding-right: 3rem;
   }
 
   .announcement-track.is-running {
@@ -49,31 +61,49 @@
     flex-shrink: 0;
   }
 
+  .announcement-item::after {
+    content: '•';
+    margin-left: 3rem;
+    opacity: 0.65;
+  }
+
+  .announcement-item:last-child::after {
+    content: none;
+    margin: 0;
+  }
+
   @keyframes scroll-announcement {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
   }
 
+  /* Desktop: fixed under navbar. Mobile: flows inside .site-top (see enhancements.css). */
   @media (max-width: 768px) {
-    /* Fixed directly under navbar (JP Control + TK/EK/KO) — same stack as desktop */
     .announcement-bar {
-      position: fixed;
-      top: var(--navbar-height, 56px);
-      left: 0;
-      right: 0;
-      margin-top: 0;
-      z-index: 999;
-      height: 40px;
+      position: relative;
+      top: auto;
+      left: auto;
+      right: auto;
+      margin: 0;
+      z-index: 1;
       width: 100%;
-      box-sizing: border-box;
+      min-height: 42px;
+      height: auto;
+      padding: 0.55rem 0;
     }
+
     .announcement-track {
-      font-size: 0.8rem;
-      gap: 2.5rem;
+      font-size: 0.8125rem;
+      gap: 2rem;
+      padding-right: 2rem;
+    }
+
+    .announcement-item::after {
+      margin-left: 2rem;
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
+  @media (prefers-reduced-div: reduce) {
     .announcement-track.is-running {
       animation-duration: 0.01ms;
       animation-iteration-count: 1;
@@ -93,20 +123,38 @@
       window.dispatchEvent(new Event('janci:layout-sync'));
     }
 
+    function measureSiteTop() {
+      const siteTop = document.getElementById('site-top');
+      if (!siteTop || !mobileMq.matches) return;
+      const total = Math.ceil(siteTop.getBoundingClientRect().height);
+      if (total > 0) {
+        document.documentElement.style.setProperty('--site-top-height', `${total}px`);
+        document.documentElement.style.setProperty('--header-total-height', `${total}px`);
+      }
+    }
+
     function syncLayoutOffsets(barHeight, visible) {
       const annH = visible ? barHeight : 0;
       document.documentElement.style.setProperty('--announcement-height', `${annH}px`);
-      /* --navbar-height is measured from full navbar (incl. safe-area + service icons) */
+      document.body.classList.toggle('has-announcement-bar', visible);
+
+      if (mobileMq.matches) {
+        measureSiteTop();
+        return;
+      }
+
       document.documentElement.style.setProperty(
         '--header-total-height',
         `calc(var(--navbar-height) + ${annH}px)`
       );
-      document.body.classList.toggle('has-announcement-bar', visible);
     }
 
     mobileMq.addEventListener('change', () => {
-      if (bar.style.display === 'none') return;
       requestLayoutSync();
+      if (bar.style.display === 'none') {
+        syncLayoutOffsets(0, false);
+        return;
+      }
       requestAnimationFrame(() => {
         syncLayoutOffsets(Math.ceil(bar.offsetHeight || 44), true);
       });
@@ -117,14 +165,12 @@
       if (!res.ok) throw new Error('API error');
       const data = await res.json();
 
-      // Filter active notifications
       const active = Array.isArray(data)
         ? data.filter((n: any) => n.active !== false)
         : (data.notifications || []).filter((n: any) => n.active !== false);
 
       if (!active.length) return;
 
-      // Build scrolling content - duplicate for seamless loop
       const texts = active.map((n: any) => n.text || n.message || '').filter(Boolean);
       if (!texts.length) return;
 
@@ -135,17 +181,17 @@
         return item;
       };
 
-      // Build one sequence, repeat until wide enough, then duplicate for seamless loop.
       track.textContent = '';
       const appendSequence = () => {
         texts.forEach((text) => track.appendChild(createItem(text)));
       };
       appendSequence();
 
-      const viewportWidth = bar.offsetWidth || window.innerWidth;
+      const viewport = bar.querySelector('.announcement-viewport');
+      const viewportWidth = viewport?.clientWidth || bar.clientWidth || window.innerWidth;
       let repeats = 1;
       const maxRepeats = 6;
-      while (track.scrollWidth < viewportWidth * 1.5 && repeats < maxRepeats) {
+      while (track.scrollWidth < viewportWidth * 2 && repeats < maxRepeats) {
         appendSequence();
         repeats += 1;
       }
@@ -154,8 +200,7 @@
       nodes.forEach((node) => track.appendChild(node.cloneNode(true)));
 
       const loopWidth = Math.max(track.scrollWidth / 2, 1);
-      // ~45s to scroll one screen width; never faster than ~18px/s
-      const secondsPerViewport = 45;
+      const secondsPerViewport = mobileMq.matches ? 55 : 45;
       const duration = Math.max(
         90,
         Math.min(300, (loopWidth / viewportWidth) * secondsPerViewport)
@@ -164,17 +209,14 @@
       track.style.setProperty('--announcement-duration', durationValue);
       track.style.animationDuration = durationValue;
 
-      // Apply custom styles from first notification
       const first = active[0];
       if (first.backgroundColor) bar.style.background = first.backgroundColor;
       if (first.backgroundGradient) bar.style.background = first.backgroundGradient;
       if (first.textColor) bar.style.color = first.textColor;
       if (first.borderColor) bar.style.borderBottom = `1px solid ${first.borderColor}`;
 
-      requestLayoutSync();
       bar.style.display = 'flex';
       track.classList.remove('is-running');
-      // Force reflow so animation restarts cleanly after content changes.
       void track.offsetWidth;
       track.classList.add('is-running');
 
