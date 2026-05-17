@@ -202,6 +202,12 @@ import Hero from '@/components/Hero.astro';
     });
   }
 
+  function isWeekend(dayKey) {
+    const date = new Date(`${dayKey}T00:00:00`);
+    const day = date.getDay();
+    return day === 0 || day === 6;
+  }
+
   function renderTable() {
     if (!tableHead || !tableBody) return;
     const visibleDays = ranges[activeRangeIndex] || [];
@@ -240,6 +246,7 @@ import Hero from '@/components/Hero.astro';
         const td = document.createElement('td');
         const dayMap = slotMatrix.get(dayKey) || new Map();
         const slot = dayMap.get(timeKey) || null;
+        const weekend = isWeekend(dayKey);
 
         if (slot && slot.available !== false) {
           const btn = document.createElement('button');
@@ -253,8 +260,8 @@ import Hero from '@/components/Hero.astro';
           td.appendChild(btn);
         } else {
           const span = document.createElement('span');
-          span.className = 'booking-slot-occupied';
-          span.textContent = 'obsadené';
+          span.className = weekend ? 'booking-slot-closed' : 'booking-slot-occupied';
+          span.textContent = weekend ? 'ZATVORENÉ' : 'obsadené';
           td.appendChild(span);
         }
 
@@ -426,10 +433,10 @@ import Hero from '@/components/Hero.astro';
   }
 
   .booking-range-btn {
-    border: 1px solid #bfdbfe;
+    border: 1px solid #cbd5e1;
     border-radius: 999px;
-    background: #fff;
-    color: #0f172a;
+    background: #f8fafc;
+    color: #334155;
     font-size: 0.78rem;
     padding: 0.35rem 0.72rem;
     cursor: pointer;
@@ -443,9 +450,9 @@ import Hero from '@/components/Hero.astro';
 
   .booking-table-wrap {
     overflow: auto;
-    border: 1px solid #cbd5e1;
-    border-radius: 10px;
-    background: #fff;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    background: #f3f4f6;
     max-height: 430px;
   }
 
@@ -453,28 +460,33 @@ import Hero from '@/components/Hero.astro';
     width: 100%;
     border-collapse: collapse;
     min-width: 760px;
+    background: #fff;
   }
 
   .booking-table th,
   .booking-table td {
-    border-bottom: 1px solid #e2e8f0;
-    border-right: 1px solid #e2e8f0;
-    padding: 0.5rem;
+    border-bottom: 1px solid #d1d5db;
+    border-right: 1px solid #d1d5db;
+    padding: 0.34rem 0.4rem;
     text-align: center;
-    font-size: 0.78rem;
+    font-size: 0.74rem;
+    line-height: 1.15;
   }
 
   .booking-table th {
     position: sticky;
     top: 0;
-    background: #0f172a;
-    color: #f8fafc;
+    background: #e5e7eb;
+    color: #111827;
     z-index: 1;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
   }
 
   .booking-table th:first-child,
   .booking-time-cell {
-    background: #f8fafc;
+    background: #f3f4f6;
     color: #0f172a;
     font-weight: 700;
     position: sticky;
@@ -482,32 +494,49 @@ import Hero from '@/components/Hero.astro';
     z-index: 2;
   }
 
+  .booking-table td {
+    background: #f9fafb;
+  }
+
+  .booking-table td:last-child,
+  .booking-table th:last-child {
+    border-right: none;
+  }
+
   .booking-slot-btn {
-    border: 1px solid #16a34a;
-    border-radius: 999px;
-    color: #166534;
-    background: #dcfce7;
-    padding: 0.2rem 0.58rem;
-    font-size: 0.74rem;
-    font-weight: 600;
+    border: none;
+    border-radius: 0;
+    color: #2f8f36;
+    background: transparent;
+    padding: 0;
+    font-size: 0.84rem;
+    font-weight: 500;
     cursor: pointer;
     text-transform: lowercase;
+    text-decoration: underline;
+    text-underline-offset: 1px;
   }
 
   .booking-slot-btn:hover {
-    background: #bbf7d0;
+    color: #1f6e28;
   }
 
   .booking-slot-btn.is-selected {
-    border-color: #1d4ed8;
-    background: #dbeafe;
-    color: #1e3a8a;
+    color: #1d4ed8;
+    font-weight: 700;
   }
 
   .booking-slot-occupied {
-    color: #64748b;
-    font-size: 0.74rem;
+    color: #b86d6a;
+    font-size: 0.84rem;
     text-transform: lowercase;
+  }
+
+  .booking-slot-closed {
+    color: #8b8f96;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
   }
 
   .booking-empty-cell {
@@ -518,9 +547,13 @@ import Hero from '@/components/Hero.astro';
 
   .selected-slot {
     margin: 0.1rem 0 1rem;
-    font-size: 0.87rem;
-    color: #0f172a;
+    font-size: 0.84rem;
+    color: #1f2937;
     font-weight: 600;
+    padding: 0.45rem 0.65rem;
+    background: #eef2ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 8px;
   }
 
   .booking-grid {
