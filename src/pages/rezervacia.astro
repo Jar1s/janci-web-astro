@@ -25,11 +25,11 @@ import Hero from '@/components/Hero.astro';
     <div class="booking-container">
       <header class="booking-head">
         <h2>Rezervácia termínu</h2>
-        <p>Vyberte službu, termín a vyplňte kontaktné údaje. Po odoslaní vám rezerváciu potvrdíme.</p>
+        <p>Vyberte službu, kliknite na voľný termín v tabuľke a vyplňte kontaktné údaje.</p>
       </header>
 
       <form id="booking-form" class="booking-form">
-        <div class="booking-grid">
+        <div class="booking-toolbar">
           <label class="booking-field">
             <span>Služba *</span>
             <select id="serviceType" name="serviceType" required>
@@ -37,14 +37,26 @@ import Hero from '@/components/Hero.astro';
               <option value="ko">Kontrola originality</option>
             </select>
           </label>
+        </div>
 
-          <label class="booking-field">
-            <span>Voľný termín *</span>
-            <select id="slotId" name="slotId" required>
-              <option value="">Načítavam termíny...</option>
-            </select>
-          </label>
+        <div class="booking-scheduler">
+          <p class="booking-range-label">Dátumové rozhranie:</p>
+          <div id="booking-ranges" class="booking-ranges"></div>
 
+          <div class="booking-table-wrap">
+            <table class="booking-table">
+              <thead id="booking-table-head"></thead>
+              <tbody id="booking-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <input type="hidden" id="slotId" name="slotId" />
+        <input type="hidden" id="slotStartAt" name="slotStartAt" />
+
+        <p id="selected-slot" class="selected-slot">Vybraný termín: žiadny</p>
+
+        <div class="booking-grid">
           <label class="booking-field">
             <span>Meno a priezvisko *</span>
             <input id="name" name="name" required minlength="2" maxlength="120" />
@@ -94,8 +106,20 @@ import Hero from '@/components/Hero.astro';
   const form = document.getElementById('booking-form');
   const message = document.getElementById('booking-msg');
   const submitBtn = document.getElementById('booking-submit');
-  const slotSelect = document.getElementById('slotId');
+  const slotInput = document.getElementById('slotId');
+  const slotStartInput = document.getElementById('slotStartAt');
   const serviceSelect = document.getElementById('serviceType');
+  const selectedSlotText = document.getElementById('selected-slot');
+  const rangesEl = document.getElementById('booking-ranges');
+  const tableHead = document.getElementById('booking-table-head');
+  const tableBody = document.getElementById('booking-table-body');
+
+  let allDays = [];
+  let allTimes = [];
+  let slotMatrix = new Map();
+  let ranges = [];
+  let activeRangeIndex = 0;
+  let selectedSlotId = null;
 
   function setMessage(text, ok) {
     if (!message) return;
@@ -104,27 +128,154 @@ import Hero from '@/components/Hero.astro';
     message.hidden = false;
   }
 
-  function setLoadingSlots() {
-    if (!slotSelect) return;
-    slotSelect.innerHTML = '';
-    const option = document.createElement('option');
-    option.value = '';
-    option.textContent = 'Načítavam termíny...';
-    slotSelect.appendChild(option);
+  function formatDayKey(value) {
+    const date = new Date(value);
+    const formatter = new Intl.DateTimeFormat('sv-SE', {
+      timeZone: 'Europe/Bratislava',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    });
+    return formatter.format(date);
   }
 
-  function setNoSlots() {
-    if (!slotSelect) return;
-    slotSelect.innerHTML = '';
-    const option = document.createElement('option');
-    option.value = '';
-    option.textContent = 'Aktuálne nie sú voľné termíny';
-    slotSelect.appendChild(option);
+  function formatDayLabel(dayKey) {
+    const date = new Date(`${dayKey}T00:00:00`);
+    const weekday = new Intl.DateTimeFormat('sk-SK', { weekday: 'short' }).format(date).toUpperCase();
+    const formattedDate = new Intl.DateTimeFormat('sk-SK', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    }).format(date);
+    return `${formattedDate} ${weekday}`;
+  }
+
+  function formatTime(value) {
+    const date = new Date(value);
+    return new Intl.DateTimeFormat('sk-SK', {
+      timeZone: 'Europe/Bratislava',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
+    }).format(date);
+  }
+
+  function chunkDays(days, size) {
+    const result = [];
+    for (let i = 0; i < days.length; i += size) {
+      result.push(days.slice(i, i + size));
+    }
+    return result;
+  }
+
+  function updateSelectedSlotLabel(label) {
+    if (!selectedSlotText) return;
+    selectedSlotText.textContent = label ? `Vybraný termín: ${label}` : 'Vybraný termín: žiadny';
+  }
+
+  function selectSlot(slot, btn) {
+    selectedSlotId = slot.id;
+    if (slotInput) slotInput.value = slot.id;
+    if (slotStartInput) slotStartInput.value = slot.startAt || '';
+    updateSelectedSlotLabel(slot.label || `${formatDayKey(slot.startAt)} ${formatTime(slot.startAt)}`);
+
+    tableBody.querySelectorAll('.booking-slot-btn').forEach((node) => node.classList.remove('is-selected'));
+    btn.classList.add('is-selected');
+  }
+
+  function renderRanges() {
+    if (!rangesEl) return;
+    rangesEl.innerHTML = '';
+    ranges.forEach((rangeDays, index) => {
+      const first = rangeDays[0];
+      const last = rangeDays[rangeDays.length - 1];
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `booking-range-btn ${index === activeRangeIndex ? 'is-active' : ''}`;
+      btn.textContent = `${formatDayLabel(first).slice(0, 10)} - ${formatDayLabel(last).slice(0, 10)}`;
+      btn.addEventListener('click', () => {
+        activeRangeIndex = index;
+        renderRanges();
+        renderTable();
+      });
+      rangesEl.appendChild(btn);
+    });
+  }
+
+  function renderTable() {
+    if (!tableHead || !tableBody) return;
+    const visibleDays = ranges[activeRangeIndex] || [];
+    tableHead.innerHTML = '';
+    tableBody.innerHTML = '';
+
+    if (!visibleDays.length || !allTimes.length) {
+      const headRow = document.createElement('tr');
+      headRow.innerHTML = '<th>Čas</th><th>Termíny</th>';
+      tableHead.appendChild(headRow);
+      const row = document.createElement('tr');
+      row.innerHTML = '<td>--</td><td class="booking-empty-cell">Aktuálne nie sú voľné termíny.</td>';
+      tableBody.appendChild(row);
+      return;
+    }
+
+    const headRow = document.createElement('tr');
+    const timeTh = document.createElement('th');
+    timeTh.textContent = 'Čas';
+    headRow.appendChild(timeTh);
+    visibleDays.forEach((day) => {
+      const th = document.createElement('th');
+      th.textContent = formatDayLabel(day);
+      headRow.appendChild(th);
+    });
+    tableHead.appendChild(headRow);
+
+    allTimes.forEach((timeKey) => {
+      const tr = document.createElement('tr');
+      const timeCell = document.createElement('td');
+      timeCell.className = 'booking-time-cell';
+      timeCell.textContent = timeKey;
+      tr.appendChild(timeCell);
+
+      visibleDays.forEach((dayKey) => {
+        const td = document.createElement('td');
+        const dayMap = slotMatrix.get(dayKey) || new Map();
+        const slot = dayMap.get(timeKey) || null;
+
+        if (slot && slot.available !== false) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'booking-slot-btn';
+          btn.textContent = 'voľné';
+          btn.addEventListener('click', () => selectSlot(slot, btn));
+          if (selectedSlotId && selectedSlotId === slot.id) {
+            btn.classList.add('is-selected');
+          }
+          td.appendChild(btn);
+        } else {
+          const span = document.createElement('span');
+          span.className = 'booking-slot-occupied';
+          span.textContent = 'obsadené';
+          td.appendChild(span);
+        }
+
+        tr.appendChild(td);
+      });
+
+      tableBody.appendChild(tr);
+    });
   }
 
   async function loadSlots() {
-    if (!slotSelect || !serviceSelect) return;
-    setLoadingSlots();
+    if (!serviceSelect) return;
+    allDays = [];
+    allTimes = [];
+    slotMatrix = new Map();
+    ranges = [];
+    activeRangeIndex = 0;
+    selectedSlotId = null;
+    if (slotInput) slotInput.value = '';
+    if (slotStartInput) slotStartInput.value = '';
+    updateSelectedSlotLabel('');
     const serviceType = serviceSelect.value || 'tk_ek';
 
     try {
@@ -135,26 +286,29 @@ import Hero from '@/components/Hero.astro';
       }
 
       const slots = Array.isArray(data?.slots) ? data.slots : [];
-      if (slots.length === 0) {
-        setNoSlots();
-        return;
-      }
-
-      slotSelect.innerHTML = '';
-      const firstEmpty = document.createElement('option');
-      firstEmpty.value = '';
-      firstEmpty.textContent = 'Vyberte termín';
-      slotSelect.appendChild(firstEmpty);
-
       slots.forEach((slot) => {
-        const option = document.createElement('option');
-        option.value = slot.id;
-        option.textContent = slot.label || slot.startAt || slot.id;
-        option.dataset.startAt = slot.startAt || '';
-        slotSelect.appendChild(option);
+        if (!slot?.startAt) return;
+        const dayKey = formatDayKey(slot.startAt);
+        const timeKey = formatTime(slot.startAt);
+        if (!slotMatrix.has(dayKey)) slotMatrix.set(dayKey, new Map());
+        slotMatrix.get(dayKey).set(timeKey, slot);
       });
+
+      allDays = Array.from(slotMatrix.keys()).sort();
+      allTimes = Array.from(
+        new Set(
+          Array.from(slotMatrix.values()).flatMap((dayMap) => Array.from(dayMap.keys()))
+        )
+      ).sort();
+      ranges = chunkDays(allDays, 7);
+
+      renderRanges();
+      renderTable();
     } catch (error) {
-      setNoSlots();
+      ranges = [];
+      allTimes = [];
+      renderRanges();
+      renderTable();
       setMessage(error?.message || 'Nepodarilo sa načítať termíny', false);
     }
   }
@@ -164,14 +318,12 @@ import Hero from '@/components/Hero.astro';
 
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
-    if (!form || !slotSelect || !submitBtn) return;
+    if (!form || !submitBtn || !slotInput || !slotStartInput) return;
     message.hidden = true;
-
-    const selectedOption = slotSelect.options[slotSelect.selectedIndex];
     const payload = {
       serviceType: serviceSelect?.value || 'tk_ek',
-      slotId: slotSelect.value,
-      slotStartAt: selectedOption?.dataset?.startAt || null,
+      slotId: slotInput.value,
+      slotStartAt: slotStartInput.value || null,
       name: String(form.name.value || '').trim(),
       phone: String(form.phone.value || '').trim(),
       email: String(form.email.value || '').trim(),
@@ -179,6 +331,11 @@ import Hero from '@/components/Hero.astro';
       vehicleVin: String(form.vehicleVin.value || '').trim(),
       note: String(form.note.value || '').trim()
     };
+
+    if (!payload.slotId) {
+      setMessage('Najprv vyberte voľný termín v tabuľke.', false);
+      return;
+    }
 
     submitBtn.disabled = true;
     submitBtn.textContent = 'Odosielam...';
@@ -240,6 +397,130 @@ import Hero from '@/components/Hero.astro';
     border-radius: 14px;
     box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
     padding: 1.25rem;
+  }
+
+  .booking-toolbar {
+    margin-bottom: 1rem;
+  }
+
+  .booking-scheduler {
+    margin-bottom: 1.1rem;
+    border: 1px solid #dbe6f3;
+    border-radius: 12px;
+    padding: 0.9rem;
+    background: #f8fbff;
+  }
+
+  .booking-range-label {
+    margin: 0 0 0.55rem;
+    font-size: 0.86rem;
+    color: #334155;
+    font-weight: 600;
+  }
+
+  .booking-ranges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .booking-range-btn {
+    border: 1px solid #bfdbfe;
+    border-radius: 999px;
+    background: #fff;
+    color: #0f172a;
+    font-size: 0.78rem;
+    padding: 0.35rem 0.72rem;
+    cursor: pointer;
+  }
+
+  .booking-range-btn.is-active {
+    background: #0066cc;
+    color: #fff;
+    border-color: #0066cc;
+  }
+
+  .booking-table-wrap {
+    overflow: auto;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #fff;
+    max-height: 430px;
+  }
+
+  .booking-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 760px;
+  }
+
+  .booking-table th,
+  .booking-table td {
+    border-bottom: 1px solid #e2e8f0;
+    border-right: 1px solid #e2e8f0;
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 0.78rem;
+  }
+
+  .booking-table th {
+    position: sticky;
+    top: 0;
+    background: #0f172a;
+    color: #f8fafc;
+    z-index: 1;
+  }
+
+  .booking-table th:first-child,
+  .booking-time-cell {
+    background: #f8fafc;
+    color: #0f172a;
+    font-weight: 700;
+    position: sticky;
+    left: 0;
+    z-index: 2;
+  }
+
+  .booking-slot-btn {
+    border: 1px solid #16a34a;
+    border-radius: 999px;
+    color: #166534;
+    background: #dcfce7;
+    padding: 0.2rem 0.58rem;
+    font-size: 0.74rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-transform: lowercase;
+  }
+
+  .booking-slot-btn:hover {
+    background: #bbf7d0;
+  }
+
+  .booking-slot-btn.is-selected {
+    border-color: #1d4ed8;
+    background: #dbeafe;
+    color: #1e3a8a;
+  }
+
+  .booking-slot-occupied {
+    color: #64748b;
+    font-size: 0.74rem;
+    text-transform: lowercase;
+  }
+
+  .booking-empty-cell {
+    text-align: left;
+    color: #475569;
+    font-style: italic;
+  }
+
+  .selected-slot {
+    margin: 0.1rem 0 1rem;
+    font-size: 0.87rem;
+    color: #0f172a;
+    font-weight: 600;
   }
 
   .booking-grid {
@@ -318,6 +599,14 @@ import Hero from '@/components/Hero.astro';
 
     .booking-form {
       padding: 1rem;
+    }
+
+    .booking-scheduler {
+      padding: 0.6rem;
+    }
+
+    .booking-ranges {
+      margin-bottom: 0.65rem;
     }
 
     .booking-grid {
