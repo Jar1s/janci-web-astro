@@ -209,6 +209,14 @@ const allNavItems = [
   var hamburgerIcon = document.getElementById('hamburger-icon');
   var closeIcon = document.getElementById('close-icon');
 
+  function syncNavbarHeight() {
+    if (!navbar) return;
+    var h = Math.ceil(navbar.getBoundingClientRect().height);
+    if (h > 0) {
+      document.documentElement.style.setProperty('--navbar-height', h + 'px');
+    }
+  }
+
   // Scroll effect — transparent → dark blue with blur
   function handleScroll() {
     if (!navbar) return;
@@ -220,7 +228,11 @@ const allNavItems = [
   }
 
   window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('resize', syncNavbarHeight, { passive: true });
+  window.addEventListener('janci:layout-sync', syncNavbarHeight);
   handleScroll(); // run on load in case page is already scrolled
+  syncNavbarHeight();
+  window.requestAnimationFrame(syncNavbarHeight);
 
   // Info dropdown toggle
   var infoDropdown = document.getElementById('info-dropdown');
@@ -803,6 +815,10 @@ document.addEventListener('astro:after-swap', function() {
     .navbar-inner {
       justify-content: center;
       position: relative;
+      height: auto;
+      min-height: 56px;
+      padding-top: max(0.35rem, env(safe-area-inset-top, 0px));
+      padding-bottom: 0.35rem;
     }
 
     .logo {
@@ -814,11 +830,28 @@ document.addEventListener('astro:after-swap', function() {
       order: 1;
       margin: 0;
       flex: 1;
+      flex-direction: row;
+      flex-wrap: wrap;
       align-items: center;
+      justify-content: center;
+      gap: 0.35rem 0.5rem;
+      max-width: calc(100% - 3rem);
+    }
+
+    .logo-text {
+      font-size: 0.95rem;
+      line-height: 1.15;
     }
 
     .logo-service-icons {
       justify-content: center;
+      margin-top: 0;
+      gap: 0.35rem;
+    }
+
+    .service-icon-img {
+      height: 20px;
+      width: auto;
     }
 
     .mobile-menu-btn {
@@ -830,6 +863,16 @@ document.addEventListener('astro:after-swap', function() {
       right: 0;
       top: 50%;
       transform: translateY(-50%);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .navbar-inner {
+      min-height: 52px;
+    }
+
+    .logo-text {
+      font-size: 0.875rem;
     }
   }
 

@@ -55,18 +55,21 @@
   }
 
   @media (max-width: 768px) {
+    /* Fixed directly under navbar (JP Control + TK/EK/KO) — same stack as desktop */
     .announcement-bar {
-      position: relative;
-      top: auto;
-      left: auto;
-      right: auto;
-      z-index: 900;
-      margin-top: var(--navbar-height, 55px);
+      position: fixed;
+      top: var(--navbar-height, 56px);
+      left: 0;
+      right: 0;
+      margin-top: 0;
+      z-index: 999;
       height: 40px;
-      flex-shrink: 0;
+      width: 100%;
+      box-sizing: border-box;
     }
     .announcement-track {
       font-size: 0.8rem;
+      gap: 2.5rem;
     }
   }
 
@@ -86,23 +89,27 @@
 
     const mobileMq = window.matchMedia('(max-width: 768px)');
 
+    function requestLayoutSync() {
+      window.dispatchEvent(new Event('janci:layout-sync'));
+    }
+
     function syncLayoutOffsets(barHeight, visible) {
-      document.documentElement.style.setProperty('--announcement-height', visible ? `${barHeight}px` : '0px');
-      if (mobileMq.matches && visible) {
-        document.body.classList.add('has-announcement-bar');
-        document.documentElement.style.setProperty('--header-total-height', 'var(--navbar-height)');
-      } else {
-        document.body.classList.remove('has-announcement-bar');
-        const total = visible
-          ? `calc(var(--navbar-height) + ${barHeight}px)`
-          : 'var(--navbar-height)';
-        document.documentElement.style.setProperty('--header-total-height', total);
-      }
+      const annH = visible ? barHeight : 0;
+      document.documentElement.style.setProperty('--announcement-height', `${annH}px`);
+      /* --navbar-height is measured from full navbar (incl. safe-area + service icons) */
+      document.documentElement.style.setProperty(
+        '--header-total-height',
+        `calc(var(--navbar-height) + ${annH}px)`
+      );
+      document.body.classList.toggle('has-announcement-bar', visible);
     }
 
     mobileMq.addEventListener('change', () => {
       if (bar.style.display === 'none') return;
-      syncLayoutOffsets(Math.ceil(bar.offsetHeight || 44), true);
+      requestLayoutSync();
+      requestAnimationFrame(() => {
+        syncLayoutOffsets(Math.ceil(bar.offsetHeight || 44), true);
+      });
     });
 
     try {
@@ -164,14 +171,18 @@
       if (first.textColor) bar.style.color = first.textColor;
       if (first.borderColor) bar.style.borderBottom = `1px solid ${first.borderColor}`;
 
+      requestLayoutSync();
       bar.style.display = 'flex';
       track.classList.remove('is-running');
       // Force reflow so animation restarts cleanly after content changes.
       void track.offsetWidth;
       track.classList.add('is-running');
 
-      const barHeight = Math.ceil(bar.offsetHeight || 44);
-      syncLayoutOffsets(barHeight, true);
+      requestAnimationFrame(() => {
+        requestLayoutSync();
+        const barHeight = Math.ceil(bar.offsetHeight || 44);
+        syncLayoutOffsets(barHeight, true);
+      });
     } catch (e) {
       bar.style.display = 'none';
       syncLayoutOffsets(0, false);

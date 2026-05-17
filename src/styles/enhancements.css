@@ -563,7 +563,53 @@
 }
 
 @media (max-width: 768px) {
-  body.has-announcement-bar .hero {
+  :root {
+    --navbar-height: 56px;
+  }
+
+  .navbar {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  /* Fixed header stack: navbar → announcement bar → page content */
+  #main {
+    padding-top: var(--navbar-height, 56px);
+  }
+
+  body.has-announcement-bar #main {
+    padding-top: var(--header-total-height, calc(var(--navbar-height) + var(--announcement-height, 40px)));
+  }
+
+  #hero.hero {
     padding-top: 0 !important;
+    min-height: calc(100dvh - var(--header-total-height, var(--navbar-height)));
+    box-sizing: border-box;
+  }
+
+  body:not(.has-announcement-bar) #hero.hero {
+    min-height: calc(100dvh - var(--navbar-height, 56px));
+  }
+
+  /* Legacy original.css forces partners absolute at bottom on small phones */
+  #hero .hero-partners-wrapper {
+    position: relative !important;
+    bottom: auto !important;
+    background: none !important;
+  }
+
+  #hero .hero-bottom {
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) and (orientation: portrait) {
+  :root {
+    --navbar-height: 52px;
+  }
+
+  #hero .hero-partners-wrapper {
+    position: relative !important;
+    bottom: auto !important;
   }
 }

@@ -442,65 +442,116 @@ const partnersList = byId('partners-list');
 if (partnersList) partnersList.addEventListener('click', handlePartnerActions);
 
 // ---- Reviews ----
+function escapeHtml(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function reviewSourceLabel(source) {
+  if (source === 'website') return 'Z webu';
+  if (source === 'import') return 'Import';
+  if (source === 'google') return 'Google';
+  return 'Manuálne';
+}
+
+function renderStars(rating) {
+  const n = Math.max(1, Math.min(5, Number(rating) || 5));
+  return '★'.repeat(n) + '☆'.repeat(5 - n);
+}
+
+function appendReviewSection(list, title, items, pendingMode) {
+  const section = document.createElement('section');
+  section.className = 'reviews-section';
+  const heading = document.createElement('h4');
+  heading.className = 'reviews-section__title';
+  heading.textContent = title;
+  section.appendChild(heading);
+  items.forEach((r) => section.appendChild(renderReviewItem(r, pendingMode)));
+  list.appendChild(section);
+}
+
 async function loadReviews() {
   const list = byId('reviews-list');
   const err = byId('reviews-error');
   if (!list) return;
-  list.innerHTML = '<div class="muted">Načítavam...</div>';
-  if (err) err.textContent = '';
+  list.innerHTML = '<p class="reviews-empty">Načítavam…</p>';
+  if (err) {
+    err.textContent = '';
+    err.hidden = true;
+  }
   try {
     const data = await apiFetch(`${API.reviews}?limit=200`);
     list.innerHTML = '';
     const items = data.reviews || [];
     if (!items.length) {
-      list.innerHTML = '<div class="muted">Žiadne recenzie v databáze. Spustite import alebo počkajte na odoslanie z webu.</div>';
+      list.innerHTML =
+        '<p class="reviews-empty">Žiadne recenzie v databáze. Spustite import alebo počkajte na odoslanie z webu.</p>';
       return;
     }
     const pending = items.filter((r) => !r.approved);
     const approved = items.filter((r) => r.approved);
     if (pending.length) {
-      const h = document.createElement('h4');
-      h.textContent = `Čakajú na schválenie (${pending.length})`;
-      h.style.margin = '0 0 0.75rem';
-      list.appendChild(h);
-      pending.forEach((r) => list.appendChild(renderReviewItem(r, true)));
+      appendReviewSection(list, `Čakajú na schválenie (${pending.length})`, pending, true);
     }
     if (approved.length) {
-      const h = document.createElement('h4');
-      h.textContent = `Schválené (${approved.length})`;
-      h.style.margin = pending.length ? '1.25rem 0 0.75rem' : '0 0 0.75rem';
-      list.appendChild(h);
-      approved.slice(0, 50).forEach((r) => list.appendChild(renderReviewItem(r, false)));
+      appendReviewSection(list, `Schválené (${approved.length})`, approved.slice(0, 50), false);
       if (approved.length > 50) {
         const more = document.createElement('p');
-        more.className = 'muted';
+        more.className = 'reviews-more';
         more.textContent = `… a ďalších ${approved.length - 50} schválených recenzií`;
         list.appendChild(more);
       }
     }
   } catch (e) {
-    if (err) err.textContent = e.message;
-    else list.innerHTML = `<div class="muted">${e.message}</div>`;
+    if (err) {
+      err.textContent = e.message;
+      err.hidden = false;
+    } else {
+      list.innerHTML = `<p class="reviews-empty">${escapeHtml(e.message)}</p>`;
+    }
   }
 }
 
-function renderReviewItem(r, showApprove) {
-  const div = document.createElement('div');
-  div.className = 'item';
-  const preview = (r.text || '').length > 180 ? `${r.text.slice(0, 177)}…` : (r.text || '');
+function renderReviewItem(r, pendingMode) {
+  const div = document.createElement('article');
+  div.className = pendingMode ? 'review-card review-card--pending' : 'review-card review-card--approved';
+  const text = (r.text || '').trim();
+  const preview = text.length > 220 ? `${text.slice(0, 217)}…` : text;
+  const time =
+    r.relative_time_description &&
+    !/^čaká na schválenie$/i.test(String(r.relative_time_description).trim())
+      ? `<span class="review-card__source"> · ${escapeHtml(r.relative_time_description)}</span>`
+      : '';
+
   div.innerHTML = `
-    <div class="inline">
-      <strong>${r.author_name || '—'}</strong>
-      <span class="badge">${r.rating || 5}★</span>
-      ${r.approved ? '<span class="badge">Schválená</span>' : '<span class="badge">Čaká</span>'}
-      ${r.source ? `<span class="badge">${r.source}</span>` : ''}
-    </div>
-    <div style="margin:6px 0;" class="muted">${r.relative_time_description || ''}</div>
-    <p style="margin:0 0 8px;">${preview}</p>
-    <div class="inline">
-      ${showApprove ? `<button type="button" class="btn-secondary" data-review-approve="${r.id}">Schváliť</button>` : ''}
-      <button type="button" class="btn-danger" data-review-del="${r.id}">Zmazať</button>
-    </div>
+    <header class="review-card__header">
+      <div class="review-card__meta">
+        <span class="review-card__author">${escapeHtml(r.author_name || '—')}</span>
+        ${
+          pendingMode
+            ? '<span class="badge badge-pending">Čaká na schválenie</span>'
+            : '<span class="badge badge-approved">Schválená</span>'
+        }
+      </div>
+      <span class="review-card__stars" aria-label="${Number(r.rating) || 5} z 5">${renderStars(r.rating)}</span>
+    </header>
+    <p class="review-card__text">${escapeHtml(preview)}</p>
+    <footer class="review-card__footer">
+      <div class="review-card__meta">
+        <span class="review-card__source">${escapeHtml(reviewSourceLabel(r.source))}${time}</span>
+      </div>
+      <div class="btn-group">
+        ${
+          pendingMode
+            ? `<button type="button" class="btn btn-success btn-sm" data-review-approve="${escapeHtml(r.id)}">Schváliť</button>`
+            : ''
+        }
+        <button type="button" class="btn btn-danger btn-sm" data-review-del="${escapeHtml(r.id)}">Zmazať</button>
+      </div>
+    </footer>
   `;
   return div;
 }

@@ -376,20 +376,17 @@ const hasHeroContent =
   @media (max-width: 768px) {
     .hero {
       height: auto;
-      min-height: 100vh;
-      padding-top: var(--navbar-height, 55px);
-      padding-bottom: 3rem;
-      justify-content: flex-start;
-      gap: 2rem;
-    }
-
-    :global(body.has-announcement-bar) .hero {
       padding-top: 0;
+      padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 0px));
+      justify-content: flex-start;
+      gap: 1.25rem;
+      box-sizing: border-box;
     }
 
     .hero-content {
-      margin-top: auto;
-      margin-bottom: 1rem;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: 0.75rem;
     }
 
     .hero-title {
@@ -532,24 +529,42 @@ const hasHeroContent =
 
   @media (max-width: 768px) {
     #hero .hero-partners-wrapper {
+      position: relative !important;
+      bottom: auto !important;
+      left: auto !important;
+      right: auto !important;
       width: 100%;
       max-width: none;
-      padding: 0;
+      padding: 0.5rem 0 0 !important;
+      margin-top: 0.25rem;
+      background: none !important;
     }
 
     #hero .hero-partners-mask {
       width: 100%;
+      mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+    }
+
+    #hero .hero-partners-set {
+      gap: 1.25rem;
+      padding-right: 1.25rem;
     }
 
     #hero .hero-partner-item {
-      min-height: 46px;
-      min-width: 100px;
-      padding: 0.35rem 0.75rem;
+      min-height: 48px;
+      min-width: 108px;
+      padding: 0.4rem 0.85rem;
     }
 
     #hero .hero-partner-item img {
-      max-height: 28px;
-      max-width: 92px;
+      display: block;
+      height: 32px !important;
+      width: auto !important;
+      max-height: 32px !important;
+      max-width: 104px !important;
+      min-width: 48px;
+      object-fit: contain;
     }
   }
 </style>
@@ -679,6 +694,8 @@ const hasHeroContent =
       img.src = partner.logoUrl || '';
       img.alt = partner.name || 'Partner logo';
       img.loading = 'lazy';
+      img.decoding = 'async';
+      img.setAttribute('height', '32');
       img.onerror = () => {
         img.remove();
         if (!el.textContent) el.textContent = partner.name || 'Partner';
