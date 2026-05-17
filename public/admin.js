@@ -554,26 +554,57 @@ const DEVICE_COLORS = {
   unknown: '#94a3b8'
 };
 
-function renderBarChart(series, labelFn) {
+function shouldShowChartLabel(index, total, labelStep) {
+  if (labelStep <= 1) return true;
+  return index % labelStep === 0 || index === total - 1;
+}
+
+function renderBarChart(series, labelFn, options = {}) {
   if (!series?.length) return '<p class="list-empty">Zatiaľ žiadne dáta</p>';
+
+  const {
+    labelStep = 1,
+    dense = false,
+    barWidth = dense ? 32 : null,
+    hideZeroValues = dense,
+    titleFn = labelFn
+  } = options;
+
   const maxViews = Math.max(1, ...series.map((d) => d.views));
-  return series
-    .map((d) => {
+  const chartClass = dense ? 'analytics-chart analytics-chart--dense' : 'analytics-chart';
+  const minWidth = barWidth ? series.length * barWidth : null;
+
+  const bars = series
+    .map((d, i) => {
       const height = Math.round((d.views / maxViews) * 100);
-      return `<div class="analytics-chart__bar">
-            <span class="analytics-chart__value">${d.views}</span>
+      const label = labelFn(d);
+      const showLabel = shouldShowChartLabel(i, series.length, labelStep);
+      const valueClass = hideZeroValues && !d.views ? 'analytics-chart__value is-zero' : 'analytics-chart__value';
+      const labelClass = showLabel ? 'analytics-chart__label' : 'analytics-chart__label is-empty';
+      const title = escapeHtml(String(titleFn(d)));
+      const value = d.views ? String(d.views) : '0';
+
+      return `<div class="analytics-chart__bar" title="${title}: ${value}">
+            <span class="${valueClass}">${value}</span>
             <span class="analytics-chart__fill" style="height:${Math.max(4, height)}%"></span>
-            <span class="analytics-chart__label">${escapeHtml(labelFn(d))}</span>
+            <span class="${labelClass}">${showLabel ? escapeHtml(label) : '·'}</span>
           </div>`;
     })
     .join('');
+
+  const chart = `<motion class="${chartClass}"${minWidth ? ` style="min-width:${minWidth}px"` : ''} role="img">${bars}</div>`;
+  const chartFixed = chart.replace('motion', 'div');
+
+  if (!dense) return chartFixed;
+
+  return `<div class="analytics-chart-scroll">${chartFixed}</div>`;
 }
 
 function renderSvgLineChart(series) {
   if (!series?.length) return '<p class="list-empty">Zatiaľ žiadne dáta</p>';
   const w = 640;
-  const h = 180;
-  const pad = { t: 16, r: 12, b: 32, l: 40 };
+  const h = 200;
+  const pad = { t: 16, r: 12, b: 40, l: 40 };
   const max = Math.max(1, ...series.map((d) => d.views));
   const innerW = w - pad.l - pad.r;
   const innerH = h - pad.t - pad.b;
@@ -592,11 +623,12 @@ function renderSvgLineChart(series) {
         <text class="analytics-line-chart__axis" x="${pad.l - 6}" y="${y + 3}" text-anchor="end">${val}</text>`;
     })
     .join('');
+  const labelEvery = Math.max(1, Math.ceil(series.length / 7));
   const xLabels = points
-    .filter((_, i) => i % Math.ceil(series.length / 6) === 0 || i === series.length - 1)
+    .filter((_, i) => i % labelEvery === 0 || i === series.length - 1)
     .map(
       (p) =>
-        `<text class="analytics-line-chart__axis" x="${p.x}" y="${h - 8}" text-anchor="middle">${formatShortDate(p.date)}</text>`
+        `<text class="analytics-line-chart__axis" x="${p.x}" y="${h - 10}" text-anchor="middle">${formatShortDate(p.date)}</text>`
     )
     .join('');
   return `<svg class="analytics-line-chart" viewBox="0 0 ${w} ${h}" role="img" aria-hidden="true">
@@ -726,17 +758,30 @@ async function loadTraffic() {
     const series14 = data.daily?.length ? data.daily : buildDailySeries(data.daily, 14);
     const chart = byId('traffic-chart');
     if (chart) {
-      chart.innerHTML = renderBarChart(series14, (d) => formatShortDate(d.date));
+      chart.innerHTML = renderBarChart(series14, (d) => formatShortDate(d.date), {
+        dense: true,
+        labelStep: 2,
+        barWidth: 36,
+        titleFn: (d) => formatShortDate(d.date)
+      });
     }
 
     const hourlyChart = byId('traffic-hourly-chart');
     if (hourlyChart) {
-      hourlyChart.innerHTML = renderBarChart(data.hourly || [], (d) => `${String(d.hour).padStart(2, '0')}:00`);
+      hourlyChart.innerHTML = renderBarChart(data.hourly || [], (d) => `${String(d.hour).padStart(2, '0')}`, {
+        dense: true,
+        labelStep: 4,
+        barWidth: 32,
+        titleFn: (d) => `${String(d.hour).padStart(2, '0')}:00 UTC`
+      });
     }
 
     const weekdayChart = byId('traffic-weekday-chart');
     if (weekdayChart) {
-      weekdayChart.innerHTML = renderBarChart(data.weekday || [], (d) => d.label || '');
+      weekdayChart.innerHTML = renderBarChart(data.weekday || [], (d) => d.label || '', {
+        labelStep: 1,
+        hideZeroValues: false
+      });
     }
 
     const topPages = byId('traffic-top-pages');
