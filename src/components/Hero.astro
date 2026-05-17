@@ -17,6 +17,11 @@ interface Props {
   showTitle?: boolean;
   showCta?: boolean;
   showDecorations?: boolean;
+  /** i18n keys — override default homepage hero keys on subpages */
+  translateTitleKey?: string;
+  translateSubtitleKey?: string;
+  translateCtaKey?: string;
+  translateSecondaryKey?: string;
 }
 
 const {
@@ -38,6 +43,10 @@ const {
   showTitle = true,
   showCta = true,
   showDecorations = true,
+  translateTitleKey = 'hero-title',
+  translateSubtitleKey = 'hero-subtitle',
+  translateCtaKey = 'hero-cta',
+  translateSecondaryKey = 'hero-cta-secondary',
 } = Astro.props;
 
 const heroVideoMobileSrc =
@@ -84,15 +93,15 @@ const hasHeroContent =
   {hasHeroContent && (
     <div class="hero-content">
       {showTitle && (
-        <h1 class="hero-title hero-title-animate" data-translate="hero-title">{title}</h1>
+        <h1 class="hero-title hero-title-animate" data-translate={translateTitleKey}>{title}</h1>
       )}
       {showSubtitle && (
-        <p class="hero-subtitle hero-subtitle-animate" data-translate="hero-subtitle">{subtitle}</p>
+        <p class="hero-subtitle hero-subtitle-animate" data-translate={translateSubtitleKey}>{subtitle}</p>
       )}
       {(showCta || hasSecondaryCta) && (
         <div class="hero-cta-row">
           {showCta && (
-            <a href={ctaHref} class="hero-cta magnetic-btn pulse-glow hero-cta-animate" rel="noopener noreferrer" data-translate="hero-cta">
+            <a href={ctaHref} class="hero-cta magnetic-btn pulse-glow hero-cta-animate" rel="noopener noreferrer" data-translate={translateCtaKey}>
               {ctaText}
             </a>
           )}
@@ -101,7 +110,7 @@ const hasHeroContent =
               href={secondaryHref}
               class="hero-cta hero-cta--secondary magnetic-btn hero-cta-animate"
               rel="noopener noreferrer"
-              data-translate="hero-cta-secondary"
+              data-translate={translateSecondaryKey}
             >
               {secondaryText}
             </a>

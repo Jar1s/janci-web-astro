@@ -16,13 +16,17 @@ const rightNavItems = [
   { href: '/kontakt', label: 'KONTAKT', key: 'nav-contact' },
 ];
 
+const infoNavItems = [
+  { href: '/legislativa', label: 'PLATNÁ LEGISLATÍVA', key: 'nav-legislation-mobile' },
+  { href: '/kategorie-vozidiel', label: 'KATEGÓRIE VOZIDIEL', key: 'nav-categories-mobile' },
+  { href: '/povinna-vybava', label: 'POVINNÁ VÝBAVA', key: 'nav-equipment-mobile' },
+];
+
 const allNavItems = [
   ...leftNavItems,
-  { href: '/legislativa', label: 'PLATNÁ LEGISLATÍVA' },
-  { href: '/kategorie-vozidiel', label: 'KATEGÓRIE VOZIDIEL' },
-  { href: '/povinna-vybava', label: 'POVINNÁ VÝBAVA' },
+  ...infoNavItems,
   ...rightNavItems,
-  { href: 'https://www.kontrolavozidiel.sk/rezervovat-cez-internet', label: 'REZERVOVAŤ' },
+  { href: 'https://www.kontrolavozidiel.sk/rezervovat-cez-internet', label: 'REZERVOVAŤ', key: 'nav-booking' },
 ];
 ---
 
@@ -76,14 +80,14 @@ const allNavItems = [
     <ul class="nav-menu nav-menu-right" role="list">
       <!-- Informácie dropdown -->
       <li class="info-dropdown" id="info-dropdown">
-        <button class="nav-link info-dropdown__btn" id="info-dropdown-btn" type="button">
+        <button class="nav-link info-dropdown__btn" id="info-dropdown-btn" type="button" data-translate="nav-info">
           INFORMÁCIE
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="info-dropdown__arrow"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
         <div class="info-dropdown__menu" id="info-dropdown-menu">
-          <a href="/legislativa" class="info-dropdown__link">Platná legislatíva</a>
-          <a href="/kategorie-vozidiel" class="info-dropdown__link">Kategórie vozidiel</a>
-          <a href="/povinna-vybava" class="info-dropdown__link">Povinná výbava</a>
+          <a href="/legislativa" class="info-dropdown__link" data-translate="nav-legislation">Platná legislatíva</a>
+          <a href="/kategorie-vozidiel" class="info-dropdown__link" data-translate="nav-categories">Kategórie vozidiel</a>
+          <a href="/povinna-vybava" class="info-dropdown__link" data-translate="nav-equipment">Povinná výbava</a>
         </div>
       </li>
       {rightNavItems.map(item => (
@@ -159,8 +163,9 @@ const allNavItems = [
               class:list={[
                 'mobile-nav-link',
                 { active: currentPath === item.href },
-                { 'mobile-btn-rezervovat': item.href === '/rezervacia' }
+                { 'mobile-btn-rezervovat': item.href.includes('rezervovat') }
               ]}
+              data-translate={item.key}
             >
               {item.label}
             </a>
@@ -935,11 +940,58 @@ document.addEventListener('astro:after-swap', function() {
     }
   }
 
-  @media (min-width: 1201px) and (max-width: 1399px) {
-    .navbar-center {
-      gap: 0.75rem;
+  /* Desktop: logo v skutočnom strede lišty, menu po stranách */
+  @media (min-width: 1201px) {
+    .navbar-inner {
+      position: relative;
+      grid-template-columns: auto 1fr auto;
     }
 
+    .navbar-left-extras {
+      grid-column: 1;
+      grid-row: 1;
+      z-index: 4;
+      position: relative;
+    }
+
+    .navbar-center {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      min-width: 0;
+      gap: 0;
+      padding-inline: clamp(4.25rem, 5.5vw, 5.75rem) clamp(8rem, 11vw, 10.5rem);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .nav-menu-left,
+    .nav-menu-right {
+      pointer-events: auto;
+      flex-shrink: 0;
+    }
+
+    .logo-wrapper {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 5;
+      pointer-events: auto;
+    }
+
+    .navbar-right-extras {
+      grid-column: 3;
+      grid-row: 1;
+      z-index: 4;
+      position: relative;
+    }
+  }
+
+  @media (min-width: 1201px) and (max-width: 1399px) {
     .nav-menu-left,
     .nav-menu-right {
       gap: 0.85rem;
@@ -955,10 +1007,6 @@ document.addEventListener('astro:after-swap', function() {
   }
 
   @media (min-width: 1400px) {
-    .navbar-center {
-      gap: 1.35rem;
-    }
-
     .nav-menu-left,
     .nav-menu-right {
       gap: 1.35rem;

@@ -18,6 +18,9 @@ import CTASection from '@/components/CTASection.astro';
     subtitle="Transparentné ceny pre všetky naše služby"
     ctaText="KONTAKTOVAŤ NÁS"
     ctaHref="/kontakt"
+    translateTitleKey="pricing-hero-title"
+    translateSubtitleKey="pricing-hero-subtitle"
+    translateCtaKey="btn-contact-us"
   />
 
   <!-- Pricing Section -->
@@ -25,22 +28,22 @@ import CTASection from '@/components/CTASection.astro';
     <div class="pricing-container">
       <!-- Intro -->
       <div class="pricing-intro">
-        <p>Cenník za služby vykonania technickej kontroly (STK) a emisnej kontroly (EK).</p>
-        <p>Cena za opakovanú kontrolu platí iba vtedy, ak bola predchádzajúca kontrola vykonaná na našej STK.</p>
-        <p>V prípade nejasností volajte <a href="tel:+421948888088" class="pricing-phone-link">0948 888 088</a>.</p>
+        <p data-translate="pricing-intro-1">Cenník za služby vykonania technickej kontroly (STK) a emisnej kontroly (EK).</p>
+        <p data-translate="pricing-intro-2">Cena za opakovanú kontrolu platí iba vtedy, ak bola predchádzajúca kontrola vykonaná na našej STK.</p>
+        <p><span data-translate="pricing-intro-3a">V prípade nejasností volajte</span> <a href="tel:+421948888088" class="pricing-phone-link">0948 888 088</a>.</p>
       </div>
 
       <!-- Tab Navigation -->
       <div class="tabs-scroll-container">
         <div class="tabs-nav" role="tablist">
-          <button class="tab-btn active" data-tab="common" role="tab" aria-selected="true" aria-controls="panel-common">Najčastejšie vozidlá</button>
-          <button class="tab-btn" data-tab="personal" role="tab" aria-selected="false" aria-controls="panel-personal">Osobné vozidlá</button>
-          <button class="tab-btn" data-tab="motorcycles" role="tab" aria-selected="false" aria-controls="panel-motorcycles">Motocykle</button>
-          <button class="tab-btn" data-tab="trailers" role="tab" aria-selected="false" aria-controls="panel-trailers">Prípojné vozidlá</button>
-          <button class="tab-btn" data-tab="trucks" role="tab" aria-selected="false" aria-controls="panel-trucks">Nákladné vozidlá</button>
-          <button class="tab-btn" data-tab="tractors" role="tab" aria-selected="false" aria-controls="panel-tractors">Traktory</button>
-          <button class="tab-btn" data-tab="other" role="tab" aria-selected="false" aria-controls="panel-other">Ostatné</button>
-          <button class="tab-btn" data-tab="extra" role="tab" aria-selected="false" aria-controls="panel-extra">Extra služby</button>
+          <button class="tab-btn active" data-tab="common" role="tab" aria-selected="true" aria-controls="panel-common" data-translate="pricing-tab-common">Najčastejšie vozidlá</button>
+          <button class="tab-btn" data-tab="personal" role="tab" aria-selected="false" aria-controls="panel-personal" data-translate="pricing-tab-personal">Osobné vozidlá</button>
+          <button class="tab-btn" data-tab="motorcycles" role="tab" aria-selected="false" aria-controls="panel-motorcycles" data-translate="pricing-tab-motorcycles">Motocykle</button>
+          <button class="tab-btn" data-tab="trailers" role="tab" aria-selected="false" aria-controls="panel-trailers" data-translate="pricing-tab-trailers">Prípojné vozidlá</button>
+          <button class="tab-btn" data-tab="trucks" role="tab" aria-selected="false" aria-controls="panel-trucks" data-translate="pricing-tab-trucks">Nákladné vozidlá</button>
+          <button class="tab-btn" data-tab="tractors" role="tab" aria-selected="false" aria-controls="panel-tractors" data-translate="pricing-tab-tractors">Traktory</button>
+          <button class="tab-btn" data-tab="other" role="tab" aria-selected="false" aria-controls="panel-other" data-translate="pricing-tab-other">Ostatné</button>
+          <button class="tab-btn" data-tab="extra" role="tab" aria-selected="false" aria-controls="panel-extra" data-translate="pricing-tab-extra">Extra služby</button>
         </div>
       </div>
 
@@ -48,32 +51,32 @@ import CTASection from '@/components/CTASection.astro';
 
       <!-- TAB 1: Najčastejšie vozidlá -->
       <div class="tab-panel active" id="panel-common" role="tabpanel">
-        <h3 class="table-title">Povinná kontrola vyplývajúca zo zákona v SR - najčastejšie vozidlá na našej STK</h3>
+        <h3 class="table-title" data-translate="price-table-01">Povinná kontrola vyplývajúca zo zákona v SR - najčastejšie vozidlá na našej STK</h3>
         <div class="table-wrapper">
           <table class="pricing-table">
             <tbody>
               <tr>
-                <td class="service-cell">Osobné vozidlo (M1, N1) TK+EK</td>
+                <td class="service-cell" data-translate="price-row-001">Osobné vozidlo (M1, N1) TK+EK</td>
                 <td class="price-cell">99 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Osobné vozidlo - opakovaná kontrola TK (všetky úkony bez brzdenia vozidla)</td>
+                <td class="service-cell" data-translate="price-row-002">Osobné vozidlo - opakovaná kontrola TK (všetky úkony bez brzdenia vozidla)</td>
                 <td class="price-cell">24 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Osobné vozidlo - opakovaná kontrola TK (úkony s brzdením vozidla)</td>
+                <td class="service-cell" data-translate="price-row-003">Osobné vozidlo - opakovaná kontrola TK (úkony s brzdením vozidla)</td>
                 <td class="price-cell">24 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola EK (všetky závady týkajúce sa pripojenia OBD)</td>
+                <td class="service-cell" data-translate="price-row-004">Opakovaná kontrola EK (všetky závady týkajúce sa pripojenia OBD)</td>
                 <td class="price-cell">24 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola EK (všetky závady okrem pripojenia OBD)</td>
+                <td class="service-cell" data-translate="price-row-005">Opakovaná kontrola EK (všetky závady okrem pripojenia OBD)</td>
                 <td class="price-cell">24 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Nákladné vozidlo a autobusy (N2,N3, M2, M3) TK+EK</td>
+                <td class="service-cell" data-translate="price-row-006">Nákladné vozidlo a autobusy (N2,N3, M2, M3) TK+EK</td>
                 <td class="price-cell">134 &euro;</td>
               </tr>
             </tbody>
@@ -83,64 +86,64 @@ import CTASection from '@/components/CTASection.astro';
 
       <!-- TAB 2: Osobné vozidlá -->
       <div class="tab-panel" id="panel-personal" role="tabpanel">
-        <h3 class="table-title">Osobné vozidlo (M1, N1)</h3>
+        <h3 class="table-title" data-translate="price-table-02">Osobné vozidlo (M1, N1)</h3>
         <div class="table-wrapper">
           <table class="pricing-table">
             <tbody>
               <tr>
-                <td class="service-cell">TK (platí aj pri LPG, CNG)</td>
+                <td class="service-cell" data-translate="price-row-007">TK (platí aj pri LPG, CNG)</td>
                 <td class="price-cell">54 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">EK</td>
+                <td class="service-cell" data-translate="price-row-008">EK</td>
                 <td class="price-cell">45 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">EK LPG, CNG</td>
+                <td class="service-cell" data-translate="price-row-009">EK LPG, CNG</td>
                 <td class="price-cell">55 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Administratívna kontrola TK</td>
+                <td class="service-cell" data-translate="price-row-010">Administratívna kontrola TK</td>
                 <td class="price-cell">14 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Administratívna kontrola EK</td>
+                <td class="service-cell" data-translate="price-row-011">Administratívna kontrola EK</td>
                 <td class="price-cell">14 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Kontrola originality (dovoz, vývoz, nestihol prihlásiť, zmena farby)</td>
+                <td class="service-cell" data-translate="price-row-012">Kontrola originality (dovoz, vývoz, nestihol prihlásiť, zmena farby)</td>
                 <td class="price-cell">99 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">TK pri neprihlásenom vozidle v SR</td>
+                <td class="service-cell" data-translate="price-row-013">TK pri neprihlásenom vozidle v SR</td>
                 <td class="price-cell">49 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">EK pri neprihlásenom vozidle v SR</td>
+                <td class="service-cell" data-translate="price-row-014">EK pri neprihlásenom vozidle v SR</td>
                 <td class="price-cell">40 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Komplet KO+TK+EK</td>
+                <td class="service-cell" data-translate="price-row-015">Komplet KO+TK+EK</td>
                 <td class="price-cell">188 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola TK (bez brzdenia)</td>
+                <td class="service-cell" data-translate="price-row-016">Opakovaná kontrola TK (bez brzdenia)</td>
                 <td class="price-cell">24 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola TK (s brzdením)</td>
+                <td class="service-cell" data-translate="price-row-017">Opakovaná kontrola TK (s brzdením)</td>
                 <td class="price-cell">24 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola EK (OBD)</td>
+                <td class="service-cell" data-translate="price-row-018">Opakovaná kontrola EK (OBD)</td>
                 <td class="price-cell">24 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola EK (okrem OBD)</td>
+                <td class="service-cell" data-translate="price-row-019">Opakovaná kontrola EK (okrem OBD)</td>
                 <td class="price-cell">24 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola EK (LPG, CNG)</td>
+                <td class="service-cell" data-translate="price-row-020">Opakovaná kontrola EK (LPG, CNG)</td>
                 <td class="price-cell">24 &euro;</td>
               </tr>
             </tbody>
@@ -150,7 +153,7 @@ import CTASection from '@/components/CTASection.astro';
 
       <!-- TAB 3: Motocykle -->
       <div class="tab-panel" id="panel-motorcycles" role="tabpanel">
-        <h3 class="table-title">Motocykle, trojkolky, štvorkolky (L1e-L7e)</h3>
+        <h3 class="table-title" data-translate="price-table-03">Motocykle, trojkolky, štvorkolky (L1e-L7e)</h3>
         <div class="table-wrapper">
           <table class="pricing-table">
             <tbody>
@@ -158,23 +161,23 @@ import CTASection from '@/components/CTASection.astro';
                 <td colspan="2" class="note-cell">L1E, L2E - nepodlieha TK!</td>
               </tr>
               <tr>
-                <td class="service-cell">TK</td>
+                <td class="service-cell" data-translate="price-row-021">TK</td>
                 <td class="price-cell">42 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Administratívna kontrola</td>
+                <td class="service-cell" data-translate="price-row-022">Administratívna kontrola</td>
                 <td class="price-cell">14 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Kontrola originality</td>
+                <td class="service-cell" data-translate="price-row-023">Kontrola originality</td>
                 <td class="price-cell">73 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">TK pri kontrole originality</td>
+                <td class="service-cell" data-translate="price-row-024">TK pri kontrole originality</td>
                 <td class="price-cell">37 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="service-cell" data-translate="price-row-025">Opakovaná kontrola TK</td>
                 <td class="price-cell">24 &euro;</td>
               </tr>
             </tbody>
@@ -185,7 +188,7 @@ import CTASection from '@/components/CTASection.astro';
       <!-- TAB 4: Prípojné vozidlá -->
       <div class="tab-panel" id="panel-trailers" role="tabpanel">
         <!-- Sub-section: O1 -->
-        <h3 class="table-title">Vozík malý prípojný do 750 kg (O1)</h3>
+        <h3 class="table-title" data-translate="price-table-04">Vozík malý prípojný do 750 kg (O1)</h3>
         <div class="table-wrapper">
           <table class="pricing-table">
             <tbody>
@@ -193,23 +196,23 @@ import CTASection from '@/components/CTASection.astro';
                 <td colspan="2" class="note-cell">TK - od 20.05.2018 nepodlieha TK!</td>
               </tr>
               <tr>
-                <td class="service-cell">TK</td>
+                <td class="service-cell" data-translate="price-row-026">TK</td>
                 <td class="price-cell">17 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Administratívna kontrola</td>
+                <td class="service-cell" data-translate="price-row-027">Administratívna kontrola</td>
                 <td class="price-cell">14 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Kontrola originality</td>
+                <td class="service-cell" data-translate="price-row-028">Kontrola originality</td>
                 <td class="price-cell">63 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">TK pri neprihlásenom vozidle</td>
+                <td class="service-cell" data-translate="price-row-029">TK pri neprihlásenom vozidle</td>
                 <td class="price-cell">12 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="service-cell" data-translate="price-row-030">Opakovaná kontrola TK</td>
                 <td class="price-cell">17 &euro;</td>
               </tr>
             </tbody>
@@ -217,28 +220,28 @@ import CTASection from '@/components/CTASection.astro';
         </div>
 
         <!-- Sub-section: O2 -->
-        <h3 class="table-title subsection-title">Prípojné vozidlo nad 750 kg (O2)</h3>
+        <h3 class="table-title subsection-title" data-translate="price-table-05">Prípojné vozidlo nad 750 kg (O2)</h3>
         <div class="table-wrapper">
           <table class="pricing-table">
             <tbody>
               <tr>
-                <td class="service-cell">TK</td>
+                <td class="service-cell" data-translate="price-row-031">TK</td>
                 <td class="price-cell">37 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Administratívna kontrola</td>
+                <td class="service-cell" data-translate="price-row-032">Administratívna kontrola</td>
                 <td class="price-cell">14 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Kontrola originality</td>
+                <td class="service-cell" data-translate="price-row-033">Kontrola originality</td>
                 <td class="price-cell">93 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">TK pri neprihlásenom vozidle</td>
+                <td class="service-cell" data-translate="price-row-034">TK pri neprihlásenom vozidle</td>
                 <td class="price-cell">32 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="service-cell" data-translate="price-row-035">Opakovaná kontrola TK</td>
                 <td class="price-cell">37 &euro;</td>
               </tr>
             </tbody>
@@ -246,28 +249,28 @@ import CTASection from '@/components/CTASection.astro';
         </div>
 
         <!-- Sub-section: O3/O4 -->
-        <h3 class="table-title subsection-title">Prípojné vozidlo O3 alebo O4</h3>
+        <h3 class="table-title subsection-title" data-translate="price-table-06">Prípojné vozidlo O3 alebo O4</h3>
         <div class="table-wrapper">
           <table class="pricing-table">
             <tbody>
               <tr>
-                <td class="service-cell">TK</td>
+                <td class="service-cell" data-translate="price-row-036">TK</td>
                 <td class="price-cell">67 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Administratívna kontrola</td>
+                <td class="service-cell" data-translate="price-row-037">Administratívna kontrola</td>
                 <td class="price-cell">14 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Kontrola originality</td>
+                <td class="service-cell" data-translate="price-row-038">Kontrola originality</td>
                 <td class="price-cell">120 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">TK pri neprihlásenom vozidle</td>
+                <td class="service-cell" data-translate="price-row-039">TK pri neprihlásenom vozidle</td>
                 <td class="price-cell">62 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="service-cell" data-translate="price-row-040">Opakovaná kontrola TK</td>
                 <td class="price-cell">67 &euro;</td>
               </tr>
             </tbody>
@@ -277,44 +280,44 @@ import CTASection from '@/components/CTASection.astro';
 
       <!-- TAB 5: Nákladné vozidlá -->
       <div class="tab-panel" id="panel-trucks" role="tabpanel">
-        <h3 class="table-title">Nákladné vozidlo a autobusy (N2,N3, M2, M3)</h3>
+        <h3 class="table-title" data-translate="price-table-07">Nákladné vozidlo a autobusy (N2,N3, M2, M3)</h3>
         <div class="table-wrapper">
           <table class="pricing-table">
             <tbody>
               <tr>
-                <td class="service-cell">TK</td>
+                <td class="service-cell" data-translate="price-row-041">TK</td>
                 <td class="price-cell">80 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">EK</td>
+                <td class="service-cell" data-translate="price-row-042">EK</td>
                 <td class="price-cell">54 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Administratívna kontrola TK</td>
+                <td class="service-cell" data-translate="price-row-043">Administratívna kontrola TK</td>
                 <td class="price-cell">14 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Administratívna kontrola EK</td>
+                <td class="service-cell" data-translate="price-row-044">Administratívna kontrola EK</td>
                 <td class="price-cell">14 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Kontrola originality ťahač, nákladné a autobusy</td>
+                <td class="service-cell" data-translate="price-row-045">Kontrola originality ťahač, nákladné a autobusy</td>
                 <td class="price-cell">140 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">TK pri neprihlásenom vozidle</td>
+                <td class="service-cell" data-translate="price-row-046">TK pri neprihlásenom vozidle</td>
                 <td class="price-cell">75 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">EK pri neprihlásenom vozidle</td>
+                <td class="service-cell" data-translate="price-row-047">EK pri neprihlásenom vozidle</td>
                 <td class="price-cell">49 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="service-cell" data-translate="price-row-048">Opakovaná kontrola TK</td>
                 <td class="price-cell">80 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola EK</td>
+                <td class="service-cell" data-translate="price-row-049">Opakovaná kontrola EK</td>
                 <td class="price-cell">54 &euro;</td>
               </tr>
             </tbody>
@@ -325,24 +328,24 @@ import CTASection from '@/components/CTASection.astro';
       <!-- TAB 6: Traktory -->
       <div class="tab-panel" id="panel-tractors" role="tabpanel">
         <!-- Sub: Traktory kolesové -->
-        <h3 class="table-title">Traktory kolesové (T1-T5)</h3>
+        <h3 class="table-title" data-translate="price-table-08">Traktory kolesové (T1-T5)</h3>
         <div class="table-wrapper">
           <table class="pricing-table">
             <tbody>
               <tr>
-                <td class="service-cell">TK</td>
+                <td class="service-cell" data-translate="price-row-050">TK</td>
                 <td class="price-cell">58 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">EK</td>
+                <td class="service-cell" data-translate="price-row-051">EK</td>
                 <td class="price-cell">55 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="service-cell" data-translate="price-row-052">Opakovaná kontrola TK</td>
                 <td class="price-cell">58 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola EK</td>
+                <td class="service-cell" data-translate="price-row-053">Opakovaná kontrola EK</td>
                 <td class="price-cell">55 &euro;</td>
               </tr>
             </tbody>
@@ -350,16 +353,16 @@ import CTASection from '@/components/CTASection.astro';
         </div>
 
         <!-- Sub: Traktory prípojné -->
-        <h3 class="table-title subsection-title">Traktory prípojné (R2-R4)</h3>
+        <h3 class="table-title subsection-title" data-translate="price-table-09">Traktory prípojné (R2-R4)</h3>
         <div class="table-wrapper">
           <table class="pricing-table">
             <tbody>
               <tr>
-                <td class="service-cell">TK</td>
+                <td class="service-cell" data-translate="price-row-054">TK</td>
                 <td class="price-cell">45 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="service-cell" data-translate="price-row-055">Opakovaná kontrola TK</td>
                 <td class="price-cell">45 &euro;</td>
               </tr>
             </tbody>
@@ -367,16 +370,16 @@ import CTASection from '@/components/CTASection.astro';
         </div>
 
         <!-- Sub: Traktory pásové -->
-        <h3 class="table-title subsection-title">Traktory pásové a pracovné stroje (C1-C5, Ps)</h3>
+        <h3 class="table-title subsection-title" data-translate="price-table-10">Traktory pásové a pracovné stroje (C1-C5, Ps)</h3>
         <div class="table-wrapper">
           <table class="pricing-table">
             <tbody>
               <tr>
-                <td class="service-cell">TK</td>
+                <td class="service-cell" data-translate="price-row-056">TK</td>
                 <td class="price-cell">69 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="service-cell" data-translate="price-row-057">Opakovaná kontrola TK</td>
                 <td class="price-cell">69 &euro;</td>
               </tr>
             </tbody>
@@ -384,16 +387,16 @@ import CTASection from '@/components/CTASection.astro';
         </div>
 
         <!-- Sub: Snežné skútre -->
-        <h3 class="table-title subsection-title">Snežné skútre (Ls)</h3>
+        <h3 class="table-title subsection-title" data-translate="price-table-11">Snežné skútre (Ls)</h3>
         <div class="table-wrapper">
           <table class="pricing-table">
             <tbody>
               <tr>
-                <td class="service-cell">TK</td>
+                <td class="service-cell" data-translate="price-row-058">TK</td>
                 <td class="price-cell">45 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Opakovaná kontrola TK</td>
+                <td class="service-cell" data-translate="price-row-059">Opakovaná kontrola TK</td>
                 <td class="price-cell">45 &euro;</td>
               </tr>
             </tbody>
@@ -403,32 +406,32 @@ import CTASection from '@/components/CTASection.astro';
 
       <!-- TAB 7: Ostatné -->
       <div class="tab-panel" id="panel-other" role="tabpanel">
-        <h3 class="table-title">Ostatné služby</h3>
+        <h3 class="table-title" data-translate="price-table-12">Ostatné služby</h3>
         <div class="table-wrapper">
           <table class="pricing-table">
             <tbody>
               <tr>
-                <td class="service-cell">Zaťaženie do 2. náprav</td>
+                <td class="service-cell" data-translate="price-row-060">Zaťaženie do 2. náprav</td>
                 <td class="price-cell">20 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Zaťaženie do 3. náprav</td>
+                <td class="service-cell" data-translate="price-row-061">Zaťaženie do 3. náprav</td>
                 <td class="price-cell">30 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Zaťaženie do 4. náprav a viac</td>
+                <td class="service-cell" data-translate="price-row-062">Zaťaženie do 4. náprav a viac</td>
                 <td class="price-cell">40 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Preklady dokumentov pri dovoze</td>
+                <td class="service-cell" data-translate="price-row-063">Preklady dokumentov pri dovoze</td>
                 <td class="price-cell price-dash">-</td>
               </tr>
               <tr>
-                <td class="service-cell">Kompletné prihlásenie vozidla pri dovoze (bez správnych poplatkov)</td>
+                <td class="service-cell" data-translate="price-row-064">Kompletné prihlásenie vozidla pri dovoze (bez správnych poplatkov)</td>
                 <td class="price-cell">100 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Zvláštna kontrola EK - zápis LPG/CNG</td>
+                <td class="service-cell" data-translate="price-row-065">Zvláštna kontrola EK - zápis LPG/CNG</td>
                 <td class="price-cell">50 &euro;</td>
               </tr>
             </tbody>
@@ -438,20 +441,20 @@ import CTASection from '@/components/CTASection.astro';
 
       <!-- TAB 8: Extra služby -->
       <div class="tab-panel" id="panel-extra" role="tabpanel">
-        <h3 class="table-title">Extra služby</h3>
+        <h3 class="table-title" data-translate="price-table-13">Extra služby</h3>
         <div class="table-wrapper">
           <table class="pricing-table">
             <tbody>
               <tr>
-                <td class="service-cell">Vyzdvihnutie vozidla v rámci Pezinka</td>
+                <td class="service-cell" data-translate="price-row-066">Vyzdvihnutie vozidla v rámci Pezinka</td>
                 <td class="price-cell price-free">ZADARMO</td>
               </tr>
               <tr>
-                <td class="service-cell">Vyzdvihnutie vozidla okolité mestá do 10km</td>
+                <td class="service-cell" data-translate="price-row-067">Vyzdvihnutie vozidla okolité mestá do 10km</td>
                 <td class="price-cell">+20 &euro;</td>
               </tr>
               <tr>
-                <td class="service-cell">Zapožičanie prevozných EČV</td>
+                <td class="service-cell" data-translate="price-row-068">Zapožičanie prevozných EČV</td>
                 <td class="price-cell price-complex">20 &euro;/deň + 100 &euro; vratná kaucia</td>
               </tr>
             </tbody>

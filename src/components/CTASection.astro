@@ -4,6 +4,9 @@ interface Props {
   subtitle?: string;
   ctaText?: string;
   ctaHref?: string;
+  titleKey?: string;
+  subtitleKey?: string;
+  ctaKey?: string;
 }
 
 const {
@@ -11,19 +14,23 @@ const {
   subtitle,
   ctaText = 'Rezervovať termín teraz',
   ctaHref = 'https://www.kontrolavozidiel.sk/rezervovat-cez-internet',
+  titleKey = 'cta-title',
+  subtitleKey = 'cta-subtitle',
+  ctaKey = 'cta-btn',
 } = Astro.props;
 ---
 
 <section class="cta-section">
   <div class="cta-container">
-    <h2 class="cta-title">{title}</h2>
+    <h2 class="cta-title" data-translate={titleKey}>{title}</h2>
     {subtitle && (
-      <p class="cta-subtitle">{subtitle}</p>
+      <p class="cta-subtitle" data-translate={subtitleKey}>{subtitle}</p>
     )}
     <a
       href={ctaHref}
       class="cta-button magnetic-btn pulse-glow"
       rel="noopener noreferrer"
+      data-translate={ctaKey}
     >
       {ctaText}
     </a>
