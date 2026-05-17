@@ -1197,7 +1197,7 @@
   </script>
 
   <!-- Keep the original admin.js logic for API calls -->
-  <script src="admin.js?v=10"></script>
+  <script src="admin.js?v=11"></script>
 
   <script>
     // ===== AUTH =====
@@ -1325,10 +1325,6 @@
         document.getElementById('ov-notif-list').textContent = 'API nedostupné';
       }
     }
-
-    // Override original admin.js messages to use toasts
-    const origSubmitNotif = submitNotif;
-    const origSubmitStats = submitStats;
 
     checkAuth();
   </script>

@@ -82,7 +82,7 @@ function authMessageFromResponse(status, body) {
   return `Prihlásenie zlyhalo (HTTP ${status}).`;
 }
 
-export async function verifyAdminToken(token) {
+async function verifyAdminToken(token) {
   try {
     const res = await fetch(API.auth, {
       headers: {
@@ -152,6 +152,86 @@ async function loadNotifications() {
       err.textContent = e.message;
     } else {
       list.innerHTML = `<p class="list-empty">${escapeHtml(e.message)}</p>`;
+    }
+  }
+}
+
+function fillNotifForm(n) {
+  const idEl = byId('notif-id');
+  const textEl = byId('notif-text');
+  const bgEl = byId('notif-bg');
+  const gradEl = byId('notif-grad');
+  const borderEl = byId('notif-border');
+  const colorEl = byId('notif-textcolor');
+  const activeEl = byId('notif-active');
+  if (idEl) idEl.value = n.id || '';
+  if (textEl) textEl.value = n.text || '';
+  if (bgEl) bgEl.value = n.backgroundColor || 'rgba(200, 30, 30, 0.95)';
+  if (gradEl) gradEl.value = n.backgroundGradient || 'rgba(180, 20, 20, 0.95)';
+  if (borderEl) borderEl.value = n.borderColor || 'rgba(150, 10, 10, 0.8)';
+  if (colorEl) colorEl.value = n.textColor || 'rgba(255, 255, 255, 1)';
+  if (activeEl) activeEl.value = n.active ? 'true' : 'false';
+}
+
+async function submitNotif(e) {
+  e.preventDefault();
+  const msg = byId('notif-form-msg');
+  if (msg) msg.textContent = '';
+  const payload = {
+    text: byId('notif-text')?.value,
+    backgroundColor: byId('notif-bg')?.value,
+    backgroundGradient: byId('notif-grad')?.value,
+    borderColor: byId('notif-border')?.value,
+    textColor: byId('notif-textcolor')?.value,
+    active: byId('notif-active')?.value === 'true'
+  };
+  const id = byId('notif-id')?.value;
+  try {
+    if (id) {
+      await apiFetch(API.notification(id), {
+        method: 'PUT',
+        body: JSON.stringify(payload)
+      });
+      if (msg) msg.textContent = 'Notifikácia upravená';
+      showFeedback('Notifikácia upravená');
+    } else {
+      await apiFetch(API.notifications, {
+        method: 'POST',
+        body: JSON.stringify(payload)
+      });
+      if (msg) msg.textContent = 'Notifikácia pridaná';
+      showFeedback('Notifikácia pridaná');
+    }
+    fillNotifForm({});
+    loadNotifications();
+  } catch (err) {
+    if (msg) msg.textContent = err.message;
+    showFeedback(err.message, 'error');
+  }
+}
+
+async function handleNotifActions(e) {
+  const target = e.target;
+  if (target.dataset.edit) {
+    const id = target.dataset.edit;
+    const data = await apiFetch(API.notifications);
+    const n = data.notifications.find((x) => x.id.toString() === id.toString());
+    if (n) fillNotifForm(n);
+  }
+  if (target.dataset.toggle) {
+    const id = target.dataset.toggle;
+    const data = await apiFetch(API.notifications);
+    const n = data.notifications.find((x) => x.id.toString() === id.toString());
+    if (n) {
+      await apiFetch(API.notification(id), { method: 'PUT', body: JSON.stringify({ active: !n.active }) });
+      loadNotifications();
+    }
+  }
+  if (target.dataset.del) {
+    const id = target.dataset.del;
+    if (confirm(`Zmazať notifikáciu #${id}?`)) {
+      await apiFetch(API.notification(id), { method: 'DELETE' });
+      loadNotifications();
     }
   }
 }
