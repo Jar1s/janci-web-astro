@@ -576,14 +576,16 @@
 @media (max-width: 768px) {
   :root {
     --site-top-height: 96px;
-    --mobile-header-gap: 0.35rem;
+    --mobile-header-gap: 0;
   }
 
-  /* Fixed stack: blue navbar → red announcement (no overlapping fixed layers) */
+  /* Fixed stack: blue navbar → red announcement (flush, no white gap) */
   .site-top {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    gap: 0;
+    row-gap: 0;
     position: fixed;
     top: 0;
     left: 0;
@@ -592,7 +594,7 @@
     width: 100%;
     max-width: 100vw;
     overflow: hidden;
-    background: transparent;
+    background: #005aad;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   }
 
@@ -619,20 +621,34 @@
     justify-content: center;
     gap: 0.2rem;
     min-height: 52px;
+    margin: 0;
     padding-top: calc(env(safe-area-inset-top, 0px) + 0.4rem);
-    padding-bottom: 0.4rem;
-    padding-left: 2.75rem;
-    padding-right: 2.75rem;
+    padding-bottom: 0.35rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
 
   .site-top .logo-wrapper {
     flex-direction: column;
     flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
     gap: 0.2rem;
+    width: 100%;
     max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .site-top .logo {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
   }
 
   .site-top .logo-text {
+    display: block;
+    width: 100%;
     font-size: 0.8125rem;
     line-height: 1.2;
     color: #fff;
@@ -658,13 +674,16 @@
     left: auto !important;
     flex: 0 0 auto;
     width: 100%;
-    margin: 0;
+    margin: 0 !important;
     z-index: 1;
     min-height: 38px;
     height: auto !important;
     padding: 0.45rem 0.65rem;
     box-sizing: border-box;
+    border-top: none !important;
     border-bottom: 2px solid rgba(150, 10, 10, 0.8);
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
 
   .site-top .announcement-bar[style*='display: none'] {
@@ -715,7 +734,7 @@
   }
 
   #main {
-    padding-top: calc(var(--site-top-height, 96px) + var(--mobile-header-gap));
+    padding-top: var(--site-top-height, 96px);
   }
 
   .hero,
@@ -725,7 +744,7 @@
     padding-top: 0 !important;
     justify-content: flex-start !important;
     align-items: center;
-    min-height: calc(100dvh - var(--site-top-height, 96px) - var(--mobile-header-gap));
+    min-height: calc(100dvh - var(--site-top-height, 96px));
     box-sizing: border-box;
     overflow-x: hidden;
   }
@@ -733,9 +752,21 @@
   #hero .hero-content {
     position: relative;
     z-index: 3;
-    flex: 0 0 auto;
-    padding-top: 0.85rem;
-    margin-top: 0;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0.5rem 1rem 0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 900px;
+    min-height: 0;
+  }
+
+  #hero .hero-cta-row {
+    justify-content: center;
     width: 100%;
   }
 
