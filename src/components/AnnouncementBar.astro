@@ -36,7 +36,7 @@
   }
 
   .announcement-track.is-running {
-    animation: scroll-announcement var(--announcement-duration, 28s) linear infinite;
+    animation: scroll-announcement var(--announcement-duration, 90s) linear infinite;
   }
 
   .announcement-track.is-running:hover {
@@ -110,8 +110,8 @@
 
       const viewportWidth = bar.offsetWidth || window.innerWidth;
       let repeats = 1;
-      const maxRepeats = 12;
-      while (track.scrollWidth < viewportWidth * 2.2 && repeats < maxRepeats) {
+      const maxRepeats = 6;
+      while (track.scrollWidth < viewportWidth * 1.5 && repeats < maxRepeats) {
         appendSequence();
         repeats += 1;
       }
@@ -119,10 +119,16 @@
       const nodes = Array.from(track.children);
       nodes.forEach((node) => track.appendChild(node.cloneNode(true)));
 
-      const loopWidth = track.scrollWidth / 2;
-      const pxPerSecond = 72;
-      const duration = Math.max(18, Math.min(90, loopWidth / pxPerSecond));
-      track.style.setProperty('--announcement-duration', `${duration}s`);
+      const loopWidth = Math.max(track.scrollWidth / 2, 1);
+      // ~45s to scroll one screen width; never faster than ~18px/s
+      const secondsPerViewport = 45;
+      const duration = Math.max(
+        90,
+        Math.min(300, (loopWidth / viewportWidth) * secondsPerViewport)
+      );
+      const durationValue = `${duration}s`;
+      track.style.setProperty('--announcement-duration', durationValue);
+      track.style.animationDuration = durationValue;
 
       // Apply custom styles from first notification
       const first = active[0];
