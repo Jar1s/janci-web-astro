@@ -38,7 +38,8 @@ const allNavItems = [
       </div>
     </div>
 
-    <!-- Left Nav Links (order: 2) -->
+    <div class="navbar-center">
+    <!-- Left Nav Links -->
     <ul class="nav-menu nav-menu-left" role="list">
       {leftNavItems.map(item => (
         <li>
@@ -97,8 +98,8 @@ const allNavItems = [
         </li>
       ))}
     </ul>
+    </div>
 
-    <!-- Social Icons (order: 5) -->
     <div class="navbar-right-extras">
       <a href="https://www.kontrolavozidiel.sk/rezervovat-cez-internet" class="nav-link btn-rezervovat" data-translate="nav-booking">REZERVOVAŤ</a>
     </div>
@@ -352,52 +353,50 @@ document.addEventListener('astro:after-swap', function() {
 
   .navbar-inner {
     display: grid;
-    grid-template-columns: 84px minmax(0, 1fr) auto minmax(0, 1fr) auto;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     max-width: 1400px;
     margin: 0 auto;
-    padding-left: clamp(1.25rem, 2vw, 2rem);
-    padding-right: clamp(2rem, 4vw, 3.5rem);
+    padding-inline: clamp(1.25rem, 2vw, 2rem);
     width: 100%;
     height: 64px;
-    column-gap: 0.9rem;
+    column-gap: 0.75rem;
     box-sizing: border-box;
   }
 
-  /* =====================================================
-     ORDER-BASED LAYOUT
-     ===================================================== */
+  /* Ľavý okraj | centrované menu + logo | pravý okraj (REZERVOVAŤ) */
   .navbar-left-extras {
-    order: 1;
-    width: 84px;
+    grid-column: 1;
+    justify-self: start;
     display: flex;
     justify-content: flex-start;
+    min-width: 0;
   }
 
-  .nav-menu-left {
-    order: 2;
-    justify-self: end;
-    justify-content: flex-end;
+  .navbar-center {
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.65rem, 1.2vw, 1.25rem);
+    min-width: 0;
   }
 
-  .logo {
-    order: 1;
-    flex-shrink: 0;
-    margin: 0 1.5rem;
-  }
-
+  .nav-menu-left,
   .nav-menu-right {
-    order: 4;
-    justify-self: start;
-    justify-content: flex-start;
+    justify-content: center;
+    flex-shrink: 1;
+    min-width: 0;
   }
 
   .navbar-right-extras {
-    order: 5;
+    grid-column: 3;
+    justify-self: end;
     width: auto;
     min-width: 0;
     margin-left: 0;
     margin-right: 0;
+    padding-inline-end: clamp(0.5rem, 1.5vw, 1.25rem);
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -606,13 +605,12 @@ document.addEventListener('astro:after-swap', function() {
   }
 
   .logo-wrapper {
-    order: 3;
-    grid-column: 3;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: 0;
+    flex-shrink: 0;
   }
 
   .logo-service-icons {
@@ -829,6 +827,10 @@ document.addEventListener('astro:after-swap', function() {
       display: none;
     }
 
+    .navbar-center {
+      display: contents;
+    }
+
     .navbar-inner {
       display: grid;
       grid-template-columns: 3rem minmax(0, 1fr) 3rem;
@@ -933,10 +935,9 @@ document.addEventListener('astro:after-swap', function() {
     }
   }
 
-  /* Desktop — medzera vpravo pri zúženom okne (REZERVOVAŤ nie pri kraji) */
   @media (min-width: 1201px) and (max-width: 1399px) {
-    .navbar-inner {
-      padding-right: clamp(2.25rem, 5vw, 4rem);
+    .navbar-center {
+      gap: 0.75rem;
     }
 
     .nav-menu-left,
@@ -947,17 +948,24 @@ document.addEventListener('astro:after-swap', function() {
     .nav-link {
       font-size: 0.78rem;
     }
+
+    .navbar-right-extras {
+      padding-inline-end: clamp(0.75rem, 2vw, 1.5rem);
+    }
   }
 
   @media (min-width: 1400px) {
-    .navbar-inner {
-      grid-template-columns: 92px minmax(0, 1fr) auto minmax(0, 1fr) auto;
-      padding-right: 3.5rem;
+    .navbar-center {
+      gap: 1.35rem;
     }
 
     .nav-menu-left,
     .nav-menu-right {
       gap: 1.35rem;
+    }
+
+    .navbar-right-extras {
+      padding-inline-end: 1.25rem;
     }
   }
 </style>
