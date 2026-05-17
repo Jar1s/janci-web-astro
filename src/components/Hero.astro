@@ -111,26 +111,28 @@ const hasHeroContent =
     </div>
   )}
 
-  {showDecorations && (
-    <div class="hero-partners-wrapper" id="hero-partners-wrapper" style="display: none;">
-      <div class="hero-partners-mask">
-        <div class="hero-partners-track" id="hero-partners-track"></div>
-      </div>
-    </div>
-  )}
-
-  <!-- Statistics -->
-  {stats && stats.length > 0 && (
-    <div class="hero-stats" id="hero-stats">
-      {stats.map((stat, i) => (
-        <div class="hero-stat">
-          <span class="hero-stat-value" data-target={stat.value}>0</span>
-          <span class="hero-stat-label" data-translate={`stat-label-${i}`}>{stat.label}</span>
+  {(stats && stats.length > 0) || showDecorations ? (
+    <div class="hero-bottom">
+      {stats && stats.length > 0 && (
+        <div class="hero-stats" id="hero-stats">
+          {stats.map((stat, i) => (
+            <div class="hero-stat">
+              <span class="hero-stat-value" data-target={stat.value}>0</span>
+              <span class="hero-stat-label" data-translate={`stat-label-${i}`}>{stat.label}</span>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
-  )}
+      )}
 
+      {showDecorations && (
+        <div class="hero-partners-wrapper" id="hero-partners-wrapper" style="display: none;">
+          <div class="hero-partners-mask">
+            <div class="hero-partners-track" id="hero-partners-track"></div>
+          </div>
+        </div>
+      )}
+    </div>
+  ) : null}
   {showDecorations && (
     <div class="hero-scroll" aria-hidden="true">
       <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -281,18 +283,33 @@ const hasHeroContent =
     box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
   }
 
-  /* Statistics */
-  .hero-stats {
+  /* Bottom stack: stats, then partners */
+  .hero-bottom {
     position: absolute;
-    bottom: 5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 0 1rem 3.5rem;
+    pointer-events: none;
+  }
+
+  .hero-bottom > * {
+    pointer-events: auto;
+  }
+
+  .hero-stats {
+    position: relative;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 4rem;
+    width: 100%;
   }
 
   .hero-stat {
@@ -385,16 +402,17 @@ const hasHeroContent =
       font-size: 0.875rem;
     }
 
-    .hero-stats {
+    .hero-bottom {
       position: relative;
-      bottom: auto;
-      left: auto;
-      transform: none;
+      padding: 0 0.75rem 1rem;
+      margin-top: auto;
+      width: 100%;
+    }
+
+    .hero-stats {
       flex-direction: row;
       flex-wrap: wrap;
       gap: 1.5rem 2.5rem;
-      margin-top: auto;
-      padding: 0 1rem;
       justify-content: center;
     }
 
@@ -414,13 +432,24 @@ const hasHeroContent =
 
 <style is:global>
   /* Partner strip — global so JS-inserted nodes get layout (Astro scoped CSS would not). */
-  #hero .hero-partners-wrapper {
+  #hero .hero-bottom::before {
+    content: '';
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 9.25rem;
-    z-index: 4;
+    bottom: 0;
+    height: min(220px, 42vh);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.2) 55%, transparent 100%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  #hero .hero-partners-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1120px;
     padding: 0;
+    margin: 0;
     background: none;
     overflow: visible;
     pointer-events: none;
@@ -499,12 +528,9 @@ const hasHeroContent =
 
   @media (max-width: 768px) {
     #hero .hero-partners-wrapper {
-      position: relative;
-      bottom: auto;
-      order: 2;
       width: 100%;
-      margin: 0.25rem 0 0;
-      padding: 0 0.75rem;
+      max-width: none;
+      padding: 0;
     }
 
     #hero .hero-partners-mask {
