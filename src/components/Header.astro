@@ -940,64 +940,79 @@ document.addEventListener('astro:after-swap', function() {
     }
   }
 
-  /* Desktop: logo v strede, 3+3 položky menu symetricky po bokoch */
+  /* Desktop: jeden riadok — menu | logo | menu (nič pod sebou) */
   @media (min-width: 1201px) {
     .navbar-inner {
-      position: relative;
-      grid-template-columns: auto 1fr auto;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      height: auto;
+      min-height: 68px;
+      padding-block: 0.35rem;
     }
 
     .navbar-left-extras {
       grid-column: 1;
       grid-row: 1;
-      z-index: 4;
-      position: relative;
+      justify-self: start;
     }
 
     .navbar-center {
-      grid-column: 1 / -1;
+      grid-column: 2;
       grid-row: 1;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
       align-items: center;
-      column-gap: clamp(1.25rem, 2.2vw, 2.5rem);
-      width: 100%;
+      justify-content: center;
+      gap: clamp(0.65rem, 1.15vw, 1.35rem);
+      width: max-content;
+      max-width: min(920px, calc(100vw - 14rem));
       min-width: 0;
-      padding-inline: clamp(4.5rem, 5.5vw, 5.75rem) clamp(8.25rem, 10vw, 10.25rem);
-      pointer-events: none;
-      z-index: 1;
+    }
+
+    .nav-menu-left,
+    .nav-menu-right {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      flex-shrink: 0;
     }
 
     .nav-menu-left {
-      grid-column: 1;
-      justify-self: end;
+      order: 1;
       justify-content: flex-end;
-      pointer-events: auto;
-      flex-shrink: 0;
     }
 
     .nav-menu-right {
-      grid-column: 3;
-      justify-self: start;
+      order: 3;
       justify-content: flex-start;
-      pointer-events: auto;
-      flex-shrink: 0;
     }
 
     .logo-wrapper {
-      grid-column: 2;
-      justify-self: center;
-      position: static;
-      transform: none;
-      z-index: 5;
-      pointer-events: auto;
+      order: 2;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      order: unset;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .logo-service-icons {
+      margin-top: 0;
     }
 
     .navbar-right-extras {
       grid-column: 3;
       grid-row: 1;
-      z-index: 4;
-      position: relative;
+      justify-self: end;
     }
   }
 
