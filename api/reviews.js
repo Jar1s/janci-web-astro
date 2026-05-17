@@ -1,6 +1,14 @@
 export default async function handler(req, res) {
-  const { handleCors } = await import('../lib/cors.js');
-  if (handleCors(req, res)) return;
+  const { getCorsHeaders, handleCorsPreflight } = await import('../lib/cors.js');
+
+  const corsHeaders = getCorsHeaders(req.headers.origin);
+  Object.keys(corsHeaders).forEach((key) => {
+    res.setHeader(key, corsHeaders[key]);
+  });
+
+  if (req.method === 'OPTIONS') {
+    return handleCorsPreflight(req, res);
+  }
 
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
