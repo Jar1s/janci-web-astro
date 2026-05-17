@@ -87,23 +87,37 @@
       margin: 0;
       z-index: 1;
       width: 100%;
-      min-height: 42px;
+      min-height: 38px;
       height: auto;
-      padding: 0.55rem 0;
+      padding: 0.45rem 0.65rem;
     }
 
     .announcement-track {
-      font-size: 0.8125rem;
-      gap: 2rem;
-      padding-right: 2rem;
+      display: flex;
+      width: 100%;
+      max-width: 100%;
+      justify-content: center;
+      white-space: normal;
+      gap: 0;
+      padding-right: 0;
+    }
+
+    .announcement-track.is-running {
+      animation: none;
+    }
+
+    .announcement-item {
+      text-align: center;
+      line-height: 1.35;
     }
 
     .announcement-item::after {
-      margin-left: 2rem;
+      content: none;
+      margin: 0;
     }
   }
 
-  @media (prefers-reduced-div: reduce) {
+  @media (prefers-reduced-motion: reduce) {
     .announcement-track.is-running {
       animation-duration: 0.01ms;
       animation-iteration-count: 1;
@@ -118,6 +132,7 @@
     if (!bar || !track) return;
 
     const mobileMq = window.matchMedia('(max-width: 768px)');
+    let mobileRotateTimer: ReturnType<typeof setInterval> | null = null;
 
     function requestLayoutSync() {
       window.dispatchEvent(new Event('janci:layout-sync'));
@@ -181,34 +196,6 @@
         return item;
       };
 
-      track.textContent = '';
-      const appendSequence = () => {
-        texts.forEach((text) => track.appendChild(createItem(text)));
-      };
-      appendSequence();
-
-      const viewport = bar.querySelector('.announcement-viewport');
-      const viewportWidth = viewport?.clientWidth || bar.clientWidth || window.innerWidth;
-      let repeats = 1;
-      const maxRepeats = 6;
-      while (track.scrollWidth < viewportWidth * 2 && repeats < maxRepeats) {
-        appendSequence();
-        repeats += 1;
-      }
-
-      const nodes = Array.from(track.children);
-      nodes.forEach((node) => track.appendChild(node.cloneNode(true)));
-
-      const loopWidth = Math.max(track.scrollWidth / 2, 1);
-      const secondsPerViewport = mobileMq.matches ? 55 : 45;
-      const duration = Math.max(
-        90,
-        Math.min(300, (loopWidth / viewportWidth) * secondsPerViewport)
-      );
-      const durationValue = `${duration}s`;
-      track.style.setProperty('--announcement-duration', durationValue);
-      track.style.animationDuration = durationValue;
-
       const first = active[0];
       if (first.backgroundColor) bar.style.background = first.backgroundColor;
       if (first.backgroundGradient) bar.style.background = first.backgroundGradient;
@@ -217,8 +204,66 @@
 
       bar.style.display = 'flex';
       track.classList.remove('is-running');
-      void track.offsetWidth;
-      track.classList.add('is-running');
+      track.textContent = '';
+
+      if (mobileMq.matches) {
+        bar.classList.add('announcement-bar--mobile');
+        let mobileIndex = 0;
+        const showMobileMessage = () => {
+          track.textContent = '';
+          track.classList.remove('is-running');
+          track.appendChild(createItem(texts[mobileIndex]));
+          requestLayoutSync();
+          measureSiteTop();
+        };
+        showMobileMessage();
+        if (texts.length > 1) {
+          if (mobileRotateTimer) clearInterval(mobileRotateTimer);
+          mobileRotateTimer = setInterval(() => {
+            mobileIndex = (mobileIndex + 1) % texts.length;
+            showMobileMessage();
+          }, 8000);
+        }
+        mobileMq.addEventListener('change', () => {
+          if (!mobileMq.matches) {
+            bar.classList.remove('announcement-bar--mobile');
+            if (mobileRotateTimer) {
+              clearInterval(mobileRotateTimer);
+              mobileRotateTimer = null;
+            }
+          }
+        });
+      } else {
+        bar.classList.remove('announcement-bar--mobile');
+        const appendSequence = () => {
+          texts.forEach((text) => track.appendChild(createItem(text)));
+        };
+        appendSequence();
+
+        const viewport = bar.querySelector('.announcement-viewport');
+        const viewportWidth = viewport?.clientWidth || bar.clientWidth || window.innerWidth;
+        let repeats = 1;
+        const maxRepeats = 6;
+        while (track.scrollWidth < viewportWidth * 2 && repeats < maxRepeats) {
+          appendSequence();
+          repeats += 1;
+        }
+
+        const nodes = Array.from(track.children);
+        nodes.forEach((node) => track.appendChild(node.cloneNode(true)));
+
+        const loopWidth = Math.max(track.scrollWidth / 2, 1);
+        const secondsPerViewport = 45;
+        const duration = Math.max(
+          90,
+          Math.min(300, (loopWidth / viewportWidth) * secondsPerViewport)
+        );
+        const durationValue = `${duration}s`;
+        track.style.setProperty('--announcement-duration', durationValue);
+        track.style.animationDuration = durationValue;
+        void track.offsetWidth;
+        track.classList.add('is-running');
+      }
 
       requestAnimationFrame(() => {
         requestLayoutSync();
