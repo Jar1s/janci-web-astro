@@ -14,10 +14,19 @@ export default async function handler(req, res) {
 
   if (req.method === 'GET' || req.method === 'HEAD') {
     if (!process.env.ADMIN_PASSWORD) {
-      return res.status(503).json({ error: 'ADMIN_PASSWORD is not configured' });
+      return res.status(503).json({
+        error: 'Service unavailable',
+        code: 'not_configured',
+        message:
+          'Admin prihlásenie nie je nakonfigurované na serveri. Nastavte premennú ADMIN_PASSWORD vo Vercel (Settings → Environment Variables).'
+      });
     }
     if (!isAdminRequest(req)) {
-      return res.status(401).json({ error: 'Unauthorized' });
+      return res.status(401).json({
+        error: 'Unauthorized',
+        code: 'wrong_password',
+        message: 'Nesprávne administrátorské heslo. Skúste to znova.'
+      });
     }
     if (req.method === 'HEAD') {
       return res.status(200).end();

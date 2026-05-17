@@ -51,7 +51,10 @@ async function apiFetch(url, options = {}) {
     if (res.status === 401) {
       setToken('');
       if (typeof window !== 'undefined' && typeof window.showLogin === 'function') {
-        window.showLogin('Nesprávne alebo expirované heslo. Prihláste sa znova.');
+        window.showLogin(
+          'Vaše prihlásenie vypršalo alebo heslo nesedí. Zadajte heslo znova.',
+          'Opätovné prihlásenie'
+        );
       }
     }
     throw new Error(`Request failed ${res.status}: ${text}`);
@@ -59,17 +62,56 @@ async function apiFetch(url, options = {}) {
   return res.json();
 }
 
-async function verifyAdminToken(token) {
-  const res = await fetch(API.auth, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-  if (!res.ok) {
-    setToken('');
-    return false;
+function parseAuthErrorBody(text) {
+  if (!text) return null;
+  try {
+    return JSON.parse(text);
+  } catch {
+    return null;
   }
-  return true;
+}
+
+function authMessageFromResponse(status, body) {
+  if (body?.message) return body.message;
+  if (status === 401) return 'Nesprávne administrátorské heslo. Skúste to znova.';
+  if (status === 503) {
+    return 'Admin prihlásenie nie je dostupné — na serveri chýba ADMIN_PASSWORD (Vercel env).';
+  }
+  if (status === 405) return 'API auth endpoint neodpovedá správne (skontrolujte deployment).';
+  if (status >= 500) return 'Chyba servera pri overovaní hesla. Skúste to o chvíľu znova.';
+  return `Prihlásenie zlyhalo (HTTP ${status}).`;
+}
+
+export async function verifyAdminToken(token) {
+  try {
+    const res = await fetch(API.auth, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    const text = await res.text().catch(() => '');
+    const body = parseAuthErrorBody(text);
+
+    if (res.ok) {
+      return { ok: true };
+    }
+
+    setToken('');
+    return {
+      ok: false,
+      code: body?.code || `http_${res.status}`,
+      message: authMessageFromResponse(res.status, body)
+    };
+  } catch {
+    setToken('');
+    return {
+      ok: false,
+      code: 'network',
+      message:
+        'Nepodarilo sa spojiť s API (/api/auth). Skontrolujte internet, či beží Vercel deployment, alebo či admin otvárate z rovnakej domény ako web.'
+    };
+  }
 }
 
 // Notifications

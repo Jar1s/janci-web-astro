@@ -689,7 +689,41 @@
     }
 
     .auth-card h1 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
-    .auth-card p { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 2rem; }
+    .auth-card p { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.5rem; }
+
+    .auth-error {
+      display: none;
+      margin-bottom: 1rem;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      background: var(--red-bg);
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      color: #fecaca;
+      font-size: 0.8125rem;
+      line-height: 1.45;
+      text-align: left;
+    }
+
+    .auth-error.is-visible {
+      display: block;
+    }
+
+    .auth-error strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: #fca5a5;
+      font-weight: 700;
+    }
+
+    .form-input--invalid {
+      border-color: rgba(239, 68, 68, 0.65);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+    }
+
+    #login-btn:disabled {
+      opacity: 0.7;
+      cursor: wait;
+    }
 
     /* ===== MOBILE ===== */
     .mobile-toggle {
@@ -726,10 +760,10 @@
       <h1>JP Control Admin</h1>
       <p>Zadajte administrátorské heslo</p>
       <div class="form-group">
-        <input type="password" id="admin-password" class="form-input" placeholder="Heslo" style="text-align:center;">
+        <input type="password" id="admin-password" class="form-input" placeholder="Heslo" style="text-align:center;" autocomplete="current-password" aria-describedby="auth-error">
       </div>
-      <button class="btn btn-primary btn-lg" id="login-btn" style="width:100%;justify-content:center;">Prihlásiť sa</button>
-      <div id="auth-error" style="color:var(--red);margin-top:1rem;font-size:0.8rem;"></div>
+      <div id="auth-error" class="auth-error" role="alert" aria-live="polite"></div>
+      <button type="button" class="btn btn-primary btn-lg" id="login-btn" style="width:100%;justify-content:center;">Prihlásiť sa</button>
     </div>
   </div>
 
@@ -1163,26 +1197,43 @@
   </script>
 
   <!-- Keep the original admin.js logic for API calls -->
-  <script src="admin.js?v=9"></script>
+  <script src="admin.js?v=10"></script>
 
   <script>
     // ===== AUTH =====
     const authScreen = document.getElementById('auth-screen');
     const dashboard = document.getElementById('dashboard');
 
-    window.showLogin = function(message) {
+    function showAuthError(message, title) {
+      const box = document.getElementById('auth-error');
+      const input = document.getElementById('admin-password');
+      if (!box) return;
+      if (!message) {
+        box.classList.remove('is-visible');
+        box.innerHTML = '';
+        if (input) input.classList.remove('form-input--invalid');
+        return;
+      }
+      const heading = title || 'Prihlásenie sa nepodarilo';
+      box.replaceChildren();
+      const strong = document.createElement('strong');
+      strong.textContent = heading;
+      box.append(strong, document.createTextNode(message));
+      box.classList.add('is-visible');
+      if (input) input.classList.add('form-input--invalid');
+    }
+
+    window.showLogin = function(message, title) {
       authScreen.style.display = 'flex';
       dashboard.style.display = 'none';
-      if (message) {
-        document.getElementById('auth-error').textContent = message;
-      }
+      showAuthError(message, title);
     };
 
     async function checkAuth() {
       const token = getToken();
       if (token) {
-        const valid = await verifyAdminToken(token);
-        if (valid) {
+        const result = await verifyAdminToken(token);
+        if (result.ok) {
           authScreen.style.display = 'none';
           dashboard.style.display = 'flex';
           loadOverview();
@@ -1192,24 +1243,43 @@
           if (typeof loadReviews === 'function') loadReviews();
           if (typeof loadTraffic === 'function') loadTraffic();
         } else {
-          window.showLogin('Prihlásenie vypršalo alebo heslo nesedí.');
+          window.showLogin(
+            result.message || 'Uložené heslo už nie je platné. Prihláste sa znova.',
+            'Opätovné prihlásenie'
+          );
         }
       }
     }
 
     document.getElementById('login-btn').addEventListener('click', async () => {
-      const pw = document.getElementById('admin-password').value.trim();
+      const pwInput = document.getElementById('admin-password');
+      const btn = document.getElementById('login-btn');
+      const pw = pwInput.value.trim();
       if (!pw) {
-        document.getElementById('auth-error').textContent = 'Zadajte heslo';
+        showAuthError('Do poľa Heslo zadajte administrátorské heslo.', 'Chýba heslo');
+        pwInput.focus();
         return;
       }
+
+      const prevLabel = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Overujem…';
+      showAuthError('');
+
       setToken(pw);
-      const valid = await verifyAdminToken(pw);
-      if (!valid) {
-        document.getElementById('auth-error').textContent = 'Nesprávne heslo';
+      const result = await verifyAdminToken(pw);
+
+      btn.disabled = false;
+      btn.textContent = prevLabel;
+
+      if (!result.ok) {
+        showAuthError(result.message, 'Prihlásenie zlyhalo');
+        pwInput.focus();
+        pwInput.select();
         return;
       }
-      document.getElementById('auth-error').textContent = '';
+
+      showAuthError('');
       authScreen.style.display = 'none';
       dashboard.style.display = 'flex';
       loadOverview();
@@ -1218,6 +1288,10 @@
       loadPartners();
       if (typeof loadReviews === 'function') loadReviews();
       if (typeof loadTraffic === 'function') loadTraffic();
+    });
+
+    document.getElementById('admin-password').addEventListener('input', () => {
+      showAuthError('');
     });
 
     document.getElementById('admin-password').addEventListener('keydown', (e) => {
