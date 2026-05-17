@@ -1329,7 +1329,7 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
 
   async function loadReviewsFromApi() {
     try {
-      var res = await fetch('/api/reviews');
+      var res = await fetch('/api/reviews?limit=30');
       if (!res.ok) return;
       var data = await res.json();
       if (!data || !Array.isArray(data.reviews) || data.reviews.length < 1) return;

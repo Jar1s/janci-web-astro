@@ -5,7 +5,9 @@ const API = {
   statistics: '/api/statistics',
   partners: '/api/partners',
   partner: (id) => `/api/partners?id=${encodeURIComponent(id)}`,
-  partnerUpload: '/api/partners/upload'
+  partnerUpload: '/api/partners/upload',
+  reviews: '/api/reviews',
+  review: (id) => `/api/reviews?id=${encodeURIComponent(id)}`
 };
 
 function byId(id) {
@@ -439,6 +441,96 @@ if (partnerReset) partnerReset.addEventListener('click', () => fillPartnerForm({
 const partnersList = byId('partners-list');
 if (partnersList) partnersList.addEventListener('click', handlePartnerActions);
 
+// ---- Reviews ----
+async function loadReviews() {
+  const list = byId('reviews-list');
+  const err = byId('reviews-error');
+  if (!list) return;
+  list.innerHTML = '<div class="muted">Načítavam...</div>';
+  if (err) err.textContent = '';
+  try {
+    const data = await apiFetch(`${API.reviews}?limit=200`);
+    list.innerHTML = '';
+    const items = data.reviews || [];
+    if (!items.length) {
+      list.innerHTML = '<div class="muted">Žiadne recenzie v databáze. Spustite import alebo počkajte na odoslanie z webu.</div>';
+      return;
+    }
+    const pending = items.filter((r) => !r.approved);
+    const approved = items.filter((r) => r.approved);
+    if (pending.length) {
+      const h = document.createElement('h4');
+      h.textContent = `Čakajú na schválenie (${pending.length})`;
+      h.style.margin = '0 0 0.75rem';
+      list.appendChild(h);
+      pending.forEach((r) => list.appendChild(renderReviewItem(r, true)));
+    }
+    if (approved.length) {
+      const h = document.createElement('h4');
+      h.textContent = `Schválené (${approved.length})`;
+      h.style.margin = pending.length ? '1.25rem 0 0.75rem' : '0 0 0.75rem';
+      list.appendChild(h);
+      approved.slice(0, 50).forEach((r) => list.appendChild(renderReviewItem(r, false)));
+      if (approved.length > 50) {
+        const more = document.createElement('p');
+        more.className = 'muted';
+        more.textContent = `… a ďalších ${approved.length - 50} schválených recenzií`;
+        list.appendChild(more);
+      }
+    }
+  } catch (e) {
+    if (err) err.textContent = e.message;
+    else list.innerHTML = `<div class="muted">${e.message}</div>`;
+  }
+}
+
+function renderReviewItem(r, showApprove) {
+  const div = document.createElement('div');
+  div.className = 'item';
+  const preview = (r.text || '').length > 180 ? `${r.text.slice(0, 177)}…` : (r.text || '');
+  div.innerHTML = `
+    <div class="inline">
+      <strong>${r.author_name || '—'}</strong>
+      <span class="badge">${r.rating || 5}★</span>
+      ${r.approved ? '<span class="badge">Schválená</span>' : '<span class="badge">Čaká</span>'}
+      ${r.source ? `<span class="badge">${r.source}</span>` : ''}
+    </div>
+    <div style="margin:6px 0;" class="muted">${r.relative_time_description || ''}</div>
+    <p style="margin:0 0 8px;">${preview}</p>
+    <div class="inline">
+      ${showApprove ? `<button type="button" class="btn-secondary" data-review-approve="${r.id}">Schváliť</button>` : ''}
+      <button type="button" class="btn-danger" data-review-del="${r.id}">Zmazať</button>
+    </div>
+  `;
+  return div;
+}
+
+async function handleReviewActions(e) {
+  const t = e.target;
+  if (t.dataset.reviewApprove) {
+    const id = t.dataset.reviewApprove;
+    await apiFetch(API.review(id), {
+      method: 'PUT',
+      body: JSON.stringify({ approved: true, relative_time_description: 'nedávno' })
+    });
+    showFeedback('Recenzia schválená');
+    loadReviews();
+  }
+  if (t.dataset.reviewDel) {
+    const id = t.dataset.reviewDel;
+    if (!confirm(`Zmazať recenziu #${id}?`)) return;
+    await apiFetch(API.review(id), { method: 'DELETE' });
+    showFeedback('Recenzia zmazaná');
+    loadReviews();
+  }
+}
+
+const reviewsList = byId('reviews-list');
+if (reviewsList) reviewsList.addEventListener('click', handleReviewActions);
+
 if (getToken()) {
   loadPartners();
+  loadReviews();
 }
+
+window.loadReviews = loadReviews;

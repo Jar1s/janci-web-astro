@@ -55,6 +55,35 @@ const fallbackReviews = [
         <p class="reviews-summary__source" id="reviews-source">Zdroj: overené recenzie</p>
       </div>
 
+      <section class="reviews-submit" id="reviews-submit">
+        <h2 class="reviews-submit__title">Napíšte svoju recenziu</h2>
+        <p class="reviews-submit__hint">Recenzia sa zobrazí po schválení. Polia označené * sú povinné.</p>
+        <form id="review-form" class="reviews-form">
+          <div class="reviews-form__row">
+            <label class="reviews-form__label" for="review-name">Vaše meno *</label>
+            <input id="review-name" name="name" class="reviews-form__input" required minlength="2" maxlength="80" autocomplete="name">
+          </div>
+          <div class="reviews-form__row">
+            <label class="reviews-form__label" for="review-text">Recenzia *</label>
+            <textarea id="review-text" name="text" class="reviews-form__input reviews-form__textarea" required minlength="8" maxlength="1200" rows="4" placeholder="Ako ste boli spokojní so službami?"></textarea>
+          </div>
+          <div class="reviews-form__row">
+            <span class="reviews-form__label">Hodnotenie</span>
+            <div class="reviews-form__stars" role="radiogroup" aria-label="Hodnotenie">
+              {[5, 4, 3, 2, 1].map((n) => (
+                <label class="reviews-form__star">
+                  <input type="radio" name="rating" value={n} checked={n === 5} />
+                  <span>{n}★</span>
+                </label>
+              ))}
+            </div>
+          </div>
+          <p id="review-form-msg" class="reviews-form__msg" hidden></p>
+          <button type="submit" class="reviews-form__btn">Odoslať recenziu</button>
+        </form>
+      </section>
+
+
       <div class="reviews-grid" id="reviews-grid">
         {fallbackReviews.map((review) => (
           <article class="review-card">
@@ -123,7 +152,7 @@ const fallbackReviews = [
     const countEl = document.getElementById('reviews-count');
 
     try {
-      const response = await fetch('/api/reviews');
+      const response = await fetch('/api/reviews?limit=100');
       if (!response.ok) throw new Error('Failed to load reviews');
       const data = await response.json();
 
@@ -134,7 +163,9 @@ const fallbackReviews = [
         countEl.textContent = `${data.total_reviews}+ recenzií`;
       }
       if (source) {
-        source.textContent = data.source === 'google' ? 'Zdroj: Google recenzie' : 'Zdroj: lokálne recenzie';
+        if (data.source === 'google') source.textContent = 'Zdroj: Google recenzie';
+        else if (data.source === 'database') source.textContent = 'Zdroj: recenzie zákazníkov';
+        else source.textContent = 'Zdroj: ukážkové recenzie';
       }
       if (Array.isArray(data.reviews) && data.reviews.length > 0) {
         renderReviews(data.reviews);
@@ -145,6 +176,44 @@ const fallbackReviews = [
   }
 
   loadReviews();
+
+  const reviewForm = document.getElementById('review-form');
+  const reviewFormMsg = document.getElementById('review-form-msg');
+  if (reviewForm) {
+    reviewForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!reviewFormMsg) return;
+      reviewFormMsg.hidden = true;
+      const fd = new FormData(reviewForm);
+      const payload = {
+        name: String(fd.get('name') || '').trim(),
+        text: String(fd.get('text') || '').trim(),
+        rating: Number(fd.get('rating') || 5)
+      };
+      try {
+        const res = await fetch('/api/reviews', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) {
+          reviewFormMsg.textContent = data.errors ? data.errors.join(' ') : (data.error || 'Odoslanie zlyhalo.');
+          reviewFormMsg.className = 'reviews-form__msg reviews-form__msg--error';
+          reviewFormMsg.hidden = false;
+          return;
+        }
+        reviewForm.reset();
+        reviewFormMsg.textContent = data.message || 'Ďakujeme! Recenzia čaká na schválenie.';
+        reviewFormMsg.className = 'reviews-form__msg reviews-form__msg--ok';
+        reviewFormMsg.hidden = false;
+      } catch (_) {
+        reviewFormMsg.textContent = 'Nepodarilo sa odoslať recenziu. Skúste neskôr.';
+        reviewFormMsg.className = 'reviews-form__msg reviews-form__msg--error';
+        reviewFormMsg.hidden = false;
+      }
+    });
+  }
 </script>
 
 <style>
@@ -204,6 +273,108 @@ const fallbackReviews = [
   .reviews-summary__source {
     font-size: 0.86rem;
     color: #93c5fd;
+  }
+
+  .reviews-submit {
+    background: #fff;
+    border: 1px solid #dbe6f3;
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.75rem;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  }
+
+  .reviews-submit__title {
+    margin: 0 0 0.35rem;
+    font-size: 1.25rem;
+    color: #0f172a;
+  }
+
+  .reviews-submit__hint {
+    margin: 0 0 1rem;
+    font-size: 0.875rem;
+    color: #64748b;
+  }
+
+  .reviews-form__row {
+    margin-bottom: 0.85rem;
+  }
+
+  .reviews-form__label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.35rem;
+  }
+
+  .reviews-form__input {
+    width: 100%;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.9375rem;
+    font-family: inherit;
+  }
+
+  .reviews-form__textarea {
+    resize: vertical;
+    min-height: 96px;
+  }
+
+  .reviews-form__stars {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .reviews-form__star {
+    cursor: pointer;
+  }
+
+  .reviews-form__star input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .reviews-form__star span {
+    display: inline-block;
+    padding: 0.35rem 0.65rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 999px;
+    font-size: 0.8125rem;
+    background: #f8fafc;
+  }
+
+  .reviews-form__star input:checked + span {
+    background: #0066cc;
+    border-color: #0066cc;
+    color: #fff;
+  }
+
+  .reviews-form__btn {
+    margin-top: 0.25rem;
+    background: #0066cc;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.65rem 1.25rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .reviews-form__msg {
+    margin: 0.5rem 0;
+    font-size: 0.875rem;
+  }
+
+  .reviews-form__msg--ok {
+    color: #15803d;
+  }
+
+  .reviews-form__msg--error {
+    color: #b91c1c;
   }
 
   .reviews-grid {

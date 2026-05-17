@@ -10,7 +10,9 @@
     "dev:api": "vercel dev",
     "build": "astro build",
     "preview": "astro preview",
-    "db:check": "node scripts/check-supabase.mjs"
+    "db:check": "node scripts/check-supabase.mjs",
+    "reviews:import": "node scripts/import-reviews.mjs",
+    "reviews:import:dry": "node scripts/import-reviews.mjs --dry-run"
   },
   "dependencies": {
     "@astrojs/tailwind": "^6.0.2",
