@@ -377,10 +377,14 @@ const hasHeroContent =
     .hero {
       height: auto;
       min-height: 100vh;
-      padding-top: 80px;
+      padding-top: var(--navbar-height, 55px);
       padding-bottom: 3rem;
       justify-content: flex-start;
       gap: 2rem;
+    }
+
+    :global(body.has-announcement-bar) .hero {
+      padding-top: 0;
     }
 
     .hero-content {

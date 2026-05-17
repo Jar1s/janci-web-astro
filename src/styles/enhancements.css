@@ -561,3 +561,9 @@
 #reviews .review-card:hover {
   border-color: #e5e7eb;
 }
+
+@media (max-width: 768px) {
+  body.has-announcement-bar .hero {
+    padding-top: 0 !important;
+  }
+}
