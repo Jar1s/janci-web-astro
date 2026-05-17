@@ -19,13 +19,16 @@ import CTASection from '@/components/CTASection.astro';
     ctaText="REZERVOVAŤ TERMÍN"
     ctaHref="https://www.kontrolavozidiel.sk/rezervovat-cez-internet"
     videoSrc="/images/sluzby.mp4"
+    translateTitleKey="ek-hero-title"
+    translateSubtitleKey="ek-hero-subtitle"
+    translateCtaKey="ek-hero-cta"
   />
 
   <!-- Čo je emisná kontrola -->
   <section class="py-16 bg-white">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Čo je emisná kontrola?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="ek-what-title">Čo je emisná kontrola?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
       </div>
       <div class="space-y-5 text-slate-700 text-lg leading-relaxed max-w-4xl mx-auto">
@@ -39,28 +42,28 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-slate-50">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Druhy emisných kontrol</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="ek-types-title">Druhy emisných kontrol</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
-        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Druhy emisných kontrol, ktoré vykonávame:</p>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto" data-translate="ek-types-sub">Druhy emisných kontrol, ktoré vykonávame:</p>
       </div>
       <div class="space-y-6 max-w-4xl mx-auto">
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-          <h3 class="text-xl font-bold text-blue-600 mb-3">Emisná kontrola PRAVIDELNÁ</h3>
+          <h3 class="text-xl font-bold text-blue-600 mb-3" data-translate="ek-type-regular">Emisná kontrola PRAVIDELNÁ</h3>
           <p class="text-slate-700 leading-relaxed">Vykonáva sa v rozsahu kontrolných položiek určených metodickými pokynmi ministerstva dopravy na vykonávanie emisnej kontroly pravidelnej.</p>
         </div>
 
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-          <h3 class="text-xl font-bold text-blue-600 mb-3">Emisná kontrola ZVLÁŠTNA</h3>
+          <h3 class="text-xl font-bold text-blue-600 mb-3" data-translate="ek-type-special">Emisná kontrola ZVLÁŠTNA</h3>
           <p class="text-slate-700 leading-relaxed">Vykonáva sa v úplnom alebo čiastočnom rozsahu emisnej kontroly pravidelnej a podľa kontrolných položiek určených metodikou na vykonávanie emisných kontrol zvláštnych.</p>
         </div>
 
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-          <h3 class="text-xl font-bold text-blue-600 mb-3">Emisná kontrola ADMINISTRATÍVNA</h3>
+          <h3 class="text-xl font-bold text-blue-600 mb-3" data-translate="ek-type-admin">Emisná kontrola ADMINISTRATÍVNA</h3>
           <p class="text-slate-700 leading-relaxed">Vykonáva sa v čiastočnom rozsahu emisnej kontroly pravidelnej a podľa kontrolných položiek určených metodikou na vykonávanie emisných kontrol administratívnych.</p>
         </div>
 
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-          <h3 class="text-xl font-bold text-blue-600 mb-3">OPAKOVANÁ emisná kontrola</h3>
+          <h3 class="text-xl font-bold text-blue-600 mb-3" data-translate="ek-type-repeat">OPAKOVANÁ emisná kontrola</h3>
           <p class="text-slate-700 leading-relaxed">Vykonáva sa v plnom rozsahu pôvodnej emisnej kontroly s dôrazom na kontrolu odstránenia chýb zistených pri emisnej kontrole uvedenej v predchádzajúcich bodoch, a to do 60 dní odo dňa vykonania pôvodnej kontroly.</p>
         </div>
       </div>
@@ -71,9 +74,9 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-white">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Kategórie vozidiel</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="tk-categories-title">Kategórie vozidiel</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
-        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Kategórie vozidiel, pre ktoré vykonávame emisné kontroly:</p>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto" data-translate="ek-categories-sub">Kategórie vozidiel, pre ktoré vykonávame emisné kontroly:</p>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-4xl mx-auto">
         <div class="bg-blue-50 rounded-xl p-5 border border-blue-100 flex items-center gap-4">
@@ -126,7 +129,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-slate-50">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké vozidlá podliehajú vykonaniu pravidelnej emisnej kontroly?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="ek-regular-vehicles-title">Aké vozidlá podliehajú vykonaniu pravidelnej emisnej kontroly?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
       </div>
       <div class="max-w-4xl mx-auto space-y-8">
@@ -161,7 +164,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-white">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Čo sa kontroluje pri emisnej kontrole?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="ek-checked-title">Čo sa kontroluje pri emisnej kontrole?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
         <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Kontrola sa zameriava prinajmenšom na nasledujúce oblasti:</p>
       </div>
@@ -211,7 +214,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-slate-50">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké doklady treba predložiť na emisnú kontrolu (EK)?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="ek-docs-title">Aké doklady treba predložiť na emisnú kontrolu (EK)?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
         <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Prevádzkovateľ vozidla alebo vodič vozidla predkladá na vykonanie:</p>
       </div>
@@ -309,7 +312,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-white">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Kedy ísť na emisnú kontrolu (EK)?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="ek-when-title">Kedy ísť na emisnú kontrolu (EK)?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
       </div>
       <div class="overflow-x-auto max-w-4xl mx-auto">
@@ -380,7 +383,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-slate-50">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké sú povinnosti prevádzkovateľa vozidla pri emisnej kontrole (EK)?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="ek-duties-title">Aké sú povinnosti prevádzkovateľa vozidla pri emisnej kontrole (EK)?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
       </div>
       <div class="max-w-4xl mx-auto">
@@ -404,7 +407,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-white">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Ako prebieha hodnotenie technického stavu vozidla pri emisnej kontrole?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="ek-eval-title">Ako prebieha hodnotenie technického stavu vozidla pri emisnej kontrole?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
       </div>
       <div class="max-w-4xl mx-auto space-y-6">
@@ -457,7 +460,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-slate-50">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké sú prípady nevykonania emisnej kontroly?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="ek-skip-title">Aké sú prípady nevykonania emisnej kontroly?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
       </div>
       <div class="max-w-4xl mx-auto">
@@ -477,7 +480,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-white">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké doklady dostanem po vykonaní emisnej kontroly?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="ek-after-docs-title">Aké doklady dostanem po vykonaní emisnej kontroly?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
       </div>
       <div class="overflow-x-auto max-w-4xl mx-auto">
@@ -528,7 +531,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-slate-50">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Ako sa preukazuje platnosť emisnej kontroly?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="ek-validity-title">Ako sa preukazuje platnosť emisnej kontroly?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
       </div>
       <div class="max-w-4xl mx-auto">

@@ -940,7 +940,7 @@ document.addEventListener('astro:after-swap', function() {
     }
   }
 
-  /* Desktop: logo v skutočnom strede lišty, menu po stranách */
+  /* Desktop: logo v strede, 3+3 položky menu symetricky po bokoch */
   @media (min-width: 1201px) {
     .navbar-inner {
       position: relative;
@@ -957,28 +957,38 @@ document.addEventListener('astro:after-swap', function() {
     .navbar-center {
       grid-column: 1 / -1;
       grid-row: 1;
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
       align-items: center;
-      justify-content: space-between;
+      column-gap: clamp(1.25rem, 2.2vw, 2.5rem);
       width: 100%;
       min-width: 0;
-      gap: 0;
-      padding-inline: clamp(4.25rem, 5.5vw, 5.75rem) clamp(8rem, 11vw, 10.5rem);
+      padding-inline: clamp(4.5rem, 5.5vw, 5.75rem) clamp(8.25rem, 10vw, 10.25rem);
       pointer-events: none;
       z-index: 1;
     }
 
-    .nav-menu-left,
+    .nav-menu-left {
+      grid-column: 1;
+      justify-self: end;
+      justify-content: flex-end;
+      pointer-events: auto;
+      flex-shrink: 0;
+    }
+
     .nav-menu-right {
+      grid-column: 3;
+      justify-self: start;
+      justify-content: flex-start;
       pointer-events: auto;
       flex-shrink: 0;
     }
 
     .logo-wrapper {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
+      grid-column: 2;
+      justify-self: center;
+      position: static;
+      transform: none;
       z-index: 5;
       pointer-events: auto;
     }

@@ -41,35 +41,35 @@ const fallbackReviews = [
     showDecorations={false}
     stats={[]}
   />
-  <h1 class="sr-only">Recenzie zákazníkov</h1>
+  <h1 class="sr-only" data-translate="reviews-page-title">Recenzie zákazníkov</h1>
 
   <section class="reviews-page">
     <div class="reviews-page__container">
       <div class="reviews-summary">
-        <p class="reviews-summary__label">Hodnotenie zákazníkov</p>
+        <p class="reviews-summary__label" data-translate="reviews-summary-label">Hodnotenie zákazníkov</p>
         <div class="reviews-summary__metrics">
           <span class="reviews-summary__rating" id="reviews-rating">4.9</span>
           <span class="reviews-summary__stars" aria-hidden="true">★★★★★</span>
-          <span class="reviews-summary__count" id="reviews-count">250+ recenzií</span>
+          <span class="reviews-summary__count" id="reviews-count" data-translate="reviews-count">250+ recenzií</span>
         </div>
-        <p class="reviews-summary__source" id="reviews-source">Zdroj: overené recenzie</p>
+        <p class="reviews-summary__source" id="reviews-source" data-translate="reviews-source">Zdroj: overené recenzie</p>
       </div>
 
       <section class="reviews-submit" id="reviews-submit">
-        <h2 class="reviews-submit__title">Napíšte svoju recenziu</h2>
-        <p class="reviews-submit__hint">Recenzia sa zobrazí po schválení. Polia označené * sú povinné.</p>
+        <h2 class="reviews-submit__title" data-translate="reviews-submit-title">Napíšte svoju recenziu</h2>
+        <p class="reviews-submit__hint" data-translate="reviews-submit-hint">Recenzia sa zobrazí po schválení. Polia označené * sú povinné.</p>
         <form id="review-form" class="reviews-form">
           <div class="reviews-form__row">
-            <label class="reviews-form__label" for="review-name">Vaše meno *</label>
+            <label class="reviews-form__label" for="review-name" data-translate="reviews-form-name">Vaše meno *</label>
             <input id="review-name" name="name" class="reviews-form__input" required minlength="2" maxlength="80" autocomplete="name">
           </div>
           <div class="reviews-form__row">
-            <label class="reviews-form__label" for="review-text">Recenzia *</label>
-            <textarea id="review-text" name="text" class="reviews-form__input reviews-form__textarea" required minlength="8" maxlength="1200" rows="4" placeholder="Ako ste boli spokojní so službami?"></textarea>
+            <label class="reviews-form__label" for="review-text" data-translate="reviews-form-text">Recenzia *</label>
+            <textarea id="review-text" name="text" class="reviews-form__input reviews-form__textarea" required minlength="8" maxlength="1200" rows="4" placeholder="Ako ste boli spokojní so službami?" data-translate="reviews-form-placeholder"></textarea>
           </div>
           <div class="reviews-form__row">
-            <span class="reviews-form__label">Hodnotenie</span>
-            <div class="reviews-form__stars" role="radiogroup" aria-label="Hodnotenie">
+            <span class="reviews-form__label" data-translate="reviews-form-rating">Hodnotenie</span>
+            <div class="reviews-form__stars" role="radiogroup" aria-label="Hodnotenie" data-translate-aria="reviews-form-rating-aria">
               {[5, 4, 3, 2, 1].map((n) => (
                 <label class="reviews-form__star">
                   <input type="radio" name="rating" value={n} checked={n === 5} />
@@ -79,7 +79,7 @@ const fallbackReviews = [
             </div>
           </div>
           <p id="review-form-msg" class="reviews-form__msg" hidden></p>
-          <button type="submit" class="reviews-form__btn">Odoslať recenziu</button>
+          <button type="submit" class="reviews-form__btn" data-translate="reviews-form-submit">Odoslať recenziu</button>
         </form>
       </section>
 

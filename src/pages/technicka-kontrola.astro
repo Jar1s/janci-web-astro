@@ -19,13 +19,16 @@ import CTASection from '@/components/CTASection.astro';
     ctaText="REZERVOVAŤ TERMÍN"
     ctaHref="https://www.kontrolavozidiel.sk/rezervovat-cez-internet"
     videoSrc="/images/sluzby.mp4"
+    translateTitleKey="tk-hero-title"
+    translateSubtitleKey="tk-hero-subtitle"
+    translateCtaKey="tk-hero-cta"
   />
 
   <!-- Čo je technická kontrola -->
   <section class="py-16 bg-white">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Čo je technická kontrola?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="tk-what-title">Čo je technická kontrola?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
       </div>
       <div class="space-y-5 text-slate-700 text-lg leading-relaxed max-w-4xl mx-auto">
@@ -39,14 +42,14 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-slate-50">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Druhy technických kontrol</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="tk-types-title">Druhy technických kontrol</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
-        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Druhy technických kontrol, ktoré vykonávame:</p>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto" data-translate="tk-types-sub">Druhy technických kontrol, ktoré vykonávame:</p>
       </div>
       <div class="space-y-6 max-w-4xl mx-auto">
         <!-- Pravidelná -->
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-          <h3 class="text-xl font-bold text-blue-600 mb-3">Technická kontrola PRAVIDELNÁ</h3>
+          <h3 class="text-xl font-bold text-blue-600 mb-3" data-translate="tk-type-regular">Technická kontrola PRAVIDELNÁ</h3>
           <p class="text-slate-700 leading-relaxed mb-3">Vykonáva sa v rozsahu kontrolných položiek určených metodickými pokynmi Ministerstva dopravy Slovenskej republiky, ktoré sa vzťahujú na kontrolované vozidlo s ohľadom na jeho:</p>
           <ul class="list-disc list-inside text-slate-600 space-y-1 ml-4">
             <li>kategóriu,</li>
@@ -57,7 +60,7 @@ import CTASection from '@/components/CTASection.astro';
 
         <!-- Zvláštna -->
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-          <h3 class="text-xl font-bold text-blue-600 mb-3">Technická kontrola ZVLÁŠTNA</h3>
+          <h3 class="text-xl font-bold text-blue-600 mb-3" data-translate="tk-type-special">Technická kontrola ZVLÁŠTNA</h3>
           <p class="text-slate-700 leading-relaxed mb-3">Vykonáva sa v úplnom alebo čiastočnom rozsahu technickej kontroly pravidelnej a podľa kontrolných položiek určených metodikou na vykonávanie technickej kontroly zvláštnej:</p>
           <ul class="space-y-2 text-slate-600 ml-4">
             <li class="flex gap-3 items-start"><span class="text-blue-600 mt-1 shrink-0">&#9679;</span><span>na žiadosť prevádzkovateľa alebo vodiča vozidla – v rozsahu ich ústnej požiadavky,</span></li>
@@ -69,13 +72,13 @@ import CTASection from '@/components/CTASection.astro';
 
         <!-- Administratívna -->
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-          <h3 class="text-xl font-bold text-blue-600 mb-3">Technická kontrola ADMINISTRATÍVNA</h3>
+          <h3 class="text-xl font-bold text-blue-600 mb-3" data-translate="tk-type-admin">Technická kontrola ADMINISTRATÍVNA</h3>
           <p class="text-slate-700 leading-relaxed">Vykonáva sa v čiastočnom rozsahu technickej kontroly pravidelnej a podľa kontrolných položiek určených metodikou na vykonávanie technickej kontroly administratívnej.</p>
         </div>
 
         <!-- Opakovaná -->
         <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm">
-          <h3 class="text-xl font-bold text-blue-600 mb-3">OPAKOVANÁ technická kontrola</h3>
+          <h3 class="text-xl font-bold text-blue-600 mb-3" data-translate="tk-type-repeat">OPAKOVANÁ technická kontrola</h3>
           <p class="text-slate-700 leading-relaxed">Vykonáva sa v čiastočnom rozsahu so zameraním na kontrolu odstránenia chýb zistených pri technickej kontrole uvedenej v predchádzajúcich bodoch, a to do 60 dní odo dňa vykonania pôvodnej technickej kontroly.</p>
         </div>
       </div>
@@ -86,9 +89,9 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-white">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Kategórie vozidiel</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="tk-categories-title">Kategórie vozidiel</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
-        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Kategórie vozidiel, pre ktoré vykonávame technické kontroly:</p>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto" data-translate="tk-categories-sub">Kategórie vozidiel, pre ktoré vykonávame technické kontroly:</p>
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl mx-auto">
         <div class="bg-blue-50 rounded-xl p-5 text-center border border-blue-100">
@@ -99,7 +102,7 @@ import CTASection from '@/components/CTASection.astro';
             <circle cx="8" cy="17" r="1.5" />
             <circle cx="16" cy="17" r="1.5" />
           </svg>
-          <p class="text-slate-700 font-medium">osobné a úžitkové vozidlá</p>
+          <p class="text-slate-700 font-medium" data-translate="tk-cat-personal">osobné a úžitkové vozidlá</p>
         </div>
         <div class="bg-blue-50 rounded-xl p-5 text-center border border-blue-100">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mx-auto mb-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -108,7 +111,7 @@ import CTASection from '@/components/CTASection.astro';
             <circle cx="7" cy="18" r="2" />
             <circle cx="18" cy="18" r="2" />
           </svg>
-          <p class="text-slate-700 font-medium">nákladné vozidlá všetkých kategórií</p>
+          <p class="text-slate-700 font-medium" data-translate="tk-cat-trucks">nákladné vozidlá všetkých kategórií</p>
         </div>
         <div class="bg-blue-50 rounded-xl p-5 text-center border border-blue-100">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mx-auto mb-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -118,7 +121,7 @@ import CTASection from '@/components/CTASection.astro';
             <circle cx="7" cy="17" r="2" />
             <circle cx="17" cy="17" r="2" />
           </svg>
-          <p class="text-slate-700 font-medium">traktory, autobusy a iné stavebné a poľnohospodárske stroje a vozidlá</p>
+          <p class="text-slate-700 font-medium" data-translate="tk-cat-special">traktory, autobusy a iné stavebné a poľnohospodárske stroje a vozidlá</p>
         </div>
         <div class="bg-blue-50 rounded-xl p-5 text-center border border-blue-100">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mx-auto mb-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -128,7 +131,7 @@ import CTASection from '@/components/CTASection.astro';
             <path d="M11 12H8.5L7 9" />
             <path d="M14 12l-1-3h3" />
           </svg>
-          <p class="text-slate-700 font-medium">motocykle všetkých kategórií</p>
+          <p class="text-slate-700 font-medium" data-translate="tk-cat-moto">motocykle všetkých kategórií</p>
         </div>
         <div class="bg-blue-50 rounded-xl p-5 text-center border border-blue-100">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mx-auto mb-3 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -138,7 +141,7 @@ import CTASection from '@/components/CTASection.astro';
             <circle cx="9" cy="18" r="2" />
             <circle cx="16" cy="18" r="2" />
           </svg>
-          <p class="text-slate-700 font-medium">prípojné vozidlá všetkých kategórií</p>
+          <p class="text-slate-700 font-medium" data-translate="tk-cat-trailers">prípojné vozidlá všetkých kategórií</p>
         </div>
       </div>
     </div>
@@ -148,7 +151,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-slate-50">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Čo odporúčame skontrolovať pred návštevou STK?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="tk-previsit-title">Čo odporúčame skontrolovať pred návštevou STK?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
       </div>
 
@@ -237,9 +240,9 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-white">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Čo sa kontroluje pri technickej kontrole?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="tk-checked-title">Čo sa kontroluje pri technickej kontrole?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
-        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Kontrola sa zameriava prinajmenšom na nasledujúce oblasti:</p>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto" data-translate="tk-checked-sub">Kontrola sa zameriava prinajmenšom na nasledujúce oblasti:</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
         <!-- Identifikácia vozidla -->
@@ -387,7 +390,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-slate-50">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké doklady treba predložiť na technickú kontrolu (TK)?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="tk-docs-title">Aké doklady treba predložiť na technickú kontrolu (TK)?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
         <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Prevádzkovateľ vozidla alebo vodič vozidla predkladá na vykonanie:</p>
       </div>
@@ -427,7 +430,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-white">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Kedy ísť na technickú kontrolu (TK)?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="tk-when-title">Kedy ísť na technickú kontrolu (TK)?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
         <p class="text-slate-500 mt-4 max-w-3xl mx-auto">Lehoty technických kontrol určuje vyhláška Ministerstva dopravy a výstavby Slovenskej republiky č. 137/2018 Z. z., ktorou sa ustanovujú podrobnosti v oblasti technickej kontroly.</p>
       </div>
@@ -507,7 +510,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-slate-50">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké sú povinnosti prevádzkovateľa vozidla pri technickej kontrole (TK)?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="tk-duties-title">Aké sú povinnosti prevádzkovateľa vozidla pri technickej kontrole (TK)?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
       </div>
       <div class="max-w-4xl mx-auto">
@@ -531,7 +534,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-white">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Ako prebieha hodnotenie technického stavu vozidla pri technickej kontrole (TK)?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="tk-eval-title">Ako prebieha hodnotenie technického stavu vozidla pri technickej kontrole (TK)?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
       </div>
       <div class="max-w-4xl mx-auto space-y-6">
@@ -585,7 +588,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-slate-50">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké sú prípady nevykonania technickej kontroly?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="tk-skip-title">Aké sú prípady nevykonania technickej kontroly?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
       </div>
       <div class="max-w-4xl mx-auto">
@@ -609,7 +612,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-white">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Aké doklady dostanem po vykonaní technickej kontroly?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="tk-after-docs-title">Aké doklady dostanem po vykonaní technickej kontroly?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
       </div>
       <div class="overflow-x-auto max-w-4xl mx-auto">
@@ -660,7 +663,7 @@ import CTASection from '@/components/CTASection.astro';
   <section class="py-16 bg-slate-50">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-blue-600 mb-4">Ako sa preukazuje platnosť technickej kontroly?</h2>
+        <h2 class="text-3xl font-bold text-blue-600 mb-4" data-translate="tk-validity-title">Ako sa preukazuje platnosť technickej kontroly?</h2>
         <div class="w-16 h-1 bg-blue-600 mx-auto rounded-full"></div>
       </div>
       <div class="max-w-4xl mx-auto">
