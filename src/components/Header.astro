@@ -381,10 +381,29 @@ document.addEventListener('astro:after-swap', function() {
   .navbar-center {
     grid-column: 2;
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
     gap: clamp(0.65rem, 1.2vw, 1.25rem);
     min-width: 0;
+  }
+
+  /* original.css dáva .logo order:2, ale .logo-wrapper má 0 — logo skončí vľavo pred menu */
+  .navbar-center .nav-menu-left {
+    order: 1;
+  }
+
+  .navbar-center .logo-wrapper {
+    order: 2;
+    flex-shrink: 0;
+  }
+
+  .navbar-center .nav-menu-right {
+    order: 3;
+  }
+
+  .navbar-center .logo {
+    order: unset;
   }
 
   .nav-menu-left,
