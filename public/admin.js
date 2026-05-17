@@ -76,25 +76,31 @@ async function loadNotifications() {
   const list = byId('notif-list');
   const err = byId('notif-error');
   if (!list) return;
-  list.innerHTML = '<div class="muted">Načítavam...</div>';
+  list.innerHTML = '<p class="list-empty">Načítavam…</p>';
   if (err) err.textContent = '';
   try {
     const data = await apiFetch(API.notifications);
     list.innerHTML = '';
+    if (!data.notifications?.length) {
+      list.innerHTML = '<p class="list-empty">Žiadne notifikácie</p>';
+      return;
+    }
     data.notifications.forEach((n) => {
       const div = document.createElement('div');
-      div.className = 'item';
+      div.className = 'list-item';
       div.innerHTML = `
-        <div class="inline">
-          <strong>#${n.id}</strong>
-          <span class="badge">${n.active ? 'Aktívna' : 'Neaktívna'}</span>
+        <div class="list-item-header">
+          <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+            <span class="list-item-title">#${n.id}</span>
+            <span class="badge ${n.active ? 'badge-active' : 'badge-inactive'}">${n.active ? 'Aktívna' : 'Neaktívna'}</span>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-ghost btn-sm" data-edit="${n.id}">Upraviť</button>
+            <button type="button" class="btn btn-ghost btn-sm" data-toggle="${n.id}">${n.active ? 'Vypnúť' : 'Zapnúť'}</button>
+            <button type="button" class="btn btn-danger btn-sm" data-del="${n.id}">Zmazať</button>
+          </div>
         </div>
-        <div class="muted" style="margin:6px 0;">${n.text}</div>
-        <div class="inline">
-          <button type="button" class="btn-secondary" data-edit="${n.id}">Upraviť</button>
-          <button type="button" class="btn-secondary" data-toggle="${n.id}">${n.active ? 'Deaktivovať' : 'Aktivovať'}</button>
-          <button type="button" class="btn-danger" data-del="${n.id}">Zmazať</button>
-        </div>
+        <p class="list-item__body">${escapeHtml(n.text || '')}</p>
       `;
       list.appendChild(div);
     });
@@ -102,85 +108,11 @@ async function loadNotifications() {
     if (err) {
       err.textContent = e.message;
     } else {
-      list.innerHTML = `<div class="muted">${e.message}</div>`;
+      list.innerHTML = `<p class="list-empty">${escapeHtml(e.message)}</p>`;
     }
   }
 }
 
-function fillNotifForm(n) {
-  document.getElementById('notif-id').value = n.id || '';
-  document.getElementById('notif-text').value = n.text || '';
-  document.getElementById('notif-bg').value = n.backgroundColor || 'rgba(200, 30, 30, 0.95)';
-  document.getElementById('notif-grad').value = n.backgroundGradient || 'rgba(180, 20, 20, 0.95)';
-  document.getElementById('notif-border').value = n.borderColor || 'rgba(150, 10, 10, 0.8)';
-  document.getElementById('notif-textcolor').value = n.textColor || 'rgba(255, 255, 255, 1)';
-  document.getElementById('notif-active').value = n.active ? 'true' : 'false';
-}
-
-async function submitNotif(e) {
-  e.preventDefault();
-  const msg = byId('notif-form-msg');
-  if (msg) msg.textContent = '';
-  const payload = {
-    text: document.getElementById('notif-text').value,
-    backgroundColor: document.getElementById('notif-bg').value,
-    backgroundGradient: document.getElementById('notif-grad').value,
-    borderColor: document.getElementById('notif-border').value,
-    textColor: document.getElementById('notif-textcolor').value,
-    active: document.getElementById('notif-active').value === 'true'
-  };
-  const id = document.getElementById('notif-id').value;
-  try {
-    if (id) {
-      await apiFetch(API.notification(id), {
-        method: 'PUT',
-        body: JSON.stringify(payload)
-      });
-      if (msg) msg.textContent = 'Notifikácia upravená';
-      showFeedback('Notifikácia upravená');
-    } else {
-      await apiFetch(API.notifications, {
-        method: 'POST',
-        body: JSON.stringify(payload)
-      });
-      if (msg) msg.textContent = 'Notifikácia pridaná';
-      showFeedback('Notifikácia pridaná');
-    }
-    fillNotifForm({});
-    loadNotifications();
-  } catch (err) {
-    if (msg) msg.textContent = err.message;
-    showFeedback(err.message, 'error');
-  }
-}
-
-async function handleNotifActions(e) {
-  const target = e.target;
-  if (target.dataset.edit) {
-    const id = target.dataset.edit;
-    const data = await apiFetch(API.notifications);
-    const n = data.notifications.find((x) => x.id.toString() === id.toString());
-    if (n) fillNotifForm(n);
-  }
-  if (target.dataset.toggle) {
-    const id = target.dataset.toggle;
-    const data = await apiFetch(API.notifications);
-    const n = data.notifications.find((x) => x.id.toString() === id.toString());
-    if (n) {
-      await apiFetch(API.notification(id), { method: 'PUT', body: JSON.stringify({ active: !n.active }) });
-      loadNotifications();
-    }
-  }
-  if (target.dataset.del) {
-    const id = target.dataset.del;
-    if (confirm(`Zmazať notifikáciu #${id}?`)) {
-      await apiFetch(API.notification(id), { method: 'DELETE' });
-      loadNotifications();
-    }
-  }
-}
-
-// Statistics
 async function loadStats() {
   const msg = byId('stats-msg');
   if (msg) msg.textContent = '';
@@ -263,25 +195,29 @@ async function loadPartners() {
   try {
     const data = await apiFetch(`${API.partners}?includeInactive=true`);
     list.innerHTML = '';
+    if (!data.partners?.length) {
+      list.innerHTML = '<p class="list-empty">Žiadni partneri</p>';
+      return;
+    }
     data.partners.forEach((p) => {
       const div = document.createElement('div');
-      div.className = 'item';
+      div.className = 'list-item';
+      const safeName = escapeHtml(p.name || '');
       div.innerHTML = `
-        <div class="inline">
-          <strong>#${p.id}</strong>
-          <span class="badge">${p.active ? 'Aktívny' : 'Neaktívny'}</span>
-          <span class="badge">Poradie: ${p.sortOrder ?? 0}</span>
+        <div class="list-item-header">
+          <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+            <span class="list-item-title">${safeName}</span>
+            <span class="badge ${p.active ? 'badge-active' : 'badge-inactive'}">${p.active ? 'Aktívny' : 'Neaktívny'}</span>
+            <span class="badge badge-blue">Poradie: ${p.sortOrder ?? 0}</span>
+          </div>
+          <div class="btn-group">
+            <button type="button" class="btn btn-ghost btn-sm" data-partner-edit="${p.id}">Upraviť</button>
+            <button type="button" class="btn btn-ghost btn-sm" data-partner-toggle="${p.id}">${p.active ? 'Vypnúť' : 'Zapnúť'}</button>
+            <button type="button" class="btn btn-danger btn-sm" data-partner-del="${p.id}">Zmazať</button>
+          </div>
         </div>
-        <div style="margin:6px 0;">
-          <div><strong>${p.name}</strong></div>
-          ${p.logoUrl ? `<div class="muted">Logo: ${p.logoUrl}</div>` : ''}
-          ${p.link ? `<div class="muted">Link: ${p.link}</div>` : ''}
-        </div>
-        <div class="inline">
-          <button type="button" class="btn-secondary" data-partner-edit="${p.id}">Upraviť</button>
-          <button type="button" class="btn-secondary" data-partner-toggle="${p.id}">${p.active ? 'Deaktivovať' : 'Aktivovať'}</button>
-          <button type="button" class="btn-danger" data-partner-del="${p.id}">Zmazať</button>
-        </div>
+        ${p.logoUrl ? `<div class="partner-list__logo"><img src="${escapeHtml(p.logoUrl)}" alt="${safeName}"></div>` : ''}
+        ${p.link ? `<p class="partner-list__link">${escapeHtml(p.link)}</p>` : ''}
       `;
       list.appendChild(div);
     });
@@ -289,7 +225,7 @@ async function loadPartners() {
     if (err) {
       err.textContent = e.message;
     } else {
-      list.innerHTML = `<div class="muted">${e.message}</div>`;
+      list.innerHTML = `<p class="list-empty">${escapeHtml(e.message)}</p>`;
     }
   }
 }

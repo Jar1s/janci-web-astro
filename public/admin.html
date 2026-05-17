@@ -238,21 +238,33 @@
     .btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
       padding: 0.5rem 1rem;
-      border: none;
+      border: 1px solid transparent;
       border-radius: var(--radius-sm);
       font-size: 0.8125rem;
       font-weight: 600;
       font-family: inherit;
+      line-height: 1;
       cursor: pointer;
-      transition: all 0.15s;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+      -webkit-appearance: none;
+      appearance: none;
     }
 
     .btn-primary { background: var(--blue); color: #fff; }
     .btn-primary:hover { background: var(--blue-hover); }
-    .btn-danger { background: var(--red-bg); color: var(--red); }
-    .btn-danger:hover { background: rgba(239,68,68,0.2); }
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.12);
+      color: #fca5a5;
+      border-color: rgba(239, 68, 68, 0.4);
+    }
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.22);
+      color: #fecaca;
+      border-color: rgba(239, 68, 68, 0.55);
+    }
     .btn-ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
     .btn-ghost:hover { background: rgba(255,255,255,0.03); color: var(--text); }
     .btn-success { background: var(--green-bg); color: var(--green); border: 1px solid rgba(34, 197, 94, 0.35); }
@@ -281,6 +293,59 @@
     }
 
     .list-item-title { font-weight: 600; font-size: 0.9rem; }
+
+    .list-item__body {
+      margin: 0.5rem 0 0;
+      font-size: 0.8125rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .list-empty {
+      margin: 0;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+
+    .partner-list__logo {
+      margin-top: 0.75rem;
+    }
+
+    .partner-list__logo img {
+      max-height: 40px;
+      border-radius: 4px;
+      background: #fff;
+      padding: 4px;
+    }
+
+    .partner-list__link {
+      margin: 0.5rem 0 0;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      word-break: break-all;
+    }
+
+    .form-input[type="file"] {
+      padding: 0.5rem 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .form-input[type="file"]::file-selector-button {
+      margin-right: 0.75rem;
+      padding: 0.375rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg-card-hover);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .form-input[type="file"]::file-selector-button:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
 
     /* ===== BADGES ===== */
     .badge {
@@ -827,7 +892,7 @@
               </div>
               <div class="form-group">
                 <label class="form-label">Logo (PNG/JPG, max 5MB)</label>
-                <input type="file" id="partner-logo" class="form-input" accept="image/*">
+                <input type="file" id="partner-logo" class="form-input form-input--file" accept="image/*">
               </div>
               <div class="btn-group">
                 <button type="submit" class="btn btn-primary">Uložiť partnera</button>
@@ -913,7 +978,7 @@
   </script>
 
   <!-- Keep the original admin.js logic for API calls -->
-  <script src="admin.js?v=7"></script>
+  <script src="admin.js?v=8"></script>
 
   <script>
     // ===== AUTH =====
@@ -999,80 +1064,6 @@
     // Override original admin.js messages to use toasts
     const origSubmitNotif = submitNotif;
     const origSubmitStats = submitStats;
-
-    // Override notification list rendering with better UI
-    const origLoadNotifications = loadNotifications;
-    window.loadNotifications = async function() {
-      const list = document.getElementById('notif-list');
-      const err = document.getElementById('notif-error');
-      list.innerHTML = '<div style="color:var(--text-muted);">Načítavam...</div>';
-      try {
-        const data = await apiFetch('/api/notifications');
-        list.innerHTML = '';
-        if (!data.notifications || data.notifications.length === 0) {
-          list.innerHTML = '<div style="color:var(--text-muted);">Žiadne notifikácie</div>';
-          return;
-        }
-        data.notifications.forEach((n) => {
-          const div = document.createElement('div');
-          div.className = 'list-item';
-          div.innerHTML = `
-            <div class="list-item-header">
-              <div style="display:flex;gap:0.5rem;align-items:center;">
-                <span class="list-item-title">#${n.id}</span>
-                <span class="badge ${n.active ? 'badge-active' : 'badge-inactive'}">${n.active ? 'Aktívna' : 'Neaktívna'}</span>
-              </div>
-              <div class="btn-group">
-                <button type="button" class="btn btn-ghost btn-sm" data-edit="${n.id}">Upraviť</button>
-                <button type="button" class="btn btn-ghost btn-sm" data-toggle="${n.id}">${n.active ? 'Vypnúť' : 'Zapnúť'}</button>
-                <button type="button" class="btn btn-danger btn-sm" data-del="${n.id}">Zmazať</button>
-              </div>
-            </div>
-            <div style="color:var(--text-muted);font-size:0.8rem;margin-top:0.375rem;">${n.text}</div>
-          `;
-          list.appendChild(div);
-        });
-      } catch (e) {
-        list.innerHTML = '<div style="color:var(--red);">' + e.message + '</div>';
-      }
-    };
-
-    // Override partner list rendering
-    const origLoadPartners = loadPartners;
-    window.loadPartners = async function() {
-      const list = document.getElementById('partners-list');
-      list.innerHTML = '<div style="color:var(--text-muted);">Načítavam...</div>';
-      try {
-        const data = await apiFetch('/api/partners?includeInactive=true');
-        list.innerHTML = '';
-        if (!data.partners || data.partners.length === 0) {
-          list.innerHTML = '<div style="color:var(--text-muted);">Žiadni partneri</div>';
-          return;
-        }
-        data.partners.forEach((p) => {
-          const div = document.createElement('div');
-          div.className = 'list-item';
-          div.innerHTML = `
-            <div class="list-item-header">
-              <div style="display:flex;gap:0.5rem;align-items:center;">
-                <span class="list-item-title">${p.name}</span>
-                <span class="badge ${p.active ? 'badge-active' : 'badge-inactive'}">${p.active ? 'Aktívny' : 'Neaktívny'}</span>
-                <span class="badge badge-blue">Poradie: ${p.sortOrder ?? 0}</span>
-              </div>
-              <div class="btn-group">
-                <button type="button" class="btn btn-ghost btn-sm" data-partner-edit="${p.id}">Upraviť</button>
-                <button type="button" class="btn btn-ghost btn-sm" data-partner-toggle="${p.id}">${p.active ? 'Vypnúť' : 'Zapnúť'}</button>
-                <button type="button" class="btn btn-danger btn-sm" data-partner-del="${p.id}">Zmazať</button>
-              </div>
-            </div>
-            ${p.logoUrl ? `<div style="margin-top:0.5rem;"><img src="${p.logoUrl}" alt="${p.name}" style="max-height:40px;border-radius:4px;background:white;padding:4px;"></div>` : ''}
-          `;
-          list.appendChild(div);
-        });
-      } catch (e) {
-        list.innerHTML = '<div style="color:var(--red);">' + e.message + '</div>';
-      }
-    };
 
     checkAuth();
   </script>
