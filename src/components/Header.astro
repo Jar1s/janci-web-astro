@@ -211,7 +211,10 @@ const allNavItems = [
 
   function syncNavbarHeight() {
     if (!navbar) return;
-    var h = Math.ceil(navbar.getBoundingClientRect().height);
+    var measured = Math.ceil(navbar.getBoundingClientRect().height);
+    var mobile = window.matchMedia('(max-width: 768px)').matches;
+    var minMobile = 68;
+    var h = mobile ? Math.max(measured, minMobile) : measured;
     if (h > 0) {
       document.documentElement.style.setProperty('--navbar-height', h + 'px');
     }
@@ -817,8 +820,8 @@ document.addEventListener('astro:after-swap', function() {
       position: relative;
       height: auto;
       min-height: 56px;
-      padding-top: max(0.35rem, env(safe-area-inset-top, 0px));
-      padding-bottom: 0.35rem;
+      padding-top: calc(env(safe-area-inset-top, 0px) + 0.5rem);
+      padding-bottom: 0.5rem;
     }
 
     .logo {
@@ -867,8 +870,20 @@ document.addEventListener('astro:after-swap', function() {
   }
 
   @media (max-width: 768px) {
+    .navbar {
+      min-height: calc(64px + env(safe-area-inset-top, 0px));
+    }
+
     .navbar-inner {
-      min-height: 52px;
+      min-height: 56px;
+      padding-top: calc(env(safe-area-inset-top, 0px) + 0.625rem);
+      padding-bottom: 0.5rem;
+    }
+
+    .logo-wrapper {
+      flex-direction: column;
+      flex-wrap: nowrap;
+      gap: 0.25rem;
     }
 
     .logo-text {

@@ -564,30 +564,34 @@
 
 @media (max-width: 768px) {
   :root {
-    --navbar-height: 56px;
-  }
-
-  .navbar {
-    padding-top: env(safe-area-inset-top, 0px);
+    --navbar-height: 68px;
+    --mobile-header-gap: 0.75rem;
   }
 
   /* Fixed header stack: navbar → announcement bar → page content */
   #main {
-    padding-top: var(--navbar-height, 56px);
+    padding-top: calc(var(--navbar-height, 68px) + var(--mobile-header-gap));
   }
 
   body.has-announcement-bar #main {
-    padding-top: var(--header-total-height, calc(var(--navbar-height) + var(--announcement-height, 40px)));
+    padding-top: calc(
+      var(--header-total-height, calc(var(--navbar-height) + var(--announcement-height, 40px))) +
+        var(--mobile-header-gap)
+    );
   }
 
   #hero.hero {
-    padding-top: 0 !important;
-    min-height: calc(100dvh - var(--header-total-height, var(--navbar-height)));
+    padding-top: 0.5rem !important;
+    min-height: calc(100dvh - var(--header-total-height, var(--navbar-height)) - var(--mobile-header-gap));
     box-sizing: border-box;
   }
 
   body:not(.has-announcement-bar) #hero.hero {
-    min-height: calc(100dvh - var(--navbar-height, 56px));
+    min-height: calc(100dvh - var(--navbar-height, 68px) - var(--mobile-header-gap));
+  }
+
+  #hero .hero-content {
+    padding-top: 1.35rem;
   }
 
   /* Legacy original.css forces partners absolute at bottom on small phones */
