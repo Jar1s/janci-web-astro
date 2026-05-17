@@ -54,7 +54,8 @@ export default async function handler(req, res) {
       active: active ?? true
     });
     if (!result.ok) {
-      return res.status(500).json({ error: 'Failed to save partner', reason: result.reason, detail: result.detail, code: result.code });
+      const status = result.reason === 'schema-migration-required' ? 503 : 500;
+      return res.status(status).json({ error: 'Failed to save partner', reason: result.reason, detail: result.detail, code: result.code });
     }
     return res.status(200).json({ ok: true });
   }
@@ -83,7 +84,8 @@ export default async function handler(req, res) {
       active: active ?? true
     });
     if (!result.ok) {
-      return res.status(500).json({ error: 'Failed to update partner', reason: result.reason, detail: result.detail, code: result.code });
+      const status = result.reason === 'schema-migration-required' ? 503 : 500;
+      return res.status(status).json({ error: 'Failed to update partner', reason: result.reason, detail: result.detail, code: result.code });
     }
     return res.status(200).json({ ok: true });
   }

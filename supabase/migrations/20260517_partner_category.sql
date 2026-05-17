@@ -12,3 +12,6 @@ alter table public.partners
 
 create index if not exists partners_category_active_sort_idx
   on public.partners (category, active, sort_order, created_at);
+
+-- Obnov PostgREST cache (inak PGRST204 „column not in schema cache“)
+notify pgrst, 'reload schema';

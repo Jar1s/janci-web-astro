@@ -446,6 +446,26 @@ async function submitPartner(e) {
     await loadPartners();
   } catch (err) {
     const errorMsg = err.message || 'Chyba pri ukladaní';
+    let apiBody = null;
+    const jsonMatch = errorMsg.match(/\{[\s\S]*\}$/);
+    if (jsonMatch) {
+      try {
+        apiBody = JSON.parse(jsonMatch[0]);
+      } catch {
+        /* ignore */
+      }
+    }
+    if (
+      apiBody?.reason === 'schema-migration-required' ||
+      errorMsg.includes('schema-migration-required') ||
+      errorMsg.includes('partners.category')
+    ) {
+      partnerStatus(
+        apiBody?.detail ||
+          'V databáze chýba stĺpec category. V Supabase → SQL Editor spusti celý súbor supabase/migrations/20260517_partner_category.sql, potom skús znova.'
+      );
+      return;
+    }
     if (err.message && err.message.includes('Validation failed')) {
       try {
         const errorData = JSON.parse(err.message.split(':')[1] || '{}');

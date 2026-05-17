@@ -69,7 +69,11 @@ import { sk, en } from './i18n/index.js';
     });
   }
 
-  document.addEventListener('DOMContentLoaded', initLanguage);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLanguage);
+  } else {
+    initLanguage();
+  }
   document.addEventListener('astro:after-swap', initLanguage);
 
   window.updateLanguage = updateLanguage;
