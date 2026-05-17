@@ -1,12 +1,7 @@
-import { deleteNotification, getNotifications, updateNotification, upsertNotification } from '../lib/kv.js';
-import { requireAdmin, isAdminRequest } from '../lib/auth.js';
-import { validateNotification } from '../lib/validation.js';
-import { getCorsHeaders, handleCorsPreflight } from '../lib/cors.js';
+import { loadKvAuthCorsValidation } from './deps.js';
 
 function extractId(req) {
-  // Try query param first
   if (req.query?.id) return req.query.id;
-  // Fallback parse from URL path /api/notifications/123
   const path = (req.url || '').split('?')[0];
   const parts = path.split('/').filter(Boolean);
   const idx = parts.indexOf('notifications');
@@ -15,8 +10,20 @@ function extractId(req) {
 }
 
 export default async function handler(req, res) {
+  const {
+    deleteNotification,
+    getNotifications,
+    updateNotification,
+    upsertNotification,
+    requireAdmin,
+    isAdminRequest,
+    validateNotification,
+    getCorsHeaders,
+    handleCorsPreflight
+  } = await loadKvAuthCorsValidation();
+
   const corsHeaders = getCorsHeaders(req.headers.origin);
-  Object.keys(corsHeaders).forEach(key => {
+  Object.keys(corsHeaders).forEach((key) => {
     res.setHeader(key, corsHeaders[key]);
   });
   if (req.method === 'OPTIONS') {

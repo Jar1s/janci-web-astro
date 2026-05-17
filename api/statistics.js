@@ -1,11 +1,17 @@
-import { getStatistics, saveStatistics } from '../lib/kv.js';
-import { requireAdmin } from '../lib/auth.js';
-import { validateStatistics } from '../lib/validation.js';
-import { getCorsHeaders, handleCorsPreflight } from '../lib/cors.js';
+import { loadKvAuthCorsValidation } from './deps.js';
 
 export default async function handler(req, res) {
+  const {
+    getStatistics,
+    saveStatistics,
+    requireAdmin,
+    validateStatistics,
+    getCorsHeaders,
+    handleCorsPreflight
+  } = await loadKvAuthCorsValidation();
+
   const corsHeaders = getCorsHeaders(req.headers.origin);
-  Object.keys(corsHeaders).forEach(key => {
+  Object.keys(corsHeaders).forEach((key) => {
     res.setHeader(key, corsHeaders[key]);
   });
   if (req.method === 'OPTIONS') {
@@ -52,8 +58,3 @@ export default async function handler(req, res) {
   res.setHeader('Allow', ['GET', 'PUT']);
   return res.status(405).json({ error: `Method ${req.method} not allowed` });
 }
-
-
-
-
-

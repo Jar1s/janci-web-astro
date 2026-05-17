@@ -1,7 +1,4 @@
-import { deletePartner, getPartners, upsertPartner } from '../lib/kv.js';
-import { requireAdmin } from '../lib/auth.js';
-import { validatePartner } from '../lib/validation.js';
-import { getCorsHeaders, handleCorsPreflight } from '../lib/cors.js';
+import { loadKvAuthCorsValidation } from './deps.js';
 
 function extractId(req) {
   if (req.query?.id) return req.query.id;
@@ -13,8 +10,18 @@ function extractId(req) {
 }
 
 export default async function handler(req, res) {
+  const {
+    deletePartner,
+    getPartners,
+    upsertPartner,
+    requireAdmin,
+    validatePartner,
+    getCorsHeaders,
+    handleCorsPreflight
+  } = await loadKvAuthCorsValidation();
+
   const corsHeaders = getCorsHeaders(req.headers.origin);
-  Object.keys(corsHeaders).forEach(key => {
+  Object.keys(corsHeaders).forEach((key) => {
     res.setHeader(key, corsHeaders[key]);
   });
   if (req.method === 'OPTIONS') {
@@ -55,12 +62,11 @@ export default async function handler(req, res) {
     if (!requireAdmin(req, res)) return;
     if (!id) return res.status(400).json({ error: 'Missing id' });
     const { name, logoUrl, link, sortOrder, active } = req.body || {};
-    
-    // Get existing partner to preserve logoUrl if not provided
+
     const existing = await getPartners(false);
     const existingPartner = existing.partners.find((p) => p.id.toString() === id.toString());
     const finalLogoUrl = logoUrl !== undefined ? (logoUrl?.trim() || null) : (existingPartner?.logoUrl || null);
-    
+
     const validation = validatePartner({ name, logoUrl: finalLogoUrl, link, sortOrder, active });
     if (!validation.valid) {
       return res.status(400).json({ error: 'Validation failed', errors: validation.errors });

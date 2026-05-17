@@ -1,6 +1,7 @@
-import { envSummary, hasSupabase, hasServiceRole } from '../lib/supabase.js';
+import { loadSupabase } from './deps.js';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
+  const { envSummary, hasSupabase, hasServiceRole } = await loadSupabase();
   res.setHeader('Cache-Control', 'no-store');
   return res.status(200).json({
     status: 'ok',

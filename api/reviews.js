@@ -1,6 +1,5 @@
-import { cors, handleCors } from '../lib/cors.js';
-
 export default async function handler(req, res) {
+  const { handleCors } = await import('../lib/cors.js');
   if (handleCors(req, res)) return;
 
   if (req.method !== 'GET') {
@@ -11,7 +10,6 @@ export default async function handler(req, res) {
   const placeId = req.query.placeId || process.env.GOOGLE_PLACE_ID;
 
   if (!apiKey || !placeId) {
-    // Return fallback reviews if no API key
     return res.status(200).json({
       reviews: [
         {
@@ -49,7 +47,7 @@ export default async function handler(req, res) {
     }
 
     return res.status(200).json({
-      reviews: (data.result.reviews || []).slice(0, 5).map(r => ({
+      reviews: (data.result.reviews || []).slice(0, 5).map((r) => ({
         author_name: r.author_name,
         rating: r.rating,
         text: r.text,

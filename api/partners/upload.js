@@ -1,6 +1,4 @@
-import { hasSupabase, hasServiceRole, storageEnsureBucket, storageUpload } from '../../lib/supabase.js';
-import { requireAdmin } from '../../lib/auth.js';
-import { getCorsHeaders, handleCorsPreflight } from '../../lib/cors.js';
+import { loadAuthCors, loadSupabase } from '../deps.js';
 
 const BUCKET = 'partners';
 const MAX_SIZE = 5 * 1024 * 1024;
@@ -14,6 +12,9 @@ export const config = {
 };
 
 export default async function handler(req, res) {
+  const { requireAdmin, getCorsHeaders, handleCorsPreflight } = await loadAuthCors();
+  const { hasSupabase, hasServiceRole, storageEnsureBucket, storageUpload } = await loadSupabase();
+
   const corsHeaders = getCorsHeaders(req.headers.origin);
   Object.keys(corsHeaders).forEach((key) => {
     res.setHeader(key, corsHeaders[key]);
