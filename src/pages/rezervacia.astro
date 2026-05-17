@@ -37,11 +37,22 @@ import Hero from '@/components/Hero.astro';
               <option value="ko">Kontrola originality</option>
             </select>
           </label>
+
+          <label class="booking-field">
+            <span>Začiatok dátumového rozhrania *</span>
+            <input id="rangeStartDate" name="rangeStartDate" type="date" required />
+          </label>
         </div>
 
         <div class="booking-scheduler">
-          <p class="booking-range-label">Dátumové rozhranie:</p>
-          <div id="booking-ranges" class="booking-ranges"></div>
+          <div class="booking-scheduler-head">
+            <p class="booking-range-label">Dátumové rozhranie (8 dní vedľa seba):</p>
+            <div class="booking-range-controls">
+              <button id="booking-prev-range" type="button" class="booking-range-btn">← Predchádzajúcich 8 dní</button>
+              <span id="booking-current-range" class="booking-range-current"></span>
+              <button id="booking-next-range" type="button" class="booking-range-btn">Ďalších 8 dní →</button>
+            </div>
+          </div>
 
           <div class="booking-table-wrap">
             <table class="booking-table">
@@ -109,16 +120,25 @@ import Hero from '@/components/Hero.astro';
   const slotInput = document.getElementById('slotId');
   const slotStartInput = document.getElementById('slotStartAt');
   const serviceSelect = document.getElementById('serviceType');
+  const rangeStartInput = document.getElementById('rangeStartDate');
+  const prevRangeBtn = document.getElementById('booking-prev-range');
+  const nextRangeBtn = document.getElementById('booking-next-range');
+  const currentRangeLabel = document.getElementById('booking-current-range');
   const selectedSlotText = document.getElementById('selected-slot');
-  const rangesEl = document.getElementById('booking-ranges');
   const tableHead = document.getElementById('booking-table-head');
   const tableBody = document.getElementById('booking-table-body');
 
-  let allDays = [];
+  const DAYS_PER_VIEW = 8;
+  const TIME_STEP_MINUTES = 15;
+  const SERVICE_HOURS = {
+    tk_ek: { open: 7, close: 16 },
+    ko: { open: 8, close: 15 }
+  };
+
+  let visibleDays = [];
   let allTimes = [];
   let slotMatrix = new Map();
-  let ranges = [];
-  let activeRangeIndex = 0;
+  let currentStartDate = '';
   let selectedSlotId = null;
 
   function setMessage(text, ok) {
@@ -160,12 +180,68 @@ import Hero from '@/components/Hero.astro';
     }).format(date);
   }
 
-  function chunkDays(days, size) {
-    const result = [];
-    for (let i = 0; i < days.length; i += size) {
-      result.push(days.slice(i, i + size));
+  function getTodayDayKey() {
+    return formatDayKey(new Date().toISOString());
+  }
+
+  function sanitizeDayKey(value) {
+    if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      const parsed = new Date(`${value}T00:00:00`);
+      if (!Number.isNaN(parsed.getTime())) {
+        return value;
+      }
     }
-    return result;
+    return getTodayDayKey();
+  }
+
+  function shiftDayKey(dayKey, shiftByDays) {
+    const date = new Date(`${dayKey}T00:00:00`);
+    date.setDate(date.getDate() + shiftByDays);
+    return formatDayKey(date.toISOString());
+  }
+
+  function buildVisibleDays(startDayKey, count) {
+    const days = [];
+    for (let i = 0; i < count; i += 1) {
+      days.push(shiftDayKey(startDayKey, i));
+    }
+    return days;
+  }
+
+  function parseTimeToMinutes(timeKey) {
+    const [hours, minutes] = String(timeKey).split(':').map((part) => Number(part));
+    if (!Number.isInteger(hours) || !Number.isInteger(minutes)) return null;
+    return hours * 60 + minutes;
+  }
+
+  function minutesToTime(totalMinutes) {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+  }
+
+  function buildDefaultTimeGrid(serviceType) {
+    const hours = SERVICE_HOURS[serviceType] || SERVICE_HOURS.tk_ek;
+    const min = hours.open * 60;
+    const max = hours.close * 60;
+    const times = [];
+    for (let value = min; value <= max; value += TIME_STEP_MINUTES) {
+      times.push(minutesToTime(value));
+    }
+    return times;
+  }
+
+  function buildTimeGrid(serviceType) {
+    const predefined = buildDefaultTimeGrid(serviceType);
+    const fromSlots = Array.from(
+      new Set(Array.from(slotMatrix.values()).flatMap((dayMap) => Array.from(dayMap.keys())))
+    );
+    const all = new Set([...predefined, ...fromSlots]);
+    return Array.from(all).sort((a, b) => {
+      const left = parseTimeToMinutes(a) ?? 0;
+      const right = parseTimeToMinutes(b) ?? 0;
+      return left - right;
+    });
   }
 
   function updateSelectedSlotLabel(label) {
@@ -183,23 +259,11 @@ import Hero from '@/components/Hero.astro';
     btn.classList.add('is-selected');
   }
 
-  function renderRanges() {
-    if (!rangesEl) return;
-    rangesEl.innerHTML = '';
-    ranges.forEach((rangeDays, index) => {
-      const first = rangeDays[0];
-      const last = rangeDays[rangeDays.length - 1];
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = `booking-range-btn ${index === activeRangeIndex ? 'is-active' : ''}`;
-      btn.textContent = `${formatDayLabel(first).slice(0, 10)} - ${formatDayLabel(last).slice(0, 10)}`;
-      btn.addEventListener('click', () => {
-        activeRangeIndex = index;
-        renderRanges();
-        renderTable();
-      });
-      rangesEl.appendChild(btn);
-    });
+  function updateRangeLabel() {
+    if (!currentRangeLabel || !visibleDays.length) return;
+    const first = visibleDays[0];
+    const last = visibleDays[visibleDays.length - 1];
+    currentRangeLabel.textContent = `${formatDayLabel(first).slice(0, 10)} - ${formatDayLabel(last).slice(0, 10)}`;
   }
 
   function isWeekend(dayKey) {
@@ -210,7 +274,6 @@ import Hero from '@/components/Hero.astro';
 
   function renderTable() {
     if (!tableHead || !tableBody) return;
-    const visibleDays = ranges[activeRangeIndex] || [];
     tableHead.innerHTML = '';
     tableBody.innerHTML = '';
 
@@ -248,7 +311,12 @@ import Hero from '@/components/Hero.astro';
         const slot = dayMap.get(timeKey) || null;
         const weekend = isWeekend(dayKey);
 
-        if (slot && slot.available !== false) {
+        if (weekend) {
+          const span = document.createElement('span');
+          span.className = 'booking-slot-closed';
+          span.textContent = 'ZATVORENÉ';
+          td.appendChild(span);
+        } else if (slot && slot.available !== false) {
           const btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'booking-slot-btn';
@@ -260,8 +328,8 @@ import Hero from '@/components/Hero.astro';
           td.appendChild(btn);
         } else {
           const span = document.createElement('span');
-          span.className = weekend ? 'booking-slot-closed' : 'booking-slot-occupied';
-          span.textContent = weekend ? 'ZATVORENÉ' : 'obsadené';
+          span.className = 'booking-slot-occupied';
+          span.textContent = 'obsadené';
           td.appendChild(span);
         }
 
@@ -273,20 +341,24 @@ import Hero from '@/components/Hero.astro';
   }
 
   async function loadSlots() {
-    if (!serviceSelect) return;
-    allDays = [];
+    if (!serviceSelect || !rangeStartInput) return;
     allTimes = [];
     slotMatrix = new Map();
-    ranges = [];
-    activeRangeIndex = 0;
     selectedSlotId = null;
     if (slotInput) slotInput.value = '';
     if (slotStartInput) slotStartInput.value = '';
     updateSelectedSlotLabel('');
+
     const serviceType = serviceSelect.value || 'tk_ek';
+    currentStartDate = sanitizeDayKey(rangeStartInput.value || currentStartDate || getTodayDayKey());
+    visibleDays = buildVisibleDays(currentStartDate, DAYS_PER_VIEW);
+    rangeStartInput.value = currentStartDate;
+    updateRangeLabel();
 
     try {
-      const res = await fetch(`/api/booking/slots?serviceType=${encodeURIComponent(serviceType)}&days=21`);
+      const res = await fetch(
+        `/api/booking/slots?serviceType=${encodeURIComponent(serviceType)}&days=${DAYS_PER_VIEW}&startDate=${encodeURIComponent(currentStartDate)}`
+      );
       const data = await res.json();
       if (!res.ok) {
         throw new Error(data?.detail || data?.error || 'Chyba pri načítaní termínov');
@@ -301,26 +373,33 @@ import Hero from '@/components/Hero.astro';
         slotMatrix.get(dayKey).set(timeKey, slot);
       });
 
-      allDays = Array.from(slotMatrix.keys()).sort();
-      allTimes = Array.from(
-        new Set(
-          Array.from(slotMatrix.values()).flatMap((dayMap) => Array.from(dayMap.keys()))
-        )
-      ).sort();
-      ranges = chunkDays(allDays, 7);
-
-      renderRanges();
+      allTimes = buildTimeGrid(serviceType);
       renderTable();
     } catch (error) {
-      ranges = [];
-      allTimes = [];
-      renderRanges();
+      allTimes = buildDefaultTimeGrid(serviceType);
       renderTable();
       setMessage(error?.message || 'Nepodarilo sa načítať termíny', false);
     }
   }
 
   serviceSelect?.addEventListener('change', loadSlots);
+  rangeStartInput?.addEventListener('change', loadSlots);
+  prevRangeBtn?.addEventListener('click', () => {
+    currentStartDate = sanitizeDayKey(rangeStartInput?.value || currentStartDate || getTodayDayKey());
+    rangeStartInput.value = shiftDayKey(currentStartDate, -DAYS_PER_VIEW);
+    loadSlots();
+  });
+  nextRangeBtn?.addEventListener('click', () => {
+    currentStartDate = sanitizeDayKey(rangeStartInput?.value || currentStartDate || getTodayDayKey());
+    rangeStartInput.value = shiftDayKey(currentStartDate, DAYS_PER_VIEW);
+    loadSlots();
+  });
+
+  if (rangeStartInput) {
+    currentStartDate = sanitizeDayKey(rangeStartInput.value || getTodayDayKey());
+    rangeStartInput.value = currentStartDate;
+  }
+
   loadSlots();
 
   form?.addEventListener('submit', async (event) => {
@@ -378,7 +457,7 @@ import Hero from '@/components/Hero.astro';
   }
 
   .booking-container {
-    max-width: 980px;
+    max-width: 1320px;
     margin: 0 auto;
   }
 
@@ -407,6 +486,9 @@ import Hero from '@/components/Hero.astro';
   }
 
   .booking-toolbar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 320px));
+    gap: 0.8rem;
     margin-bottom: 1rem;
   }
 
@@ -419,17 +501,36 @@ import Hero from '@/components/Hero.astro';
   }
 
   .booking-range-label {
-    margin: 0 0 0.55rem;
+    margin: 0;
     font-size: 0.86rem;
     color: #334155;
     font-weight: 600;
   }
 
-  .booking-ranges {
+  .booking-scheduler-head {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.45rem;
-    margin-bottom: 0.8rem;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .booking-range-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .booking-range-current {
+    font-size: 0.84rem;
+    color: #0f172a;
+    font-weight: 700;
+    padding: 0.3rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid #cbd5e1;
+    background: #fff;
   }
 
   .booking-range-btn {
@@ -442,24 +543,17 @@ import Hero from '@/components/Hero.astro';
     cursor: pointer;
   }
 
-  .booking-range-btn.is-active {
-    background: #0066cc;
-    color: #fff;
-    border-color: #0066cc;
-  }
-
   .booking-table-wrap {
-    overflow: auto;
+    overflow-x: auto;
     border: 1px solid #d1d5db;
     border-radius: 4px;
     background: #f3f4f6;
-    max-height: 430px;
   }
 
   .booking-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 760px;
+    min-width: 1040px;
     background: #fff;
   }
 
@@ -638,8 +732,21 @@ import Hero from '@/components/Hero.astro';
       padding: 0.6rem;
     }
 
-    .booking-ranges {
-      margin-bottom: 0.65rem;
+    .booking-toolbar {
+      grid-template-columns: 1fr;
+    }
+
+    .booking-scheduler-head {
+      align-items: flex-start;
+    }
+
+    .booking-range-controls {
+      width: 100%;
+    }
+
+    .booking-range-current {
+      width: 100%;
+      text-align: center;
     }
 
     .booking-grid {

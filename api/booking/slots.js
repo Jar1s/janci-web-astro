@@ -25,12 +25,16 @@ export default async function handler(req, res) {
 
   const serviceType = req.query?.serviceType ? String(req.query.serviceType).toLowerCase() : 'tk_ek';
   const days = req.query?.days ? Number(req.query.days) : 14;
+  const startDate = req.query?.startDate ? String(req.query.startDate).trim() : '';
+  const fromDate = startDate
+    ? new Date(`${startDate}T00:00:00`).toISOString()
+    : new Date().toISOString();
 
   try {
     const { slots, source } = await getAvailableSlots({
       serviceType,
       days,
-      fromDate: new Date().toISOString()
+      fromDate
     });
 
     return res.status(200).json({ slots, source });
