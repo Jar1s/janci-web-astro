@@ -662,93 +662,6 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
     color: #6b7280;
   }
 
-  /* Carousel styles */
-  .reviews-carousel {
-    max-width: 1280px;
-    margin: 0 auto;
-  }
-
-  .carousel-track-wrapper {
-    overflow: hidden;
-    border-radius: 0.75rem;
-    width: 100%;
-    padding: 0.75rem 0;
-  }
-
-  .carousel-track {
-    display: flex;
-    gap: 1rem;
-    will-change: transform;
-    transform: translate3d(0, 0, 0);
-  }
-
-  .carousel-slide {
-    flex: 0 0 380px;
-    box-sizing: border-box;
-    min-width: 0;
-  }
-
-  .carousel-arrow {
-    display: none;
-  }
-
-  .carousel-dots {
-    display: none;
-  }
-
-  .review-card {
-    background: #ffffff;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-  }
-
-  .reviews-carousel .review-card:hover {
-    transform: translateY(-6px);
-  }
-
-  .review-card__stars {
-    margin-bottom: 1rem;
-    display: flex;
-    gap: 0.125rem;
-  }
-
-  .review-star {
-    color: #fbbf24;
-    font-size: 1.25rem;
-  }
-
-  .review-card__text {
-    font-size: 0.9375rem;
-    line-height: 1.7;
-    color: #4a5568;
-    margin-bottom: 1.25rem;
-    font-style: italic;
-  }
-
-  .review-card__author {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #1a1a1a;
-    margin: 0;
-  }
-
-  @media (max-width: 640px) {
-    .carousel-track {
-      gap: 0.5rem;
-    }
-
-    .carousel-slide {
-      flex-basis: 85vw;
-    }
-  }
-
-  @media (max-width: 1100px) and (min-width: 641px) {
-    .carousel-slide {
-      flex-basis: 46vw;
-    }
-  }
-
   /* ===== Special Offer CTA ===== */
   .special-offer-section {
     padding: 5rem 0;
@@ -1216,6 +1129,105 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
   }
 </style>
 
+<style is:global>
+  /* Reviews carousel — global so API-inserted slides keep layout */
+  #reviews .reviews-carousel {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  #reviews .carousel-track-wrapper {
+    overflow: hidden;
+    width: 100%;
+    padding: 0.75rem 0;
+    mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  }
+
+  #reviews .carousel-track {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 1rem;
+    width: max-content;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+  }
+
+  #reviews .carousel-slide {
+    flex: 0 0 380px;
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 380px;
+  }
+
+  #reviews .carousel-arrow,
+  #reviews .carousel-dots {
+    display: none;
+  }
+
+  #reviews .review-card {
+    background: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    height: 100%;
+    border: 1px solid #e5e7eb;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  #reviews .reviews-carousel .review-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.18);
+  }
+
+  #reviews .review-card__stars {
+    margin-bottom: 1rem;
+    display: flex;
+    gap: 0.125rem;
+  }
+
+  #reviews .review-star {
+    color: #fbbf24;
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  #reviews .review-card__text {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: #4a5568;
+    margin-bottom: 1.25rem;
+    font-style: italic;
+  }
+
+  #reviews .review-card__author {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    #reviews .carousel-track {
+      gap: 0.75rem;
+    }
+
+    #reviews .carousel-slide {
+      flex-basis: min(320px, 85vw);
+      max-width: min(320px, 85vw);
+    }
+  }
+
+  @media (max-width: 1100px) and (min-width: 641px) {
+    #reviews .carousel-slide {
+      flex-basis: min(360px, 46vw);
+      max-width: min(360px, 46vw);
+    }
+  }
+</style>
+
 <script is:inline>
 // Reviews Carousel (continuous right-to-left marquee)
 (function() {
@@ -1269,32 +1281,50 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
     });
   }
 
+  function getTrackGap() {
+    var gap = window.getComputedStyle(track).columnGap || window.getComputedStyle(track).gap;
+    var parsed = parseFloat(gap);
+    return Number.isFinite(parsed) ? parsed : 16;
+  }
+
+  function measureSetWidth(nodes) {
+    if (!nodes.length) return 0;
+    var gap = getTrackGap();
+    return nodes.reduce(function(sum, node, index) {
+      return sum + node.offsetWidth + (index > 0 ? gap : 0);
+    }, 0);
+  }
+
   function setupMarquee() {
     clearClones();
     offset = 0;
+    track.style.transform = 'translate3d(0, 0, 0)';
 
     var originals = Array.from(track.children).filter(function(node) {
       return node.getAttribute('data-clone') !== '1';
     });
 
-    if (originals.length < 2) {
+    if (!originals.length) {
       setWidth = 0;
-      track.style.transform = 'translate3d(0, 0, 0)';
       return;
     }
 
-    originals.forEach(function(node) {
-      var clone = node.cloneNode(true);
-      clone.setAttribute('data-clone', '1');
-      track.appendChild(clone);
-    });
+    if (originals.length === 1) {
+      var onlyClone = originals[0].cloneNode(true);
+      onlyClone.setAttribute('data-clone', '1');
+      track.appendChild(onlyClone);
+    } else {
+      originals.forEach(function(node) {
+        var clone = node.cloneNode(true);
+        clone.setAttribute('data-clone', '1');
+        track.appendChild(clone);
+      });
+    }
 
-    setWidth = originals.reduce(function(sum, node) {
-      return sum + node.getBoundingClientRect().width;
-    }, 0);
-    setWidth += (originals.length - 1) * 16;
-
-    track.style.transform = 'translate3d(0, 0, 0)';
+    setWidth = measureSetWidth(originals);
+    if (setWidth <= 0) {
+      setWidth = Math.max(1, Math.floor(track.scrollWidth / 2));
+    }
   }
 
   async function loadReviewsFromApi() {
@@ -1308,9 +1338,13 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
       data.reviews.forEach(function(item) {
         track.appendChild(buildSlide(item));
       });
-      setupMarquee();
+      window.requestAnimationFrame(function() {
+        setupMarquee();
+      });
     } catch (_) {
-      setupMarquee();
+      window.requestAnimationFrame(function() {
+        setupMarquee();
+      });
     }
   }
 
@@ -1335,8 +1369,10 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
   carousel.addEventListener('focusout', function() { paused = false; });
   window.addEventListener('resize', onResize);
 
-  setupMarquee();
-  loadReviewsFromApi();
+  window.requestAnimationFrame(function() {
+    setupMarquee();
+    loadReviewsFromApi();
+  });
   if (rafId) window.cancelAnimationFrame(rafId);
   rafId = window.requestAnimationFrame(animate);
 })();

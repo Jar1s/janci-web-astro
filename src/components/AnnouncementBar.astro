@@ -27,14 +27,19 @@
     display: flex;
     align-items: center;
     white-space: nowrap;
-    animation: scroll-announcement 20s linear infinite;
+    width: fit-content;
+    will-change: transform;
     gap: 4rem;
     font-size: 0.875rem;
     font-weight: 500;
     letter-spacing: 0.02em;
   }
 
-  .announcement-track:hover {
+  .announcement-track.is-running {
+    animation: scroll-announcement var(--announcement-duration, 28s) linear infinite;
+  }
+
+  .announcement-track.is-running:hover {
     animation-play-state: paused;
   }
 
@@ -60,7 +65,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .announcement-track {
+    .announcement-track.is-running {
       animation-duration: 0.01ms;
       animation-iteration-count: 1;
     }
@@ -96,10 +101,28 @@
         return item;
       };
 
-      // Clear and rebuild safely to avoid injecting raw HTML from API text.
+      // Build one sequence, repeat until wide enough, then duplicate for seamless loop.
       track.textContent = '';
-      texts.forEach((text) => track.appendChild(createItem(text)));
-      texts.forEach((text) => track.appendChild(createItem(text)));
+      const appendSequence = () => {
+        texts.forEach((text) => track.appendChild(createItem(text)));
+      };
+      appendSequence();
+
+      const viewportWidth = bar.offsetWidth || window.innerWidth;
+      let repeats = 1;
+      const maxRepeats = 12;
+      while (track.scrollWidth < viewportWidth * 2.2 && repeats < maxRepeats) {
+        appendSequence();
+        repeats += 1;
+      }
+
+      const nodes = Array.from(track.children);
+      nodes.forEach((node) => track.appendChild(node.cloneNode(true)));
+
+      const loopWidth = track.scrollWidth / 2;
+      const pxPerSecond = 72;
+      const duration = Math.max(18, Math.min(90, loopWidth / pxPerSecond));
+      track.style.setProperty('--announcement-duration', `${duration}s`);
 
       // Apply custom styles from first notification
       const first = active[0];
@@ -109,6 +132,10 @@
       if (first.borderColor) bar.style.borderBottom = `1px solid ${first.borderColor}`;
 
       bar.style.display = 'flex';
+      track.classList.remove('is-running');
+      // Force reflow so animation restarts cleanly after content changes.
+      void track.offsetWidth;
+      track.classList.add('is-running');
 
       // Keep global layout offsets in sync with the actual rendered bar.
       const barHeight = Math.ceil(bar.offsetHeight || 44);

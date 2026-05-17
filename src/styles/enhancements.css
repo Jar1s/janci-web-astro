@@ -546,3 +546,18 @@
     letter-spacing: normal;
   }
 }
+
+/* Hero partner strip — override legacy original.css bottom gradient band */
+#hero .hero-partners-wrapper {
+  background: none !important;
+  padding: 0 !important;
+}
+
+/* Reviews carousel — avoid legacy .review-card hover fighting marquee layout */
+#reviews .review-card {
+  transform: none;
+}
+
+#reviews .review-card:hover {
+  border-color: #e5e7eb;
+}
