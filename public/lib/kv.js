@@ -1,8 +1,18 @@
-import { supabase, hasSupabase, hasServiceRole } from './supabase.js';
+import {
+  hasSupabase,
+  hasServiceRole,
+  restDelete,
+  restInsert,
+  restSelect,
+  restSelectOne,
+  restUpdate,
+  restUpsert
+} from './supabase.js';
 
 const NOTIFICATIONS_TABLE = 'notifications';
 const STATISTICS_TABLE = 'statistics';
 const PARTNERS_TABLE = 'partners';
+const REVIEWS_TABLE = 'reviews';
 
 const defaultNotifications = [];
 const defaultStatistics = {
@@ -12,16 +22,16 @@ const defaultStatistics = {
   googlePlaceId: null
 };
 
-// Notifications
 export async function getNotifications(activeOnly = true) {
   if (!hasSupabase()) {
     return { notifications: defaultNotifications };
   }
 
   try {
-    const query = supabase.from(NOTIFICATIONS_TABLE).select('*').order('created_at', { ascending: false });
-    if (activeOnly) query.eq('active', true);
-    const { data, error } = await query;
+    const { data, error } = await restSelect(NOTIFICATIONS_TABLE, {
+      order: [{ column: 'created_at', ascending: false }],
+      ...(activeOnly ? { eqBool: { active: true } } : {})
+    });
 
     if (error) {
       console.error('Error reading notifications:', error);
@@ -65,15 +75,10 @@ export async function upsertNotification(payload) {
 
   let error;
   if (payload.id) {
-    ({ error } = await supabase
-      .from(NOTIFICATIONS_TABLE)
-      .update(notificationData)
-      .eq('id', payload.id));
+    ({ error } = await restUpdate(NOTIFICATIONS_TABLE, notificationData, { id: payload.id }));
   } else {
     notificationData.created_at = now;
-    ({ error } = await supabase
-      .from(NOTIFICATIONS_TABLE)
-      .insert(notificationData));
+    ({ error } = await restInsert(NOTIFICATIONS_TABLE, notificationData));
   }
 
   if (error) {
@@ -99,7 +104,7 @@ export async function updateNotification(id, changes) {
 
   const updateData = { ...mapChange, updated_at: new Date().toISOString() };
 
-  const { error } = await supabase.from(NOTIFICATIONS_TABLE).update(updateData).eq('id', id);
+  const { error } = await restUpdate(NOTIFICATIONS_TABLE, updateData, { id });
   if (error) {
     console.error('Error updating notification:', error);
     return { ok: false, reason: 'db-error' };
@@ -111,7 +116,7 @@ export async function deleteNotification(id) {
   if (!hasSupabase() || !hasServiceRole()) {
     return { ok: false, reason: 'missing-service-role' };
   }
-  const { error } = await supabase.from(NOTIFICATIONS_TABLE).delete().eq('id', id);
+  const { error } = await restDelete(NOTIFICATIONS_TABLE, { id });
   if (error) {
     console.error('Error deleting notification:', error);
     return { ok: false, reason: 'db-error', detail: error.message, code: error.code };
@@ -119,17 +124,16 @@ export async function deleteNotification(id) {
   return { ok: true };
 }
 
-// Partners
 export async function getPartners(activeOnly = true) {
   if (!hasSupabase()) return { partners: [] };
   try {
-    const query = supabase
-      .from(PARTNERS_TABLE)
-      .select('*')
-      .order('sort_order', { ascending: true, nullsFirst: true })
-      .order('created_at', { ascending: true });
-    if (activeOnly) query.eq('active', true);
-    const { data, error } = await query;
+    const { data, error } = await restSelect(PARTNERS_TABLE, {
+      order: [
+        { column: 'sort_order', ascending: true },
+        { column: 'created_at', ascending: true }
+      ],
+      ...(activeOnly ? { eqBool: { active: true } } : {})
+    });
     if (error) {
       console.error('Error reading partners:', error);
       return { partners: [] };
@@ -164,10 +168,10 @@ export async function upsertPartner(payload) {
   };
   let error;
   if (payload.id) {
-    ({ error } = await supabase.from(PARTNERS_TABLE).update(row).eq('id', payload.id));
+    ({ error } = await restUpdate(PARTNERS_TABLE, row, { id: payload.id }));
   } else {
     row.created_at = now;
-    ({ error } = await supabase.from(PARTNERS_TABLE).insert(row));
+    ({ error } = await restInsert(PARTNERS_TABLE, row));
   }
   if (error) {
     console.error('Error saving partner:', error);
@@ -178,7 +182,7 @@ export async function upsertPartner(payload) {
 
 export async function deletePartner(id) {
   if (!hasSupabase() || !hasServiceRole()) return { ok: false, reason: 'missing-service-role' };
-  const { error } = await supabase.from(PARTNERS_TABLE).delete().eq('id', id);
+  const { error } = await restDelete(PARTNERS_TABLE, { id });
   if (error) {
     console.error('Error deleting partner:', error);
     return { ok: false, reason: 'db-error', detail: error.message, code: error.code };
@@ -186,19 +190,68 @@ export async function deletePartner(id) {
   return { ok: true };
 }
 
-// Statistics
+export async function getManualReviews(approvedOnly = true, limit = 12) {
+  if (!hasSupabase()) return { reviews: [] };
+  try {
+    const { data, error } = await restSelect(REVIEWS_TABLE, {
+      order: [{ column: 'created_at', ascending: false }],
+      limit,
+      ...(approvedOnly ? { eqBool: { approved: true } } : {})
+    });
+    if (error) {
+      console.error('Error reading manual reviews:', error);
+      return { reviews: [] };
+    }
+    const reviews = (data || []).map((item) => ({
+      id: item.id?.toString(),
+      author_name: item.name,
+      rating: item.rating ?? 5,
+      text: item.text,
+      relative_time_description: item.relative_time_description || 'nedávno',
+      source: 'manual',
+      approved: item.approved === true,
+      createdAt: item.created_at,
+      updatedAt: item.updated_at
+    }));
+    return { reviews };
+  } catch (err) {
+    console.error('Unexpected error reading manual reviews:', err);
+    return { reviews: [] };
+  }
+}
+
+export async function createManualReview(payload) {
+  if (!hasSupabase() || !hasServiceRole()) {
+    return { ok: false, reason: 'missing-service-role' };
+  }
+
+  const now = new Date().toISOString();
+  const row = {
+    name: payload.name,
+    text: payload.text,
+    rating: payload.rating ?? 5,
+    approved: payload.approved ?? false,
+    source: payload.source || 'manual',
+    relative_time_description: payload.relativeTimeDescription || 'práve teraz',
+    created_at: now,
+    updated_at: now
+  };
+
+  const { error } = await restInsert(REVIEWS_TABLE, row);
+  if (error) {
+    console.error('Error saving manual review:', error);
+    return { ok: false, reason: 'db-error', detail: error.message, code: error.code };
+  }
+  return { ok: true };
+}
+
 export async function getStatistics() {
   if (!hasSupabase()) {
     return defaultStatistics;
   }
 
   try {
-    // Always load canonical row id=1 to avoid flicker between multiple rows
-    const { data, error } = await supabase
-      .from(STATISTICS_TABLE)
-      .select('*')
-      .eq('id', 1)
-      .maybeSingle();
+    const { data, error } = await restSelectOne(STATISTICS_TABLE, { eq: { id: 1 } });
 
     if (error) {
       console.error('Error reading statistics:', error);
@@ -233,7 +286,7 @@ export async function saveStatistics(stats) {
     updated_at: new Date().toISOString()
   };
 
-  const { error } = await supabase.from(STATISTICS_TABLE).upsert(row, { onConflict: 'id' });
+  const { error } = await restUpsert(STATISTICS_TABLE, row, 'id');
   if (error) {
     console.error('Error saving statistics:', error);
     return { ok: false, reason: 'db-error', detail: error.message, code: error.code };
