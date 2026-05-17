@@ -53,6 +53,11 @@ import Hero from '@/components/Hero.astro';
               <button id="booking-next-range" type="button" class="booking-range-btn">Ďalších 8 dní →</button>
             </div>
           </div>
+          <div class="booking-legend" aria-label="Legenda dostupnosti termínov">
+            <span class="booking-legend-item booking-legend-item--free">voľné</span>
+            <span class="booking-legend-item booking-legend-item--busy">obsadené</span>
+            <span class="booking-legend-item booking-legend-item--closed">zatvorené</span>
+          </div>
 
           <div class="booking-table-wrap">
             <table class="booking-table">
@@ -453,7 +458,7 @@ import Hero from '@/components/Hero.astro';
 <style>
   .booking-page {
     padding: 64px 20px 88px;
-    background: linear-gradient(180deg, #f8fafc 0%, #eef3f8 100%);
+    background: linear-gradient(180deg, #f8fafc 0%, #edf3f9 100%);
   }
 
   .booking-container {
@@ -462,7 +467,7 @@ import Hero from '@/components/Hero.astro';
   }
 
   .booking-head {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.7rem;
   }
 
   .booking-head h2 {
@@ -480,9 +485,9 @@ import Hero from '@/components/Hero.astro';
   .booking-form {
     background: #fff;
     border: 1px solid #dbe6f3;
-    border-radius: 14px;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-    padding: 1.25rem;
+    border-radius: 16px;
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+    padding: 1.35rem;
   }
 
   .booking-toolbar {
@@ -495,9 +500,10 @@ import Hero from '@/components/Hero.astro';
   .booking-scheduler {
     margin-bottom: 1.1rem;
     border: 1px solid #dbe6f3;
-    border-radius: 12px;
-    padding: 0.9rem;
-    background: #f8fbff;
+    border-radius: 14px;
+    padding: 1rem;
+    background: linear-gradient(180deg, #f8fbff 0%, #f3f8ff 100%);
+    animation: schedulerFadeIn 240ms ease-out;
   }
 
   .booking-range-label {
@@ -521,6 +527,7 @@ import Hero from '@/components/Hero.astro';
     flex-wrap: wrap;
     align-items: center;
     gap: 0.5rem;
+    justify-content: flex-end;
   }
 
   .booking-range-current {
@@ -533,20 +540,72 @@ import Hero from '@/components/Hero.astro';
     background: #fff;
   }
 
+  .booking-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.72rem;
+  }
+
+  .booking-legend-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 78px;
+    border-radius: 999px;
+    padding: 0.2rem 0.55rem;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    text-transform: lowercase;
+    border: 1px solid transparent;
+  }
+
+  .booking-legend-item--free {
+    color: #1f7d2d;
+    background: #e9f9ec;
+    border-color: #bde5c5;
+  }
+
+  .booking-legend-item--busy {
+    color: #a95652;
+    background: #fdf0ef;
+    border-color: #f0ccc9;
+  }
+
+  .booking-legend-item--closed {
+    color: #667085;
+    background: #f3f4f6;
+    border-color: #d5d7dc;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+  }
+
   .booking-range-btn {
     border: 1px solid #cbd5e1;
     border-radius: 999px;
     background: #f8fafc;
     color: #334155;
-    font-size: 0.78rem;
-    padding: 0.35rem 0.72rem;
+    font-size: 0.76rem;
+    padding: 0.36rem 0.68rem;
     cursor: pointer;
+    transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+  }
+
+  .booking-range-btn:hover {
+    background: #eef2ff;
+    border-color: #a9b8ea;
+  }
+
+  .booking-range-btn:focus-visible {
+    outline: 2px solid #1d4ed8;
+    outline-offset: 1px;
   }
 
   .booking-table-wrap {
     overflow-x: auto;
     border: 1px solid #d1d5db;
-    border-radius: 4px;
+    border-radius: 8px;
     background: #f3f4f6;
   }
 
@@ -561,7 +620,7 @@ import Hero from '@/components/Hero.astro';
   .booking-table td {
     border-bottom: 1px solid #d1d5db;
     border-right: 1px solid #d1d5db;
-    padding: 0.34rem 0.4rem;
+    padding: 0.36rem 0.42rem;
     text-align: center;
     font-size: 0.74rem;
     line-height: 1.15;
@@ -590,6 +649,15 @@ import Hero from '@/components/Hero.astro';
 
   .booking-table td {
     background: #f9fafb;
+    transition: background-color 0.15s ease;
+  }
+
+  .booking-table tbody tr:nth-child(2n) td {
+    background: #f3f4f6;
+  }
+
+  .booking-table tbody tr:hover td {
+    background: #ebf2fb;
   }
 
   .booking-table td:last-child,
@@ -609,6 +677,7 @@ import Hero from '@/components/Hero.astro';
     text-transform: lowercase;
     text-decoration: underline;
     text-underline-offset: 1px;
+    transition: color 0.15s ease, text-decoration-color 0.15s ease;
   }
 
   .booking-slot-btn:hover {
@@ -618,6 +687,13 @@ import Hero from '@/components/Hero.astro';
   .booking-slot-btn.is-selected {
     color: #1d4ed8;
     font-weight: 700;
+    text-decoration-color: #1d4ed8;
+  }
+
+  .booking-slot-btn:focus-visible {
+    outline: 2px solid #1d4ed8;
+    outline-offset: 1px;
+    border-radius: 2px;
   }
 
   .booking-slot-occupied {
@@ -644,10 +720,10 @@ import Hero from '@/components/Hero.astro';
     font-size: 0.84rem;
     color: #1f2937;
     font-weight: 600;
-    padding: 0.45rem 0.65rem;
+    padding: 0.52rem 0.75rem;
     background: #eef2ff;
     border: 1px solid #c7d2fe;
-    border-radius: 8px;
+    border-radius: 10px;
   }
 
   .booking-grid {
@@ -677,6 +753,15 @@ import Hero from '@/components/Hero.astro';
     font-size: 0.96rem;
     font-family: inherit;
     width: 100%;
+    transition: border-color 0.14s ease, box-shadow 0.14s ease;
+  }
+
+  .booking-field input:focus-visible,
+  .booking-field select:focus-visible,
+  .booking-field textarea:focus-visible {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15);
+    outline: none;
   }
 
   .booking-field--full {
@@ -706,17 +791,41 @@ import Hero from '@/components/Hero.astro';
     margin-top: 1.1rem;
     border: none;
     border-radius: 8px;
-    background: #0066cc;
+    background: linear-gradient(180deg, #0b73da 0%, #0066cc 100%);
     color: #fff;
     padding: 0.74rem 1.3rem;
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
+    transition: transform 0.14s ease, box-shadow 0.14s ease, background-color 0.14s ease;
+  }
+
+  .booking-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(0, 102, 204, 0.28);
+  }
+
+  .booking-submit:focus-visible {
+    outline: 2px solid #1d4ed8;
+    outline-offset: 2px;
   }
 
   .booking-submit:disabled {
     opacity: 0.7;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  @keyframes schedulerFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   @media (max-width: 720px) {
