@@ -377,16 +377,21 @@ const hasHeroContent =
     .hero {
       height: auto;
       padding-top: 0;
-      padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 0px));
+      padding-bottom: max(5rem, env(safe-area-inset-bottom, 0px) + 4rem);
       justify-content: center;
       align-items: center;
-      gap: 1rem;
+      position: relative;
+      gap: 0;
       box-sizing: border-box;
+    }
+
+    .hero-bottom {
+      display: contents;
     }
 
     .hero-content {
       margin: 0 auto;
-      padding-top: 0;
+      padding: 0 1rem;
       align-items: center;
       text-align: center;
     }
@@ -397,7 +402,7 @@ const hasHeroContent =
 
     .hero-subtitle {
       font-size: 0.9rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
     }
 
     .hero-cta {
@@ -405,26 +410,25 @@ const hasHeroContent =
       font-size: 0.875rem;
     }
 
-    .hero-bottom {
-      position: relative;
-      padding: 0 0.75rem 1rem;
-      margin-top: auto;
-      width: 100%;
-    }
-
     .hero-stats {
+      position: relative;
       flex-direction: row;
       flex-wrap: wrap;
-      gap: 1.5rem 2.5rem;
+      gap: 0.75rem 1.25rem;
       justify-content: center;
+      width: 100%;
+      max-width: 900px;
+      margin: 1rem auto 0;
+      padding: 0 1rem;
     }
 
     .hero-stat-value {
-      font-size: 2.25rem;
+      font-size: 2rem;
     }
 
     .hero-stat-label {
-      font-size: 0.65rem;
+      font-size: 0.625rem;
+      max-width: 6.5rem;
     }
 
     .hero-scroll {
