@@ -1,3 +1,10 @@
+const PARTNER_CATEGORY_LABELS = {
+  hero: 'Hero pásik',
+  exkluzivny: 'Exkluzívni mediálni',
+  medialny: 'Mediálni',
+  hlavny: 'Hlavní',
+};
+
 const API = {
   auth: '/api/auth',
   notifications: '/api/notifications',
@@ -331,6 +338,7 @@ async function loadPartners() {
           <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
             <span class="list-item-title">${safeName}</span>
             <span class="badge ${p.active ? 'badge-active' : 'badge-inactive'}">${p.active ? 'Aktívny' : 'Neaktívny'}</span>
+            <span class="badge badge-blue">${escapeHtml(PARTNER_CATEGORY_LABELS[p.category] || p.category || '—')}</span>
             <span class="badge badge-blue">Poradie: ${p.sortOrder ?? 0}</span>
           </div>
           <div class="btn-group">
@@ -358,6 +366,7 @@ function fillPartnerForm(p) {
   document.getElementById('partner-name').value = p?.name || '';
   document.getElementById('partner-link').value = p?.link || '';
   document.getElementById('partner-order').value = p?.sortOrder ?? 0;
+  document.getElementById('partner-category').value = p?.category || 'hlavny';
   document.getElementById('partner-active').value = p?.active ? 'true' : 'false';
   document.getElementById('partner-logo').value = '';
   partnerStatus('');
@@ -414,6 +423,7 @@ async function submitPartner(e) {
       name,
       link: linkValue || null,
       sortOrder: Number(document.getElementById('partner-order').value || 0),
+      category: document.getElementById('partner-category').value || 'hlavny',
       active: document.getElementById('partner-active').value === 'true'
     };
     
@@ -477,6 +487,7 @@ async function handlePartnerActions(e) {
         link: p.link || null,
         logoUrl: p.logoUrl || null,
         sortOrder: p.sortOrder ?? 0,
+        category: p.category || 'hlavny',
         active: !p.active
       };
       await apiFetch(API.partner(id), { method: 'PUT', body: JSON.stringify(payload) });

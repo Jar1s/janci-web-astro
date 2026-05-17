@@ -85,6 +85,8 @@ export const sk = {
   'extra-container-desc': 'Prenájom kontajnerov',
   'extra-vinomat-desc': 'Predaj vína',
 
+  'partners-title': 'Partneri',
+
   'index-cta-btn': 'Rezervovať termín'
 };
 
@@ -174,6 +176,8 @@ export const en = {
   'extra-container-title': 'Container service',
   'extra-container-desc': 'Container rental',
   'extra-vinomat-desc': 'Wine sales',
+
+  'partners-title': 'Partners',
 
   'index-cta-btn': 'Book appointment'
 };

@@ -39,8 +39,8 @@ export default async function handler(req, res) {
 
   if (req.method === 'POST') {
     if (!requireAdmin(req, res)) return;
-    const { id: bodyId, name, logoUrl, link, sortOrder, active } = req.body || {};
-    const validation = validatePartner({ name, logoUrl: logoUrl || null, link, sortOrder, active });
+    const { id: bodyId, name, logoUrl, link, category, sortOrder, active } = req.body || {};
+    const validation = validatePartner({ name, logoUrl: logoUrl || null, link, category, sortOrder, active });
     if (!validation.valid) {
       return res.status(400).json({ error: 'Validation failed', errors: validation.errors });
     }
@@ -49,6 +49,7 @@ export default async function handler(req, res) {
       name: name.trim(),
       logoUrl: logoUrl?.trim() || null,
       link: link?.trim() || null,
+      category: category || 'hlavny',
       sortOrder: sortOrder ?? 0,
       active: active ?? true
     });
@@ -61,13 +62,14 @@ export default async function handler(req, res) {
   if (req.method === 'PUT') {
     if (!requireAdmin(req, res)) return;
     if (!id) return res.status(400).json({ error: 'Missing id' });
-    const { name, logoUrl, link, sortOrder, active } = req.body || {};
+    const { name, logoUrl, link, category, sortOrder, active } = req.body || {};
 
     const existing = await getPartners(false);
     const existingPartner = existing.partners.find((p) => p.id.toString() === id.toString());
     const finalLogoUrl = logoUrl !== undefined ? (logoUrl?.trim() || null) : (existingPartner?.logoUrl || null);
+    const finalCategory = category !== undefined ? category : (existingPartner?.category || 'hlavny');
 
-    const validation = validatePartner({ name, logoUrl: finalLogoUrl, link, sortOrder, active });
+    const validation = validatePartner({ name, logoUrl: finalLogoUrl, link, category: finalCategory, sortOrder, active });
     if (!validation.valid) {
       return res.status(400).json({ error: 'Validation failed', errors: validation.errors });
     }
@@ -76,6 +78,7 @@ export default async function handler(req, res) {
       name: name?.trim(),
       logoUrl: finalLogoUrl,
       link: link?.trim() || null,
+      category: finalCategory,
       sortOrder: sortOrder ?? 0,
       active: active ?? true
     });

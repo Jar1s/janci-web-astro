@@ -43,6 +43,7 @@ create table if not exists public.partners (
   name text not null,
   logo_url text,
   link text,
+  category text not null default 'hero' check (category in ('hero', 'exkluzivny', 'medialny', 'hlavny')),
   sort_order integer not null default 0,
   active boolean not null default true,
   created_at timestamptz not null default now(),
@@ -66,6 +67,9 @@ create index if not exists notifications_active_created_idx
 
 create index if not exists partners_active_sort_idx
   on public.partners (active, sort_order, created_at);
+
+create index if not exists partners_category_active_sort_idx
+  on public.partners (category, active, sort_order, created_at);
 
 create index if not exists reviews_approved_created_idx
   on public.reviews (approved, created_at desc);

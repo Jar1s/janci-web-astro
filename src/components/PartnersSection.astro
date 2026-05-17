@@ -1,0 +1,230 @@
+---
+import { PAGE_PARTNER_CATEGORIES, PARTNER_CATEGORIES } from '../../lib/partner-categories.js';
+---
+
+<section id="partners" class="partners-section" aria-labelledby="partners-heading" hidden>
+  <div class="partners-section__inner">
+    <header class="partners-section__header">
+      <h2 id="partners-heading" class="partners-section__title" data-translate="partners-title">Partneri</h2>
+      <div class="partners-section__divider" aria-hidden="true"></div>
+    </header>
+    <div id="partners-categories" class="partners-section__categories"></div>
+  </div>
+</section>
+
+<style>
+  .partners-section {
+    padding: 4.5rem 0 5rem;
+    background: linear-gradient(180deg, #0a1628 0%, #0f2744 100%);
+    color: #fff;
+  }
+
+  .partners-section[hidden] {
+    display: none !important;
+  }
+
+  .partners-section__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+
+  .partners-section__header {
+    text-align: center;
+    margin-bottom: 2.75rem;
+  }
+
+  .partners-section__title {
+    margin: 0;
+    font-size: clamp(1.5rem, 3vw, 1.875rem);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  .partners-section__divider {
+    width: 4rem;
+    height: 4px;
+    margin: 1rem auto 0;
+    border-radius: 2px;
+    background: #0066cc;
+  }
+
+  .partners-section__categories {
+    display: flex;
+    flex-direction: column;
+    gap: 2.75rem;
+  }
+
+  .partners-category__title {
+    margin: 0 0 1.25rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.72);
+  }
+
+  .partners-logo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 1.25rem 1.5rem;
+    align-items: center;
+    justify-items: center;
+  }
+
+  .partners-logo-grid--dense {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 1rem 1.25rem;
+  }
+
+  .partners-logo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 72px;
+    padding: 0.85rem 1rem;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-decoration: none;
+    transition:
+      background 0.25s ease,
+      border-color 0.25s ease,
+      transform 0.25s ease;
+  }
+
+  a.partners-logo-item:hover,
+  a.partners-logo-item:focus-visible {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(0, 102, 204, 0.45);
+    transform: translateY(-2px);
+  }
+
+  a.partners-logo-item:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.75);
+    outline-offset: 3px;
+  }
+
+  .partners-logo-item img {
+    display: block;
+    max-width: 100%;
+    max-height: 48px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    opacity: 0.95;
+  }
+
+  a.partners-logo-item:hover img,
+  a.partners-logo-item:focus-visible img {
+    opacity: 1;
+  }
+
+  @media (max-width: 640px) {
+    .partners-section {
+      padding: 3rem 0 3.5rem;
+    }
+
+    .partners-logo-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .partners-logo-item {
+      min-height: 64px;
+      padding: 0.65rem 0.75rem;
+    }
+
+    .partners-logo-item img {
+      max-height: 40px;
+    }
+  }
+</style>
+
+<script define:vars={{ PAGE_PARTNER_CATEGORIES, PARTNER_CATEGORIES }}>
+  const CATEGORY_KEYS = PAGE_PARTNER_CATEGORIES;
+
+  function createLogoItem(partner) {
+    const hasLink = typeof partner.link === 'string' && partner.link.trim().length > 0;
+    const el = document.createElement(hasLink ? 'a' : 'div');
+    el.className = 'partners-logo-item';
+
+    if (hasLink) {
+      el.href = partner.link.trim();
+      el.target = '_blank';
+      el.rel = 'noopener noreferrer';
+      el.setAttribute('aria-label', partner.name || 'Partner');
+    }
+
+    const img = document.createElement('img');
+    img.src = partner.logoUrl || '';
+    img.alt = partner.name || 'Partner';
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.onerror = () => {
+      el.remove();
+    };
+    el.appendChild(img);
+    return el;
+  }
+
+  async function loadPartnersSection() {
+    const section = document.getElementById('partners');
+    const container = document.getElementById('partners-categories');
+    if (!section || !container) return;
+
+    try {
+      const res = await fetch('/api/partners');
+      if (!res.ok) throw new Error('Failed to load partners');
+      const data = await res.json();
+      const partners = (data.partners || []).filter(
+        (p) =>
+          p.active !== false &&
+          p.logoUrl &&
+          CATEGORY_KEYS.includes(p.category || 'hlavny')
+      );
+
+      container.innerHTML = '';
+      let hasAny = false;
+
+      CATEGORY_KEYS.forEach((categoryId) => {
+        const group = partners
+          .filter((p) => (p.category || 'hlavny') === categoryId)
+          .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+        if (!group.length) return;
+
+        hasAny = true;
+        const block = document.createElement('div');
+        block.className = 'partners-category';
+
+        const title = document.createElement('h3');
+        title.className = 'partners-category__title';
+        title.textContent = PARTNER_CATEGORIES[categoryId].label;
+        block.appendChild(title);
+
+        const grid = document.createElement('div');
+        grid.className =
+          categoryId === 'medialny'
+            ? 'partners-logo-grid partners-logo-grid--dense'
+            : 'partners-logo-grid';
+
+        group.forEach((partner) => {
+          grid.appendChild(createLogoItem(partner));
+        });
+
+        block.appendChild(grid);
+        container.appendChild(block);
+      });
+
+      section.hidden = !hasAny;
+    } catch {
+      section.hidden = true;
+    }
+  }
+
+  loadPartnersSection();
+  document.addEventListener('astro:after-swap', loadPartnersSection);
+</script>

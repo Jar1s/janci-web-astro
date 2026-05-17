@@ -45,7 +45,17 @@ export const sk = {
 
   'contact-hours-sub': 'Navštívte nás počas pracovných dní. V pondelok máme predĺžené otváracie hodiny.',
   'contact-directions-btn': 'Navigovať',
-  'contact-form-note': 'Pre rezerváciu termínu použite online systém alebo nás kontaktujte telefonicky.'
+  'contact-form-note': 'Pre rezerváciu termínu použite online systém alebo nás kontaktujte telefonicky.',
+
+  'tk-what-p1':
+    'Technickou kontrolou (TK) je prehliadka a posúdenie technického stavu vozidla, systémov, komponentov alebo samostatných technických jednotiek v stanici technickej kontroly (STK). Technickou kontrolou sa tiež preveruje zhodnosť vozidla so schváleným typom, ak na vozidle bola zistená nezhoda. Pri technickej kontrole sa prostredníctvom celoštátneho informačného systému technických kontrol vykonáva zber údajov získaných za skutočných jazdných podmienok podľa osobitného predpisu.',
+  'tk-what-p2':
+    'Technická kontrola v STK sa vykonáva podľa jednotlivých druhov kontrol v rozsahu kontrolných úkonov ustanovených <a href="/legislativa" class="text-blue-600 hover:underline">zákonom č. 106/2018 Z. z.</a> o prevádzke vozidiel v cestnej premávke a o zmene a doplnení niektorých zákonov, vykonávacím právnym predpisom podľa § 136 ods. 3 písm. g) a podľa metodík vydaných typovým schvaľovacím orgánom.',
+
+  'ek-what-p1':
+    'Emisnou kontrolou (EK) motorového vozidla je prehliadka a kontrola stavu motora vozidla a jeho systémov, komponentov alebo samostatných technických jednotiek, ktoré ovplyvňujú tvorbu znečisťujúcich látok vo výfukových plynoch, a meraním zistené dodržiavanie podmienok a emisných limitov motora ustanovených vykonávacím právnym predpisom § 136 ods. 3 písm. h). Emisnou kontrolou sa tiež preveruje zhodnosť vozidla so schváleným typom, ak na vozidle bola zistená nezhoda.',
+  'ek-what-p2':
+    'Emisná kontrola sa vykonáva na pracovisku emisnej kontroly podľa jednotlivých druhov kontrol v rozsahu kontrolných úkonov ustanovených <a href="/legislativa" class="text-blue-600 hover:underline">zákonom č. 106/2018 Z. z.</a> o prevádzke vozidiel v cestnej premávke, vykonávacím právnym predpisom podľa § 136 ods. 3 písm. h) a podľa metodík vydaných typovým schvaľovacím orgánom.'
 };
 
 export const en = {
@@ -94,5 +104,15 @@ export const en = {
 
   'contact-hours-sub': 'Visit us on working days. On Mondays we have extended opening hours.',
   'contact-directions-btn': 'Get directions',
-  'contact-form-note': 'To book an appointment, use the online system or contact us by phone.'
+  'contact-form-note': 'To book an appointment, use the online system or contact us by phone.',
+
+  'tk-what-p1':
+    'A technical inspection (MOT) is an assessment of the technical condition of a vehicle, its systems, components, or separate technical units at an MOT station. It also verifies conformity with the approved type if a non-conformity was found. During MOT, data collected under real driving conditions is recorded via the national technical inspection information system.',
+  'tk-what-p2':
+    'MOT at our station is performed according to the types of inspection and scope set out in <a href="/legislativa" class="text-blue-600 hover:underline">Act No. 106/2018 Coll.</a> on vehicle operation in road traffic, the implementing regulation under § 136(3)(g), and methodologies issued by the type-approval authority.',
+
+  'ek-what-p1':
+    'An emission test examines the engine and related systems that affect exhaust emissions and verifies compliance with legal limits under implementing regulation § 136(3)(h). It also checks conformity with the approved type if a non-conformity was found.',
+  'ek-what-p2':
+    'Emission testing is carried out at our emission workstation according to the types and scope set out in <a href="/legislativa" class="text-blue-600 hover:underline">Act No. 106/2018 Coll.</a>, the implementing regulation under § 136(3)(h), and relevant methodologies.'
 };

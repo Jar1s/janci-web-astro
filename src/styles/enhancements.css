@@ -847,16 +847,21 @@
   }
 
   #hero .hero-partner-item {
-    min-height: 44px;
-    min-width: 100px;
-    padding: 0.35rem 0.75rem;
+    width: 108px !important;
+    height: 56px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    padding: 0.4rem 0.65rem !important;
+    border-radius: 8px !important;
+    background: linear-gradient(180deg, rgba(230, 242, 255, 0.97) 0%, rgba(255, 255, 255, 0.99) 100%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.45) !important;
   }
 
   #hero .hero-partner-item img {
-    height: 28px !important;
-    max-height: 28px !important;
+    height: 32px !important;
+    max-height: 32px !important;
     max-width: 96px !important;
-    min-width: 40px;
+    min-width: 0 !important;
   }
 
   .floating-phone {

@@ -1326,7 +1326,7 @@
         <div class="page-header">
           <div>
             <h2>Partneri</h2>
-            <p>Logá partnerov na hlavnej stránke</p>
+            <p>Hero pásik a sekcia PARTNERI na konci homepage</p>
           </div>
         </div>
 
@@ -1350,9 +1350,16 @@
                 <label class="form-label">Odkaz (voliteľný)</label>
                 <input id="partner-link" class="form-input" placeholder="https://...">
               </div>
+              <div class="form-group">
+                <label class="form-label">Kategória / umiestnenie</label>
+                <select id="partner-category" class="form-select">
+                  <option value="hero">Hero pásik (video hore)</option>
+                  <option value="exkluzivny">Exkluzívni mediálni partneri</option>
+                  <option value="medialny">Mediálni partneri</option>
+                  <option value="hlavny" selected>Hlavní partneri</option>
+                </select>
+              </div>
               <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">Poradie</label>
                   <input type="number" id="partner-order" class="form-input" value="0" step="1">
                 </div>
                 <div class="form-group">
