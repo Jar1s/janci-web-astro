@@ -535,16 +535,143 @@ function renderAnalyticsTable(rows, columns) {
   return `<table class="analytics-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
 }
 
-function buildDailySeries(daily) {
+function buildDailySeries(daily, days = 14) {
   const map = new Map((daily || []).map((d) => [d.date, d.views]));
   const out = [];
-  for (let i = 13; i >= 0; i -= 1) {
+  for (let i = days - 1; i >= 0; i -= 1) {
     const d = new Date();
     d.setUTCDate(d.getUTCDate() - i);
     const key = d.toISOString().slice(0, 10);
     out.push({ date: key, views: map.get(key) || 0 });
   }
   return out;
+}
+
+const DEVICE_COLORS = {
+  desktop: '#3b82f6',
+  mobile: '#22c55e',
+  tablet: '#a855f7',
+  unknown: '#94a3b8'
+};
+
+function renderBarChart(series, labelFn) {
+  if (!series?.length) return '<p class="list-empty">Zatiaľ žiadne dáta</p>';
+  const maxViews = Math.max(1, ...series.map((d) => d.views));
+  return series
+    .map((d) => {
+      const height = Math.round((d.views / maxViews) * 100);
+      return `<div class="analytics-chart__bar">
+            <span class="analytics-chart__value">${d.views}</span>
+            <span class="analytics-chart__fill" style="height:${Math.max(4, height)}%"></span>
+            <span class="analytics-chart__label">${escapeHtml(labelFn(d))}</span>
+          </div>`;
+    })
+    .join('');
+}
+
+function renderSvgLineChart(series) {
+  if (!series?.length) return '<p class="list-empty">Zatiaľ žiadne dáta</p>';
+  const w = 640;
+  const h = 180;
+  const pad = { t: 16, r: 12, b: 32, l: 40 };
+  const max = Math.max(1, ...series.map((d) => d.views));
+  const innerW = w - pad.l - pad.r;
+  const innerH = h - pad.t - pad.b;
+  const points = series.map((d, i) => {
+    const x = pad.l + (series.length <= 1 ? innerW / 2 : (i / (series.length - 1)) * innerW);
+    const y = pad.t + innerH - (d.views / max) * innerH;
+    return { x, y, ...d };
+  });
+  const linePts = points.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+  const areaPts = `${pad.l},${pad.t + innerH} ${linePts} ${points[points.length - 1].x.toFixed(1)},${pad.t + innerH}`;
+  const gridLines = [0, 0.25, 0.5, 0.75, 1]
+    .map((t) => {
+      const y = pad.t + innerH * (1 - t);
+      const val = Math.round(max * t);
+      return `<line class="analytics-line-chart__grid" x1="${pad.l}" y1="${y}" x2="${w - pad.r}" y2="${y}" />
+        <text class="analytics-line-chart__axis" x="${pad.l - 6}" y="${y + 3}" text-anchor="end">${val}</text>`;
+    })
+    .join('');
+  const xLabels = points
+    .filter((_, i) => i % Math.ceil(series.length / 6) === 0 || i === series.length - 1)
+    .map(
+      (p) =>
+        `<text class="analytics-line-chart__axis" x="${p.x}" y="${h - 8}" text-anchor="middle">${formatShortDate(p.date)}</text>`
+    )
+    .join('');
+  return `<svg class="analytics-line-chart" viewBox="0 0 ${w} ${h}" role="img" aria-hidden="true">
+    ${gridLines}
+    <polygon points="${areaPts}" fill="rgba(59,130,246,0.15)" />
+    <polyline points="${linePts}" fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" />
+    ${points.map((p) => `<circle cx="${p.x}" cy="${p.y}" r="3" fill="#3b82f6" />`).join('')}
+    ${xLabels}
+  </svg>`;
+}
+
+function renderHorizontalBars(items, labelKey, valueKey = 'views') {
+  if (!items?.length) return '<p class="list-empty">Zatiaľ žiadne dáta</p>';
+  const max = Math.max(1, ...items.map((i) => i[valueKey] || 0));
+  return `<div class="analytics-hbars">${items
+    .map((item) => {
+      const val = item[valueKey] || 0;
+      const pct = Math.round((val / max) * 100);
+      return `<div class="analytics-hbar">
+        <span class="analytics-hbar__label" title="${escapeHtml(String(item[labelKey]))}">${escapeHtml(String(item[labelKey]))}</span>
+        <span class="analytics-hbar__track"><span class="analytics-hbar__fill" style="width:${pct}%"></span></span>
+        <span class="analytics-hbar__value">${formatNumber(val)}</span>
+      </div>`;
+    })
+    .join('')}</div>`;
+}
+
+function renderDonutChart(items, labelFn) {
+  if (!items?.length) return '<p class="list-empty">Zatiaľ žiadne dáta</p>';
+  const total = items.reduce((s, i) => s + (i.views || 0), 0);
+  if (total === 0) return '<p class="list-empty">Zatiaľ žiadne dáta</p>';
+
+  let g = 'conic-gradient(';
+  let pos = 0;
+  const parts = items.map((item) => {
+    const pct = (item.views / total) * 100;
+    const color = DEVICE_COLORS[item.device] || '#94a3b8';
+    const start = pos;
+    pos += pct;
+    return `${color} ${start}% ${pos}%`;
+  });
+  g += parts.join(', ') + ')';
+
+  const legend = items
+    .map((item) => {
+      const color = DEVICE_COLORS[item.device] || '#94a3b8';
+      const pct = Math.round((item.views / total) * 100);
+      return `<div class="analytics-legend__item">
+        <span class="analytics-legend__swatch" style="background:${color}"></span>
+        <span class="analytics-legend__label">${escapeHtml(labelFn(item))}</span>
+        <span class="analytics-legend__value">${formatNumber(item.views)} (${pct}%)</span>
+      </div>`;
+    })
+    .join('');
+
+  return `<div class="analytics-donut-wrap">
+    <div class="analytics-donut" style="background:${g}">
+      <div class="analytics-donut__center"><strong>${formatNumber(total)}</strong><br>zobrazení</div>
+    </div>
+    <div class="analytics-legend">${legend}</div>
+  </div>`;
+}
+
+function renderSummaryCards(summary) {
+  const s = summary || {};
+  const peak =
+    s.peakDate && s.peakViews
+      ? `${formatShortDate(s.peakDate)} (${formatNumber(s.peakViews)})`
+      : '–';
+  return `
+    <div class="analytics-mini-stat"><strong>${formatNumber(s.avgDaily7d)}</strong><span>Priemer / deň (7 dní)</span></div>
+    <div class="analytics-mini-stat"><strong>${formatNumber(s.avgDaily30d)}</strong><span>Priemer / deň (30 dní)</span></div>
+    <div class="analytics-mini-stat"><strong>${peak}</strong><span>Najsilnejší deň</span></div>
+    <div class="analytics-mini-stat"><strong>${formatNumber(s.uniquePages)}</strong><span>Unikátne stránky</span></div>
+  `;
 }
 
 async function loadTraffic() {
@@ -589,44 +716,42 @@ async function loadTraffic() {
     set('tr-partners', formatNumber(content.partnersActive));
     set('tr-notifications', formatNumber(content.notificationsActive));
 
-    const series = buildDailySeries(data.daily);
-    const maxViews = Math.max(1, ...series.map((d) => d.views));
+    const summaryEl = byId('traffic-summary');
+    if (summaryEl) summaryEl.innerHTML = renderSummaryCards(data.summary);
+
+    const series30 = data.daily30?.length ? data.daily30 : buildDailySeries(data.daily, 30);
+    const lineChart = byId('traffic-line-chart');
+    if (lineChart) lineChart.innerHTML = renderSvgLineChart(series30);
+
+    const series14 = data.daily?.length ? data.daily : buildDailySeries(data.daily, 14);
     const chart = byId('traffic-chart');
     if (chart) {
-      chart.innerHTML = series
-        .map((d) => {
-          const height = Math.round((d.views / maxViews) * 100);
-          return `<div class="analytics-chart__bar">
-            <span class="analytics-chart__value">${d.views}</span>
-            <span class="analytics-chart__fill" style="height:${Math.max(4, height)}%"></span>
-            <span class="analytics-chart__label">${formatShortDate(d.date)}</span>
-          </div>`;
-        })
-        .join('');
+      chart.innerHTML = renderBarChart(series14, (d) => formatShortDate(d.date));
+    }
+
+    const hourlyChart = byId('traffic-hourly-chart');
+    if (hourlyChart) {
+      hourlyChart.innerHTML = renderBarChart(data.hourly || [], (d) => `${String(d.hour).padStart(2, '0')}:00`);
+    }
+
+    const weekdayChart = byId('traffic-weekday-chart');
+    if (weekdayChart) {
+      weekdayChart.innerHTML = renderBarChart(data.weekday || [], (d) => d.label || '');
     }
 
     const topPages = byId('traffic-top-pages');
     if (topPages) {
-      topPages.innerHTML = renderAnalyticsTable(data.topPages, [
-        { label: 'Stránka', value: (r) => r.path },
-        { label: 'Zobrazenia', value: (r) => formatNumber(r.views) }
-      ]);
+      topPages.innerHTML = renderHorizontalBars(data.topPages, 'path');
     }
 
     const referrers = byId('traffic-referrers');
     if (referrers) {
-      referrers.innerHTML = renderAnalyticsTable(data.referrers, [
-        { label: 'Zdroj', value: (r) => r.host },
-        { label: 'Zobrazenia', value: (r) => formatNumber(r.views) }
-      ]);
+      referrers.innerHTML = renderHorizontalBars(data.referrers, 'host');
     }
 
     const devices = byId('traffic-devices');
     if (devices) {
-      devices.innerHTML = renderAnalyticsTable(data.devices, [
-        { label: 'Zariadenie', value: (r) => DEVICE_LABELS[r.device] || r.device },
-        { label: 'Zobrazenia', value: (r) => formatNumber(r.views) }
-      ]);
+      devices.innerHTML = renderDonutChart(data.devices, (r) => DEVICE_LABELS[r.device] || r.device);
     }
   } catch (e) {
     if (err) {
