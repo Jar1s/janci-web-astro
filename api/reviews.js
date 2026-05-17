@@ -41,7 +41,7 @@ export default async function handler(req, res) {
 
   try {
     const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=reviews,rating,user_ratings_total&language=sk&key=${apiKey}`;
-    const response = await fetch(url);
+    const response = await fetch(url, { signal: AbortSignal.timeout(8000) });
     const data = await response.json();
 
     if (data.status !== 'OK' || !data.result) {
