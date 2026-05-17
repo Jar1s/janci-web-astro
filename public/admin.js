@@ -8,6 +8,7 @@ const API = {
   partnerUpload: '/api/partners/upload',
   reviews: '/api/reviews',
   reviewsImport: '/api/reviews/import',
+  analytics: '/api/analytics',
   review: (id) => `/api/reviews?id=${encodeURIComponent(id)}`
 };
 
@@ -377,6 +378,142 @@ if (partnerReset) partnerReset.addEventListener('click', () => fillPartnerForm({
 
 const partnersList = byId('partners-list');
 if (partnersList) partnersList.addEventListener('click', handlePartnerActions);
+
+// ---- Analytics / traffic ----
+const DEVICE_LABELS = {
+  desktop: 'Počítač',
+  mobile: 'Mobil',
+  tablet: 'Tablet',
+  unknown: 'Neznáme'
+};
+
+function formatNumber(n) {
+  return Number(n || 0).toLocaleString('sk-SK');
+}
+
+function formatShortDate(isoDate) {
+  if (!isoDate) return '';
+  const [y, m, d] = isoDate.split('-');
+  return `${d}.${m}.`;
+}
+
+function renderAnalyticsTable(rows, columns) {
+  if (!rows?.length) {
+    return '<p class="list-empty">Zatiaľ žiadne dáta</p>';
+  }
+  const head = columns.map((c) => `<th>${c.label}</th>`).join('');
+  const body = rows
+    .map((row) => {
+      const cells = columns
+        .map((c) => `<td>${escapeHtml(String(c.value(row)))}</td>`)
+        .join('');
+      return `<tr>${cells}</tr>`;
+    })
+    .join('');
+  return `<table class="analytics-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+}
+
+function buildDailySeries(daily) {
+  const map = new Map((daily || []).map((d) => [d.date, d.views]));
+  const out = [];
+  for (let i = 13; i >= 0; i -= 1) {
+    const d = new Date();
+    d.setUTCDate(d.getUTCDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    out.push({ date: key, views: map.get(key) || 0 });
+  }
+  return out;
+}
+
+async function loadTraffic() {
+  const err = byId('traffic-error');
+  const hint = byId('traffic-hint');
+  if (err) {
+    err.textContent = '';
+    err.hidden = true;
+  }
+
+  const set = (id, val) => {
+    const el = byId(id);
+    if (el) el.textContent = val;
+  };
+
+  try {
+    const data = await apiFetch(API.analytics);
+
+    if (!data.configured) {
+      if (hint) {
+        hint.textContent =
+          'Analytika nie je dostupná — v Supabase spustite aktualizovaný supabase/schema.sql (tabuľka page_views).';
+      }
+      return;
+    }
+
+    if (hint) {
+      hint.textContent =
+        data.viewsTotal === 0
+          ? 'Zatiaľ žiadne zaznamenané návštevy. Po nasadení sa začnú počítať automaticky pri prehliadaní webu.'
+          : 'Počítajú sa zobrazenia stránok (bez adminu a API). Osobné údaje sa neukladajú.';
+    }
+
+    set('tr-views-today', formatNumber(data.viewsToday));
+    set('tr-views-7d', formatNumber(data.views7d));
+    set('tr-views-30d', formatNumber(data.views30d));
+    set('tr-views-total', formatNumber(data.viewsTotal));
+
+    const content = data.content || {};
+    set('tr-reviews-approved', formatNumber(content.reviewsApproved));
+    set('tr-reviews-pending', formatNumber(content.reviewsPending));
+    set('tr-partners', formatNumber(content.partnersActive));
+    set('tr-notifications', formatNumber(content.notificationsActive));
+
+    const series = buildDailySeries(data.daily);
+    const maxViews = Math.max(1, ...series.map((d) => d.views));
+    const chart = byId('traffic-chart');
+    if (chart) {
+      chart.innerHTML = series
+        .map((d) => {
+          const height = Math.round((d.views / maxViews) * 100);
+          return `<div class="analytics-chart__bar">
+            <span class="analytics-chart__value">${d.views}</span>
+            <span class="analytics-chart__fill" style="height:${Math.max(4, height)}%"></span>
+            <span class="analytics-chart__label">${formatShortDate(d.date)}</span>
+          </div>`;
+        })
+        .join('');
+    }
+
+    const topPages = byId('traffic-top-pages');
+    if (topPages) {
+      topPages.innerHTML = renderAnalyticsTable(data.topPages, [
+        { label: 'Stránka', value: (r) => r.path },
+        { label: 'Zobrazenia', value: (r) => formatNumber(r.views) }
+      ]);
+    }
+
+    const referrers = byId('traffic-referrers');
+    if (referrers) {
+      referrers.innerHTML = renderAnalyticsTable(data.referrers, [
+        { label: 'Zdroj', value: (r) => r.host },
+        { label: 'Zobrazenia', value: (r) => formatNumber(r.views) }
+      ]);
+    }
+
+    const devices = byId('traffic-devices');
+    if (devices) {
+      devices.innerHTML = renderAnalyticsTable(data.devices, [
+        { label: 'Zariadenie', value: (r) => DEVICE_LABELS[r.device] || r.device },
+        { label: 'Zobrazenia', value: (r) => formatNumber(r.views) }
+      ]);
+    }
+  } catch (e) {
+    if (err) {
+      err.textContent = e.message;
+      err.hidden = false;
+    }
+    if (hint) hint.textContent = '';
+  }
+}
 
 // ---- Reviews ----
 function escapeHtml(str) {

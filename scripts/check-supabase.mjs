@@ -47,7 +47,7 @@ async function restGet(path) {
   return { ok: res.ok, status: res.status, json };
 }
 
-const tables = ['statistics', 'notifications', 'partners', 'reviews'];
+const tables = ['statistics', 'notifications', 'partners', 'reviews', 'page_views'];
 let allOk = true;
 
 for (const table of tables) {
