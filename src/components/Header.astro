@@ -823,34 +823,45 @@ document.addEventListener('astro:after-swap', function() {
     }
 
     .navbar-inner {
-      justify-content: center;
+      display: grid;
+      grid-template-columns: 3rem minmax(0, 1fr) 3rem;
+      grid-template-rows: auto;
+      align-items: center;
       position: relative;
       height: auto;
       min-height: 56px;
       padding-top: calc(env(safe-area-inset-top, 0px) + 0.5rem);
       padding-bottom: 0.5rem;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
     }
 
     .logo {
-      order: 1;
       margin: 0;
     }
 
+    /* Logo spans full bar width so it centers on the viewport, not beside the menu */
     .logo-wrapper {
-      order: 1;
-      margin: 0;
-      flex: 1;
+      grid-column: 1 / -1;
+      grid-row: 1;
+      justify-self: center;
+      align-self: center;
+      z-index: 1;
+      display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
       gap: 0.35rem 0.5rem;
-      max-width: calc(100% - 3rem);
+      width: max-content;
+      max-width: calc(100% - 5.5rem);
+      margin: 0;
     }
 
     .logo-text {
       font-size: 0.95rem;
       line-height: 1.15;
+      text-align: center;
     }
 
     .logo-service-icons {
@@ -868,11 +879,16 @@ document.addEventListener('astro:after-swap', function() {
       display: flex;
       align-items: center;
       justify-content: center;
-      order: 2;
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
+      grid-column: 3;
+      grid-row: 1;
+      justify-self: end;
+      align-self: center;
+      position: relative;
+      right: auto;
+      top: auto;
+      transform: none;
+      z-index: 2;
+      margin: 0;
     }
   }
 
@@ -881,19 +897,13 @@ document.addEventListener('astro:after-swap', function() {
       min-height: 54px;
       padding-top: calc(env(safe-area-inset-top, 0px) + 0.5rem);
       padding-bottom: 0.35rem;
-      padding-left: 3rem;
-      padding-right: 3rem;
     }
 
     .logo-wrapper {
       flex-direction: column;
       flex-wrap: nowrap;
-      align-items: center;
-      justify-content: center;
       gap: 0.25rem;
-      width: 100%;
-      max-width: 100%;
-      margin: 0 auto;
+      max-width: calc(100% - 4.5rem);
     }
 
     .logo {
