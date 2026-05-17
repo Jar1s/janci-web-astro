@@ -7,6 +7,7 @@ const API = {
   partner: (id) => `/api/partners?id=${encodeURIComponent(id)}`,
   partnerUpload: '/api/partners/upload',
   reviews: '/api/reviews',
+  reviewsImport: '/api/reviews/import',
   review: (id) => `/api/reviews?id=${encodeURIComponent(id)}`
 };
 
@@ -543,13 +544,19 @@ function renderReviewItem(r, pendingMode) {
       <div class="review-card__meta">
         <span class="review-card__source">${escapeHtml(reviewSourceLabel(r.source))}${time}</span>
       </div>
-      <div class="btn-group">
+      <div class="review-card__actions">
         ${
           pendingMode
-            ? `<button type="button" class="btn btn-success btn-sm" data-review-approve="${escapeHtml(r.id)}">Schváliť</button>`
+            ? `<button type="button" class="btn-review btn-review--approve" data-review-approve="${escapeHtml(r.id)}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+                Schváliť
+              </button>`
             : ''
         }
-        <button type="button" class="btn btn-danger btn-sm" data-review-del="${escapeHtml(r.id)}">Zmazať</button>
+        <button type="button" class="btn-review btn-review--delete" data-review-del="${escapeHtml(r.id)}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2m-1 0v14H9V6"/></svg>
+          Zmazať
+        </button>
       </div>
     </footer>
   `;
@@ -576,8 +583,41 @@ async function handleReviewActions(e) {
   }
 }
 
+async function importReviewsArchive() {
+  const btn = byId('reviews-import-btn');
+  if (!btn || btn.disabled) return;
+  if (
+    !confirm(
+      'Importovať 177 recenzií zo starého webu kontrolavozidiel.sk? Existujúce duplicity sa preskočia.'
+    )
+  ) {
+    return;
+  }
+  btn.disabled = true;
+  const prev = btn.textContent;
+  btn.textContent = 'Importujem…';
+  try {
+    const data = await apiFetch(API.reviewsImport, {
+      method: 'POST',
+      body: JSON.stringify({ skipExisting: true })
+    });
+    showFeedback(
+      `Import: ${data.imported} nových, ${data.skipped} preskočených, ${data.failed} chýb (celkom ${data.total})`
+    );
+    await loadReviews();
+  } catch (e) {
+    showFeedback(e.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = prev;
+  }
+}
+
 const reviewsList = byId('reviews-list');
 if (reviewsList) reviewsList.addEventListener('click', handleReviewActions);
+
+const reviewsImportBtn = byId('reviews-import-btn');
+if (reviewsImportBtn) reviewsImportBtn.addEventListener('click', importReviewsArchive);
 
 if (getToken()) {
   loadPartners();

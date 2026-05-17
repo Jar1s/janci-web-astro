@@ -11,7 +11,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "db:check": "node scripts/check-supabase.mjs",
-    "reviews:import": "node scripts/import-reviews.mjs",
+    "reviews:scrape": "node scripts/scrape-reviews.mjs",
+    "reviews:sync": "node scripts/scrape-reviews.mjs && node scripts/import-reviews.mjs --skip-existing",
+    "reviews:import": "node scripts/import-reviews.mjs --skip-existing",
     "reviews:import:dry": "node scripts/import-reviews.mjs --dry-run"
   },
   "dependencies": {

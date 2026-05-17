@@ -1,18 +1,14 @@
 /**
- * Import reviews scraped from kontrolavozidiel.sk into Supabase.
+ * Import bundled reviews (lib/data/reviews-import.json) into Supabase.
  *
  * Usage:
- *   SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... node scripts/import-reviews.mjs
- *   node scripts/import-reviews.mjs --file path/to/recenzie.md
- *   node scripts/import-reviews.mjs --dry-run
+ *   SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... npm run reviews:import
+ *   npm run reviews:import:dry
  */
 import { readFileSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { createManualReview } from '../lib/kv.js';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const DEFAULT_FILE = resolve(__dirname, 'data/recenzie-kontrolavozidiel.md');
+import { resolve } from 'node:path';
+import { createManualReview, getManualReviews } from '../lib/kv.js';
+import { bulkImportReviews } from '../lib/reviews-import.js';
 
 function loadEnvFile() {
   try {
@@ -35,72 +31,37 @@ function loadEnvFile() {
   }
 }
 
-function parseReviews(markdown) {
-  const re = />\s*"([^"]+)"\s*\n>\s*\n>\s*([^_\n]+)\s*_([0-9.]+)_/g;
-  const reviews = [];
-  let match;
-  while ((match = re.exec(markdown)) !== null) {
-    const text = match[1].trim();
-    const name = match[2].trim();
-    const date = match[3].trim();
-    if (!text || !name) continue;
-    reviews.push({
-      name,
-      text,
-      rating: 5,
-      approved: true,
-      source: 'import',
-      relativeTimeDescription: date
-    });
-  }
-  return reviews;
-}
-
 function parseArgs(argv) {
-  const opts = { file: DEFAULT_FILE, dryRun: false };
+  const opts = { dryRun: false, skipExisting: false };
   for (let i = 2; i < argv.length; i += 1) {
     const arg = argv[i];
     if (arg === '--dry-run') opts.dryRun = true;
-    else if (arg === '--file' && argv[i + 1]) {
-      opts.file = resolve(argv[++i]);
-    }
+    else if (arg === '--skip-existing') opts.skipExisting = true;
   }
   return opts;
 }
 
 async function main() {
   loadEnvFile();
-  const { file, dryRun } = parseArgs(process.argv);
-  const markdown = readFileSync(file, 'utf8');
-  const reviews = parseReviews(markdown);
+  const { dryRun, skipExisting } = parseArgs(process.argv);
 
-  if (!reviews.length) {
-    console.error('No reviews parsed from', file);
-    process.exit(1);
-  }
-
-  console.log(`Parsed ${reviews.length} reviews from ${file}`);
   if (dryRun) {
-    console.log('Dry run — first 3:', reviews.slice(0, 3));
+    const { loadImportReviews } = await import('../lib/reviews-import.js');
+    const reviews = loadImportReviews();
+    console.log(`Dry run — ${reviews.length} reviews in bundle, first:`, reviews[0]);
     return;
   }
 
-  let ok = 0;
-  let fail = 0;
-  for (const review of reviews) {
-    const result = await createManualReview(review);
-    if (result.ok) {
-      ok += 1;
-    } else {
-      fail += 1;
-      if (fail <= 5) {
-        console.warn('Failed:', review.name, result.reason, result.detail || '');
-      }
-    }
-  }
+  const result = await bulkImportReviews({
+    createManualReview,
+    getManualReviews,
+    skipExisting
+  });
 
-  console.log(`Done. Imported: ${ok}, failed: ${fail}`);
-  if (fail > 0) process.exit(1);
+  console.log(
+    `Done. Total: ${result.total}, imported: ${result.imported}, skipped: ${result.skipped}, failed: ${result.failed}`
+  );
+  if (result.failed > 0) process.exit(1);
 }
 
 main().catch((err) => {
