@@ -1,0 +1,331 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import Hero from '@/components/Hero.astro';
+---
+
+<MainLayout
+  title="Rezervácia termínu | STK JP Control Pezinok"
+  description="Online rezervácia termínu pre technickú, emisnú kontrolu alebo kontrolu originality."
+  canonical="/rezervacia"
+>
+  <Header slot="header" currentPath="/rezervacia" />
+
+  <Hero
+    showTitle={false}
+    showSubtitle={false}
+    showCta={false}
+    showDecorations={false}
+    stats={[]}
+  />
+  <h1 class="sr-only">Rezervácia termínu</h1>
+
+  <section class="booking-page">
+    <div class="booking-container">
+      <header class="booking-head">
+        <h2>Rezervácia termínu</h2>
+        <p>Vyberte službu, termín a vyplňte kontaktné údaje. Po odoslaní vám rezerváciu potvrdíme.</p>
+      </header>
+
+      <form id="booking-form" class="booking-form">
+        <div class="booking-grid">
+          <label class="booking-field">
+            <span>Služba *</span>
+            <select id="serviceType" name="serviceType" required>
+              <option value="tk_ek">Technická / emisná kontrola</option>
+              <option value="ko">Kontrola originality</option>
+            </select>
+          </label>
+
+          <label class="booking-field">
+            <span>Voľný termín *</span>
+            <select id="slotId" name="slotId" required>
+              <option value="">Načítavam termíny...</option>
+            </select>
+          </label>
+
+          <label class="booking-field">
+            <span>Meno a priezvisko *</span>
+            <input id="name" name="name" required minlength="2" maxlength="120" />
+          </label>
+
+          <label class="booking-field">
+            <span>Telefón *</span>
+            <input id="phone" name="phone" required minlength="6" maxlength="32" />
+          </label>
+
+          <label class="booking-field">
+            <span>E-mail</span>
+            <input id="email" name="email" type="email" maxlength="180" />
+          </label>
+
+          <label class="booking-field">
+            <span>EČV</span>
+            <input id="vehiclePlate" name="vehiclePlate" maxlength="20" />
+          </label>
+
+          <label class="booking-field">
+            <span>VIN</span>
+            <input id="vehicleVin" name="vehicleVin" maxlength="32" />
+          </label>
+
+          <label class="booking-field booking-field--full">
+            <span>Poznámka</span>
+            <textarea id="note" name="note" maxlength="1000" rows="4"></textarea>
+          </label>
+        </div>
+
+        <p class="booking-note">
+          Pri kontrole originality (KO) odporúčame po odoslaní rezervácie počkať na telefonické potvrdenie.
+        </p>
+
+        <p id="booking-msg" class="booking-msg" hidden></p>
+
+        <button id="booking-submit" type="submit" class="booking-submit">Odoslať rezerváciu</button>
+      </form>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</MainLayout>
+
+<script is:inline>
+  const form = document.getElementById('booking-form');
+  const message = document.getElementById('booking-msg');
+  const submitBtn = document.getElementById('booking-submit');
+  const slotSelect = document.getElementById('slotId');
+  const serviceSelect = document.getElementById('serviceType');
+
+  function setMessage(text, ok) {
+    if (!message) return;
+    message.textContent = text;
+    message.className = ok ? 'booking-msg booking-msg--ok' : 'booking-msg booking-msg--error';
+    message.hidden = false;
+  }
+
+  function setLoadingSlots() {
+    if (!slotSelect) return;
+    slotSelect.innerHTML = '';
+    const option = document.createElement('option');
+    option.value = '';
+    option.textContent = 'Načítavam termíny...';
+    slotSelect.appendChild(option);
+  }
+
+  function setNoSlots() {
+    if (!slotSelect) return;
+    slotSelect.innerHTML = '';
+    const option = document.createElement('option');
+    option.value = '';
+    option.textContent = 'Aktuálne nie sú voľné termíny';
+    slotSelect.appendChild(option);
+  }
+
+  async function loadSlots() {
+    if (!slotSelect || !serviceSelect) return;
+    setLoadingSlots();
+    const serviceType = serviceSelect.value || 'tk_ek';
+
+    try {
+      const res = await fetch(`/api/booking/slots?serviceType=${encodeURIComponent(serviceType)}&days=21`);
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data?.detail || data?.error || 'Chyba pri načítaní termínov');
+      }
+
+      const slots = Array.isArray(data?.slots) ? data.slots : [];
+      if (slots.length === 0) {
+        setNoSlots();
+        return;
+      }
+
+      slotSelect.innerHTML = '';
+      const firstEmpty = document.createElement('option');
+      firstEmpty.value = '';
+      firstEmpty.textContent = 'Vyberte termín';
+      slotSelect.appendChild(firstEmpty);
+
+      slots.forEach((slot) => {
+        const option = document.createElement('option');
+        option.value = slot.id;
+        option.textContent = slot.label || slot.startAt || slot.id;
+        option.dataset.startAt = slot.startAt || '';
+        slotSelect.appendChild(option);
+      });
+    } catch (error) {
+      setNoSlots();
+      setMessage(error?.message || 'Nepodarilo sa načítať termíny', false);
+    }
+  }
+
+  serviceSelect?.addEventListener('change', loadSlots);
+  loadSlots();
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form || !slotSelect || !submitBtn) return;
+    message.hidden = true;
+
+    const selectedOption = slotSelect.options[slotSelect.selectedIndex];
+    const payload = {
+      serviceType: serviceSelect?.value || 'tk_ek',
+      slotId: slotSelect.value,
+      slotStartAt: selectedOption?.dataset?.startAt || null,
+      name: String(form.name.value || '').trim(),
+      phone: String(form.phone.value || '').trim(),
+      email: String(form.email.value || '').trim(),
+      vehiclePlate: String(form.vehiclePlate.value || '').trim(),
+      vehicleVin: String(form.vehicleVin.value || '').trim(),
+      note: String(form.note.value || '').trim()
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Odosielam...';
+
+    try {
+      const res = await fetch('/api/booking/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        const msg = data?.errors?.join(' ') || data?.detail || data?.error || 'Rezerváciu sa nepodarilo odoslať';
+        throw new Error(msg);
+      }
+
+      form.reset();
+      await loadSlots();
+      setMessage('Rezervácia bola odoslaná. Čoskoro vás budeme kontaktovať s potvrdením termínu.', true);
+    } catch (error) {
+      setMessage(error?.message || 'Rezerváciu sa nepodarilo odoslať', false);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Odoslať rezerváciu';
+    }
+  });
+</script>
+
+<style>
+  .booking-page {
+    padding: 64px 20px 88px;
+    background: linear-gradient(180deg, #f8fafc 0%, #eef3f8 100%);
+  }
+
+  .booking-container {
+    max-width: 980px;
+    margin: 0 auto;
+  }
+
+  .booking-head {
+    margin-bottom: 1.5rem;
+  }
+
+  .booking-head h2 {
+    margin: 0 0 0.6rem;
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    color: #0f172a;
+  }
+
+  .booking-head p {
+    margin: 0;
+    color: #334155;
+    line-height: 1.65;
+  }
+
+  .booking-form {
+    background: #fff;
+    border: 1px solid #dbe6f3;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    padding: 1.25rem;
+  }
+
+  .booking-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+  }
+
+  .booking-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .booking-field span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #334155;
+  }
+
+  .booking-field input,
+  .booking-field select,
+  .booking-field textarea {
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0.62rem 0.72rem;
+    font-size: 0.96rem;
+    font-family: inherit;
+    width: 100%;
+  }
+
+  .booking-field--full {
+    grid-column: 1 / -1;
+  }
+
+  .booking-note {
+    margin: 1rem 0 0;
+    color: #475569;
+    font-size: 0.9rem;
+  }
+
+  .booking-msg {
+    margin: 0.9rem 0 0;
+    font-size: 0.92rem;
+  }
+
+  .booking-msg--ok {
+    color: #15803d;
+  }
+
+  .booking-msg--error {
+    color: #b91c1c;
+  }
+
+  .booking-submit {
+    margin-top: 1.1rem;
+    border: none;
+    border-radius: 8px;
+    background: #0066cc;
+    color: #fff;
+    padding: 0.74rem 1.3rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .booking-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 720px) {
+    .booking-page {
+      padding: 50px 14px 72px;
+    }
+
+    .booking-form {
+      padding: 1rem;
+    }
+
+    .booking-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .booking-field--full {
+      grid-column: auto;
+    }
+  }
+</style>

@@ -55,7 +55,12 @@ export const sk = {
   'ek-what-p1':
     'Emisnou kontrolou (EK) motorového vozidla je prehliadka a kontrola stavu motora vozidla a jeho systémov, komponentov alebo samostatných technických jednotiek, ktoré ovplyvňujú tvorbu znečisťujúcich látok vo výfukových plynoch, a meraním zistené dodržiavanie podmienok a emisných limitov motora ustanovených vykonávacím právnym predpisom § 136 ods. 3 písm. h). Emisnou kontrolou sa tiež preveruje zhodnosť vozidla so schváleným typom, ak na vozidle bola zistená nezhoda.',
   'ek-what-p2':
-    'Emisná kontrola sa vykonáva na pracovisku emisnej kontroly podľa jednotlivých druhov kontrol v rozsahu kontrolných úkonov ustanovených <a href="/legislativa" class="text-blue-600 hover:underline">zákonom č. 106/2018 Z. z.</a> o prevádzke vozidiel v cestnej premávke, vykonávacím právnym predpisom podľa § 136 ods. 3 písm. h) a podľa metodík vydaných typovým schvaľovacím orgánom.'
+    'Emisná kontrola sa vykonáva na pracovisku emisnej kontroly podľa jednotlivých druhov kontrol v rozsahu kontrolných úkonov ustanovených <a href="/legislativa" class="text-blue-600 hover:underline">zákonom č. 106/2018 Z. z.</a> o prevádzke vozidiel v cestnej premávke, vykonávacím právnym predpisom podľa § 136 ods. 3 písm. h) a podľa metodík vydaných typovým schvaľovacím orgánom.',
+
+  'ko-what-p1':
+    'Kontrolou originality (KO) je kontrola originality a zhodnosti vozidla vykonávaná meraním a nedeštruktívnym skúmaním zameraná na zisťovanie stôp neoprávneného vonkajšieho zásahu do identifikátorov vozidla, do konštrukcie vozidla alebo do dokladov vozidla.',
+  'ko-what-p2':
+    'Kontrola originality na pracovisku kontroly originality sa vykonáva podľa jednotlivých druhov kontrol v rozsahu kontrolných úkonov ustanovených <a href="/legislativa" class="text-blue-600 hover:underline">zákonom č. 106/2018 Z. z.</a> o prevádzke vozidiel v cestnej premávke, vykonávacím právnym predpisom podľa § 136 ods. 3 písm. i) a podľa metodík vydaných typovým schvaľovacím orgánom.'
 };
 
 export const en = {
@@ -114,5 +119,10 @@ export const en = {
   'ek-what-p1':
     'An emission test examines the engine and related systems that affect exhaust emissions and verifies compliance with legal limits under implementing regulation § 136(3)(h). It also checks conformity with the approved type if a non-conformity was found.',
   'ek-what-p2':
-    'Emission testing is carried out at our emission workstation according to the types and scope set out in <a href="/legislativa" class="text-blue-600 hover:underline">Act No. 106/2018 Coll.</a>, the implementing regulation under § 136(3)(h), and relevant methodologies.'
+    'Emission testing is carried out at our emission workstation according to the types and scope set out in <a href="/legislativa" class="text-blue-600 hover:underline">Act No. 106/2018 Coll.</a>, the implementing regulation under § 136(3)(h), and relevant methodologies.',
+
+  'ko-what-p1':
+    'An originality check verifies originality and conformity by measurement and non-destructive examination focused on signs of unauthorized external interference with vehicle identifiers, structure, or documents.',
+  'ko-what-p2':
+    'Originality checks at our workstation are performed according to the types and scope set out in <a href="/legislativa" class="text-blue-600 hover:underline">Act No. 106/2018 Coll.</a> on vehicle operation in road traffic, the implementing regulation under § 136(3)(i), and methodologies issued by the type-approval authority.'
 };
