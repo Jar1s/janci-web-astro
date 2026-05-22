@@ -15,12 +15,12 @@ export default async function handler(req, res) {
   }
 
   if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ error: 'Nepodporovaná HTTP metóda' });
   }
 
   const validation = validateBookingSlotsQuery(req.query || {});
   if (!validation.valid) {
-    return res.status(400).json({ error: 'Validation failed', errors: validation.errors });
+    return res.status(400).json({ error: 'Neplatné vstupné údaje', errors: validation.errors });
   }
 
   const serviceType = req.query?.serviceType ? String(req.query.serviceType).toLowerCase() : 'tk_ek';
@@ -41,7 +41,7 @@ export default async function handler(req, res) {
   } catch (error) {
     return res.status(502).json({
       error: 'Nepodarilo sa načítať voľné termíny',
-      detail: error?.message || 'Unknown error'
+      detail: error?.message || 'Neznáma chyba'
     });
   }
 }

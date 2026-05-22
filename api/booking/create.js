@@ -16,13 +16,13 @@ export default async function handler(req, res) {
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ error: 'Nepodporovaná HTTP metóda' });
   }
 
   const payload = req.body || {};
   const validation = validateBookingCreate(payload);
   if (!validation.valid) {
-    return res.status(400).json({ error: 'Validation failed', errors: validation.errors });
+    return res.status(400).json({ error: 'Neplatné vstupné údaje', errors: validation.errors });
   }
 
   const clientRequestId = randomUUID();
@@ -91,12 +91,12 @@ export default async function handler(req, res) {
       vehiclePlate: normalizedPayload.vehiclePlate,
       vehicleVin: normalizedPayload.vehicleVin,
       note: normalizedPayload.note,
-      errorMessage: error?.message || 'Unknown error'
+      errorMessage: error?.message || 'Neznáma chyba'
     });
 
     return res.status(502).json({
       error: 'Rezerváciu sa nepodarilo odoslať',
-      detail: error?.message || 'Unknown error',
+      detail: error?.message || 'Neznáma chyba',
       requestId: clientRequestId
     });
   }
