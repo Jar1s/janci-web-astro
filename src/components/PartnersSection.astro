@@ -148,6 +148,9 @@ import { PAGE_PARTNER_CATEGORIES, PARTNER_CATEGORIES } from '../../lib/partner-c
   const CATEGORY_KEYS = PAGE_PARTNER_CATEGORIES;
 
   function createLogoItem(partner) {
+    const currentLang = (document.documentElement.lang || localStorage.getItem('language') || 'sk').toLowerCase();
+    const fallbackPartnerName = 'Partner';
+    const fallbackPartnerAlt = currentLang === 'en' ? 'Partner logo' : 'Logo partnera';
     const hasLink = typeof partner.link === 'string' && partner.link.trim().length > 0;
     const el = document.createElement(hasLink ? 'a' : 'div');
     el.className = 'partners-logo-item';
@@ -156,12 +159,12 @@ import { PAGE_PARTNER_CATEGORIES, PARTNER_CATEGORIES } from '../../lib/partner-c
       el.href = partner.link.trim();
       el.target = '_blank';
       el.rel = 'noopener noreferrer';
-      el.setAttribute('aria-label', partner.name || 'Partner');
+      el.setAttribute('aria-label', partner.name || fallbackPartnerName);
     }
 
     const img = document.createElement('img');
     img.src = partner.logoUrl || '';
-    img.alt = partner.name || 'Partner';
+    img.alt = partner.name || fallbackPartnerAlt;
     img.loading = 'lazy';
     img.decoding = 'async';
     img.onerror = () => {

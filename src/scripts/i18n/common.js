@@ -47,9 +47,12 @@ export const sk = {
   'footer-nav-legislation': 'Platná legislatíva',
   'footer-nav-categories': 'Kategórie vozidiel',
   'footer-nav-equipment': 'Povinná výbava',
+  'footer-nav-booking': 'Rezervácia termínu',
+  'footer-copyright-prefix': 'Autorské práva',
 
   'cookie-text':
     'Táto webová stránka používa cookies na zlepšenie vášho zážitku z prehliadania. Používaním stránky súhlasíte s ich používaním.',
+  'cookie-aria-label': 'Súhlas so súbormi cookie',
   'cookie-accept': 'Prijať',
   'cookie-reject': 'Odmietnuť',
 
@@ -131,9 +134,12 @@ export const en = {
   'footer-nav-legislation': 'Current legislation',
   'footer-nav-categories': 'Vehicle categories',
   'footer-nav-equipment': 'Mandatory equipment',
+  'footer-nav-booking': 'Book appointment',
+  'footer-copyright-prefix': 'Copyright',
 
   'cookie-text':
     'This website uses cookies to improve your browsing experience. By using the site, you agree to their use.',
+  'cookie-aria-label': 'Cookie consent',
   'cookie-accept': 'Accept',
   'cookie-reject': 'Decline',
 

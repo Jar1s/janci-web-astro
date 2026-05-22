@@ -9,7 +9,11 @@ export const sk = {
   'contact-hours-title': 'Otváracie hodiny',
   'contact-hours-sub': 'Navštívte nás počas pracovných dní alebo nás kontaktujte telefonicky.',
   'contact-map-title': 'Mapa a navigácia',
+  'contact-map-heading': 'Ako sa k nám dostanete?',
+  'contact-map-subheading': 'Nachádzame sa na Šenkvickej ceste 14 v Pezinku. Ľahko nás nájdete podľa mapy nižšie.',
+  'contact-map-iframe-title': 'Mapa – JP Control, TK, EK a KO Pezinok, Šenkvická cesta 14, 902 01 Pezinok',
   'contact-directions': 'Navigovať',
+  'contact-phone-note': 'Telefonická linka je dostupná',
   'contact-form-note': 'Pre rezerváciu termínu použite online systém alebo nás kontaktujte telefonicky.',
 
   'pricing-hero-title': 'Cenník služieb',
@@ -119,7 +123,11 @@ export const en = {
   'contact-hours-title': 'Opening hours',
   'contact-hours-sub': 'Visit us on working days or contact us by phone.',
   'contact-map-title': 'Map & directions',
+  'contact-map-heading': 'How to reach us',
+  'contact-map-subheading': 'We are located at Šenkvická cesta 14 in Pezinok. You can easily find us on the map below.',
+  'contact-map-iframe-title': 'Map – JP Control, MOT, emission and originality check, Šenkvická cesta 14, 902 01 Pezinok',
   'contact-directions': 'Get directions',
+  'contact-phone-note': 'Phone line is available',
   'contact-form-note': 'To book an appointment, use the online system or call us.',
 
   'pricing-hero-title': 'Service pricing',

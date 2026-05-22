@@ -322,6 +322,7 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
             title="Mapa – JP Control, TK, EK a KO Pezinok, Šenkvická cesta 14, 902 01 Pezinok"
+            data-translate-title="index-map-iframe-title"
           ></iframe>
         </div>
       </div>
@@ -446,7 +447,7 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
       <div class="services-extra-grid">
         <a href="#" class="service-link-card service-link-card--image" style="background-image: url('/images/boutique.jpeg')" target="_blank" rel="noopener noreferrer">
           <div class="service-link-card__top-line"></div>
-          <h3 class="service-link-card__title">Butik</h3>
+          <h3 class="service-link-card__title" data-translate="extra-boutique-title">Butik</h3>
           <p class="service-link-card__desc" data-translate="extra-boutique-desc">Oblečenie a módne doplnky</p>
           <span class="service-link-card__arrow">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -1260,6 +1261,8 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
   }
 
   function buildSlide(item) {
+    var currentLang = (document.documentElement.lang || localStorage.getItem('language') || 'sk').toLowerCase();
+    var fallbackCustomerName = currentLang === 'en' ? 'Customer' : 'Zákazník';
     var card = document.createElement('article');
     card.className = 'review-card carousel-slide';
 
@@ -1279,7 +1282,7 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
 
     var author = document.createElement('p');
     author.className = 'review-card__author';
-    author.textContent = item.author_name || 'Zákazník';
+    author.textContent = item.author_name || fallbackCustomerName;
 
     card.appendChild(stars);
     card.appendChild(text);

@@ -721,6 +721,9 @@ const hasHeroContent =
     const partnersTrack = document.getElementById('hero-partners-track');
 
     function createPartnerItem(partner: any) {
+      const currentLang = (document.documentElement.lang || localStorage.getItem('language') || 'sk').toLowerCase();
+      const fallbackPartnerName = 'Partner';
+      const fallbackPartnerLogo = currentLang === 'en' ? 'Partner logo' : 'Logo partnera';
       const hasLink = typeof partner.link === 'string' && partner.link.trim().length > 0;
       const el = document.createElement(hasLink ? 'a' : 'div');
       el.className = 'hero-partner-item';
@@ -729,18 +732,18 @@ const hasHeroContent =
         (el as HTMLAnchorElement).href = partner.link;
         (el as HTMLAnchorElement).target = '_blank';
         (el as HTMLAnchorElement).rel = 'noopener noreferrer';
-        (el as HTMLAnchorElement).setAttribute('aria-label', partner.name || 'Partner');
+        (el as HTMLAnchorElement).setAttribute('aria-label', partner.name || fallbackPartnerName);
       }
 
       const img = document.createElement('img');
       img.src = partner.logoUrl || '';
-      img.alt = partner.name || 'Logo partnera';
+      img.alt = partner.name || fallbackPartnerLogo;
       img.loading = 'lazy';
       img.decoding = 'async';
       img.setAttribute('height', '40');
       img.onerror = () => {
         img.remove();
-        if (!el.textContent) el.textContent = partner.name || 'Partner';
+        if (!el.textContent) el.textContent = partner.name || fallbackPartnerName;
       };
       el.appendChild(img);
       return el;

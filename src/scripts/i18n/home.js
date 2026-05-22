@@ -81,9 +81,11 @@ export const sk = {
   'charging-feature-3': 'Kontaktujte nás pre ceny',
 
   'extra-boutique-desc': 'Oblečenie a módne doplnky',
+  'extra-boutique-title': 'Butik',
   'extra-container-title': 'Kontajnerová služba',
   'extra-container-desc': 'Prenájom kontajnerov',
   'extra-vinomat-desc': 'Predaj vína',
+  'index-map-iframe-title': 'Mapa – JP Control, TK, EK a KO Pezinok, Šenkvická cesta 14, 902 01 Pezinok',
 
   'partners-title': 'Partneri',
 
@@ -173,9 +175,11 @@ export const en = {
   'charging-feature-3': 'Contact us for pricing',
 
   'extra-boutique-desc': 'Clothing and fashion accessories',
+  'extra-boutique-title': 'Boutique',
   'extra-container-title': 'Container service',
   'extra-container-desc': 'Container rental',
   'extra-vinomat-desc': 'Wine sales',
+  'index-map-iframe-title': 'Map – JP Control, MOT, emission and originality check, Šenkvická cesta 14, 902 01 Pezinok',
 
   'partners-title': 'Partners',
 
