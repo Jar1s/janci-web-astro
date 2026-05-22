@@ -303,16 +303,19 @@ import Footer from '@/components/Footer.astro';
 
       visibleDays.forEach((dayKey) => {
         const td = document.createElement('td');
+        td.className = 'booking-cell';
         const dayMap = slotMatrix.get(dayKey) || new Map();
         const slot = dayMap.get(timeKey) || null;
         const weekend = isWeekend(dayKey);
 
         if (weekend) {
+          td.classList.add('booking-cell--closed');
           const span = document.createElement('span');
           span.className = 'booking-slot-closed';
           span.textContent = 'ZATVORENÉ';
           td.appendChild(span);
         } else if (slot && slot.available !== false) {
+          td.classList.add('booking-cell--free');
           const btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'booking-slot-btn';
@@ -323,6 +326,7 @@ import Footer from '@/components/Footer.astro';
           }
           td.appendChild(btn);
         } else {
+          td.classList.add('booking-cell--occupied');
           const span = document.createElement('span');
           span.className = 'booking-slot-occupied';
           span.textContent = 'obsadené';
@@ -643,6 +647,18 @@ import Footer from '@/components/Footer.astro';
     transition: background-color 0.15s ease;
   }
 
+  .booking-table td.booking-cell--free {
+    background: #f0fbf2;
+  }
+
+  .booking-table td.booking-cell--occupied {
+    background: #fdf4f4;
+  }
+
+  .booking-table td.booking-cell--closed {
+    background: #f3f4f6;
+  }
+
   .booking-table tbody tr:nth-child(2n) td {
     background: #f3f4f6;
   }
@@ -651,34 +667,51 @@ import Footer from '@/components/Footer.astro';
     background: #ebf2fb;
   }
 
+  .booking-table tbody tr:nth-child(2n) td.booking-cell--free,
+  .booking-table tbody tr:hover td.booking-cell--free {
+    background: #e4f7e8;
+  }
+
+  .booking-table tbody tr:nth-child(2n) td.booking-cell--occupied,
+  .booking-table tbody tr:hover td.booking-cell--occupied {
+    background: #fbe8e8;
+  }
+
+  .booking-table tbody tr:nth-child(2n) td.booking-cell--closed,
+  .booking-table tbody tr:hover td.booking-cell--closed {
+    background: #eceef1;
+  }
+
   .booking-table td:last-child,
   .booking-table th:last-child {
     border-right: none;
   }
 
   .booking-slot-btn {
-    border: none;
-    border-radius: 0;
-    color: #2f8f36;
-    background: transparent;
-    padding: 0;
+    border: 1px solid #b8e2bf;
+    border-radius: 999px;
+    color: #1f7d2d;
+    background: #e9f9ec;
+    padding: 0.18rem 0.52rem;
     font-size: 0.84rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     text-transform: lowercase;
-    text-decoration: underline;
-    text-underline-offset: 1px;
-    transition: color 0.15s ease, text-decoration-color 0.15s ease;
+    line-height: 1.05;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   }
 
   .booking-slot-btn:hover {
-    color: #1f6e28;
+    color: #1c6d28;
+    background: #dff5e4;
+    border-color: #9ed3a7;
   }
 
   .booking-slot-btn.is-selected {
-    color: #1d4ed8;
+    color: #fff;
     font-weight: 700;
-    text-decoration-color: #1d4ed8;
+    border-color: #1d4ed8;
+    background: #1d4ed8;
   }
 
   .booking-slot-btn:focus-visible {
@@ -688,16 +721,34 @@ import Footer from '@/components/Footer.astro';
   }
 
   .booking-slot-occupied {
-    color: #b86d6a;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #efc5c3;
+    border-radius: 999px;
+    background: #fff1f1;
+    color: #a95652;
+    padding: 0.16rem 0.5rem;
     font-size: 0.84rem;
+    font-weight: 600;
     text-transform: lowercase;
+    line-height: 1.05;
   }
 
   .booking-slot-closed {
-    color: #8b8f96;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d5d8de;
+    border-radius: 999px;
+    background: #eef0f3;
+    color: #6b7280;
+    padding: 0.16rem 0.46rem;
     font-size: 0.72rem;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.02em;
+    line-height: 1.05;
   }
 
   .booking-empty-cell {
