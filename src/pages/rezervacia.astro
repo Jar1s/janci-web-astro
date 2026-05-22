@@ -251,8 +251,14 @@ import Footer from '@/components/Footer.astro';
     if (slotStartInput) slotStartInput.value = slot.startAt || '';
     updateSelectedSlotLabel(slot.label || `${formatDayKey(slot.startAt)} ${formatTime(slot.startAt)}`);
 
-    tableBody.querySelectorAll('.booking-slot-btn').forEach((node) => node.classList.remove('is-selected'));
+    tableBody.querySelectorAll('.booking-slot-btn').forEach((node) => {
+      node.classList.remove('is-selected');
+      node.textContent = 'voľné';
+    });
+    tableBody.querySelectorAll('.booking-cell').forEach((node) => node.classList.remove('booking-cell--selected'));
     btn.classList.add('is-selected');
+    btn.textContent = 'vybrané';
+    btn.closest('td')?.classList.add('booking-cell--selected');
   }
 
   function updateRangeLabel() {
@@ -323,6 +329,8 @@ import Footer from '@/components/Footer.astro';
           btn.addEventListener('click', () => selectSlot(slot, btn));
           if (selectedSlotId && selectedSlotId === slot.id) {
             btn.classList.add('is-selected');
+            btn.textContent = 'vybrané';
+            td.classList.add('booking-cell--selected');
           }
           td.appendChild(btn);
         } else {
@@ -659,6 +667,11 @@ import Footer from '@/components/Footer.astro';
     background: #f3f4f6;
   }
 
+  .booking-table td.booking-cell--selected {
+    background: #dbeafe;
+    box-shadow: inset 0 0 0 2px #1d4ed8;
+  }
+
   .booking-table tbody tr:nth-child(2n) td {
     background: #f3f4f6;
   }
@@ -680,6 +693,11 @@ import Footer from '@/components/Footer.astro';
   .booking-table tbody tr:nth-child(2n) td.booking-cell--closed,
   .booking-table tbody tr:hover td.booking-cell--closed {
     background: #eceef1;
+  }
+
+  .booking-table tbody tr:nth-child(2n) td.booking-cell--selected,
+  .booking-table tbody tr:hover td.booking-cell--selected {
+    background: #dbeafe;
   }
 
   .booking-table td:last-child,
@@ -712,6 +730,8 @@ import Footer from '@/components/Footer.astro';
     font-weight: 700;
     border-color: #1d4ed8;
     background: #1d4ed8;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
   }
 
   .booking-slot-btn:focus-visible {
@@ -759,12 +779,12 @@ import Footer from '@/components/Footer.astro';
 
   .selected-slot {
     margin: 0.1rem 0 1rem;
-    font-size: 0.84rem;
+    font-size: 0.9rem;
     color: #1f2937;
-    font-weight: 600;
-    padding: 0.52rem 0.75rem;
-    background: #eef2ff;
-    border: 1px solid #c7d2fe;
+    font-weight: 700;
+    padding: 0.58rem 0.82rem;
+    background: #e0e7ff;
+    border: 1px solid #a5b4fc;
     border-radius: 10px;
   }
 
