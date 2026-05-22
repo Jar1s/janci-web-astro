@@ -2,7 +2,6 @@
 import MainLayout from '@/layouts/MainLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
-import Hero from '@/components/Hero.astro';
 ---
 
 <MainLayout
@@ -11,14 +10,6 @@ import Hero from '@/components/Hero.astro';
   canonical="/rezervacia"
 >
   <Header slot="header" currentPath="/rezervacia" />
-
-  <Hero
-    showTitle={false}
-    showSubtitle={false}
-    showCta={false}
-    showDecorations={false}
-    stats={[]}
-  />
   <h1 class="sr-only">Rezervácia termínu</h1>
 
   <section class="booking-page">
