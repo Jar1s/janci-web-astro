@@ -329,11 +329,25 @@ import Footer from '@/components/Footer.astro';
           td.appendChild(span);
         } else if (slot && slot.available !== false) {
           td.classList.add('booking-cell--free');
+          td.classList.add('booking-cell--clickable');
+          td.tabIndex = 0;
+          td.setAttribute('role', 'button');
+          td.setAttribute('aria-label', `Vybrať termín ${formatDayLabel(dayKey)} ${timeKey}`);
           const btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'booking-slot-btn';
           btn.textContent = 'voľné';
-          btn.addEventListener('click', () => selectSlot(slot, btn));
+          btn.addEventListener('click', (event) => {
+            event.stopPropagation();
+            selectSlot(slot, btn);
+          });
+          td.addEventListener('click', () => selectSlot(slot, btn));
+          td.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              event.preventDefault();
+              selectSlot(slot, btn);
+            }
+          });
           if (selectedSlotId && selectedSlotId === slot.id) {
             btn.classList.add('is-selected');
             btn.textContent = 'vybrané ✓';
@@ -506,7 +520,7 @@ import Footer from '@/components/Footer.astro';
     display: grid;
     grid-template-columns: repeat(2, minmax(220px, 320px));
     justify-content: center;
-    align-items: end;
+    align-items: start;
     gap: 0.8rem;
     margin-bottom: 1rem;
   }
@@ -514,6 +528,13 @@ import Footer from '@/components/Footer.astro';
   .booking-toolbar .booking-field {
     width: 320px;
     max-width: 100%;
+    align-self: start;
+  }
+
+  .booking-toolbar .booking-field > span {
+    min-height: 1.3rem;
+    display: inline-flex;
+    align-items: center;
   }
 
   .booking-scheduler {
@@ -673,6 +694,10 @@ import Footer from '@/components/Footer.astro';
 
   .booking-table td.booking-cell--free {
     background: #f0fbf2;
+  }
+
+  .booking-table td.booking-cell--clickable {
+    cursor: pointer;
   }
 
   .booking-table td.booking-cell--occupied {
@@ -853,6 +878,7 @@ import Footer from '@/components/Footer.astro';
 
   .booking-toolbar .booking-field input,
   .booking-toolbar .booking-field select {
+    height: 48px;
     min-height: 48px;
   }
 
