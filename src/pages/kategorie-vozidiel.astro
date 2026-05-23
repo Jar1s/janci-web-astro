@@ -25,53 +25,53 @@ import Hero from '@/components/Hero.astro';
   <section class="py-16 bg-white">
     <div class="max-w-5xl mx-auto px-5">
       <div class="text-center mb-10">
-        <h2 class="text-2xl font-bold text-primary mb-3">Schematické zobrazenie kategorizácie vozidiel</h2>
+        <h2 class="text-2xl font-bold text-primary mb-3" data-translate="categories-schematic-title">Schematické zobrazenie kategorizácie vozidiel</h2>
         <div class="w-16 h-1 bg-primary rounded mx-auto mb-4"></div>
-        <p class="text-slate-600">Podrobnejšie rozdelenie kategórií vozidiel stanovuje <a href="/legislativa" class="text-blue-600 hover:underline">zákon č. 106/2018 Z. z.</a> o prevádzke vozidiel v cestnej premávke a o zmene a doplnení niektorých zákonov.</p>
+        <p class="text-slate-600" data-translate="categories-schematic-intro-html" data-translate-html>Podrobnejšie rozdelenie kategórií vozidiel stanovuje <a href="/legislativa" class="text-blue-600 hover:underline">zákon č. 106/2018 Z. z.</a> o prevádzke vozidiel v cestnej premávke a o zmene a doplnení niektorých zákonov.</p>
       </div>
 
       <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-sm">
         <table class="w-full text-sm border-collapse">
           <thead>
             <tr class="bg-primary text-white">
-              <th class="text-left px-4 py-3 font-semibold whitespace-nowrap">Kategória</th>
-              <th class="text-left px-4 py-3 font-semibold whitespace-nowrap">Podkategória</th>
-              <th class="text-left px-4 py-3 font-semibold">Popis</th>
+              <th class="text-left px-4 py-3 font-semibold whitespace-nowrap" data-translate="categories-table-col-category">Kategória</th>
+              <th class="text-left px-4 py-3 font-semibold whitespace-nowrap" data-translate="categories-table-col-subcategory">Podkategória</th>
+              <th class="text-left px-4 py-3 font-semibold" data-translate="categories-table-col-description">Popis</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="bg-primary/5 font-semibold"><td class="px-4 py-3" colspan="2">kategória L</td><td class="px-4 py-3">dvojkolesové motorové vozidlá, trojkolesové motorové vozidlá a štvorkolky</td></tr>
-            <tr class="border-b border-slate-100"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">L1e</td><td class="px-4 py-2.5">ľahké dvojkolesové motorové vozidlo</td></tr>
-            <tr class="border-b border-slate-100 bg-slate-50/50"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">L2e</td><td class="px-4 py-2.5">trojkolesový moped</td></tr>
-            <tr class="border-b border-slate-100"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">L3e</td><td class="px-4 py-2.5">dvojkolesový motocykel</td></tr>
-            <tr class="border-b border-slate-100 bg-slate-50/50"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">L4e</td><td class="px-4 py-2.5">dvojkolesový motocykel s postranným vozíkom</td></tr>
-            <tr class="border-b border-slate-100"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">L5e</td><td class="px-4 py-2.5">motorová trojkolka</td></tr>
-            <tr class="border-b border-slate-100 bg-slate-50/50"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">L6e</td><td class="px-4 py-2.5">ľahké štvorkolky</td></tr>
-            <tr class="border-b border-slate-200"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">L7e</td><td class="px-4 py-2.5">ťažké štvorkolky</td></tr>
+            <tr class="bg-primary/5 font-semibold"><td class="px-4 py-3" colspan="2" data-translate="categories-group-l-title">kategória L</td><td class="px-4 py-3" data-translate="categories-group-l-desc">dvojkolesové motorové vozidlá, trojkolesové motorové vozidlá a štvorkolky</td></tr>
+            <tr class="border-b border-slate-100"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">L1e</td><td class="px-4 py-2.5" data-translate="categories-l1e-desc">ľahké dvojkolesové motorové vozidlo</td></tr>
+            <tr class="border-b border-slate-100 bg-slate-50/50"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">L2e</td><td class="px-4 py-2.5" data-translate="categories-l2e-desc">trojkolesový moped</td></tr>
+            <tr class="border-b border-slate-100"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">L3e</td><td class="px-4 py-2.5" data-translate="categories-l3e-desc">dvojkolesový motocykel</td></tr>
+            <tr class="border-b border-slate-100 bg-slate-50/50"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">L4e</td><td class="px-4 py-2.5" data-translate="categories-l4e-desc">dvojkolesový motocykel s postranným vozíkom</td></tr>
+            <tr class="border-b border-slate-100"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">L5e</td><td class="px-4 py-2.5" data-translate="categories-l5e-desc">motorová trojkolka</td></tr>
+            <tr class="border-b border-slate-100 bg-slate-50/50"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">L6e</td><td class="px-4 py-2.5" data-translate="categories-l6e-desc">ľahké štvorkolky</td></tr>
+            <tr class="border-b border-slate-200"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">L7e</td><td class="px-4 py-2.5" data-translate="categories-l7e-desc">ťažké štvorkolky</td></tr>
 
-            <tr class="bg-primary/5 font-semibold"><td class="px-4 py-3" colspan="2">kategória M</td><td class="px-4 py-3">motorové vozidlá s najmenej štyrmi kolesami navrhnuté a konštruované najmä na prepravu osôb a ich batožiny</td></tr>
-            <tr class="border-b border-slate-100"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">M1</td><td class="px-4 py-2.5">vozidlá kategórie M s najviac s ôsmimi miestami na sedenie okrem miesta na sedenie vodiča</td></tr>
-            <tr class="border-b border-slate-100 bg-slate-50/50"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">M2</td><td class="px-4 py-2.5">vozidlá kategórie M s viac ako ôsmimi miestami na sedenie okrem miesta na sedenie vodiča a s najväčšou prípustnou celkovou hmotnosťou neprevyšujúcou 5 000 kg</td></tr>
-            <tr class="border-b border-slate-200"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">M3</td><td class="px-4 py-2.5">vozidlá kategórie M s viac ako ôsmimi miestami na sedenie okrem miesta na sedenie vodiča a s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 5 000 kg</td></tr>
+            <tr class="bg-primary/5 font-semibold"><td class="px-4 py-3" colspan="2" data-translate="categories-group-m-title">kategória M</td><td class="px-4 py-3" data-translate="categories-group-m-desc">motorové vozidlá s najmenej štyrmi kolesami navrhnuté a konštruované najmä na prepravu osôb a ich batožiny</td></tr>
+            <tr class="border-b border-slate-100"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">M1</td><td class="px-4 py-2.5" data-translate="categories-m1-desc">vozidlá kategórie M s najviac s ôsmimi miestami na sedenie okrem miesta na sedenie vodiča</td></tr>
+            <tr class="border-b border-slate-100 bg-slate-50/50"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">M2</td><td class="px-4 py-2.5" data-translate="categories-m2-desc">vozidlá kategórie M s viac ako ôsmimi miestami na sedenie okrem miesta na sedenie vodiča a s najväčšou prípustnou celkovou hmotnosťou neprevyšujúcou 5 000 kg</td></tr>
+            <tr class="border-b border-slate-200"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">M3</td><td class="px-4 py-2.5" data-translate="categories-m3-desc">vozidlá kategórie M s viac ako ôsmimi miestami na sedenie okrem miesta na sedenie vodiča a s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 5 000 kg</td></tr>
 
-            <tr class="bg-primary/5 font-semibold"><td class="px-4 py-3" colspan="2">kategória N</td><td class="px-4 py-3">motorové vozidlá s najmenej štyrmi kolesami navrhnuté a konštruované najmä na prepravu nákladu</td></tr>
-            <tr class="border-b border-slate-100"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">N1</td><td class="px-4 py-2.5">vozidlá kategórie N s najväčšou prípustnou celkovou hmotnosťou neprevyšujúcou 3 500 kg</td></tr>
-            <tr class="border-b border-slate-100 bg-slate-50/50"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">N2</td><td class="px-4 py-2.5">vozidlá kategórie N s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 3 500 kg, ale neprevyšujúcou 12 000 kg</td></tr>
-            <tr class="border-b border-slate-200"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">N3</td><td class="px-4 py-2.5">vozidlá kategórie N s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 12 000 kg</td></tr>
+            <tr class="bg-primary/5 font-semibold"><td class="px-4 py-3" colspan="2" data-translate="categories-group-n-title">kategória N</td><td class="px-4 py-3" data-translate="categories-group-n-desc">motorové vozidlá s najmenej štyrmi kolesami navrhnuté a konštruované najmä na prepravu nákladu</td></tr>
+            <tr class="border-b border-slate-100"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">N1</td><td class="px-4 py-2.5" data-translate="categories-n1-desc">vozidlá kategórie N s najväčšou prípustnou celkovou hmotnosťou neprevyšujúcou 3 500 kg</td></tr>
+            <tr class="border-b border-slate-100 bg-slate-50/50"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">N2</td><td class="px-4 py-2.5" data-translate="categories-n2-desc">vozidlá kategórie N s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 3 500 kg, ale neprevyšujúcou 12 000 kg</td></tr>
+            <tr class="border-b border-slate-200"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">N3</td><td class="px-4 py-2.5" data-translate="categories-n3-desc">vozidlá kategórie N s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 12 000 kg</td></tr>
 
-            <tr class="bg-primary/5 font-semibold"><td class="px-4 py-3" colspan="2">kategória O</td><td class="px-4 py-3">prípojné vozidlá</td></tr>
-            <tr class="border-b border-slate-100"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">O1</td><td class="px-4 py-2.5">vozidlá kategórie O s najväčšou prípustnou celkovou hmotnosťou neprevyšujúcou 750 kg</td></tr>
-            <tr class="border-b border-slate-100 bg-slate-50/50"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">O2</td><td class="px-4 py-2.5">vozidlá kategórie O s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 750 kg, ale neprevyšujúcou 3 500 kg</td></tr>
-            <tr class="border-b border-slate-100"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">O3</td><td class="px-4 py-2.5">vozidlá kategórie O s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 3 500 kg, ale neprevyšujúcou 10 000 kg</td></tr>
-            <tr class="border-b border-slate-200"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">O4</td><td class="px-4 py-2.5">vozidlá kategórie O s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 10 000 kg</td></tr>
+            <tr class="bg-primary/5 font-semibold"><td class="px-4 py-3" colspan="2" data-translate="categories-group-o-title">kategória O</td><td class="px-4 py-3" data-translate="categories-group-o-desc">prípojné vozidlá</td></tr>
+            <tr class="border-b border-slate-100"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">O1</td><td class="px-4 py-2.5" data-translate="categories-o1-desc">vozidlá kategórie O s najväčšou prípustnou celkovou hmotnosťou neprevyšujúcou 750 kg</td></tr>
+            <tr class="border-b border-slate-100 bg-slate-50/50"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">O2</td><td class="px-4 py-2.5" data-translate="categories-o2-desc">vozidlá kategórie O s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 750 kg, ale neprevyšujúcou 3 500 kg</td></tr>
+            <tr class="border-b border-slate-100"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">O3</td><td class="px-4 py-2.5" data-translate="categories-o3-desc">vozidlá kategórie O s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 3 500 kg, ale neprevyšujúcou 10 000 kg</td></tr>
+            <tr class="border-b border-slate-200"><td class="px-4 py-2.5"></td><td class="px-4 py-2.5 font-medium text-primary">O4</td><td class="px-4 py-2.5" data-translate="categories-o4-desc">vozidlá kategórie O s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 10 000 kg</td></tr>
 
-            <tr class="bg-primary/5 font-semibold border-b border-slate-200"><td class="px-4 py-3" colspan="2">kategória T</td><td class="px-4 py-3">kolesové traktory</td></tr>
-            <tr class="bg-primary/5 font-semibold border-b border-slate-200"><td class="px-4 py-3" colspan="2">kategória C</td><td class="px-4 py-3">pásové traktory</td></tr>
-            <tr class="bg-primary/5 font-semibold border-b border-slate-200"><td class="px-4 py-3" colspan="2">kategória R</td><td class="px-4 py-3">prípojné vozidlá za traktor</td></tr>
-            <tr class="bg-primary/5 font-semibold border-b border-slate-200"><td class="px-4 py-3" colspan="2">kategória S</td><td class="px-4 py-3">ťahané vymeniteľné zariadenia za traktor</td></tr>
-            <tr class="bg-primary/5 font-semibold border-b border-slate-200"><td class="px-4 py-3" colspan="2">kategória P</td><td class="px-4 py-3">pracovné stroje</td></tr>
-            <tr class="bg-primary/5 font-semibold border-b border-slate-200"><td class="px-4 py-3" colspan="2">kategória LS</td><td class="px-4 py-3">snežné skútre</td></tr>
-            <tr class="bg-primary/5 font-semibold"><td class="px-4 py-3" colspan="2">kategória V</td><td class="px-4 py-3">ostatné vozidlá, ktoré sa nedajú zaradiť do predchádzajúcich kategórií</td></tr>
+            <tr class="bg-primary/5 font-semibold border-b border-slate-200"><td class="px-4 py-3" colspan="2" data-translate="categories-group-t-title">kategória T</td><td class="px-4 py-3" data-translate="categories-group-t-desc">kolesové traktory</td></tr>
+            <tr class="bg-primary/5 font-semibold border-b border-slate-200"><td class="px-4 py-3" colspan="2" data-translate="categories-group-c-title">kategória C</td><td class="px-4 py-3" data-translate="categories-group-c-desc">pásové traktory</td></tr>
+            <tr class="bg-primary/5 font-semibold border-b border-slate-200"><td class="px-4 py-3" colspan="2" data-translate="categories-group-r-title">kategória R</td><td class="px-4 py-3" data-translate="categories-group-r-desc">prípojné vozidlá za traktor</td></tr>
+            <tr class="bg-primary/5 font-semibold border-b border-slate-200"><td class="px-4 py-3" colspan="2" data-translate="categories-group-s-title">kategória S</td><td class="px-4 py-3" data-translate="categories-group-s-desc">ťahané vymeniteľné zariadenia za traktor</td></tr>
+            <tr class="bg-primary/5 font-semibold border-b border-slate-200"><td class="px-4 py-3" colspan="2" data-translate="categories-group-p-title">kategória P</td><td class="px-4 py-3" data-translate="categories-group-p-desc">pracovné stroje</td></tr>
+            <tr class="bg-primary/5 font-semibold border-b border-slate-200"><td class="px-4 py-3" colspan="2" data-translate="categories-group-ls-title">kategória LS</td><td class="px-4 py-3" data-translate="categories-group-ls-desc">snežné skútre</td></tr>
+            <tr class="bg-primary/5 font-semibold"><td class="px-4 py-3" colspan="2" data-translate="categories-group-v-title">kategória V</td><td class="px-4 py-3" data-translate="categories-group-v-desc">ostatné vozidlá, ktoré sa nedajú zaradiť do predchádzajúcich kategórií</td></tr>
           </tbody>
         </table>
       </div>
@@ -80,7 +80,7 @@ import Hero from '@/components/Hero.astro';
 
   <section class="py-10 bg-slate-50">
     <div class="max-w-4xl mx-auto px-5 text-center">
-      <p class="text-slate-600">
+      <p class="text-slate-600" data-translate="categories-bottom-note-html" data-translate-html>
         Kompletný prehľad zákonov a vyhlášok nájdete na stránke
         <a href="/legislativa" class="text-blue-600 font-semibold hover:underline">Platná legislatíva</a>.
         Povinnú výbavu pre jednotlivé kategórie nájdete na stránke

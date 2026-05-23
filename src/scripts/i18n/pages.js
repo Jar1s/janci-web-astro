@@ -92,10 +92,131 @@ export const sk = {
   'categories-hero-title': 'Kategórie vozidiel',
   'categories-hero-subtitle': 'Podrobné rozdelenie kategórií vozidiel podľa platnej legislatívy',
   'categories-page-title': 'Kategórie vozidiel',
+  'categories-schematic-title': 'Schematické zobrazenie kategorizácie vozidiel',
+  'categories-schematic-intro-html':
+    'Podrobnejšie rozdelenie kategórií vozidiel stanovuje <a href="/legislativa" class="text-blue-600 hover:underline">zákon č. 106/2018 Z. z.</a> o prevádzke vozidiel v cestnej premávke a o zmene a doplnení niektorých zákonov.',
+  'categories-table-col-category': 'Kategória',
+  'categories-table-col-subcategory': 'Podkategória',
+  'categories-table-col-description': 'Popis',
+  'categories-group-l-title': 'kategória L',
+  'categories-group-l-desc': 'dvojkolesové motorové vozidlá, trojkolesové motorové vozidlá a štvorkolky',
+  'categories-l1e-desc': 'ľahké dvojkolesové motorové vozidlo',
+  'categories-l2e-desc': 'trojkolesový moped',
+  'categories-l3e-desc': 'dvojkolesový motocykel',
+  'categories-l4e-desc': 'dvojkolesový motocykel s postranným vozíkom',
+  'categories-l5e-desc': 'motorová trojkolka',
+  'categories-l6e-desc': 'ľahké štvorkolky',
+  'categories-l7e-desc': 'ťažké štvorkolky',
+  'categories-group-m-title': 'kategória M',
+  'categories-group-m-desc':
+    'motorové vozidlá s najmenej štyrmi kolesami navrhnuté a konštruované najmä na prepravu osôb a ich batožiny',
+  'categories-m1-desc':
+    'vozidlá kategórie M s najviac s ôsmimi miestami na sedenie okrem miesta na sedenie vodiča',
+  'categories-m2-desc':
+    'vozidlá kategórie M s viac ako ôsmimi miestami na sedenie okrem miesta na sedenie vodiča a s najväčšou prípustnou celkovou hmotnosťou neprevyšujúcou 5 000 kg',
+  'categories-m3-desc':
+    'vozidlá kategórie M s viac ako ôsmimi miestami na sedenie okrem miesta na sedenie vodiča a s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 5 000 kg',
+  'categories-group-n-title': 'kategória N',
+  'categories-group-n-desc':
+    'motorové vozidlá s najmenej štyrmi kolesami navrhnuté a konštruované najmä na prepravu nákladu',
+  'categories-n1-desc':
+    'vozidlá kategórie N s najväčšou prípustnou celkovou hmotnosťou neprevyšujúcou 3 500 kg',
+  'categories-n2-desc':
+    'vozidlá kategórie N s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 3 500 kg, ale neprevyšujúcou 12 000 kg',
+  'categories-n3-desc':
+    'vozidlá kategórie N s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 12 000 kg',
+  'categories-group-o-title': 'kategória O',
+  'categories-group-o-desc': 'prípojné vozidlá',
+  'categories-o1-desc':
+    'vozidlá kategórie O s najväčšou prípustnou celkovou hmotnosťou neprevyšujúcou 750 kg',
+  'categories-o2-desc':
+    'vozidlá kategórie O s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 750 kg, ale neprevyšujúcou 3 500 kg',
+  'categories-o3-desc':
+    'vozidlá kategórie O s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 3 500 kg, ale neprevyšujúcou 10 000 kg',
+  'categories-o4-desc':
+    'vozidlá kategórie O s najväčšou prípustnou celkovou hmotnosťou prevyšujúcou 10 000 kg',
+  'categories-group-t-title': 'kategória T',
+  'categories-group-t-desc': 'kolesové traktory',
+  'categories-group-c-title': 'kategória C',
+  'categories-group-c-desc': 'pásové traktory',
+  'categories-group-r-title': 'kategória R',
+  'categories-group-r-desc': 'prípojné vozidlá za traktor',
+  'categories-group-s-title': 'kategória S',
+  'categories-group-s-desc': 'ťahané vymeniteľné zariadenia za traktor',
+  'categories-group-p-title': 'kategória P',
+  'categories-group-p-desc': 'pracovné stroje',
+  'categories-group-ls-title': 'kategória LS',
+  'categories-group-ls-desc': 'snežné skútre',
+  'categories-group-v-title': 'kategória V',
+  'categories-group-v-desc': 'ostatné vozidlá, ktoré sa nedajú zaradiť do predchádzajúcich kategórií',
+  'categories-bottom-note-html':
+    'Kompletný prehľad zákonov a vyhlášok nájdete na stránke <a href="/legislativa" class="text-blue-600 font-semibold hover:underline">Platná legislatíva</a>. Povinnú výbavu pre jednotlivé kategórie nájdete na stránke <a href="/povinna-vybava" class="text-blue-600 font-semibold hover:underline">Povinná výbava</a>.',
 
   'equipment-hero-title': 'Povinná výbava vozidiel',
   'equipment-hero-subtitle': 'Čo musíte mať vo vozidle podľa platných predpisov',
   'equipment-page-title': 'Povinná výbava',
+  'equipment-section1-title': 'Povinná výbava podľa kategórie vozidla',
+  'equipment-section1-intro': 'Nezabudnite si skontrolovať povinnú výbavu vozidla:',
+  'equipment-cat-m1n1-title': 'Kategória M1 a N1',
+  'equipment-cat-m1n1-subtitle': '(osobné a úžitkové vozidlá)',
+  'equipment-cat-m1n1-item-a': 'autolekárnička – skontrolujte úplnosť a stav obsahu,',
+  'equipment-cat-m1n1-item-b':
+    'bezpečnostný reflexný odev (napr. vesta, overal, nohavice alebo pláštenka) – umiestňuje sa v dosahu zo sedadla vodiča vozidla,',
+  'equipment-cat-m1n1-item-c': 'homologizovaný prenosný výstražný trojuholník,',
+  'equipment-cat-m1n1-item-d': 'náhradné koleso (disk s pneumatikou) predpísaného druhu a rozmeru,',
+  'equipment-cat-m1n1-item-e': 'kľúč na matice alebo na skrutky kolies a príručný zdvihák,',
+  'equipment-exception-label': 'Výnimka:',
+  'equipment-cat-m1n1-exception':
+    'povinná výbava podľa odsekov d) a e) sa nevzťahuje na vozidlá, ktoré: majú vybavené všetky kolesá pneumatikami zvláštnej konštrukcie umožňujúcej dočasné použitie po defekte s indikáciou defektu v ktorejkoľvek z pneumatík, sú vybavené prostriedkami na bezdemontážnu opravu poškodenej pneumatiky umožňujúcej dočasné použitie.',
+  'equipment-cat-m2m3-title': 'Kategória M2, M3, N2, N3, T, C, a PS',
+  'equipment-cat-m2m3-subtitle': '(autobusy, nákladné, traktory)',
+  'equipment-cat-m2m3-item-a': 'autolekárnička – resp. dve autolekárničky (M2/M3 nad 22 miest),',
+  'equipment-cat-m2m3-item-b': 'bezpečnostný reflexný odev,',
+  'equipment-cat-m2m3-item-c': 'homologizovaný prenosný výstražný trojuholník,',
+  'equipment-cat-m2m3-item-d':
+    'náhradné koleso – jazdná súprava zložená z ťahača a prípojného vozidla môže mať jedno spoločné náhradné koleso,',
+  'equipment-cat-m2m3-item-e': 'kľúč na matice alebo na skrutky kolies a príručný zdvihák,',
+  'equipment-cat-m2m3-item-f': 'hasiace prístroje:',
+  'equipment-cat-m2m3-fire-1': '6 kg (M2/M3 do 22 miest)',
+  'equipment-cat-m2m3-fire-2': '12 kg (M2/M3 nad 22 miest)',
+  'equipment-cat-m2m3-fire-3': '6 kg (N2, N3, T, C, PS)',
+  'equipment-cat-m2m3-fire-4': '1,3 kg (záchranná/banská/plynárenská služba)',
+  'equipment-cat-m2m3-item-g': 'snehové reťaze (15.11 – 31.3, pre N3),',
+  'equipment-cat-m2m3-item-h': 'zakladacie kliny (1 klin pre mc > 3.5t, 2 kliny pre 3+ náprav),',
+  'equipment-cat-m2m3-exception':
+    'povinná výbava podľa odsekov d) a e) sa nevzťahuje na vozidlá, ktoré: majú vybavené všetky kolesá pneumatikami zvláštnej konštrukcie umožňujúcej dočasné použitie po defekte s indikáciou defektu v ktorejkoľvek z pneumatík, sú vybavené prostriedkami na bezdemontážnu opravu poškodenej pneumatiky umožňujúcej dočasné použitie. Ďalej sa nevzťahuje na mestské autobusy, špeciálne vozidlá v operatívnom dosahu servisných služieb.',
+  'equipment-cat-l-title': 'Kategória L3e, L4e, L5e a L7e',
+  'equipment-cat-l-subtitle': '(motocykle)',
+  'equipment-cat-l-item-a': 'motolekárnička – skontrolujte úplnosť a stav obsahu',
+  'equipment-cat-o-title': 'Kategória O2 až Q4 a RB2 až RB4',
+  'equipment-cat-o-subtitle': '(prípojné vozidlá)',
+  'equipment-cat-o-item-a': 'náhradné koleso predpísaného druhu a rozmeru',
+  'equipment-cat-o-item-b': 'zakladacie kliny (1 klin pre mc > 750 kg, 2 kliny pre 3+ náprav)',
+  'equipment-section2-title': 'Čo ďalšie skontrolovať pred návštevou STK?',
+  'equipment-check-item-1-title': 'Ostrekovače, stierače a klaksón',
+  'equipment-check-item-1-desc': 'Preskúšajte funkčnosť ostrekovačov, stieračov a klaksónu.',
+  'equipment-check-item-2-title': 'Osvetlenie',
+  'equipment-check-item-2-desc':
+    'Preverte si vonkajšie osvetlenie vozidla (obrysové, stretávacie a diaľkové svetlá, svetlá do hmly, smerové a spätné svetlá), signalizáciu porúch. Vyskúšajte funkčnosť znižovania sklonu predných svetlometov.',
+  'equipment-check-item-3-title': 'Motorový priestor',
+  'equipment-check-item-3-desc': 'Skontrolujte či je motorový priestor suchý, či neunikajú prevádzkové kvapaliny.',
+  'equipment-check-item-4-title': 'Brzdy',
+  'equipment-check-item-4-desc': 'Skontrolujte funkčnosť bŕzd, vrátane výšky zdvihu páky parkovacej brzdy.',
+  'equipment-check-item-5-title': 'Riadenie',
+  'equipment-check-item-5-desc':
+    'Preverte si riadenie, či vozidlo reaguje plynulo na natočenie volantu a či sa volant po prejdení zákrutou vracia do východiskovej polohy.',
+  'equipment-check-item-6-title': 'Pneumatiky',
+  'equipment-check-item-6-desc':
+    'Premerajte si dezén pneumatík (predpísaná hĺbka dezénu je minimálne 3 mm na letných a 1,6 mm na zimných pneumatikách), presvedčte sa či máte predpísaný rozmer pneumatík podľa osvedčenia o evidencii.',
+  'equipment-check-item-7-title': 'Zasklenie',
+  'equipment-check-item-7-desc':
+    'Skontrolujte zasklenie vozidla – na prednom skle a na predných bočných sklách nesmú byť umiestnené tieniace fólie. Tieniaca fólia nesmie prekrývať zadné brzdové svetlo, tzv. tretie brzdové svetlo. Skontrolujte si či nie je prasknuté predné sklo – za narušený výhľad z miesta vodiča cez zónu čistenia stieračmi čelného skla sa považuje stav, ak sa v zóne bezprostredne pred vodičom nenachádza žiadne poškodenie alebo sa mimo zóny bezprostredne pred vodičom nachádzajú najviac 3 poškodenia akéhokoľvek typu veľkosti menšej ako 20 mm.',
+  'equipment-check-item-8-title': 'Výfuk',
+  'equipment-check-item-8-desc': 'Presvedčte sa či nie je výfukové potrubie uvoľnené, netesné a či nevydáva nadmerný hluk.',
+  'equipment-check-item-9-title': 'Identifikačné údaje',
+  'equipment-check-item-9-desc':
+    'Skontrolujte si či sa zhodujú identifikačné údaje v dokladoch so skutočným stavom na vozidle (farba, výrobný štítok, VIN, EČV).',
+  'equipment-cta-link': 'Viac o technickej kontrole',
 
   'reviews-page-title': 'Recenzie zákazníkov',
   'reviews-summary-label': 'Hodnotenie zákazníkov',
@@ -206,10 +327,131 @@ export const en = {
   'categories-hero-title': 'Vehicle categories',
   'categories-hero-subtitle': 'Vehicle categories under current Slovak legislation',
   'categories-page-title': 'Vehicle categories',
+  'categories-schematic-title': 'Schematic vehicle category overview',
+  'categories-schematic-intro-html':
+    'Detailed vehicle category classification is defined by <a href="/legislativa" class="text-blue-600 hover:underline">Act No. 106/2018 Coll.</a> on road traffic vehicle operation and on amendments to certain acts.',
+  'categories-table-col-category': 'Category',
+  'categories-table-col-subcategory': 'Subcategory',
+  'categories-table-col-description': 'Description',
+  'categories-group-l-title': 'category L',
+  'categories-group-l-desc': 'two-wheel motor vehicles, three-wheel motor vehicles, and quadricycles',
+  'categories-l1e-desc': 'light two-wheel motor vehicle',
+  'categories-l2e-desc': 'three-wheel moped',
+  'categories-l3e-desc': 'two-wheel motorcycle',
+  'categories-l4e-desc': 'two-wheel motorcycle with sidecar',
+  'categories-l5e-desc': 'motor tricycle',
+  'categories-l6e-desc': 'light quadricycles',
+  'categories-l7e-desc': 'heavy quadricycles',
+  'categories-group-m-title': 'category M',
+  'categories-group-m-desc':
+    'motor vehicles with at least four wheels designed and constructed mainly for the transport of passengers and their luggage',
+  'categories-m1-desc':
+    'vehicles of category M with no more than eight seats in addition to the driver’s seat',
+  'categories-m2-desc':
+    'vehicles of category M with more than eight seats in addition to the driver’s seat and with maximum permissible gross mass not exceeding 5,000 kg',
+  'categories-m3-desc':
+    'vehicles of category M with more than eight seats in addition to the driver’s seat and with maximum permissible gross mass exceeding 5,000 kg',
+  'categories-group-n-title': 'category N',
+  'categories-group-n-desc':
+    'motor vehicles with at least four wheels designed and constructed mainly for the transport of goods',
+  'categories-n1-desc':
+    'vehicles of category N with maximum permissible gross mass not exceeding 3,500 kg',
+  'categories-n2-desc':
+    'vehicles of category N with maximum permissible gross mass exceeding 3,500 kg but not exceeding 12,000 kg',
+  'categories-n3-desc':
+    'vehicles of category N with maximum permissible gross mass exceeding 12,000 kg',
+  'categories-group-o-title': 'category O',
+  'categories-group-o-desc': 'trailers',
+  'categories-o1-desc':
+    'vehicles of category O with maximum permissible gross mass not exceeding 750 kg',
+  'categories-o2-desc':
+    'vehicles of category O with maximum permissible gross mass exceeding 750 kg but not exceeding 3,500 kg',
+  'categories-o3-desc':
+    'vehicles of category O with maximum permissible gross mass exceeding 3,500 kg but not exceeding 10,000 kg',
+  'categories-o4-desc':
+    'vehicles of category O with maximum permissible gross mass exceeding 10,000 kg',
+  'categories-group-t-title': 'category T',
+  'categories-group-t-desc': 'wheeled tractors',
+  'categories-group-c-title': 'category C',
+  'categories-group-c-desc': 'tracked tractors',
+  'categories-group-r-title': 'category R',
+  'categories-group-r-desc': 'tractor trailers',
+  'categories-group-s-title': 'category S',
+  'categories-group-s-desc': 'tractor-drawn interchangeable equipment',
+  'categories-group-p-title': 'category P',
+  'categories-group-p-desc': 'work machines',
+  'categories-group-ls-title': 'category LS',
+  'categories-group-ls-desc': 'snowmobiles',
+  'categories-group-v-title': 'category V',
+  'categories-group-v-desc': 'other vehicles that cannot be assigned to previous categories',
+  'categories-bottom-note-html':
+    'The complete overview of laws and regulations is available on the <a href="/legislativa" class="text-blue-600 font-semibold hover:underline">Current legislation</a> page. Mandatory equipment for each category is available on the <a href="/povinna-vybava" class="text-blue-600 font-semibold hover:underline">Mandatory equipment</a> page.',
 
   'equipment-hero-title': 'Mandatory vehicle equipment',
   'equipment-hero-subtitle': 'What you must carry in your vehicle by law',
   'equipment-page-title': 'Mandatory equipment',
+  'equipment-section1-title': 'Mandatory equipment by vehicle category',
+  'equipment-section1-intro': 'Do not forget to check your vehicle mandatory equipment:',
+  'equipment-cat-m1n1-title': 'Category M1 and N1',
+  'equipment-cat-m1n1-subtitle': '(passenger and utility vehicles)',
+  'equipment-cat-m1n1-item-a': 'first aid kit – check completeness and condition of the contents,',
+  'equipment-cat-m1n1-item-b':
+    'reflective safety garment (e.g. vest, overall, trousers, or raincoat) – must be within reach from the driver seat,',
+  'equipment-cat-m1n1-item-c': 'approved portable warning triangle,',
+  'equipment-cat-m1n1-item-d': 'spare wheel (rim with tire) of the prescribed type and size,',
+  'equipment-cat-m1n1-item-e': 'wheel nut/bolt wrench and portable jack,',
+  'equipment-exception-label': 'Exception:',
+  'equipment-cat-m1n1-exception':
+    'mandatory equipment according to points d) and e) does not apply to vehicles that: have all wheels equipped with special-construction tires enabling temporary use after puncture with puncture indication in any tire, and are equipped with tools for non-dismount temporary tire repair.',
+  'equipment-cat-m2m3-title': 'Category M2, M3, N2, N3, T, C, and PS',
+  'equipment-cat-m2m3-subtitle': '(buses, trucks, tractors)',
+  'equipment-cat-m2m3-item-a': 'first aid kit – or two first aid kits (M2/M3 over 22 seats),',
+  'equipment-cat-m2m3-item-b': 'reflective safety garment,',
+  'equipment-cat-m2m3-item-c': 'approved portable warning triangle,',
+  'equipment-cat-m2m3-item-d':
+    'spare wheel – a road set consisting of a tractor unit and trailer may share one spare wheel,',
+  'equipment-cat-m2m3-item-e': 'wheel nut/bolt wrench and portable jack,',
+  'equipment-cat-m2m3-item-f': 'fire extinguishers:',
+  'equipment-cat-m2m3-fire-1': '6 kg (M2/M3 up to 22 seats)',
+  'equipment-cat-m2m3-fire-2': '12 kg (M2/M3 over 22 seats)',
+  'equipment-cat-m2m3-fire-3': '6 kg (N2, N3, T, C, PS)',
+  'equipment-cat-m2m3-fire-4': '1.3 kg (rescue/mining/gas service)',
+  'equipment-cat-m2m3-item-g': 'snow chains (15 Nov – 31 Mar, for N3),',
+  'equipment-cat-m2m3-item-h': 'wheel chocks (1 chock for gvw > 3.5 t, 2 chocks for 3+ axles),',
+  'equipment-cat-m2m3-exception':
+    'mandatory equipment according to points d) and e) does not apply to vehicles that: have all wheels equipped with special-construction tires enabling temporary use after puncture with puncture indication in any tire, and are equipped with tools for non-dismount temporary tire repair. It also does not apply to city buses and special vehicles within operating range of service teams.',
+  'equipment-cat-l-title': 'Category L3e, L4e, L5e and L7e',
+  'equipment-cat-l-subtitle': '(motorcycles)',
+  'equipment-cat-l-item-a': 'motorcycle first aid kit – check completeness and condition of the contents',
+  'equipment-cat-o-title': 'Category O2 to Q4 and RB2 to RB4',
+  'equipment-cat-o-subtitle': '(trailers)',
+  'equipment-cat-o-item-a': 'spare wheel of the prescribed type and size',
+  'equipment-cat-o-item-b': 'wheel chocks (1 chock for gvw > 750 kg, 2 chocks for 3+ axles)',
+  'equipment-section2-title': 'What else to check before visiting MOT?',
+  'equipment-check-item-1-title': 'Washers, wipers and horn',
+  'equipment-check-item-1-desc': 'Test the functionality of washers, wipers, and the horn.',
+  'equipment-check-item-2-title': 'Lighting',
+  'equipment-check-item-2-desc':
+    'Check the external vehicle lighting (position, low-beam and high-beam lights, fog lights, turn signals, and reverse lights), including fault indicators. Test headlamp leveling control.',
+  'equipment-check-item-3-title': 'Engine bay',
+  'equipment-check-item-3-desc': 'Check that the engine bay is dry and no operating fluids are leaking.',
+  'equipment-check-item-4-title': 'Brakes',
+  'equipment-check-item-4-desc': 'Check brake functionality, including the travel height of the parking brake lever.',
+  'equipment-check-item-5-title': 'Steering',
+  'equipment-check-item-5-desc':
+    'Check steering response to ensure the vehicle reacts smoothly to steering wheel input and the wheel returns to neutral after cornering.',
+  'equipment-check-item-6-title': 'Tires',
+  'equipment-check-item-6-desc':
+    'Measure tire tread depth (minimum legal depth is 3 mm for summer tires and 1.6 mm for winter tires) and verify the tire size matches the vehicle registration certificate.',
+  'equipment-check-item-7-title': 'Glazing',
+  'equipment-check-item-7-desc':
+    'Check vehicle glazing – no tint films are allowed on the windshield and front side windows. Tint film must not cover the rear brake lamp (third brake light). Also check for windshield cracks – visibility from the driver seat through the wiper-cleaned zone is considered impaired if there is any damage directly in front of the driver, or if outside this direct zone there are more than 3 damages of any type larger than 20 mm.',
+  'equipment-check-item-8-title': 'Exhaust',
+  'equipment-check-item-8-desc': 'Make sure the exhaust system is not loose, leaking, or excessively noisy.',
+  'equipment-check-item-9-title': 'Identification data',
+  'equipment-check-item-9-desc':
+    'Check whether identification data in documents matches the actual vehicle state (color, manufacturer plate, VIN, plate number).',
+  'equipment-cta-link': 'More about technical inspection',
 
   'reviews-page-title': 'Customer reviews',
   'reviews-summary-label': 'Customer rating',
