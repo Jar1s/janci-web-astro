@@ -10,48 +10,48 @@ import Footer from '@/components/Footer.astro';
   canonical="/rezervacia"
 >
   <Header slot="header" currentPath="/rezervacia" />
-  <h1 class="sr-only">Rezervácia termínu</h1>
+  <h1 class="sr-only" data-translate="booking-title">Rezervácia termínu</h1>
 
   <section class="booking-page">
     <div class="booking-container">
       <header class="booking-head">
-        <h2>Rezervácia termínu</h2>
-        <p>Vyberte službu, kliknite na voľný termín v tabuľke a vyplňte kontaktné údaje.</p>
+        <h2 data-translate="booking-title">Rezervácia termínu</h2>
+        <p data-translate="booking-subtitle">Vyberte službu, kliknite na voľný termín v tabuľke a vyplňte kontaktné údaje.</p>
         <p class="booking-ko-notice">
-          <strong>REZERVOVANIE NA KONTROLU ORIGINALITY (KO) JE MOŽNÉ IBA TELEFONICKY NA <a href="tel:+421948888088">0948 888 088</a></strong>
-          <span>Vyberte termín, ktorý Vám vyhovuje, vyplne formulár a odošlite. Budeme Vás späťne kontaktovať telefonicky, hneď ako to bude možné.</span>
+          <strong data-translate-html="booking-ko-notice-strong">REZERVOVANIE NA KONTROLU ORIGINALITY (KO) JE MOŽNÉ IBA TELEFONICKY NA <a href="tel:+421948888088">0948 888 088</a></strong>
+          <span data-translate="booking-ko-notice-text">Vyberte termín, ktorý Vám vyhovuje, vyplne formulár a odošlite. Budeme Vás späťne kontaktovať telefonicky, hneď ako to bude možné.</span>
         </p>
       </header>
 
       <form id="booking-form" class="booking-form">
         <div class="booking-toolbar">
           <label class="booking-field">
-            <span>Služba *</span>
+            <span data-translate="booking-service-label">Služba *</span>
             <select id="serviceType" name="serviceType" required>
-              <option value="tk_ek">Technická / emisná kontrola</option>
-              <option value="ko">Kontrola originality</option>
+              <option value="tk_ek" data-translate="booking-service-option-tkek">Technická / emisná kontrola</option>
+              <option value="ko" data-translate="booking-service-option-ko">Kontrola originality</option>
             </select>
           </label>
 
           <label class="booking-field">
-            <span>Začiatok dátumového rozhrania *</span>
+            <span data-translate="booking-range-start-label">Začiatok dátumového rozhrania *</span>
             <input id="rangeStartDate" name="rangeStartDate" type="date" required />
           </label>
         </div>
 
         <div class="booking-scheduler">
           <div class="booking-scheduler-head">
-            <p class="booking-range-label">Dátumové rozhranie (8 dní vedľa seba):</p>
+            <p class="booking-range-label" data-translate="booking-range-label">Dátumové rozhranie (8 dní vedľa seba):</p>
             <div class="booking-range-controls">
-              <button id="booking-prev-range" type="button" class="booking-range-btn">← Predchádzajúcich 8 dní</button>
+              <button id="booking-prev-range" type="button" class="booking-range-btn" data-translate="booking-range-prev">← Predchádzajúcich 8 dní</button>
               <span id="booking-current-range" class="booking-range-current"></span>
-              <button id="booking-next-range" type="button" class="booking-range-btn">Ďalších 8 dní →</button>
+              <button id="booking-next-range" type="button" class="booking-range-btn" data-translate="booking-range-next">Ďalších 8 dní →</button>
             </div>
           </div>
-          <div class="booking-legend" aria-label="Legenda dostupnosti termínov">
-            <span class="booking-legend-item booking-legend-item--free">voľné</span>
-            <span class="booking-legend-item booking-legend-item--busy">obsadené</span>
-            <span class="booking-legend-item booking-legend-item--closed">zatvorené</span>
+          <div class="booking-legend" aria-label="Legenda dostupnosti termínov" data-translate-aria="booking-legend-aria">
+            <span class="booking-legend-item booking-legend-item--free" data-translate="booking-status-free">voľné</span>
+            <span class="booking-legend-item booking-legend-item--busy" data-translate="booking-status-busy">obsadené</span>
+            <span class="booking-legend-item booking-legend-item--closed" data-translate="booking-status-closed">zatvorené</span>
           </div>
 
           <div class="booking-table-wrap">
@@ -69,100 +69,100 @@ import Footer from '@/components/Footer.astro';
           <div id="booking-modal-backdrop" class="booking-modal__backdrop"></div>
           <div class="booking-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="booking-modal-title">
             <div class="booking-modal__head">
-              <h3 id="booking-modal-title">Dokončenie rezervácie</h3>
-              <button id="booking-modal-close" type="button" class="booking-modal__close" aria-label="Zavrieť formulár">×</button>
+              <h3 id="booking-modal-title" data-translate="booking-modal-title">Dokončenie rezervácie</h3>
+              <button id="booking-modal-close" type="button" class="booking-modal__close" aria-label="Zavrieť formulár" data-translate-aria="booking-modal-close-aria">×</button>
             </div>
 
-            <p id="selected-slot" class="selected-slot">Vybraný termín: žiadny</p>
+            <p id="selected-slot" class="selected-slot" data-translate="booking-selected-slot-empty">Vybraný termín: žiadny</p>
 
             <div class="booking-grid">
               <label class="booking-field">
-                <span>Kontrola *</span>
+                <span data-translate="booking-check-label">Kontrola *</span>
                 <select id="serviceTypeModal" name="serviceTypeModal" disabled>
-                  <option value="tk_ek">EK+TK</option>
-                  <option value="ko">KO</option>
+                  <option value="tk_ek" data-translate="booking-check-option-tkek">EK+TK</option>
+                  <option value="ko" data-translate="booking-check-option-ko">KO</option>
                 </select>
               </label>
 
               <label class="booking-field">
-                <span>Typ kontroly *</span>
+                <span data-translate="booking-inspection-type-label">Typ kontroly *</span>
                 <select id="inspectionType" name="inspectionType" required>
-                  <option value="pravidelna">pravidelná</option>
-                  <option value="opakovana">opakovaná</option>
-                  <option value="administrativna">administratívna</option>
-                  <option value="zvlastna">zvláštna</option>
+                  <option value="pravidelna" data-translate="booking-inspection-type-regular">pravidelná</option>
+                  <option value="opakovana" data-translate="booking-inspection-type-repeated">opakovaná</option>
+                  <option value="administrativna" data-translate="booking-inspection-type-administrative">administratívna</option>
+                  <option value="zvlastna" data-translate="booking-inspection-type-special">zvláštna</option>
                 </select>
               </label>
 
               <label class="booking-field booking-field--full">
-                <span>Meno a priezvisko/Názov firmy *</span>
+                <span data-translate="booking-name-label">Meno a priezvisko/Názov firmy *</span>
                 <input id="name" name="name" required minlength="2" maxlength="120" />
               </label>
 
               <label class="booking-field">
-                <span>Telefón *</span>
+                <span data-translate="booking-phone-label">Telefón *</span>
                 <input id="phone" name="phone" required minlength="6" maxlength="32" />
               </label>
 
               <label class="booking-field">
-                <span>E-mail</span>
+                <span data-translate="booking-email-label">E-mail</span>
                 <input id="email" name="email" type="email" maxlength="180" />
               </label>
 
               <label class="booking-field">
-                <span>EČV</span>
+                <span data-translate="booking-plate-label">EČV</span>
                 <input id="vehiclePlate" name="vehiclePlate" maxlength="20" />
               </label>
 
               <label class="booking-field">
-                <span>Druh vozidla</span>
+                <span data-translate="booking-vehicle-type-label">Druh vozidla</span>
                 <select id="vehicleType" name="vehicleType">
-                  <option value="">vyberte druh vozidla</option>
-                  <option value="osobne">osobné vozidlo</option>
-                  <option value="nakladne">nákladné vozidlo</option>
-                  <option value="motocykel">motocykel</option>
-                  <option value="pripojne">prípojné vozidlo</option>
-                  <option value="ine">iné</option>
+                  <option value="" data-translate="booking-vehicle-type-empty">vyberte druh vozidla</option>
+                  <option value="osobne" data-translate="booking-vehicle-type-passenger">osobné vozidlo</option>
+                  <option value="nakladne" data-translate="booking-vehicle-type-truck">nákladné vozidlo</option>
+                  <option value="motocykel" data-translate="booking-vehicle-type-motorcycle">motocykel</option>
+                  <option value="pripojne" data-translate="booking-vehicle-type-trailer">prípojné vozidlo</option>
+                  <option value="ine" data-translate="booking-vehicle-type-other">iné</option>
                 </select>
               </label>
 
               <label class="booking-field booking-field--full">
-                <span>Značka a typ vozidla</span>
+                <span data-translate="booking-vehicle-model-label">Značka a typ vozidla</span>
                 <input id="vehicleModel" name="vehicleModel" maxlength="120" />
               </label>
 
               <label class="booking-field">
-                <span>Druh paliva</span>
+                <span data-translate="booking-fuel-type-label">Druh paliva</span>
                 <select id="fuelType" name="fuelType">
-                  <option value="">vyberte druh paliva</option>
-                  <option value="benzin">benzín</option>
-                  <option value="nafta">nafta</option>
+                  <option value="" data-translate="booking-fuel-type-empty">vyberte druh paliva</option>
+                  <option value="benzin" data-translate="booking-fuel-type-petrol">benzín</option>
+                  <option value="nafta" data-translate="booking-fuel-type-diesel">nafta</option>
                   <option value="lpg">LPG</option>
                   <option value="cng">CNG</option>
-                  <option value="hybrid">hybrid</option>
-                  <option value="elektro">elektro</option>
-                  <option value="ine">iné</option>
+                  <option value="hybrid" data-translate="booking-fuel-type-hybrid">hybrid</option>
+                  <option value="elektro" data-translate="booking-fuel-type-electric">elektro</option>
+                  <option value="ine" data-translate="booking-fuel-type-other">iné</option>
                 </select>
               </label>
 
               <label class="booking-field">
-                <span>VIN</span>
+                <span data-translate="booking-vin-label">VIN</span>
                 <input id="vehicleVin" name="vehicleVin" maxlength="32" />
               </label>
 
               <label class="booking-field booking-field--full">
-                <span>Poznámka</span>
+                <span data-translate="booking-note-label">Poznámka</span>
                 <textarea id="note" name="note" maxlength="1000" rows="4"></textarea>
               </label>
             </div>
 
-            <p class="booking-note">
+            <p class="booking-note" data-translate="booking-note-help">
               Pri kontrole originality (KO) odporúčame po odoslaní rezervácie počkať na telefonické potvrdenie.
             </p>
 
             <p id="booking-msg" class="booking-msg" hidden></p>
 
-            <button id="booking-submit" type="submit" class="booking-submit">Odoslať rezerváciu</button>
+            <button id="booking-submit" type="submit" class="booking-submit" data-translate="booking-submit">Odoslať rezerváciu</button>
           </div>
         </div>
       </form>
@@ -203,6 +203,73 @@ import Footer from '@/components/Footer.astro';
   let slotMatrix = new Map();
   let currentStartDate = '';
   let selectedSlotId = null;
+  const i18nMessages = {
+    sk: {
+      selectedSlotPrefix: 'Vybraný termín:',
+      selectedSlotNone: 'žiadny',
+      free: 'voľné',
+      selected: 'vybrané ✓',
+      time: 'Čas',
+      slots: 'Termíny',
+      noSlots: 'Aktuálne nie sú voľné termíny.',
+      closed: 'ZATVORENÉ',
+      pickSlotAria: 'Vybrať termín',
+      busy: 'obsadené',
+      loadSlotsError: 'Chyba pri načítaní termínov',
+      loadSlotsFallbackError: 'Nepodarilo sa načítať termíny',
+      detailsInspectionType: 'Typ kontroly',
+      detailsVehicleType: 'Druh vozidla',
+      detailsVehicleModel: 'Značka a typ vozidla',
+      detailsFuelType: 'Druh paliva',
+      slotRequired: 'Najprv vyberte voľný termín v tabuľke.',
+      submitPending: 'Odosielam...',
+      submitError: 'Rezerváciu sa nepodarilo odoslať',
+      submitSuccess: 'Rezervácia bola odoslaná. Čoskoro vás budeme kontaktovať s potvrdením termínu.',
+      submitIdle: 'Odoslať rezerváciu',
+      pageTitle: 'Rezervácia termínu | STK JP Control Pezinok',
+      pageDescription: 'Online rezervácia termínu pre technickú, emisnú kontrolu alebo kontrolu originality.'
+    },
+    en: {
+      selectedSlotPrefix: 'Selected appointment:',
+      selectedSlotNone: 'none',
+      free: 'available',
+      selected: 'selected ✓',
+      time: 'Time',
+      slots: 'Appointments',
+      noSlots: 'There are currently no available appointments.',
+      closed: 'CLOSED',
+      pickSlotAria: 'Select appointment',
+      busy: 'busy',
+      loadSlotsError: 'Error while loading appointments',
+      loadSlotsFallbackError: 'Failed to load appointments',
+      detailsInspectionType: 'Inspection type',
+      detailsVehicleType: 'Vehicle type',
+      detailsVehicleModel: 'Vehicle make and model',
+      detailsFuelType: 'Fuel type',
+      slotRequired: 'Please select a free appointment in the table first.',
+      submitPending: 'Sending...',
+      submitError: 'Failed to submit reservation',
+      submitSuccess: 'Your reservation has been sent. We will contact you soon to confirm the appointment.',
+      submitIdle: 'Submit reservation',
+      pageTitle: 'Appointment booking | STK JP Control Pezinok',
+      pageDescription: 'Online appointment booking for technical inspection, emission test, or originality check.'
+    }
+  };
+
+  function getLang() {
+    const htmlLang = String(document.documentElement.lang || '').toLowerCase();
+    if (htmlLang.startsWith('en')) return 'en';
+    return localStorage.getItem('language') === 'en' ? 'en' : 'sk';
+  }
+
+  function t(key) {
+    const lang = getLang();
+    return i18nMessages[lang]?.[key] ?? i18nMessages.sk[key] ?? key;
+  }
+
+  function getLocale() {
+    return getLang() === 'en' ? 'en-GB' : 'sk-SK';
+  }
 
   function openBookingModal() {
     if (!bookingModal) return;
@@ -245,8 +312,9 @@ import Footer from '@/components/Footer.astro';
 
   function formatDayLabel(dayKey) {
     const date = new Date(`${dayKey}T00:00:00`);
-    const weekday = new Intl.DateTimeFormat('sk-SK', { weekday: 'short' }).format(date).toUpperCase();
-    const formattedDate = new Intl.DateTimeFormat('sk-SK', {
+    const locale = getLocale();
+    const weekday = new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(date).toUpperCase();
+    const formattedDate = new Intl.DateTimeFormat(locale, {
       day: '2-digit',
       month: '2-digit',
       year: 'numeric'
@@ -256,7 +324,7 @@ import Footer from '@/components/Footer.astro';
 
   function formatTime(value) {
     const date = new Date(value);
-    return new Intl.DateTimeFormat('sk-SK', {
+    return new Intl.DateTimeFormat(getLocale(), {
       timeZone: 'Europe/Bratislava',
       hour: '2-digit',
       minute: '2-digit',
@@ -330,8 +398,37 @@ import Footer from '@/components/Footer.astro';
 
   function updateSelectedSlotLabel(label) {
     if (!selectedSlotText) return;
-    selectedSlotText.textContent = label ? `Vybraný termín: ${label}` : 'Vybraný termín: žiadny';
+    selectedSlotText.textContent = label ? `${t('selectedSlotPrefix')} ${label}` : `${t('selectedSlotPrefix')} ${t('selectedSlotNone')}`;
     selectedSlotText.classList.toggle('selected-slot--active', Boolean(label));
+  }
+
+  function findSelectedSlot() {
+    if (!selectedSlotId) return null;
+    for (const dayMap of slotMatrix.values()) {
+      for (const slot of dayMap.values()) {
+        if (slot?.id === selectedSlotId) return slot;
+      }
+    }
+    return null;
+  }
+
+  function syncLanguageSensitiveUi() {
+    const selectedSlot = findSelectedSlot();
+    if (selectedSlot) {
+      updateSelectedSlotLabel(selectedSlot.label || `${formatDayKey(selectedSlot.startAt)} ${formatTime(selectedSlot.startAt)}`);
+    } else {
+      updateSelectedSlotLabel('');
+    }
+    updateRangeLabel();
+    renderTable();
+    if (submitBtn && !submitBtn.disabled) {
+      submitBtn.textContent = t('submitIdle');
+    }
+    document.title = t('pageTitle');
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', t('pageDescription'));
+    }
   }
 
   function selectSlot(slot, btn) {
@@ -342,11 +439,11 @@ import Footer from '@/components/Footer.astro';
 
     tableBody.querySelectorAll('.booking-slot-btn').forEach((node) => {
       node.classList.remove('is-selected');
-      node.textContent = 'voľné';
+      node.textContent = t('free');
     });
     tableBody.querySelectorAll('.booking-cell').forEach((node) => node.classList.remove('booking-cell--selected'));
     btn.classList.add('is-selected');
-    btn.textContent = 'vybrané ✓';
+    btn.textContent = t('selected');
     const selectedCell = btn.closest('td');
     if (selectedCell) {
       selectedCell.classList.add('booking-cell--selected', 'booking-cell--pulse');
@@ -377,17 +474,17 @@ import Footer from '@/components/Footer.astro';
 
     if (!visibleDays.length || !allTimes.length) {
       const headRow = document.createElement('tr');
-      headRow.innerHTML = '<th>Čas</th><th>Termíny</th>';
+      headRow.innerHTML = `<th>${t('time')}</th><th>${t('slots')}</th>`;
       tableHead.appendChild(headRow);
       const row = document.createElement('tr');
-      row.innerHTML = '<td>--</td><td class="booking-empty-cell">Aktuálne nie sú voľné termíny.</td>';
+      row.innerHTML = `<td>--</td><td class="booking-empty-cell">${t('noSlots')}</td>`;
       tableBody.appendChild(row);
       return;
     }
 
     const headRow = document.createElement('tr');
     const timeTh = document.createElement('th');
-    timeTh.textContent = 'Čas';
+    timeTh.textContent = t('time');
     headRow.appendChild(timeTh);
     visibleDays.forEach((day) => {
       const th = document.createElement('th');
@@ -414,18 +511,18 @@ import Footer from '@/components/Footer.astro';
           td.classList.add('booking-cell--closed');
           const span = document.createElement('span');
           span.className = 'booking-slot-closed';
-          span.textContent = 'ZATVORENÉ';
+          span.textContent = t('closed');
           td.appendChild(span);
         } else if (slot && slot.available !== false) {
           td.classList.add('booking-cell--free');
           td.classList.add('booking-cell--clickable');
           td.tabIndex = 0;
           td.setAttribute('role', 'button');
-          td.setAttribute('aria-label', `Vybrať termín ${formatDayLabel(dayKey)} ${timeKey}`);
+          td.setAttribute('aria-label', `${t('pickSlotAria')} ${formatDayLabel(dayKey)} ${timeKey}`);
           const btn = document.createElement('button');
           btn.type = 'button';
           btn.className = 'booking-slot-btn';
-          btn.textContent = 'voľné';
+          btn.textContent = t('free');
           btn.addEventListener('click', (event) => {
             event.stopPropagation();
             selectSlot(slot, btn);
@@ -439,7 +536,7 @@ import Footer from '@/components/Footer.astro';
           });
           if (selectedSlotId && selectedSlotId === slot.id) {
             btn.classList.add('is-selected');
-            btn.textContent = 'vybrané ✓';
+            btn.textContent = t('selected');
             td.classList.add('booking-cell--selected');
           }
           td.appendChild(btn);
@@ -447,7 +544,7 @@ import Footer from '@/components/Footer.astro';
           td.classList.add('booking-cell--occupied');
           const span = document.createElement('span');
           span.className = 'booking-slot-occupied';
-          span.textContent = 'obsadené';
+          span.textContent = t('busy');
           td.appendChild(span);
         }
 
@@ -479,7 +576,7 @@ import Footer from '@/components/Footer.astro';
       );
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data?.detail || data?.error || 'Chyba pri načítaní termínov');
+        throw new Error(data?.detail || data?.error || t('loadSlotsError'));
       }
 
       const slots = Array.isArray(data?.slots) ? data.slots : [];
@@ -496,7 +593,7 @@ import Footer from '@/components/Footer.astro';
     } catch (error) {
       allTimes = buildDefaultTimeGrid(serviceType);
       renderTable();
-      setMessage(error?.message || 'Nepodarilo sa načítať termíny', false);
+      setMessage(error?.message || t('loadSlotsFallbackError'), false);
     }
   }
 
@@ -525,6 +622,15 @@ import Footer from '@/components/Footer.astro';
   }
 
   loadSlots();
+  syncLanguageSensitiveUi();
+
+  const languageObserver = new MutationObserver(() => {
+    syncLanguageSensitiveUi();
+  });
+  languageObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['lang']
+  });
 
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -536,10 +642,10 @@ import Footer from '@/components/Footer.astro';
     const fuelType = String(form.fuelType?.value || '').trim();
     const baseNote = String(form.note.value || '').trim();
     const extraDetails = [
-      inspectionType ? `Typ kontroly: ${inspectionType}` : null,
-      vehicleType ? `Druh vozidla: ${vehicleType}` : null,
-      vehicleModel ? `Značka a typ vozidla: ${vehicleModel}` : null,
-      fuelType ? `Druh paliva: ${fuelType}` : null
+      inspectionType ? `${t('detailsInspectionType')}: ${inspectionType}` : null,
+      vehicleType ? `${t('detailsVehicleType')}: ${vehicleType}` : null,
+      vehicleModel ? `${t('detailsVehicleModel')}: ${vehicleModel}` : null,
+      fuelType ? `${t('detailsFuelType')}: ${fuelType}` : null
     ].filter(Boolean);
     const combinedNoteRaw = [baseNote, extraDetails.length ? `---\n${extraDetails.join('\n')}` : '']
       .filter(Boolean)
@@ -560,12 +666,12 @@ import Footer from '@/components/Footer.astro';
     };
 
     if (!payload.slotId) {
-      setMessage('Najprv vyberte voľný termín v tabuľke.', false);
+      setMessage(t('slotRequired'), false);
       return;
     }
 
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Odosielam...';
+    submitBtn.textContent = t('submitPending');
 
     try {
       const res = await fetch('/api/booking/create', {
@@ -575,19 +681,19 @@ import Footer from '@/components/Footer.astro';
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        const msg = data?.errors?.join(' ') || data?.detail || data?.error || 'Rezerváciu sa nepodarilo odoslať';
+        const msg = data?.errors?.join(' ') || data?.detail || data?.error || t('submitError');
         throw new Error(msg);
       }
 
       form.reset();
       await loadSlots();
-      setMessage('Rezervácia bola odoslaná. Čoskoro vás budeme kontaktovať s potvrdením termínu.', true);
+      setMessage(t('submitSuccess'), true);
       closeBookingModal();
     } catch (error) {
-      setMessage(error?.message || 'Rezerváciu sa nepodarilo odoslať', false);
+      setMessage(error?.message || t('submitError'), false);
     } finally {
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Odoslať rezerváciu';
+      submitBtn.textContent = t('submitIdle');
     }
   });
 </script>
