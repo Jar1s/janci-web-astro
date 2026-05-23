@@ -86,8 +86,18 @@ export const sk = {
   'team-technicians': 'Technici',
 
   'legislation-hero-title': 'Platná legislatíva',
-  'legislation-hero-subtitle': 'Zákony, vyhlášky a predpisy týkajúce sa technickej kontroly vozidiel',
+  'legislation-hero-subtitle': 'Zákony, vyhlášky a metodické pokyny v oblasti kontroly vozidiel',
   'legislation-page-title': 'Legislatíva',
+  'legislation-law-title': 'Zákon',
+  'legislation-law-text': 'o prevádzke vozidiel v cestnej premávke a o zmene a doplnení niektorých zákonov.',
+  'legislation-decree-title': 'Vykonávacie vyhlášky',
+  'legislation-decree-subtitle': 'Vyhláška Ministerstva dopravy a výstavby Slovenskej republiky:',
+  'legislation-tk-methods-title': 'Metodické pokyny - Technická kontrola',
+  'legislation-tk-methods-subtitle-html':
+    'Metodický pokyn Ministerstva dopravy a výstavby Slovenskej republiky v oblasti <strong>TECHNICKEJ KONTROLY</strong>:',
+  'legislation-ek-methods-title': 'Metodické pokyny - Emisná kontrola',
+  'legislation-ek-methods-subtitle-html':
+    'Metodický pokyn Ministerstva dopravy a výstavby Slovenskej republiky v oblasti <strong>EMISNEJ KONTROLY</strong>:',
 
   'categories-hero-title': 'Kategórie vozidiel',
   'categories-hero-subtitle': 'Podrobné rozdelenie kategórií vozidiel podľa platnej legislatívy',
@@ -321,8 +331,18 @@ export const en = {
   'team-technicians': 'Technicians',
 
   'legislation-hero-title': 'Current legislation',
-  'legislation-hero-subtitle': 'Laws and regulations on vehicle technical inspection',
+  'legislation-hero-subtitle': 'Laws, decrees, and methodological guidelines in the field of vehicle inspection',
   'legislation-page-title': 'Legislation',
+  'legislation-law-title': 'Act',
+  'legislation-law-text': 'on the operation of vehicles in road traffic and on amendments to certain acts.',
+  'legislation-decree-title': 'Implementing decrees',
+  'legislation-decree-subtitle': 'Decree of the Ministry of Transport and Construction of the Slovak Republic:',
+  'legislation-tk-methods-title': 'Methodological guidelines - Technical inspection',
+  'legislation-tk-methods-subtitle-html':
+    'Methodological guideline of the Ministry of Transport and Construction of the Slovak Republic in the field of <strong>TECHNICAL INSPECTION</strong>:',
+  'legislation-ek-methods-title': 'Methodological guidelines - Emission inspection',
+  'legislation-ek-methods-subtitle-html':
+    'Methodological guideline of the Ministry of Transport and Construction of the Slovak Republic in the field of <strong>EMISSION INSPECTION</strong>:',
 
   'categories-hero-title': 'Vehicle categories',
   'categories-hero-subtitle': 'Vehicle categories under current Slovak legislation',

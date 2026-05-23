@@ -289,6 +289,9 @@ const ekMethods = [
     subtitle="Zákony, vyhlášky a metodické pokyny v oblasti kontroly vozidiel"
     ctaText="KONTAKTOVAŤ NÁS"
     ctaHref="/kontakt"
+    translateTitleKey="legislation-hero-title"
+    translateSubtitleKey="legislation-hero-subtitle"
+    translateCtaKey="contact-hero-title"
   />
 
   <!-- Section 1: Zákon -->
@@ -300,7 +303,7 @@ const ekMethods = [
       </div>
       <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200 shadow-sm">
         <p class="text-slate-700 text-lg leading-relaxed text-center font-medium">
-          <a href={law.href} class={linkClass} target="_blank" rel="noopener noreferrer">{law.label}</a> {law.text}
+          <a href={law.href} class={linkClass} target="_blank" rel="noopener noreferrer">{law.label}</a> <span data-translate="legislation-law-text">{law.text}</span>
         </p>
       </div>
     </div>
@@ -312,7 +315,7 @@ const ekMethods = [
       <div class="text-center mb-10">
         <h2 class="text-3xl font-bold text-primary mb-4" data-translate="legislation-decree-title">Vykonávacie vyhlášky</h2>
         <div class="w-16 h-1 bg-primary mx-auto rounded-full"></div>
-        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Vyhláška Ministerstva dopravy a výstavby Slovenskej republiky:</p>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto" data-translate="legislation-decree-subtitle">Vyhláška Ministerstva dopravy a výstavby Slovenskej republiky:</p>
       </div>
       <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
         <ul class="space-y-3">
@@ -339,7 +342,7 @@ const ekMethods = [
       <div class="text-center mb-10">
         <h2 class="text-3xl font-bold text-primary mb-4" data-translate="legislation-tk-methods-title">Metodické pokyny - Technická kontrola</h2>
         <div class="w-16 h-1 bg-primary mx-auto rounded-full"></div>
-        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Metodický pokyn Ministerstva dopravy a výstavby Slovenskej republiky v oblasti <strong>TECHNICKEJ KONTROLY</strong>:</p>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto" data-translate="legislation-tk-methods-subtitle-html" data-translate-html>Metodický pokyn Ministerstva dopravy a výstavby Slovenskej republiky v oblasti <strong>TECHNICKEJ KONTROLY</strong>:</p>
       </div>
       <div class="bg-slate-50 rounded-2xl p-8 border border-slate-200 shadow-sm">
         <ul class="space-y-3">
@@ -363,7 +366,7 @@ const ekMethods = [
       <div class="text-center mb-10">
         <h2 class="text-3xl font-bold text-primary mb-4" data-translate="legislation-ek-methods-title">Metodické pokyny - Emisná kontrola</h2>
         <div class="w-16 h-1 bg-primary mx-auto rounded-full"></div>
-        <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Metodický pokyn Ministerstva dopravy a výstavby Slovenskej republiky v oblasti <strong>EMISNEJ KONTROLY</strong>:</p>
+        <p class="text-slate-500 mt-4 max-w-2xl mx-auto" data-translate="legislation-ek-methods-subtitle-html" data-translate-html>Metodický pokyn Ministerstva dopravy a výstavby Slovenskej republiky v oblasti <strong>EMISNEJ KONTROLY</strong>:</p>
       </div>
       <div class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
         <ul class="space-y-3">
