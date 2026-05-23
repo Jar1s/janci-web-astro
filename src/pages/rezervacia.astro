@@ -529,12 +529,16 @@ import Footer from '@/components/Footer.astro';
     width: 320px;
     max-width: 100%;
     align-self: start;
+    display: grid;
+    grid-template-rows: 1.35rem 48px;
+    gap: 0.4rem;
   }
 
   .booking-toolbar .booking-field > span {
-    min-height: 1.3rem;
-    display: inline-flex;
+    min-height: 1.35rem;
+    display: flex;
     align-items: center;
+    margin: 0;
   }
 
   .booking-scheduler {
@@ -880,6 +884,7 @@ import Footer from '@/components/Footer.astro';
   .booking-toolbar .booking-field select {
     height: 48px;
     min-height: 48px;
+    margin: 0;
   }
 
   .booking-field input:focus-visible,
