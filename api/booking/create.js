@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { loadKvAuthCorsValidation } from '../deps.js';
-import { createExternalBooking } from '../../lib/booking-provider.js';
+import { createExternalBooking, getAvailableSlots } from '../../lib/booking-provider.js';
 
 export default async function handler(req, res) {
   const { getCorsHeaders, handleCorsPreflight, validateBookingCreate, upsertBookingRequest } =
@@ -38,6 +38,32 @@ export default async function handler(req, res) {
     note: payload.note ? String(payload.note).trim() : null,
     clientRequestId
   };
+
+  try {
+    const slotProbeFrom = normalizedPayload.slotStartAt && !Number.isNaN(Date.parse(normalizedPayload.slotStartAt))
+      ? normalizedPayload.slotStartAt
+      : new Date().toISOString();
+    const { slots } = await getAvailableSlots({
+      serviceType: normalizedPayload.serviceType,
+      fromDate: slotProbeFrom,
+      days: 2
+    });
+    const matchedSlot = Array.isArray(slots)
+      ? slots.find((slot) => slot?.id === normalizedPayload.slotId || slot?.startAt === normalizedPayload.slotStartAt)
+      : null;
+    if (!matchedSlot || matchedSlot.available === false) {
+      return res.status(409).json({
+        error: 'Vybraný termín už nie je dostupný',
+        detail: 'Obnovte tabuľku termínov a vyberte si prosím iný voľný čas.'
+      });
+    }
+  } catch (error) {
+    const statusCode = error?.status === 503 ? 503 : 502;
+    return res.status(statusCode).json({
+      error: 'Nepodarilo sa overiť dostupnosť termínu',
+      detail: error?.message || 'Neznáma chyba'
+    });
+  }
 
   await upsertBookingRequest({
     clientRequestId,
@@ -94,7 +120,8 @@ export default async function handler(req, res) {
       errorMessage: error?.message || 'Neznáma chyba'
     });
 
-    return res.status(502).json({
+    const statusCode = error?.status === 503 ? 503 : 502;
+    return res.status(statusCode).json({
       error: 'Rezerváciu sa nepodarilo odoslať',
       detail: error?.message || 'Neznáma chyba',
       requestId: clientRequestId

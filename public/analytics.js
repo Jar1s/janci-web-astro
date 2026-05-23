@@ -1,6 +1,16 @@
 (function () {
   'use strict';
 
+  var consent = null;
+  try {
+    consent = localStorage.getItem('cookie-consent');
+  } catch (_) {
+    consent = null;
+  }
+  if (consent !== 'accepted') {
+    return;
+  }
+
   var path = window.location.pathname || '/';
   if (!path.startsWith('/') || path.indexOf('/admin') === 0 || path.indexOf('/api') === 0) {
     return;

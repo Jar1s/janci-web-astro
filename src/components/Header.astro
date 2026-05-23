@@ -87,7 +87,14 @@ const forceScrolledHeader = currentPath === '/rezervacia';
     <ul class="nav-menu nav-menu-right" role="list">
       <!-- Informácie dropdown -->
       <li class="info-dropdown" id="info-dropdown">
-        <button class="nav-link info-dropdown__btn" id="info-dropdown-btn" type="button" data-translate="nav-info">
+        <button
+          class="nav-link info-dropdown__btn"
+          id="info-dropdown-btn"
+          type="button"
+          data-translate="nav-info"
+          aria-expanded="false"
+          aria-controls="info-dropdown-menu"
+        >
           INFORMÁCIE
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" class="info-dropdown__arrow"><polyline points="6 9 12 15 18 9"></polyline></svg>
         </button>
@@ -170,7 +177,7 @@ const forceScrolledHeader = currentPath === '/rezervacia';
               class:list={[
                 'mobile-nav-link',
                 { active: currentPath === item.href },
-                { 'mobile-btn-rezervovat': item.href.includes('rezervovat') }
+                { 'mobile-btn-rezervovat': item.href.includes('rezervacia') }
               ]}
               data-translate={item.key}
             >
@@ -262,12 +269,28 @@ const forceScrolledHeader = currentPath === '/rezervacia';
   var infoDropdown = document.getElementById('info-dropdown');
   var infoBtn = document.getElementById('info-dropdown-btn');
   if (infoBtn && infoDropdown) {
+    var infoMenu = document.getElementById('info-dropdown-menu');
+    function setInfoOpen(nextOpen) {
+      infoDropdown.classList.toggle('open', nextOpen);
+      infoBtn.setAttribute('aria-expanded', nextOpen ? 'true' : 'false');
+      if (nextOpen && infoMenu) {
+        infoMenu.querySelector('.info-dropdown__link')?.focus();
+      }
+    }
     infoBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      infoDropdown.classList.toggle('open');
+      setInfoOpen(!infoDropdown.classList.contains('open'));
+    });
+    infoBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        setInfoOpen(true);
+      } else if (e.key === 'Escape') {
+        setInfoOpen(false);
+      }
     });
     document.addEventListener('click', () => {
-      infoDropdown.classList.remove('open');
+      setInfoOpen(false);
     });
   }
 
@@ -337,8 +360,25 @@ document.addEventListener('astro:after-swap', function() {
   var dd = document.getElementById('info-dropdown');
   var db = document.getElementById('info-dropdown-btn');
   if (db && dd) {
-    db.addEventListener('click', function(e) { e.stopPropagation(); dd.classList.toggle('open'); });
-    document.addEventListener('click', function() { dd.classList.remove('open'); });
+    var dm = document.getElementById('info-dropdown-menu');
+    function toggleInfo(open) {
+      dd.classList.toggle('open', open);
+      db.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if (open && dm) dm.querySelector('.info-dropdown__link')?.focus();
+    }
+    db.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleInfo(!dd.classList.contains('open'));
+    });
+    db.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleInfo(true);
+      } else if (e.key === 'Escape') {
+        toggleInfo(false);
+      }
+    });
+    document.addEventListener('click', function() { toggleInfo(false); });
   }
 });
 </script>

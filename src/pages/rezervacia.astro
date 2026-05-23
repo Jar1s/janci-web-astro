@@ -188,6 +188,7 @@ import Footer from '@/components/Footer.astro';
   const bookingModal = document.getElementById('booking-modal');
   const bookingModalClose = document.getElementById('booking-modal-close');
   const bookingModalBackdrop = document.getElementById('booking-modal-backdrop');
+  const bookingModalDialog = bookingModal?.querySelector('.booking-modal__dialog');
   const tableHead = document.getElementById('booking-table-head');
   const tableBody = document.getElementById('booking-table-body');
 
@@ -203,6 +204,7 @@ import Footer from '@/components/Footer.astro';
   let slotMatrix = new Map();
   let currentStartDate = '';
   let selectedSlotId = null;
+  let lastFocusedSlotButton = null;
   const i18nMessages = {
     sk: {
       selectedSlotPrefix: 'Vybraný termín:',
@@ -226,6 +228,8 @@ import Footer from '@/components/Footer.astro';
       submitError: 'Rezerváciu sa nepodarilo odoslať',
       submitSuccess: 'Rezervácia bola odoslaná. Čoskoro vás budeme kontaktovať s potvrdením termínu.',
       submitIdle: 'Odoslať rezerváciu',
+      koPhoneOnly: 'Kontrola originality (KO) je dostupná iba telefonicky na <a href="tel:+421948888088">0948 888 088</a>.',
+      slotsUnavailablePhone: 'Online termíny sú dočasne nedostupné. Zavolajte prosím na <a href="tel:+421948888088">0948 888 088</a>.',
       pageTitle: 'Rezervácia termínu | STK JP Control Pezinok',
       pageDescription: 'Online rezervácia termínu pre technickú, emisnú kontrolu alebo kontrolu originality.'
     },
@@ -251,6 +255,8 @@ import Footer from '@/components/Footer.astro';
       submitError: 'Failed to submit reservation',
       submitSuccess: 'Your reservation has been sent. We will contact you soon to confirm the appointment.',
       submitIdle: 'Submit reservation',
+      koPhoneOnly: 'Originality check (KO) can only be booked by phone at <a href="tel:+421948888088">0948 888 088</a>.',
+      slotsUnavailablePhone: 'Online appointments are temporarily unavailable. Please call <a href="tel:+421948888088">0948 888 088</a>.',
       pageTitle: 'Appointment booking | STK JP Control Pezinok',
       pageDescription: 'Online appointment booking for technical inspection, emission test, or originality check.'
     }
@@ -290,11 +296,18 @@ import Footer from '@/components/Footer.astro';
     bookingModal.hidden = true;
     bookingModal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('booking-modal-open');
+    if (lastFocusedSlotButton) {
+      lastFocusedSlotButton.focus();
+    }
   }
 
-  function setMessage(text, ok) {
+  function setMessage(text, ok, allowHtml = false) {
     if (!message) return;
-    message.textContent = text;
+    if (allowHtml) {
+      message.innerHTML = text;
+    } else {
+      message.textContent = text;
+    }
     message.className = ok ? 'booking-msg booking-msg--ok' : 'booking-msg booking-msg--error';
     message.hidden = false;
   }
@@ -432,6 +445,7 @@ import Footer from '@/components/Footer.astro';
   }
 
   function selectSlot(slot, btn) {
+    lastFocusedSlotButton = btn;
     selectedSlotId = slot.id;
     if (slotInput) slotInput.value = slot.id;
     if (slotStartInput) slotStartInput.value = slot.startAt || '';
@@ -516,8 +530,6 @@ import Footer from '@/components/Footer.astro';
         } else if (slot && slot.available !== false) {
           td.classList.add('booking-cell--free');
           td.classList.add('booking-cell--clickable');
-          td.tabIndex = 0;
-          td.setAttribute('role', 'button');
           td.setAttribute('aria-label', `${t('pickSlotAria')} ${formatDayLabel(dayKey)} ${timeKey}`);
           const btn = document.createElement('button');
           btn.type = 'button';
@@ -528,12 +540,6 @@ import Footer from '@/components/Footer.astro';
             selectSlot(slot, btn);
           });
           td.addEventListener('click', () => selectSlot(slot, btn));
-          td.addEventListener('keydown', (event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-              event.preventDefault();
-              selectSlot(slot, btn);
-            }
-          });
           if (selectedSlotId && selectedSlotId === slot.id) {
             btn.classList.add('is-selected');
             btn.textContent = t('selected');
@@ -576,6 +582,9 @@ import Footer from '@/components/Footer.astro';
       );
       const data = await res.json();
       if (!res.ok) {
+        if (res.status === 503) {
+          throw new Error('__PHONE_FALLBACK__');
+        }
         throw new Error(data?.detail || data?.error || t('loadSlotsError'));
       }
 
@@ -593,7 +602,11 @@ import Footer from '@/components/Footer.astro';
     } catch (error) {
       allTimes = buildDefaultTimeGrid(serviceType);
       renderTable();
-      setMessage(error?.message || t('loadSlotsFallbackError'), false);
+      if (error?.message === '__PHONE_FALLBACK__') {
+        setMessage(t('slotsUnavailablePhone'), false, true);
+      } else {
+        setMessage(error?.message || t('loadSlotsFallbackError'), false);
+      }
     }
   }
 
@@ -614,6 +627,22 @@ import Footer from '@/components/Footer.astro';
   bookingModalBackdrop?.addEventListener('click', closeBookingModal);
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closeBookingModal();
+  });
+  bookingModalDialog?.addEventListener('keydown', (event) => {
+    if (event.key !== 'Tab' || bookingModal?.hidden) return;
+    const focusable = bookingModalDialog.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   });
 
   if (rangeStartInput) {
@@ -669,6 +698,10 @@ import Footer from '@/components/Footer.astro';
       setMessage(t('slotRequired'), false);
       return;
     }
+    if (payload.serviceType === 'ko') {
+      setMessage(t('koPhoneOnly'), false, true);
+      return;
+    }
 
     submitBtn.disabled = true;
     submitBtn.textContent = t('submitPending');
@@ -681,6 +714,9 @@ import Footer from '@/components/Footer.astro';
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
+        if (res.status === 503) {
+          throw new Error('__PHONE_FALLBACK__');
+        }
         const msg = data?.errors?.join(' ') || data?.detail || data?.error || t('submitError');
         throw new Error(msg);
       }
@@ -690,7 +726,11 @@ import Footer from '@/components/Footer.astro';
       setMessage(t('submitSuccess'), true);
       closeBookingModal();
     } catch (error) {
-      setMessage(error?.message || t('submitError'), false);
+      if (error?.message === '__PHONE_FALLBACK__') {
+        setMessage(t('slotsUnavailablePhone'), false, true);
+      } else {
+        setMessage(error?.message || t('submitError'), false);
+      }
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = t('submitIdle');
@@ -1229,6 +1269,13 @@ import Footer from '@/components/Footer.astro';
 
   .booking-msg--error {
     color: #b91c1c;
+  }
+
+  .booking-msg a {
+    color: inherit;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
   .booking-submit {

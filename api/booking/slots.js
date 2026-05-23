@@ -39,7 +39,8 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ slots, source });
   } catch (error) {
-    return res.status(502).json({
+    const statusCode = error?.status === 503 ? 503 : 502;
+    return res.status(statusCode).json({
       error: 'Nepodarilo sa načítať voľné termíny',
       detail: error?.message || 'Neznáma chyba'
     });
