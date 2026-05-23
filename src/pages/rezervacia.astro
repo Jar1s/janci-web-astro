@@ -506,8 +506,14 @@ import Footer from '@/components/Footer.astro';
     display: grid;
     grid-template-columns: repeat(2, minmax(220px, 320px));
     justify-content: center;
+    align-items: end;
     gap: 0.8rem;
     margin-bottom: 1rem;
+  }
+
+  .booking-toolbar .booking-field {
+    width: 320px;
+    max-width: 100%;
   }
 
   .booking-scheduler {
@@ -835,6 +841,7 @@ import Footer from '@/components/Footer.astro';
   .booking-field input,
   .booking-field select,
   .booking-field textarea {
+    box-sizing: border-box;
     border: 1px solid #cbd5e1;
     border-radius: 8px;
     padding: 0.62rem 0.72rem;
@@ -842,6 +849,11 @@ import Footer from '@/components/Footer.astro';
     font-family: inherit;
     width: 100%;
     transition: border-color 0.14s ease, box-shadow 0.14s ease;
+  }
+
+  .booking-toolbar .booking-field input,
+  .booking-toolbar .booking-field select {
+    min-height: 48px;
   }
 
   .booking-field input:focus-visible,
