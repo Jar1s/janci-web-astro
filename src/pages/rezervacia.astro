@@ -17,6 +17,10 @@ import Footer from '@/components/Footer.astro';
       <header class="booking-head">
         <h2>Rezervácia termínu</h2>
         <p>Vyberte službu, kliknite na voľný termín v tabuľke a vyplňte kontaktné údaje.</p>
+        <p class="booking-ko-notice">
+          <strong>REZERVOVANIE NA KONTROLU ORIGINALITY (KO) JE MOŽNÉ IBA TELEFONICKY NA <a href="tel:+421948888088">0948 888 088</a></strong>
+          <span>Vyberte termín, ktorý Vám vyhovuje, vyplne formulár a odošlite. Budeme Vás späťne kontaktovať telefonicky, hneď ako to bude možné.</span>
+        </p>
       </header>
 
       <form id="booking-form" class="booking-form">
@@ -73,7 +77,25 @@ import Footer from '@/components/Footer.astro';
 
             <div class="booking-grid">
               <label class="booking-field">
-                <span>Meno a priezvisko *</span>
+                <span>Kontrola *</span>
+                <select id="serviceTypeModal" name="serviceTypeModal" disabled>
+                  <option value="tk_ek">EK+TK</option>
+                  <option value="ko">KO</option>
+                </select>
+              </label>
+
+              <label class="booking-field">
+                <span>Typ kontroly *</span>
+                <select id="inspectionType" name="inspectionType" required>
+                  <option value="pravidelna">pravidelná</option>
+                  <option value="opakovana">opakovaná</option>
+                  <option value="administrativna">administratívna</option>
+                  <option value="zvlastna">zvláštna</option>
+                </select>
+              </label>
+
+              <label class="booking-field booking-field--full">
+                <span>Meno a priezvisko/Názov firmy *</span>
                 <input id="name" name="name" required minlength="2" maxlength="120" />
               </label>
 
@@ -90,6 +112,37 @@ import Footer from '@/components/Footer.astro';
               <label class="booking-field">
                 <span>EČV</span>
                 <input id="vehiclePlate" name="vehiclePlate" maxlength="20" />
+              </label>
+
+              <label class="booking-field">
+                <span>Druh vozidla</span>
+                <select id="vehicleType" name="vehicleType">
+                  <option value="">vyberte druh vozidla</option>
+                  <option value="osobne">osobné vozidlo</option>
+                  <option value="nakladne">nákladné vozidlo</option>
+                  <option value="motocykel">motocykel</option>
+                  <option value="pripojne">prípojné vozidlo</option>
+                  <option value="ine">iné</option>
+                </select>
+              </label>
+
+              <label class="booking-field booking-field--full">
+                <span>Značka a typ vozidla</span>
+                <input id="vehicleModel" name="vehicleModel" maxlength="120" />
+              </label>
+
+              <label class="booking-field">
+                <span>Druh paliva</span>
+                <select id="fuelType" name="fuelType">
+                  <option value="">vyberte druh paliva</option>
+                  <option value="benzin">benzín</option>
+                  <option value="nafta">nafta</option>
+                  <option value="lpg">LPG</option>
+                  <option value="cng">CNG</option>
+                  <option value="hybrid">hybrid</option>
+                  <option value="elektro">elektro</option>
+                  <option value="ine">iné</option>
+                </select>
               </label>
 
               <label class="booking-field">
@@ -127,6 +180,7 @@ import Footer from '@/components/Footer.astro';
   const slotStartInput = document.getElementById('slotStartAt');
   const serviceSelect = document.getElementById('serviceType');
   const rangeStartInput = document.getElementById('rangeStartDate');
+  const serviceTypeModal = document.getElementById('serviceTypeModal');
   const prevRangeBtn = document.getElementById('booking-prev-range');
   const nextRangeBtn = document.getElementById('booking-next-range');
   const currentRangeLabel = document.getElementById('booking-current-range');
@@ -152,6 +206,9 @@ import Footer from '@/components/Footer.astro';
 
   function openBookingModal() {
     if (!bookingModal) return;
+    if (serviceTypeModal && serviceSelect) {
+      serviceTypeModal.value = serviceSelect.value || 'tk_ek';
+    }
     bookingModal.hidden = false;
     bookingModal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('booking-modal-open');
@@ -473,6 +530,23 @@ import Footer from '@/components/Footer.astro';
     event.preventDefault();
     if (!form || !submitBtn || !slotInput || !slotStartInput) return;
     message.hidden = true;
+    const inspectionType = String(form.inspectionType?.value || '').trim();
+    const vehicleType = String(form.vehicleType?.value || '').trim();
+    const vehicleModel = String(form.vehicleModel?.value || '').trim();
+    const fuelType = String(form.fuelType?.value || '').trim();
+    const baseNote = String(form.note.value || '').trim();
+    const extraDetails = [
+      inspectionType ? `Typ kontroly: ${inspectionType}` : null,
+      vehicleType ? `Druh vozidla: ${vehicleType}` : null,
+      vehicleModel ? `Značka a typ vozidla: ${vehicleModel}` : null,
+      fuelType ? `Druh paliva: ${fuelType}` : null
+    ].filter(Boolean);
+    const combinedNoteRaw = [baseNote, extraDetails.length ? `---\n${extraDetails.join('\n')}` : '']
+      .filter(Boolean)
+      .join('\n\n')
+      .trim();
+    const combinedNote = combinedNoteRaw.slice(0, 1000);
+
     const payload = {
       serviceType: serviceSelect?.value || 'tk_ek',
       slotId: slotInput.value,
@@ -482,7 +556,7 @@ import Footer from '@/components/Footer.astro';
       email: String(form.email.value || '').trim(),
       vehiclePlate: String(form.vehiclePlate.value || '').trim(),
       vehicleVin: String(form.vehicleVin.value || '').trim(),
-      note: String(form.note.value || '').trim()
+      note: combinedNote
     };
 
     if (!payload.slotId) {
@@ -545,6 +619,36 @@ import Footer from '@/components/Footer.astro';
     max-width: 820px;
     color: #334155;
     line-height: 1.65;
+  }
+
+  .booking-ko-notice {
+    margin-top: 0.85rem;
+    max-width: 1020px;
+    background: #f8d7da;
+    color: #7f1d1d;
+    border: 1px solid #f1b8be;
+    border-radius: 10px;
+    padding: 0.7rem 0.85rem;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    text-align: center;
+  }
+
+  .booking-ko-notice strong {
+    display: block;
+    margin-bottom: 0.1rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+  }
+
+  .booking-ko-notice a {
+    color: #0b73da;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .booking-ko-notice span {
+    display: block;
   }
 
   .booking-form {

@@ -98,6 +98,22 @@ export const sk = {
   'legislation-ek-methods-title': 'Metodické pokyny - Emisná kontrola',
   'legislation-ek-methods-subtitle-html':
     'Metodický pokyn Ministerstva dopravy a výstavby Slovenskej republiky v oblasti <strong>EMISNEJ KONTROLY</strong>:',
+  'legislation-decree-131-text': 'ktorou sa ustanovujú podrobnosti v oblasti schvaľovania vozidiel,',
+  'legislation-decree-132-text':
+    'ktorou sa ustanovujú podrobnosti o technických požiadavkách na niektoré vozidlá, systémy, komponenty a samostatné technické jednotky na účely schvaľovania,',
+  'legislation-decree-133-text': 'ktorou sa ustanovujú podrobnosti o dokladoch vozidla,',
+  'legislation-decree-134-text': 'ktorou sa ustanovujú podrobnosti o prevádzke vozidiel v cestnej premávke,',
+  'legislation-decree-135-text': 'ktorou sa ustanovujú podrobnosti o cestnej technickej kontrole,',
+  'legislation-decree-136-text': 'ktorou sa ustanovujú podrobnosti o technickej službe overovania,',
+  'legislation-decree-137-text': 'ktorou sa ustanovujú podrobnosti v oblasti',
+  'legislation-decree-137-highlight': 'TECHNICKEJ KONTROLY',
+  'legislation-decree-138-text': 'ktorou sa ustanovujú podrobnosti v oblasti',
+  'legislation-decree-138-highlight': 'EMISNEJ KONTROLY',
+  'legislation-decree-139-text': 'ktorou sa ustanovujú podrobnosti v oblasti',
+  'legislation-decree-139-highlight': 'KONTROLY ORIGINALITY',
+  'legislation-decree-140-text': 'ktorou sa ustanovujú podrobnosti v oblasti montáže plynových zariadení,',
+  'legislation-decree-141-text':
+    'ktorou sa ustanovujú podrobnosti o štátnom odbornom dozore a odbornom dozore technických služieb na úseku prevádzky vozidiel v cestnej premávke.',
 
   'categories-hero-title': 'Kategórie vozidiel',
   'categories-hero-subtitle': 'Podrobné rozdelenie kategórií vozidiel podľa platnej legislatívy',
@@ -343,6 +359,22 @@ export const en = {
   'legislation-ek-methods-title': 'Methodological guidelines - Emission inspection',
   'legislation-ek-methods-subtitle-html':
     'Methodological guideline of the Ministry of Transport and Construction of the Slovak Republic in the field of <strong>EMISSION INSPECTION</strong>:',
+  'legislation-decree-131-text': 'which sets out details in the field of vehicle approval,',
+  'legislation-decree-132-text':
+    'which sets out details on technical requirements for certain vehicles, systems, components, and separate technical units for approval purposes,',
+  'legislation-decree-133-text': 'which sets out details on vehicle documents,',
+  'legislation-decree-134-text': 'which sets out details on the operation of vehicles in road traffic,',
+  'legislation-decree-135-text': 'which sets out details on roadside technical inspection,',
+  'legislation-decree-136-text': 'which sets out details on technical verification service,',
+  'legislation-decree-137-text': 'which sets out details in the field of',
+  'legislation-decree-137-highlight': 'TECHNICAL INSPECTION',
+  'legislation-decree-138-text': 'which sets out details in the field of',
+  'legislation-decree-138-highlight': 'EMISSION INSPECTION',
+  'legislation-decree-139-text': 'which sets out details in the field of',
+  'legislation-decree-139-highlight': 'ORIGINALITY INSPECTION',
+  'legislation-decree-140-text': 'which sets out details in the field of gas equipment installation,',
+  'legislation-decree-141-text':
+    'which sets out details on state professional supervision and professional supervision of technical services in the area of vehicle operation in road traffic.',
 
   'categories-hero-title': 'Vehicle categories',
   'categories-hero-subtitle': 'Vehicle categories under current Slovak legislation',

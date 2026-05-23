@@ -19,59 +19,73 @@ const decrees = [
     label: 'č. 131/2018 Z. z.',
     href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/131/20230102',
     text: 'ktorou sa ustanovujú podrobnosti v oblasti schvaľovania vozidiel,',
+    textKey: 'legislation-decree-131-text',
   },
   {
     label: 'č. 132/2018 Z. z.',
     href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/132/20200901',
     text: 'ktorou sa ustanovujú podrobnosti o technických požiadavkách na niektoré vozidlá, systémy, komponenty a samostatné technické jednotky na účely schvaľovania,',
+    textKey: 'legislation-decree-132-text',
   },
   {
     label: 'č. 133/2018 Z. z.',
     href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/133/20241015',
     text: 'ktorou sa ustanovujú podrobnosti o dokladoch vozidla,',
+    textKey: 'legislation-decree-133-text',
   },
   {
     label: 'č. 134/2018 Z. z.',
     href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/134/20250101',
     text: 'ktorou sa ustanovujú podrobnosti o prevádzke vozidiel v cestnej premávke,',
+    textKey: 'legislation-decree-134-text',
   },
   {
     label: 'č. 135/2018 Z. z.',
     href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/135/20220927',
     text: 'ktorou sa ustanovujú podrobnosti o cestnej technickej kontrole,',
+    textKey: 'legislation-decree-135-text',
   },
   {
     label: 'č. 136/2018 Z. z.',
     href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/136/20180520',
     text: 'ktorou sa ustanovujú podrobnosti o technickej službe overovania,',
+    textKey: 'legislation-decree-136-text',
   },
   {
     label: 'č. 137/2018 Z. z.',
     href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/137/20240701',
     text: 'ktorou sa ustanovujú podrobnosti v oblasti',
+    textKey: 'legislation-decree-137-text',
     highlight: 'TECHNICKEJ KONTROLY',
+    highlightKey: 'legislation-decree-137-highlight',
   },
   {
     label: 'č. 138/2018 Z. z.',
     href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/138/20220927',
     text: 'ktorou sa ustanovujú podrobnosti v oblasti',
+    textKey: 'legislation-decree-138-text',
     highlight: 'EMISNEJ KONTROLY',
+    highlightKey: 'legislation-decree-138-highlight',
   },
   {
     label: 'č. 139/2018 Z. z.',
     href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/139/20211231',
     text: 'ktorou sa ustanovujú podrobnosti v oblasti',
+    textKey: 'legislation-decree-139-text',
     highlight: 'KONTROLY ORIGINALITY',
+    highlightKey: 'legislation-decree-139-highlight',
   },
   {
     label: 'č. 140/2018 Z. z.',
     href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/140/20210301',
     text: 'ktorou sa ustanovujú podrobnosti v oblasti montáže plynových zariadení,',
+    textKey: 'legislation-decree-140-text',
   },
   {
     label: 'č. 141/2018 Z. z.',
     href: 'https://www.slov-lex.sk/ezbierky/pravne-predpisy/SK/ZZ/2018/141/20180520',
     text: 'ktorou sa ustanovujú podrobnosti o štátnom odbornom dozore a odbornom dozore technických služieb na úseku prevádzky vozidiel v cestnej premávke.',
+    textKey: 'legislation-decree-141-text',
   },
 ];
 
@@ -326,8 +340,8 @@ const ekMethods = [
             ]}>
               <span class="text-primary mt-1 shrink-0">&#9679;</span>
               <span>
-                <a href={decree.href} class={linkClass} target="_blank" rel="noopener noreferrer">{decree.label}</a>, {decree.text}
-                {decree.highlight ? <> <strong class="text-primary">{decree.highlight}</strong>,</> : null}
+                <a href={decree.href} class={linkClass} target="_blank" rel="noopener noreferrer">{decree.label}</a>, <span data-translate={decree.textKey}>{decree.text}</span>
+                {decree.highlight ? <> <strong class="text-primary" data-translate={decree.highlightKey}>{decree.highlight}</strong>,</> : null}
               </span>
             </li>
           ))}
