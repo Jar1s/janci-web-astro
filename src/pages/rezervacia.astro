@@ -61,47 +61,57 @@ import Footer from '@/components/Footer.astro';
         <input type="hidden" id="slotId" name="slotId" />
         <input type="hidden" id="slotStartAt" name="slotStartAt" />
 
-        <p id="selected-slot" class="selected-slot">Vybraný termín: žiadny</p>
+        <div id="booking-modal" class="booking-modal" hidden aria-hidden="true">
+          <div id="booking-modal-backdrop" class="booking-modal__backdrop"></div>
+          <div class="booking-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="booking-modal-title">
+            <div class="booking-modal__head">
+              <h3 id="booking-modal-title">Dokončenie rezervácie</h3>
+              <button id="booking-modal-close" type="button" class="booking-modal__close" aria-label="Zavrieť formulár">×</button>
+            </div>
 
-        <div class="booking-grid">
-          <label class="booking-field">
-            <span>Meno a priezvisko *</span>
-            <input id="name" name="name" required minlength="2" maxlength="120" />
-          </label>
+            <p id="selected-slot" class="selected-slot">Vybraný termín: žiadny</p>
 
-          <label class="booking-field">
-            <span>Telefón *</span>
-            <input id="phone" name="phone" required minlength="6" maxlength="32" />
-          </label>
+            <div class="booking-grid">
+              <label class="booking-field">
+                <span>Meno a priezvisko *</span>
+                <input id="name" name="name" required minlength="2" maxlength="120" />
+              </label>
 
-          <label class="booking-field">
-            <span>E-mail</span>
-            <input id="email" name="email" type="email" maxlength="180" />
-          </label>
+              <label class="booking-field">
+                <span>Telefón *</span>
+                <input id="phone" name="phone" required minlength="6" maxlength="32" />
+              </label>
 
-          <label class="booking-field">
-            <span>EČV</span>
-            <input id="vehiclePlate" name="vehiclePlate" maxlength="20" />
-          </label>
+              <label class="booking-field">
+                <span>E-mail</span>
+                <input id="email" name="email" type="email" maxlength="180" />
+              </label>
 
-          <label class="booking-field">
-            <span>VIN</span>
-            <input id="vehicleVin" name="vehicleVin" maxlength="32" />
-          </label>
+              <label class="booking-field">
+                <span>EČV</span>
+                <input id="vehiclePlate" name="vehiclePlate" maxlength="20" />
+              </label>
 
-          <label class="booking-field booking-field--full">
-            <span>Poznámka</span>
-            <textarea id="note" name="note" maxlength="1000" rows="4"></textarea>
-          </label>
+              <label class="booking-field">
+                <span>VIN</span>
+                <input id="vehicleVin" name="vehicleVin" maxlength="32" />
+              </label>
+
+              <label class="booking-field booking-field--full">
+                <span>Poznámka</span>
+                <textarea id="note" name="note" maxlength="1000" rows="4"></textarea>
+              </label>
+            </div>
+
+            <p class="booking-note">
+              Pri kontrole originality (KO) odporúčame po odoslaní rezervácie počkať na telefonické potvrdenie.
+            </p>
+
+            <p id="booking-msg" class="booking-msg" hidden></p>
+
+            <button id="booking-submit" type="submit" class="booking-submit">Odoslať rezerváciu</button>
+          </div>
         </div>
-
-        <p class="booking-note">
-          Pri kontrole originality (KO) odporúčame po odoslaní rezervácie počkať na telefonické potvrdenie.
-        </p>
-
-        <p id="booking-msg" class="booking-msg" hidden></p>
-
-        <button id="booking-submit" type="submit" class="booking-submit">Odoslať rezerváciu</button>
       </form>
     </div>
   </section>
@@ -121,6 +131,9 @@ import Footer from '@/components/Footer.astro';
   const nextRangeBtn = document.getElementById('booking-next-range');
   const currentRangeLabel = document.getElementById('booking-current-range');
   const selectedSlotText = document.getElementById('selected-slot');
+  const bookingModal = document.getElementById('booking-modal');
+  const bookingModalClose = document.getElementById('booking-modal-close');
+  const bookingModalBackdrop = document.getElementById('booking-modal-backdrop');
   const tableHead = document.getElementById('booking-table-head');
   const tableBody = document.getElementById('booking-table-body');
 
@@ -136,6 +149,24 @@ import Footer from '@/components/Footer.astro';
   let slotMatrix = new Map();
   let currentStartDate = '';
   let selectedSlotId = null;
+
+  function openBookingModal() {
+    if (!bookingModal) return;
+    bookingModal.hidden = false;
+    bookingModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('booking-modal-open');
+    window.setTimeout(() => {
+      const nameInput = document.getElementById('name');
+      if (nameInput) nameInput.focus();
+    }, 0);
+  }
+
+  function closeBookingModal() {
+    if (!bookingModal) return;
+    bookingModal.hidden = true;
+    bookingModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('booking-modal-open');
+  }
 
   function setMessage(text, ok) {
     if (!message) return;
@@ -266,6 +297,7 @@ import Footer from '@/components/Footer.astro';
         selectedCell.classList.remove('booking-cell--pulse');
       }, 520);
     }
+    openBookingModal();
   }
 
   function updateRangeLabel() {
@@ -424,6 +456,12 @@ import Footer from '@/components/Footer.astro';
     loadSlots();
   });
 
+  bookingModalClose?.addEventListener('click', closeBookingModal);
+  bookingModalBackdrop?.addEventListener('click', closeBookingModal);
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeBookingModal();
+  });
+
   if (rangeStartInput) {
     currentStartDate = sanitizeDayKey(rangeStartInput.value || getTodayDayKey());
     rangeStartInput.value = currentStartDate;
@@ -470,6 +508,7 @@ import Footer from '@/components/Footer.astro';
       form.reset();
       await loadSlots();
       setMessage('Rezervácia bola odoslaná. Čoskoro vás budeme kontaktovať s potvrdením termínu.', true);
+      closeBookingModal();
     } catch (error) {
       setMessage(error?.message || 'Rezerváciu sa nepodarilo odoslať', false);
     } finally {
@@ -849,6 +888,66 @@ import Footer from '@/components/Footer.astro';
     box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.24);
   }
 
+  .booking-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .booking-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.48);
+    backdrop-filter: blur(1px);
+  }
+
+  .booking-modal__dialog {
+    position: relative;
+    width: min(980px, calc(100vw - 2rem));
+    max-height: calc(100vh - 2rem);
+    overflow: auto;
+    background: #fff;
+    border: 1px solid #dbe6f3;
+    border-radius: 14px;
+    box-shadow: 0 20px 44px rgba(15, 23, 42, 0.35);
+    padding: 1rem;
+  }
+
+  .booking-modal__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .booking-modal__head h3 {
+    margin: 0;
+    font-size: 1.02rem;
+    color: #0f172a;
+  }
+
+  .booking-modal__close {
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    color: #334155;
+    border-radius: 8px;
+    width: 34px;
+    height: 34px;
+    font-size: 1.35rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .booking-modal__close:hover {
+    background: #eef2ff;
+    border-color: #a9b8ea;
+  }
+
   .booking-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1014,8 +1113,23 @@ import Footer from '@/components/Footer.astro';
       grid-template-columns: 1fr;
     }
 
+    .booking-modal {
+      padding: 0.5rem;
+      align-items: flex-end;
+    }
+
+    .booking-modal__dialog {
+      width: 100%;
+      max-height: calc(100vh - 1rem);
+      border-radius: 12px;
+    }
+
     .booking-field--full {
       grid-column: auto;
     }
+  }
+
+  body.booking-modal-open {
+    overflow: hidden;
   }
 </style>
