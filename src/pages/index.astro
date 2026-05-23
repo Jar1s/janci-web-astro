@@ -536,7 +536,7 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
 
   .advantages-grid .advantage-card {
     flex: 0 1 calc(33.333% - 1rem);
-    max-width: 400px;
+    max-width: 100%;
   }
 
   @media (max-width: 1024px) {
@@ -1170,10 +1170,10 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
   }
 
   #reviews .carousel-slide {
-    flex: 0 0 380px;
+    flex: 0 0 clamp(280px, 32vw, 380px);
     box-sizing: border-box;
     min-width: 0;
-    max-width: 380px;
+    max-width: clamp(280px, 32vw, 380px);
   }
 
   #reviews .carousel-arrow,
@@ -1238,6 +1238,21 @@ const mapEmbedUrl = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
     #reviews .carousel-slide {
       flex-basis: min(360px, 46vw);
       max-width: min(360px, 46vw);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .process-section {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    .special-offer-title {
+      font-size: clamp(1.6rem, 5vw, 2rem);
+    }
+
+    .charging-card__info {
+      padding: clamp(1.1rem, 3.5vw, 2rem);
     }
   }
 </style>

@@ -661,7 +661,7 @@ import Footer from '@/components/Footer.astro';
 
   .booking-toolbar {
     display: grid;
-    grid-template-columns: repeat(2, minmax(220px, 320px));
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
     justify-content: center;
     align-items: start;
     gap: 0.8rem;
@@ -669,8 +669,8 @@ import Footer from '@/components/Footer.astro';
   }
 
   .booking-toolbar .booking-field {
-    width: 320px;
-    max-width: 100%;
+    width: 100%;
+    max-width: 380px;
     align-self: start;
     display: grid;
     grid-template-rows: 1.35rem 48px;
@@ -799,7 +799,7 @@ import Footer from '@/components/Footer.astro';
   .booking-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 1040px;
+    min-width: 980px;
     background: #fff;
   }
 
@@ -1016,7 +1016,7 @@ import Footer from '@/components/Footer.astro';
   .booking-modal__dialog {
     position: relative;
     width: min(980px, calc(100vw - 2rem));
-    max-height: calc(100vh - 2rem);
+    max-height: calc(100dvh - 2rem);
     overflow: auto;
     background: #fff;
     border: 1px solid #dbe6f3;
@@ -1234,6 +1234,75 @@ import Footer from '@/components/Footer.astro';
 
     .booking-field--full {
       grid-column: auto;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .booking-page {
+      padding: 56px 16px 76px;
+    }
+
+    .booking-form {
+      padding: 1.05rem;
+    }
+
+    .booking-toolbar {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem;
+    }
+
+    .booking-toolbar .booking-field {
+      max-width: none;
+    }
+
+    .booking-table {
+      min-width: 900px;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .booking-table {
+      min-width: 820px;
+    }
+
+    .booking-table th,
+    .booking-table td {
+      padding: 0.3rem 0.32rem;
+      font-size: 0.69rem;
+    }
+
+    .booking-slot-btn,
+    .booking-slot-occupied {
+      font-size: 0.76rem;
+      padding: 0.14rem 0.42rem;
+    }
+
+    .booking-slot-closed {
+      font-size: 0.66rem;
+      padding: 0.14rem 0.38rem;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .booking-table {
+      min-width: 760px;
+    }
+
+    .booking-table th,
+    .booking-table td {
+      font-size: 0.64rem;
+      padding: 0.26rem 0.24rem;
+    }
+
+    .booking-slot-btn,
+    .booking-slot-occupied {
+      font-size: 0.7rem;
+      padding: 0.12rem 0.32rem;
+    }
+
+    .booking-slot-closed {
+      font-size: 0.61rem;
+      padding: 0.12rem 0.3rem;
     }
   }
 

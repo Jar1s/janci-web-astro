@@ -114,6 +114,84 @@ export const sk = {
   'legislation-decree-140-text': 'ktorou sa ustanovujú podrobnosti v oblasti montáže plynových zariadení,',
   'legislation-decree-141-text':
     'ktorou sa ustanovujú podrobnosti o štátnom odbornom dozore a odbornom dozore technických služieb na úseku prevádzky vozidiel v cestnej premávke.',
+  'legislation-tk-method-44-2018-html':
+    'na vykonávanie technických kontrol <strong>PRAVIDELNÝCH</strong>, <strong>ZVLÁŠTNYCH</strong>, <strong>ADMINISTRATÍVNYCH</strong> a <strong>OPAKOVANÝCH</strong> technických kontrol,',
+  'legislation-tk-method-47-2018-html':
+    'ktorým sa stanovujú kontrolné položky týkajúce sa identifikácie vozidla (Kontrolné položky skupiny 0),',
+  'legislation-tk-method-48-2018-html':
+    'ktorým sa stanovujú kontrolné položky týkajúce sa brzdového zariadenia (Kontrolné položky skupiny 1),',
+  'legislation-tk-method-49-2018-html':
+    'ktorým sa stanovujú kontrolné položky týkajúce sa riadenia vozidla (Kontrolné položky skupiny 2),',
+  'legislation-tk-method-50-2018-html':
+    'ktorým sa stanovujú kontrolné položky týkajúce sa výhľadu z vozidla (Kontrolné položky skupiny 3),',
+  'legislation-tk-method-51-2018-html':
+    'ktorým sa stanovujú kontrolné položky týkajúce sa osvetlenia a svetelnej signalizácie vozidla (Kontrolné položky skupiny 4),',
+  'legislation-tk-method-52-2018-html':
+    'ktorým sa stanovujú kontrolné položky týkajúce sa náprav, kolies, pneumatík a zavesenia náprav (Kontrolné položky skupiny 5),',
+  'legislation-tk-method-53-2018-html':
+    'ktorým sa stanovujú kontrolné položky týkajúce sa podvozku a jeho príslušenstva (Kontrolné položky skupiny 6),',
+  'legislation-tk-method-54-2018-html':
+    'ktorým sa stanovujú kontrolné položky týkajúce sa ostatného vybavenia vozidla (Kontrolné položky skupiny 7),',
+  'legislation-tk-method-55-2018-html':
+    'ktorým sa stanovujú kontrolné položky týkajúce sa zaťaženia životného prostredia (Kontrolné položky skupiny 8),',
+  'legislation-tk-method-56-2018-html':
+    'ktorým sa stanovujú kontrolné položky týkajúce sa doplňujúcich skúšok pre vozidlá kategórií M2 a M3 určených na prepravu osôb (Kontrolné položky skupiny 9),',
+  'legislation-tk-method-59-2018-html':
+    'na vykonávanie technických kontrol v súvislosti s jednotlivo dovezenými vozidlami,',
+  'legislation-tk-method-60-2018-html':
+    'na vykonávanie technických kontrol v súvislosti s vydaním nového osvedčenia o evidencii časť II alebo nového technického osvedčenia vozidla pri hromadnej prestavbe typu vozidla,',
+  'legislation-tk-method-61-2018-html':
+    'na vykonávanie technických kontrol v súvislosti s dodatočným schválením jednotlivého vozidla na prevádzku v cestnej premávke,',
+  'legislation-tk-method-62-2018-html':
+    'ktorým sa upravuje postup vykonávania technických kontrol zvláštnych historických vozidiel,',
+  'legislation-tk-method-63-2018-html':
+    'na vykonávanie technických kontrol v súvislosti s montážou spájacieho zariadenia na vozidlo,',
+  'legislation-tk-method-64-2018-html':
+    'na vykonávanie technických kontrol v súvislosti so zápisom alternatívnych rozmerov ráfikov a pneumatík,',
+  'legislation-tk-method-65-2018-html':
+    'na vykonávanie technických kontrol v súvislosti s opätovným schválením jednotlivého vozidla na prevádzku v cestnej premávke,',
+  'legislation-tk-method-66-2018-html':
+    'na vykonávanie technických kontrol v súvislosti so zápisom alebo zrušením zápisu zvláštnej výbavy vozidla,',
+  'legislation-tk-method-67-2018-html':
+    'na vykonávanie technických kontrol v súvislosti s výmenou technického osvedčenia vozidla,',
+  'legislation-tk-method-68-2018-html':
+    'na vykonávanie technických kontrol v súvislosti s výmenou karosérie, rámu alebo motora na jednotlivom vozidle,',
+  'legislation-tk-method-69-2018-html':
+    'ktorým sa upravuje vykonávanie technických kontrol na vozidlách uvedených v § 1 ods. 5 zákona č. 106/2018 Z. z.,',
+  'legislation-tk-method-76-2018-html':
+    'na vykonávanie technických kontrol v súvislosti s montážou dvojitého ovládania spojky a prevádzkovej brzdy výcvikových vozidiel autoškôl na vozidlo,',
+  'legislation-tk-method-77-2018-html':
+    'na vykonávanie technických kontrol v súvislosti s demontážou dvojitého ovládania spojky a prevádzkovej brzdy výcvikových vozidiel autoškôl na vozidlo,',
+  'legislation-tk-method-78-2018-html':
+    'na vykonávanie technických kontrol v súvislosti s montážou alebo demontážou zvláštnych výstražných svietidiel a zvukových výstražných znamení,',
+  'legislation-tk-method-79-2018-html':
+    'na vykonávanie technických kontrol v súvislosti s montážou alebo demontážou plachty na valníkové vozidlo a úpravou valníkového vozidla na plošinové vozidlo demontážou valníkovej konštrukcie,',
+  'legislation-tk-method-82-2018-html':
+    'na vykonávanie technických kontrol v súvislosti s konverziou motocyklov subkategórie L3e/L4e-A2 a L3e/L4e-A3,',
+  'legislation-tk-method-41-2019-html':
+    'na vykonávanie technických kontrol v súvislosti s demontážou plynového zariadenia z vozidla,',
+  'legislation-tk-method-42-2019-html':
+    'na vykonávanie technických kontrol v súvislosti s vnútroštátnym schválením jednotlivého vozidla s obmedzenou prevádzkou,',
+  'legislation-tk-method-1-2020-html':
+    'na vykonávanie technických kontrol v súvislosti so zmenou vozidla kategórie O na vozidlo kategórie Ra, ak na vozidle nedošlo k žiadnej konštrukčnej úprave alebo zmene,',
+  'legislation-tk-method-57-2020-html':
+    'na vykonávanie technických kontrol vozidiel na prepravu nebezpečných vecí (ADR),',
+  'legislation-tk-method-49-2021-html':
+    'na vykonávanie technických kontrol na vydanie prepravného povolenia,',
+  'legislation-ek-method-2-2020-html':
+    'ktorý upravuje vykonávanie emisnej kontroly <strong>PRAVIDELNEJ</strong> motorových vozidiel so zážihovým motorom s nezdokonaleným emisným systémom, so zážihovým motorom so zdokonaleným emisným systémom a so vznetovým motorom,',
+  'legislation-ek-method-45-2019-html':
+    'ktorý upravuje vykonávanie emisnej kontroly <strong>ZVLÁŠTNEJ</strong>,',
+  'legislation-ek-method-34-2018-html':
+    'ktorý upravuje vykonávanie emisnej kontroly <strong>ADMINISTRATÍVNEJ</strong>,',
+  'legislation-ek-method-35-2018-html':
+    'ktorý upravuje vykonávanie emisnej kontroly <strong>OPAKOVANEJ</strong>,',
+  'legislation-ek-method-36-2018-html':
+    'ktorý upravuje vykonávanie emisnej kontroly <strong>PRAVIDELNEJ</strong> motorového vozidla, ktoré nie je prihlásené do evidencie,',
+  'legislation-ek-method-37-2018-html':
+    'ktorý upravuje vykonávanie emisnej kontroly na vozidlách uvedených v § 1 ods. 5 zákona č. 106/2018 Z. z.,',
+  'legislation-ek-method-38-2018-html':
+    'na vyznačovanie výsledku emisnej kontroly do dokladov o emisnej kontrole,',
 
   'categories-hero-title': 'Kategórie vozidiel',
   'categories-hero-subtitle': 'Podrobné rozdelenie kategórií vozidiel podľa platnej legislatívy',
@@ -375,6 +453,84 @@ export const en = {
   'legislation-decree-140-text': 'which sets out details in the field of gas equipment installation,',
   'legislation-decree-141-text':
     'which sets out details on state professional supervision and professional supervision of technical services in the area of vehicle operation in road traffic.',
+  'legislation-tk-method-44-2018-html':
+    'for performing <strong>PERIODIC</strong>, <strong>SPECIAL</strong>, <strong>ADMINISTRATIVE</strong> and <strong>REPEATED</strong> technical inspections,',
+  'legislation-tk-method-47-2018-html':
+    'which sets inspection items related to vehicle identification (Inspection items group 0),',
+  'legislation-tk-method-48-2018-html':
+    'which sets inspection items related to braking system (Inspection items group 1),',
+  'legislation-tk-method-49-2018-html':
+    'which sets inspection items related to vehicle steering (Inspection items group 2),',
+  'legislation-tk-method-50-2018-html':
+    'which sets inspection items related to visibility from the vehicle (Inspection items group 3),',
+  'legislation-tk-method-51-2018-html':
+    'which sets inspection items related to vehicle lighting and light signaling (Inspection items group 4),',
+  'legislation-tk-method-52-2018-html':
+    'which sets inspection items related to axles, wheels, tires and suspension (Inspection items group 5),',
+  'legislation-tk-method-53-2018-html':
+    'which sets inspection items related to chassis and its accessories (Inspection items group 6),',
+  'legislation-tk-method-54-2018-html':
+    'which sets inspection items related to other vehicle equipment (Inspection items group 7),',
+  'legislation-tk-method-55-2018-html':
+    'which sets inspection items related to environmental impact (Inspection items group 8),',
+  'legislation-tk-method-56-2018-html':
+    'which sets inspection items related to additional tests for M2 and M3 category vehicles intended for passenger transport (Inspection items group 9),',
+  'legislation-tk-method-59-2018-html':
+    'for performing technical inspections related to individually imported vehicles,',
+  'legislation-tk-method-60-2018-html':
+    'for performing technical inspections related to issuing a new registration certificate part II or a new vehicle technical certificate after mass conversion of a vehicle type,',
+  'legislation-tk-method-61-2018-html':
+    'for performing technical inspections related to additional approval of an individual vehicle for road operation,',
+  'legislation-tk-method-62-2018-html':
+    'which regulates the procedure for special technical inspections of historic vehicles,',
+  'legislation-tk-method-63-2018-html':
+    'for performing technical inspections related to installation of a coupling device on a vehicle,',
+  'legislation-tk-method-64-2018-html':
+    'for performing technical inspections related to registration of alternative rim and tire sizes,',
+  'legislation-tk-method-65-2018-html':
+    'for performing technical inspections related to re-approval of an individual vehicle for road operation,',
+  'legislation-tk-method-66-2018-html':
+    'for performing technical inspections related to registration or cancellation of registration of special vehicle equipment,',
+  'legislation-tk-method-67-2018-html':
+    'for performing technical inspections related to replacement of the vehicle technical certificate,',
+  'legislation-tk-method-68-2018-html':
+    'for performing technical inspections related to replacement of bodywork, frame, or engine on an individual vehicle,',
+  'legislation-tk-method-69-2018-html':
+    'which regulates performance of technical inspections on vehicles listed in § 1 para. 5 of Act No. 106/2018 Coll.,',
+  'legislation-tk-method-76-2018-html':
+    'for performing technical inspections related to installation of dual clutch and service brake controls for driving school training vehicles,',
+  'legislation-tk-method-77-2018-html':
+    'for performing technical inspections related to removal of dual clutch and service brake controls for driving school training vehicles,',
+  'legislation-tk-method-78-2018-html':
+    'for performing technical inspections related to installation or removal of special warning lights and sound warning signals,',
+  'legislation-tk-method-79-2018-html':
+    'for performing technical inspections related to installation or removal of tarpaulin on a flatbed vehicle and conversion of a flatbed vehicle to a platform vehicle by removing the flatbed structure,',
+  'legislation-tk-method-82-2018-html':
+    'for performing technical inspections related to conversion of motorcycles in subcategories L3e/L4e-A2 and L3e/L4e-A3,',
+  'legislation-tk-method-41-2019-html':
+    'for performing technical inspections related to removal of gas equipment from a vehicle,',
+  'legislation-tk-method-42-2019-html':
+    'for performing technical inspections related to national approval of an individual vehicle with restricted operation,',
+  'legislation-tk-method-1-2020-html':
+    'for performing technical inspections related to changing a category O vehicle to category Ra, if no structural modification or change was made on the vehicle,',
+  'legislation-tk-method-57-2020-html':
+    'for performing technical inspections of vehicles used for transport of dangerous goods (ADR),',
+  'legislation-tk-method-49-2021-html':
+    'for performing technical inspections for issuing a transport permit,',
+  'legislation-ek-method-2-2020-html':
+    'which regulates performance of <strong>PERIODIC</strong> emission inspection of motor vehicles with spark-ignition engine with non-advanced emission system, with spark-ignition engine with advanced emission system, and with compression-ignition engine,',
+  'legislation-ek-method-45-2019-html':
+    'which regulates performance of <strong>SPECIAL</strong> emission inspection,',
+  'legislation-ek-method-34-2018-html':
+    'which regulates performance of <strong>ADMINISTRATIVE</strong> emission inspection,',
+  'legislation-ek-method-35-2018-html':
+    'which regulates performance of <strong>REPEATED</strong> emission inspection,',
+  'legislation-ek-method-36-2018-html':
+    'which regulates performance of <strong>PERIODIC</strong> emission inspection of a motor vehicle that is not registered,',
+  'legislation-ek-method-37-2018-html':
+    'which regulates performance of emission inspection on vehicles listed in § 1 para. 5 of Act No. 106/2018 Coll.,',
+  'legislation-ek-method-38-2018-html':
+    'for recording the emission inspection result in emission inspection documents,',
 
   'categories-hero-title': 'Vehicle categories',
   'categories-hero-subtitle': 'Vehicle categories under current Slovak legislation',

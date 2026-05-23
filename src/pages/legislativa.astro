@@ -7,6 +7,8 @@ import Hero from '@/components/Hero.astro';
 const linkClass = 'font-semibold text-primary underline underline-offset-4 hover:text-primary-hover transition-colors';
 const methodSeparator = (html: string) =>
   html.startsWith('ktor') || html.startsWith('na vyzna') ? ', ' : ' ';
+const methodTranslationKey = (scope: 'tk' | 'ek', label: string) =>
+  `legislation-${scope}-method-${String(label).replace(/[^0-9]+/g, '-').replace(/^-+|-+$/g, '')}-html`;
 
 const law = {
   label: 'Zákon č. 106/2018 Z. z.',
@@ -365,7 +367,7 @@ const ekMethods = [
               <span class="text-primary mt-1 shrink-0">&#9679;</span>
               <span>
                 <a href={method.href} class={linkClass} target="_blank" rel="noopener noreferrer">{method.label}</a>{methodSeparator(method.html)}
-                <span set:html={method.html} />
+                <span data-translate={methodTranslationKey('tk', method.label)} data-translate-html set:html={method.html} />
               </span>
             </li>
           ))}
@@ -389,7 +391,7 @@ const ekMethods = [
               <span class="text-primary mt-1 shrink-0">&#9679;</span>
               <span>
                 <a href={method.href} class={linkClass} target="_blank" rel="noopener noreferrer">{method.label}</a>{methodSeparator(method.html)}
-                <span set:html={method.html} />
+                <span data-translate={methodTranslationKey('ek', method.label)} data-translate-html set:html={method.html} />
               </span>
             </li>
           ))}
