@@ -125,7 +125,14 @@ for (let value = FALLBACK_OPEN_HOUR * 60; value <= FALLBACK_CLOSE_HOUR * 60; val
                         {isFallbackWeekend(dayKey) ? (
                           <span class="booking-slot-closed">ZATVORENÉ</span>
                         ) : (
-                          <span class="booking-slot-btn">VOĽNÉ</span>
+                          <button
+                            type="button"
+                            class="booking-slot-btn booking-slot-btn--fallback"
+                            data-fallback-day={dayKey}
+                            data-fallback-time={timeKey}
+                          >
+                            VOĽNÉ
+                          </button>
                         )}
                       </td>
                     ))}
@@ -721,6 +728,38 @@ for (let value = FALLBACK_OPEN_HOUR * 60; value <= FALLBACK_CLOSE_HOUR * 60; val
     openBookingModal();
   }
 
+  function buildFallbackSlot(dayKey, timeKey) {
+    const startAt = new Date(`${dayKey}T${timeKey}:00`);
+    if (Number.isNaN(startAt.getTime())) return null;
+    const serviceType = (serviceSelect && serviceSelect.value) || 'tk_ek';
+    return {
+      id: `ui-fallback-${dayKey}-${String(timeKey).replace(':', '')}-${serviceType}`,
+      startAt: startAt.toISOString(),
+      endAt: new Date(startAt.getTime() + TIME_STEP_MINUTES * 60 * 1000).toISOString(),
+      available: true
+    };
+  }
+
+  function attachFallbackTableHandlers() {
+    if (!tableBody) return;
+    const fallbackButtons = tableBody.querySelectorAll('.booking-slot-btn--fallback');
+    fallbackButtons.forEach((btn) => {
+      const dayKey = btn.getAttribute('data-fallback-day') || '';
+      const timeKey = btn.getAttribute('data-fallback-time') || '';
+      const fallbackSlot = buildFallbackSlot(dayKey, timeKey);
+      if (!fallbackSlot) return;
+      const parentCell = btn.closest('td');
+      btn.addEventListener('click', (event) => {
+        event.stopPropagation();
+        selectSlot(fallbackSlot, btn);
+      });
+      if (parentCell) {
+        parentCell.classList.add('booking-cell--clickable');
+        parentCell.addEventListener('click', () => selectSlot(fallbackSlot, btn));
+      }
+    });
+  }
+
   function updateRangeLabel() {
     if (!currentRangeLabel || !visibleDays.length) return;
     const first = visibleDays[0];
@@ -1001,6 +1040,7 @@ for (let value = FALLBACK_OPEN_HOUR * 60; value <= FALLBACK_CLOSE_HOUR * 60; val
     rangeStartInput.value = currentStartDate;
   }
 
+  attachFallbackTableHandlers();
   loadSlots();
   syncLanguageSensitiveUi();
 
