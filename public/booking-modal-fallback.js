@@ -1,6 +1,4 @@
 (function () {
-  if (typeof window !== 'undefined' && window.__bookingInlineReady) return;
-
   function findParentCell(element) {
     var node = element;
     while (node && node !== document.body) {
