@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { loadKvAuthCorsValidation } from '../deps.js';
 import { createExternalBooking, getAvailableSlots } from '../../lib/booking-provider.js';
+import { isRecaptchaEnabled, verifyRecaptchaToken } from '../../lib/recaptcha.js';
 
 export default async function handler(req, res) {
   const {
@@ -74,6 +75,18 @@ export default async function handler(req, res) {
           detail: 'Skúste odoslať nový formulár pre vytvorenie novej rezervácie.'
         });
       }
+    }
+  }
+
+  if (isRecaptchaEnabled()) {
+    const forwardedFor = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
+    const remoteIp = forwardedFor || req.socket?.remoteAddress || '';
+    const recaptcha = await verifyRecaptchaToken(payload.recaptchaToken, remoteIp);
+    if (!recaptcha.ok) {
+      return res.status(400).json({
+        error: 'Nepodarilo sa overiť reCAPTCHA',
+        detail: recaptcha.message
+      });
     }
   }
 

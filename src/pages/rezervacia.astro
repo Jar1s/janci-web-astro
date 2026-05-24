@@ -2,6 +2,7 @@
 import MainLayout from '@/layouts/MainLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
+const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '');
 ---
 
 <MainLayout
@@ -85,9 +86,10 @@ import Footer from '@/components/Footer.astro';
             <div class="booking-grid">
               <label class="booking-field">
                 <span data-translate="booking-check-label">Kontrola *</span>
-                <select id="serviceTypeModal" name="serviceTypeModal" disabled>
+                <select id="serviceTypeModal" name="serviceTypeModal" required>
                   <option value="tk_ek" data-translate="booking-check-option-tkek">EK+TK</option>
-                  <option value="ko" data-translate="booking-check-option-ko">KO</option>
+                  <option value="ek" data-translate="booking-check-option-ek">EK</option>
+                  <option value="tk" data-translate="booking-check-option-tk">TK</option>
                 </select>
               </label>
 
@@ -127,9 +129,12 @@ import Footer from '@/components/Footer.astro';
                   <option value="" data-translate="booking-vehicle-type-empty">vyberte druh vozidla</option>
                   <option value="osobne" data-translate="booking-vehicle-type-passenger">osobné vozidlo</option>
                   <option value="nakladne" data-translate="booking-vehicle-type-truck">nákladné vozidlo</option>
+                  <option value="tahac" data-translate="booking-vehicle-type-tractor-unit">ťahač</option>
+                  <option value="naves" data-translate="booking-vehicle-type-semitrailer">náves</option>
+                  <option value="vozik-o1-o2" data-translate="booking-vehicle-type-trailer-o1o2">vozík (O1, O2)</option>
                   <option value="motocykel" data-translate="booking-vehicle-type-motorcycle">motocykel</option>
-                  <option value="pripojne" data-translate="booking-vehicle-type-trailer">prípojné vozidlo</option>
-                  <option value="ine" data-translate="booking-vehicle-type-other">iné</option>
+                  <option value="autobus" data-translate="booking-vehicle-type-bus">autobus</option>
+                  <option value="traktor" data-translate="booking-vehicle-type-tractor">traktor</option>
                 </select>
               </label>
 
@@ -144,11 +149,14 @@ import Footer from '@/components/Footer.astro';
                   <option value="" data-translate="booking-fuel-type-empty">vyberte druh paliva</option>
                   <option value="benzin" data-translate="booking-fuel-type-petrol">benzín</option>
                   <option value="nafta" data-translate="booking-fuel-type-diesel">nafta</option>
+                  <option value="benzin-lpg" data-translate="booking-fuel-type-petrol-lpg">benzín+LPG</option>
+                  <option value="benzin-cng" data-translate="booking-fuel-type-petrol-cng">benzín+CNG</option>
                   <option value="lpg">LPG</option>
                   <option value="cng">CNG</option>
                   <option value="hybrid" data-translate="booking-fuel-type-hybrid">hybrid</option>
-                  <option value="elektro" data-translate="booking-fuel-type-electric">elektro</option>
+                  <option value="elektrika" data-translate="booking-fuel-type-electric">elektrika</option>
                   <option value="ine" data-translate="booking-fuel-type-other">iné</option>
+                  <option value="bez" data-translate="booking-fuel-type-none">bez</option>
                 </select>
               </label>
 
@@ -169,6 +177,13 @@ import Footer from '@/components/Footer.astro';
 
             <p id="booking-msg" class="booking-msg" hidden></p>
 
+            {recaptchaSiteKey && (
+              <div class="booking-recaptcha-wrap">
+                <span class="booking-recaptcha-label" data-translate="booking-recaptcha-label">Bezpečnostné overenie *</span>
+                <div class="g-recaptcha" data-sitekey={recaptchaSiteKey}></div>
+              </div>
+            )}
+
             <button id="booking-submit" type="submit" class="booking-submit" data-translate="booking-submit">Odoslať rezerváciu</button>
           </div>
         </div>
@@ -179,7 +194,12 @@ import Footer from '@/components/Footer.astro';
   <Footer slot="footer" />
 </MainLayout>
 
+{recaptchaSiteKey && (
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+)}
+
 <script is:inline>
+  const RECAPTCHA_SITE_KEY = {JSON.stringify(recaptchaSiteKey)};
   const form = document.getElementById('booking-form');
   const message = document.getElementById('booking-msg');
   const submitBtn = document.getElementById('booking-submit');
@@ -231,6 +251,7 @@ import Footer from '@/components/Footer.astro';
       loadSlotsError: 'Chyba pri načítaní termínov',
       loadSlotsFallbackError: 'Nepodarilo sa načítať termíny',
       detailsInspectionType: 'Typ kontroly',
+      detailsControl: 'Kontrola',
       detailsVehicleType: 'Druh vozidla',
       detailsVehicleModel: 'Značka a typ vozidla',
       detailsFuelType: 'Druh paliva',
@@ -239,6 +260,7 @@ import Footer from '@/components/Footer.astro';
       submitError: 'Rezerváciu sa nepodarilo odoslať',
       submitSuccess: 'Rezervácia bola odoslaná. Čoskoro vás budeme kontaktovať s potvrdením termínu.',
       submitIdle: 'Odoslať rezerváciu',
+      recaptchaRequired: 'Potvrďte prosím, že nie ste robot (reCAPTCHA).',
       koPhoneOnly: 'Kontrola originality (KO) je dostupná iba telefonicky na <a href="tel:+421948888088">0948 888 088</a>.',
       slotsUnavailablePhone: 'Online termíny sú dočasne nedostupné. Zavolajte prosím na <a href="tel:+421948888088">0948 888 088</a>.',
       mobileDayClosed: 'Tento deň je pracovisko zatvorené.',
@@ -261,6 +283,7 @@ import Footer from '@/components/Footer.astro';
       loadSlotsError: 'Error while loading appointments',
       loadSlotsFallbackError: 'Failed to load appointments',
       detailsInspectionType: 'Inspection type',
+      detailsControl: 'Inspection',
       detailsVehicleType: 'Vehicle type',
       detailsVehicleModel: 'Vehicle make and model',
       detailsFuelType: 'Fuel type',
@@ -269,6 +292,7 @@ import Footer from '@/components/Footer.astro';
       submitError: 'Failed to submit reservation',
       submitSuccess: 'Your reservation has been sent. We will contact you soon to confirm the appointment.',
       submitIdle: 'Submit reservation',
+      recaptchaRequired: 'Please confirm that you are not a robot (reCAPTCHA).',
       koPhoneOnly: 'Originality check (KO) can only be booked by phone at <a href="tel:+421948888088">0948 888 088</a>.',
       slotsUnavailablePhone: 'Online appointments are temporarily unavailable. Please call <a href="tel:+421948888088">0948 888 088</a>.',
       mobileDayClosed: 'The station is closed on this day.',
@@ -312,6 +336,18 @@ import Footer from '@/components/Footer.astro';
     }
   }
 
+  function getRecaptchaToken() {
+    if (!RECAPTCHA_SITE_KEY || !window.grecaptcha || typeof window.grecaptcha.getResponse !== 'function') {
+      return '';
+    }
+    return String(window.grecaptcha.getResponse() || '').trim();
+  }
+
+  function resetRecaptcha() {
+    if (!RECAPTCHA_SITE_KEY || !window.grecaptcha || typeof window.grecaptcha.reset !== 'function') return;
+    window.grecaptcha.reset();
+  }
+
   function getLocale() {
     return getLang() === 'en' ? 'en-GB' : 'sk-SK';
   }
@@ -319,7 +355,10 @@ import Footer from '@/components/Footer.astro';
   function openBookingModal() {
     if (!bookingModal) return;
     if (serviceTypeModal && serviceSelect) {
-      serviceTypeModal.value = serviceSelect.value || 'tk_ek';
+      const schedulerService = serviceSelect.value || 'tk_ek';
+      if (schedulerService === 'ko') {
+        serviceTypeModal.value = 'tk_ek';
+      }
     }
     bookingModal.hidden = false;
     bookingModal.setAttribute('aria-hidden', 'false');
@@ -779,11 +818,13 @@ import Footer from '@/components/Footer.astro';
     if (!form || !submitBtn || !slotInput || !slotStartInput) return;
     message.hidden = true;
     const inspectionType = String(form.inspectionType?.value || '').trim();
+    const controlLabel = String(form.serviceTypeModal?.selectedOptions?.[0]?.textContent || '').trim();
     const vehicleType = String(form.vehicleType?.value || '').trim();
     const vehicleModel = String(form.vehicleModel?.value || '').trim();
     const fuelType = String(form.fuelType?.value || '').trim();
     const baseNote = String(form.note.value || '').trim();
     const extraDetails = [
+      controlLabel ? `${t('detailsControl')}: ${controlLabel}` : null,
       inspectionType ? `${t('detailsInspectionType')}: ${inspectionType}` : null,
       vehicleType ? `${t('detailsVehicleType')}: ${vehicleType}` : null,
       vehicleModel ? `${t('detailsVehicleModel')}: ${vehicleModel}` : null,
@@ -805,7 +846,8 @@ import Footer from '@/components/Footer.astro';
       vehiclePlate: String(form.vehiclePlate.value || '').trim(),
       vehicleVin: String(form.vehicleVin.value || '').trim(),
       note: combinedNote,
-      clientRequestId: getOrCreateClientRequestId()
+      clientRequestId: getOrCreateClientRequestId(),
+      recaptchaToken: getRecaptchaToken()
     };
 
     if (!payload.slotId) {
@@ -814,6 +856,10 @@ import Footer from '@/components/Footer.astro';
     }
     if (payload.serviceType === 'ko') {
       setMessage(t('koPhoneOnly'), false, true);
+      return;
+    }
+    if (RECAPTCHA_SITE_KEY && !payload.recaptchaToken) {
+      setMessage(t('recaptchaRequired'), false);
       return;
     }
 
@@ -837,6 +883,7 @@ import Footer from '@/components/Footer.astro';
 
       form.reset();
       resetClientRequestId();
+      resetRecaptcha();
       await loadSlots();
       setMessage(t('submitSuccess'), true);
       closeBookingModal();
@@ -1441,6 +1488,18 @@ import Footer from '@/components/Footer.astro';
     margin: 1rem 0 0;
     color: #475569;
     font-size: 0.9rem;
+  }
+
+  .booking-recaptcha-wrap {
+    margin-top: 0.9rem;
+  }
+
+  .booking-recaptcha-label {
+    display: inline-block;
+    margin-bottom: 0.45rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #334155;
   }
 
   .booking-msg {
