@@ -428,15 +428,35 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
     });
   }
 
-  function formatDayKey(value) {
-    const date = new Date(value);
-    const formatter = new Intl.DateTimeFormat('sv-SE', {
+  function toBratislavaDayKey(date) {
+    if (!(date instanceof Date) || Number.isNaN(date.getTime())) return '';
+    const parts = new Intl.DateTimeFormat('en-US', {
       timeZone: 'Europe/Bratislava',
       year: 'numeric',
       month: '2-digit',
       day: '2-digit'
-    });
-    return formatter.format(date);
+    }).formatToParts(date);
+    const year = parts.find((part) => part.type === 'year')?.value;
+    const month = parts.find((part) => part.type === 'month')?.value;
+    const day = parts.find((part) => part.type === 'day')?.value;
+    if (!year || !month || !day) return '';
+    return `${year}-${month}-${day}`;
+  }
+
+  function parseDayKey(dayKey) {
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(dayKey || ''));
+    if (!match) return null;
+    const year = Number(match[1]);
+    const month = Number(match[2]);
+    const day = Number(match[3]);
+    if (!year || !month || !day) return null;
+    const parsed = new Date(Date.UTC(year, month - 1, day, 12, 0, 0));
+    return Number.isNaN(parsed.getTime()) ? null : parsed;
+  }
+
+  function formatDayKey(value) {
+    const date = new Date(value);
+    return toBratislavaDayKey(date);
   }
 
   function formatDayLabel(dayKey) {
@@ -462,23 +482,18 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
   }
 
   function getTodayDayKey() {
-    return formatDayKey(new Date().toISOString());
+    return toBratislavaDayKey(new Date());
   }
 
   function sanitizeDayKey(value) {
-    if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
-      const parsed = new Date(`${value}T00:00:00`);
-      if (!Number.isNaN(parsed.getTime())) {
-        return value;
-      }
-    }
+    if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value) && parseDayKey(value)) return value;
     return getTodayDayKey();
   }
 
   function shiftDayKey(dayKey, shiftByDays) {
-    const date = new Date(`${dayKey}T00:00:00`);
-    date.setDate(date.getDate() + shiftByDays);
-    return formatDayKey(date.toISOString());
+    const date = parseDayKey(dayKey) || parseDayKey(getTodayDayKey()) || new Date();
+    date.setUTCDate(date.getUTCDate() + shiftByDays);
+    return toBratislavaDayKey(date) || getTodayDayKey();
   }
 
   function buildVisibleDays(startDayKey, count) {
