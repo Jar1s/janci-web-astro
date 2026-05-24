@@ -383,6 +383,7 @@ export const sk = {
   'booking-note-help':
     'Pri kontrole originality (KO) odporúčame po odoslaní rezervácie počkať na telefonické potvrdenie.',
   'booking-recaptcha-label': 'Bezpečnostné overenie *',
+  'booking-recaptcha-note': 'Formulár je chránený službou reCAPTCHA v3.',
   'booking-submit': 'Odoslať rezerváciu',
 
   'reviews-page-title': 'Recenzie zákazníkov',
@@ -785,6 +786,7 @@ export const en = {
   'booking-note-help':
     'For originality checks (KO), we recommend waiting for phone confirmation after submitting your reservation.',
   'booking-recaptcha-label': 'Security verification *',
+  'booking-recaptcha-note': 'This form is protected by reCAPTCHA v3.',
   'booking-submit': 'Submit reservation',
 
   'reviews-page-title': 'Customer reviews',

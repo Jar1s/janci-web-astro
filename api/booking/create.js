@@ -81,7 +81,7 @@ export default async function handler(req, res) {
   if (isRecaptchaEnabled()) {
     const forwardedFor = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
     const remoteIp = forwardedFor || req.socket?.remoteAddress || '';
-    const recaptcha = await verifyRecaptchaToken(payload.recaptchaToken, remoteIp);
+    const recaptcha = await verifyRecaptchaToken(payload.recaptchaToken, remoteIp, 'booking_submit');
     if (!recaptcha.ok) {
       return res.status(400).json({
         error: 'Nepodarilo sa overiť reCAPTCHA',

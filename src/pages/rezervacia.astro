@@ -178,10 +178,9 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
             <p id="booking-msg" class="booking-msg" hidden></p>
 
             {recaptchaSiteKey && (
-              <div class="booking-recaptcha-wrap">
-                <span class="booking-recaptcha-label" data-translate="booking-recaptcha-label">Bezpečnostné overenie *</span>
-                <div class="g-recaptcha" data-sitekey={recaptchaSiteKey}></div>
-              </div>
+              <p class="booking-recaptcha-note" data-translate="booking-recaptcha-note">
+                Formulár je chránený službou reCAPTCHA v3.
+              </p>
             )}
 
             <button id="booking-submit" type="submit" class="booking-submit" data-translate="booking-submit">Odoslať rezerváciu</button>
@@ -195,7 +194,7 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
 </MainLayout>
 
 {recaptchaSiteKey && (
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <script src={`https://www.google.com/recaptcha/api.js?render=${encodeURIComponent(recaptchaSiteKey)}`} async defer></script>
 )}
 
 <script is:inline>
@@ -260,7 +259,8 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
       submitError: 'Rezerváciu sa nepodarilo odoslať',
       submitSuccess: 'Rezervácia bola odoslaná. Čoskoro vás budeme kontaktovať s potvrdením termínu.',
       submitIdle: 'Odoslať rezerváciu',
-      recaptchaRequired: 'Potvrďte prosím, že nie ste robot (reCAPTCHA).',
+      recaptchaRequired: 'Nepodarilo sa overiť bezpečnostnú kontrolu reCAPTCHA.',
+      recaptchaLoading: 'Prebieha bezpečnostné overenie...',
       koPhoneOnly: 'Kontrola originality (KO) je dostupná iba telefonicky na <a href="tel:+421948888088">0948 888 088</a>.',
       slotsUnavailablePhone: 'Online termíny sú dočasne nedostupné. Zavolajte prosím na <a href="tel:+421948888088">0948 888 088</a>.',
       mobileDayClosed: 'Tento deň je pracovisko zatvorené.',
@@ -292,7 +292,8 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
       submitError: 'Failed to submit reservation',
       submitSuccess: 'Your reservation has been sent. We will contact you soon to confirm the appointment.',
       submitIdle: 'Submit reservation',
-      recaptchaRequired: 'Please confirm that you are not a robot (reCAPTCHA).',
+      recaptchaRequired: 'Security check via reCAPTCHA failed.',
+      recaptchaLoading: 'Running security verification...',
       koPhoneOnly: 'Originality check (KO) can only be booked by phone at <a href="tel:+421948888088">0948 888 088</a>.',
       slotsUnavailablePhone: 'Online appointments are temporarily unavailable. Please call <a href="tel:+421948888088">0948 888 088</a>.',
       mobileDayClosed: 'The station is closed on this day.',
@@ -336,16 +337,24 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
     }
   }
 
-  function getRecaptchaToken() {
-    if (!RECAPTCHA_SITE_KEY || !window.grecaptcha || typeof window.grecaptcha.getResponse !== 'function') {
+  async function getRecaptchaToken() {
+    if (!RECAPTCHA_SITE_KEY) return '';
+    const recaptcha = window.grecaptcha;
+    if (!recaptcha || typeof recaptcha.ready !== 'function' || typeof recaptcha.execute !== 'function') {
       return '';
     }
-    return String(window.grecaptcha.getResponse() || '').trim();
+    return new Promise((resolve) => {
+      recaptcha.ready(() => {
+        recaptcha
+          .execute(RECAPTCHA_SITE_KEY, { action: 'booking_submit' })
+          .then((token) => resolve(String(token || '').trim()))
+          .catch(() => resolve(''));
+      });
+    });
   }
 
   function resetRecaptcha() {
-    if (!RECAPTCHA_SITE_KEY || !window.grecaptcha || typeof window.grecaptcha.reset !== 'function') return;
-    window.grecaptcha.reset();
+    // v3 is token-based per action, no widget reset is needed.
   }
 
   function getLocale() {
@@ -836,6 +845,11 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
       .trim();
     const combinedNote = combinedNoteRaw.slice(0, 1000);
 
+    if (RECAPTCHA_SITE_KEY) {
+      submitBtn.textContent = t('recaptchaLoading');
+    }
+    const recaptchaToken = await getRecaptchaToken();
+
     const payload = {
       serviceType: serviceSelect?.value || 'tk_ek',
       slotId: slotInput.value,
@@ -847,7 +861,7 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
       vehicleVin: String(form.vehicleVin.value || '').trim(),
       note: combinedNote,
       clientRequestId: getOrCreateClientRequestId(),
-      recaptchaToken: getRecaptchaToken()
+      recaptchaToken
     };
 
     if (!payload.slotId) {
@@ -860,6 +874,8 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
     }
     if (RECAPTCHA_SITE_KEY && !payload.recaptchaToken) {
       setMessage(t('recaptchaRequired'), false);
+      submitBtn.disabled = false;
+      submitBtn.textContent = t('submitIdle');
       return;
     }
 
@@ -1490,16 +1506,11 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
     font-size: 0.9rem;
   }
 
-  .booking-recaptcha-wrap {
+  .booking-recaptcha-note {
     margin-top: 0.9rem;
-  }
-
-  .booking-recaptcha-label {
-    display: inline-block;
-    margin-bottom: 0.45rem;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #334155;
+    margin-bottom: 0;
+    font-size: 0.82rem;
+    color: #64748b;
   }
 
   .booking-msg {
