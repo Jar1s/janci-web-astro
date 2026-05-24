@@ -3,7 +3,14 @@ import { loadKvAuthCorsValidation } from '../deps.js';
 import { createExternalBooking, getAvailableSlots } from '../../lib/booking-provider.js';
 
 export default async function handler(req, res) {
-  const { getCorsHeaders, handleCorsPreflight, validateBookingCreate, upsertBookingRequest } =
+  const {
+    getCorsHeaders,
+    handleCorsPreflight,
+    validateBookingCreate,
+    upsertBookingRequest,
+    getBookingRequestByClientRequestId,
+    countRecentBookingRequestsByPhone
+  } =
     await loadKvAuthCorsValidation();
 
   const corsHeaders = getCorsHeaders(req.headers.origin);
@@ -25,7 +32,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Neplatné vstupné údaje', errors: validation.errors });
   }
 
-  const clientRequestId = randomUUID();
+  const incomingClientRequestId = payload.clientRequestId ? String(payload.clientRequestId).trim() : null;
+  const clientRequestId = incomingClientRequestId || randomUUID();
   const normalizedPayload = {
     slotId: String(payload.slotId).trim(),
     slotStartAt: payload.slotStartAt ? String(payload.slotStartAt) : null,
@@ -38,6 +46,44 @@ export default async function handler(req, res) {
     note: payload.note ? String(payload.note).trim() : null,
     clientRequestId
   };
+
+  if (incomingClientRequestId) {
+    const existing = await getBookingRequestByClientRequestId(incomingClientRequestId);
+    if (existing?.bookingRequest) {
+      const prev = existing.bookingRequest;
+      if (prev.status === 'confirmed') {
+        return res.status(200).json({
+          ok: true,
+          deduplicated: true,
+          requestId: prev.clientRequestId,
+          bookingId: prev.externalBookingId || null,
+          source: 'idempotent'
+        });
+      }
+      if (prev.status === 'pending') {
+        return res.status(202).json({
+          ok: true,
+          deduplicated: true,
+          requestId: prev.clientRequestId,
+          detail: 'Požiadavka sa už spracováva.'
+        });
+      }
+      if (prev.status === 'failed') {
+        return res.status(409).json({
+          error: 'Táto požiadavka už bola spracovaná s chybou',
+          detail: 'Skúste odoslať nový formulár pre vytvorenie novej rezervácie.'
+        });
+      }
+    }
+  }
+
+  const rateLimit = await countRecentBookingRequestsByPhone(normalizedPayload.phone, 1);
+  if ((rateLimit?.count || 0) >= 5) {
+    return res.status(429).json({
+      error: 'Príliš veľa pokusov o rezerváciu',
+      detail: 'Skúste to prosím znova o chvíľu alebo nám zavolajte na 0948 888 088.'
+    });
+  }
 
   try {
     const slotProbeFrom = normalizedPayload.slotStartAt && !Number.isNaN(Date.parse(normalizedPayload.slotStartAt))

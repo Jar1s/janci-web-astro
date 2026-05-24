@@ -88,11 +88,38 @@ create index if not exists page_views_created_at_idx
 create index if not exists page_views_path_created_idx
   on public.page_views (path, created_at desc);
 
+create table if not exists public.booking_requests (
+  id bigint generated always as identity primary key,
+  client_request_id text not null unique,
+  status text not null default 'pending' check (status in ('pending', 'confirmed', 'failed')),
+  service_type text not null default 'tk_ek',
+  slot_id text not null,
+  slot_start_at timestamptz null,
+  customer_name text not null,
+  customer_phone text not null,
+  customer_email text null,
+  vehicle_plate text null,
+  vehicle_vin text null,
+  note text null,
+  external_booking_id text null,
+  external_response jsonb null,
+  error_message text null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create index if not exists booking_requests_created_at_idx
+  on public.booking_requests (created_at desc);
+
+create index if not exists booking_requests_status_idx
+  on public.booking_requests (status);
+
 alter table public.statistics enable row level security;
 alter table public.notifications enable row level security;
 alter table public.partners enable row level security;
 alter table public.reviews enable row level security;
 alter table public.page_views enable row level security;
+alter table public.booking_requests enable row level security;
 
 insert into storage.buckets (id, name, public)
 values ('partners', 'partners', true)

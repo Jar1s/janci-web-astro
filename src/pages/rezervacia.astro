@@ -60,6 +60,13 @@ import Footer from '@/components/Footer.astro';
               <tbody id="booking-table-body"></tbody>
             </table>
           </div>
+
+          <div class="booking-mobile-scheduler">
+            <p class="booking-mobile-scheduler__label" data-translate="booking-mobile-days-label">Dni v rozsahu:</p>
+            <div id="booking-mobile-days" class="booking-mobile-days" role="tablist" aria-label="Dni termínov"></div>
+            <p class="booking-mobile-scheduler__label" data-translate="booking-mobile-slots-label">Voľné termíny pre vybraný deň:</p>
+            <div id="booking-mobile-slots" class="booking-mobile-slots"></div>
+          </div>
         </div>
 
         <input type="hidden" id="slotId" name="slotId" />
@@ -191,6 +198,8 @@ import Footer from '@/components/Footer.astro';
   const bookingModalDialog = bookingModal?.querySelector('.booking-modal__dialog');
   const tableHead = document.getElementById('booking-table-head');
   const tableBody = document.getElementById('booking-table-body');
+  const mobileDaysContainer = document.getElementById('booking-mobile-days');
+  const mobileSlotsContainer = document.getElementById('booking-mobile-slots');
 
   const DAYS_PER_VIEW = 8;
   const TIME_STEP_MINUTES = 15;
@@ -205,6 +214,8 @@ import Footer from '@/components/Footer.astro';
   let currentStartDate = '';
   let selectedSlotId = null;
   let lastFocusedSlotButton = null;
+  let activeMobileDayKey = null;
+  const BOOKING_REQUEST_ID_KEY = 'booking-client-request-id';
   const i18nMessages = {
     sk: {
       selectedSlotPrefix: 'Vybraný termín:',
@@ -230,6 +241,9 @@ import Footer from '@/components/Footer.astro';
       submitIdle: 'Odoslať rezerváciu',
       koPhoneOnly: 'Kontrola originality (KO) je dostupná iba telefonicky na <a href="tel:+421948888088">0948 888 088</a>.',
       slotsUnavailablePhone: 'Online termíny sú dočasne nedostupné. Zavolajte prosím na <a href="tel:+421948888088">0948 888 088</a>.',
+      mobileDayClosed: 'Tento deň je pracovisko zatvorené.',
+      mobileNoSlotsDay: 'Pre vybraný deň momentálne nie sú voľné termíny.',
+      mobileDaysAria: 'Dni termínov',
       pageTitle: 'Rezervácia termínu | STK JP Control Pezinok',
       pageDescription: 'Online rezervácia termínu pre technickú, emisnú kontrolu alebo kontrolu originality.'
     },
@@ -257,6 +271,9 @@ import Footer from '@/components/Footer.astro';
       submitIdle: 'Submit reservation',
       koPhoneOnly: 'Originality check (KO) can only be booked by phone at <a href="tel:+421948888088">0948 888 088</a>.',
       slotsUnavailablePhone: 'Online appointments are temporarily unavailable. Please call <a href="tel:+421948888088">0948 888 088</a>.',
+      mobileDayClosed: 'The station is closed on this day.',
+      mobileNoSlotsDay: 'There are currently no available appointments for the selected day.',
+      mobileDaysAria: 'Appointment days',
       pageTitle: 'Appointment booking | STK JP Control Pezinok',
       pageDescription: 'Online appointment booking for technical inspection, emission test, or originality check.'
     }
@@ -271,6 +288,28 @@ import Footer from '@/components/Footer.astro';
   function t(key) {
     const lang = getLang();
     return i18nMessages[lang]?.[key] ?? i18nMessages.sk[key] ?? key;
+  }
+
+  function getOrCreateClientRequestId() {
+    try {
+      const existing = sessionStorage.getItem(BOOKING_REQUEST_ID_KEY);
+      if (existing && existing.length >= 8) return existing;
+      const generated = (window.crypto?.randomUUID?.() || `req-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`)
+        .replace(/[^a-zA-Z0-9._:-]/g, '')
+        .slice(0, 80);
+      sessionStorage.setItem(BOOKING_REQUEST_ID_KEY, generated);
+      return generated;
+    } catch {
+      return `req-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`.slice(0, 80);
+    }
+  }
+
+  function resetClientRequestId() {
+    try {
+      sessionStorage.removeItem(BOOKING_REQUEST_ID_KEY);
+    } catch {
+      // ignore storage errors
+    }
   }
 
   function getLocale() {
@@ -465,6 +504,7 @@ import Footer from '@/components/Footer.astro';
         selectedCell.classList.remove('booking-cell--pulse');
       }, 520);
     }
+    renderMobileSchedule();
     openBookingModal();
   }
 
@@ -473,6 +513,76 @@ import Footer from '@/components/Footer.astro';
     const first = visibleDays[0];
     const last = visibleDays[visibleDays.length - 1];
     currentRangeLabel.textContent = `${formatDayLabel(first).slice(0, 10)} - ${formatDayLabel(last).slice(0, 10)}`;
+  }
+
+  function renderMobileSchedule() {
+    if (!mobileDaysContainer || !mobileSlotsContainer) return;
+
+    mobileDaysContainer.innerHTML = '';
+    mobileSlotsContainer.innerHTML = '';
+    mobileDaysContainer.setAttribute('aria-label', t('mobileDaysAria'));
+
+    if (!visibleDays.length) {
+      mobileSlotsContainer.innerHTML = `<p class="booking-mobile-empty">${t('mobileNoSlotsDay')}</p>`;
+      return;
+    }
+
+    if (!activeMobileDayKey || !visibleDays.includes(activeMobileDayKey)) {
+      activeMobileDayKey = visibleDays[0];
+    }
+
+    visibleDays.forEach((dayKey) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'booking-mobile-day-btn';
+      btn.setAttribute('role', 'tab');
+      const isActive = dayKey === activeMobileDayKey;
+      btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      btn.classList.toggle('is-active', isActive);
+      btn.textContent = formatDayLabel(dayKey);
+      btn.addEventListener('click', () => {
+        activeMobileDayKey = dayKey;
+        renderMobileSchedule();
+      });
+      mobileDaysContainer.appendChild(btn);
+    });
+
+    if (isWeekend(activeMobileDayKey)) {
+      mobileSlotsContainer.innerHTML = `<p class="booking-mobile-empty">${t('mobileDayClosed')}</p>`;
+      return;
+    }
+
+    const dayMap = slotMatrix.get(activeMobileDayKey) || new Map();
+    const dayAvailableSlots = Array.from(dayMap.values())
+      .filter((slot) => slot?.available !== false)
+      .sort((a, b) => {
+        const left = parseTimeToMinutes(formatTime(a.startAt)) ?? 0;
+        const right = parseTimeToMinutes(formatTime(b.startAt)) ?? 0;
+        return left - right;
+      });
+
+    if (!dayAvailableSlots.length) {
+      mobileSlotsContainer.innerHTML = `<p class="booking-mobile-empty">${t('mobileNoSlotsDay')}</p>`;
+      return;
+    }
+
+    const list = document.createElement('div');
+    list.className = 'booking-mobile-slot-list';
+
+    dayAvailableSlots.forEach((slot) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'booking-mobile-slot-btn';
+      button.textContent = formatTime(slot.startAt);
+      if (selectedSlotId && selectedSlotId === slot.id) {
+        button.classList.add('is-selected');
+        button.textContent = `${formatTime(slot.startAt)} · ${t('selected')}`;
+      }
+      button.addEventListener('click', () => selectSlot(slot, button));
+      list.appendChild(button);
+    });
+
+    mobileSlotsContainer.appendChild(list);
   }
 
   function isWeekend(dayKey) {
@@ -493,6 +603,7 @@ import Footer from '@/components/Footer.astro';
       const row = document.createElement('tr');
       row.innerHTML = `<td>--</td><td class="booking-empty-cell">${t('noSlots')}</td>`;
       tableBody.appendChild(row);
+      renderMobileSchedule();
       return;
     }
 
@@ -559,6 +670,7 @@ import Footer from '@/components/Footer.astro';
 
       tableBody.appendChild(tr);
     });
+    renderMobileSchedule();
   }
 
   async function loadSlots() {
@@ -573,6 +685,7 @@ import Footer from '@/components/Footer.astro';
     const serviceType = serviceSelect.value || 'tk_ek';
     currentStartDate = sanitizeDayKey(rangeStartInput.value || currentStartDate || getTodayDayKey());
     visibleDays = buildVisibleDays(currentStartDate, DAYS_PER_VIEW);
+    activeMobileDayKey = visibleDays[0] || null;
     rangeStartInput.value = currentStartDate;
     updateRangeLabel();
 
@@ -691,7 +804,8 @@ import Footer from '@/components/Footer.astro';
       email: String(form.email.value || '').trim(),
       vehiclePlate: String(form.vehiclePlate.value || '').trim(),
       vehicleVin: String(form.vehicleVin.value || '').trim(),
-      note: combinedNote
+      note: combinedNote,
+      clientRequestId: getOrCreateClientRequestId()
     };
 
     if (!payload.slotId) {
@@ -722,6 +836,7 @@ import Footer from '@/components/Footer.astro';
       }
 
       form.reset();
+      resetClientRequestId();
       await loadSlots();
       setMessage(t('submitSuccess'), true);
       closeBookingModal();
@@ -940,6 +1055,76 @@ import Footer from '@/components/Footer.astro';
     border: 1px solid #d1d5db;
     border-radius: 8px;
     background: #f3f4f6;
+  }
+
+  .booking-mobile-scheduler {
+    display: none;
+    margin-top: 0.9rem;
+  }
+
+  .booking-mobile-scheduler__label {
+    margin: 0 0 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #334155;
+  }
+
+  .booking-mobile-days {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.4rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .booking-mobile-day-btn {
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #fff;
+    color: #0f172a;
+    text-align: left;
+    font-size: 0.84rem;
+    font-weight: 600;
+    padding: 0.6rem 0.68rem;
+  }
+
+  .booking-mobile-day-btn.is-active {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+    background: #eff6ff;
+  }
+
+  .booking-mobile-slot-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
+  }
+
+  .booking-mobile-slot-btn {
+    border: 1px solid #b8e2bf;
+    border-radius: 999px;
+    color: #1f7d2d;
+    background: #e9f9ec;
+    padding: 0.48rem 0.58rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+
+  .booking-mobile-slot-btn.is-selected {
+    color: #fff;
+    border-color: #1e40af;
+    background: linear-gradient(180deg, #2563eb 0%, #1d4ed8 100%);
+  }
+
+  .booking-mobile-empty {
+    margin: 0;
+    border: 1px dashed #cbd5e1;
+    border-radius: 10px;
+    padding: 0.7rem;
+    color: #475569;
+    background: #f8fafc;
+    font-size: 0.83rem;
   }
 
   .booking-table {
@@ -1353,6 +1538,14 @@ import Footer from '@/components/Footer.astro';
       padding: 0.6rem;
     }
 
+    .booking-table-wrap {
+      display: none;
+    }
+
+    .booking-mobile-scheduler {
+      display: block;
+    }
+
     .booking-toolbar {
       grid-template-columns: 1fr;
     }
@@ -1371,6 +1564,10 @@ import Footer from '@/components/Footer.astro';
     }
 
     .booking-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .booking-mobile-slot-list {
       grid-template-columns: 1fr;
     }
 
