@@ -810,17 +810,19 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
       }
 
       const slots = Array.isArray(data?.slots) ? data.slots : [];
-      slotMatrix = new Map();
-      slots.forEach((slot) => {
-        if (!slot?.startAt) return;
-        const dayKey = formatDayKey(slot.startAt);
-        const timeKey = formatTime(slot.startAt);
-        if (!slotMatrix.has(dayKey)) slotMatrix.set(dayKey, new Map());
-        slotMatrix.get(dayKey).set(timeKey, slot);
-      });
-
-      allTimes = buildTimeGrid(serviceType);
-      renderTable();
+      if (slots.length > 0) {
+        const apiMatrix = new Map();
+        slots.forEach((slot) => {
+          if (!slot?.startAt) return;
+          const dayKey = formatDayKey(slot.startAt);
+          const timeKey = formatTime(slot.startAt);
+          if (!apiMatrix.has(dayKey)) apiMatrix.set(dayKey, new Map());
+          apiMatrix.get(dayKey).set(timeKey, slot);
+        });
+        slotMatrix = apiMatrix;
+        allTimes = buildTimeGrid(serviceType);
+        renderTable();
+      }
     } catch (error) {
       const fallbackSlots = buildClientMockSlots(serviceType);
       fallbackSlots.forEach((slot) => {
