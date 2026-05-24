@@ -70,6 +70,8 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
           </div>
         </div>
 
+        <p id="booking-inline-msg" class="booking-msg" hidden></p>
+
         <input type="hidden" id="slotId" name="slotId" />
         <input type="hidden" id="slotStartAt" name="slotStartAt" />
 
@@ -201,6 +203,7 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
   const RECAPTCHA_SITE_KEY = {JSON.stringify(recaptchaSiteKey)};
   const form = document.getElementById('booking-form');
   const message = document.getElementById('booking-msg');
+  const inlineMessage = document.getElementById('booking-inline-msg');
   const submitBtn = document.getElementById('booking-submit');
   const slotInput = document.getElementById('slotId');
   const slotStartInput = document.getElementById('slotStartAt');
@@ -389,14 +392,17 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
   }
 
   function setMessage(text, ok, allowHtml = false) {
-    if (!message) return;
-    if (allowHtml) {
-      message.innerHTML = text;
-    } else {
-      message.textContent = text;
-    }
-    message.className = ok ? 'booking-msg booking-msg--ok' : 'booking-msg booking-msg--error';
-    message.hidden = false;
+    const targetMessages = [message, inlineMessage].filter(Boolean);
+    if (!targetMessages.length) return;
+    targetMessages.forEach((node) => {
+      if (allowHtml) {
+        node.innerHTML = text;
+      } else {
+        node.textContent = text;
+      }
+      node.className = ok ? 'booking-msg booking-msg--ok' : 'booking-msg booking-msg--error';
+      node.hidden = false;
+    });
   }
 
   function formatDayKey(value) {
@@ -825,7 +831,8 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form || !submitBtn || !slotInput || !slotStartInput) return;
-    message.hidden = true;
+    if (message) message.hidden = true;
+    if (inlineMessage) inlineMessage.hidden = true;
     const inspectionType = String(form.inspectionType?.value || '').trim();
     const controlLabel = String(form.serviceTypeModal?.selectedOptions?.[0]?.textContent || '').trim();
     const vehicleType = String(form.vehicleType?.value || '').trim();
