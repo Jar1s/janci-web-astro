@@ -4,6 +4,56 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '');
 const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLowerCase() === 'v2' ? 'v2' : 'v3';
+
+const FALLBACK_DAYS_PER_VIEW = 8;
+const FALLBACK_TIME_STEP_MINUTES = 15;
+const FALLBACK_OPEN_HOUR = 7;
+const FALLBACK_CLOSE_HOUR = 16;
+
+function fallbackDayKey(date: Date): string {
+  const year = String(date.getFullYear());
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function shiftFallbackDay(dayKey: string, days: number): string {
+  const date = new Date(`${dayKey}T12:00:00`);
+  date.setDate(date.getDate() + days);
+  return fallbackDayKey(date);
+}
+
+function isFallbackWeekend(dayKey: string): boolean {
+  const date = new Date(`${dayKey}T12:00:00`);
+  const day = date.getDay();
+  return day === 0 || day === 6;
+}
+
+function fallbackDayLabel(dayKey: string): string {
+  const date = new Date(`${dayKey}T12:00:00`);
+  const formattedDate = new Intl.DateTimeFormat('sk-SK', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  }).format(date);
+  const weekday = new Intl.DateTimeFormat('sk-SK', { weekday: 'short' }).format(date).toUpperCase();
+  return `${formattedDate} ${weekday}`;
+}
+
+function fallbackTimeLabel(totalMinutes: number): string {
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+}
+
+const fallbackStartDay = fallbackDayKey(new Date());
+const fallbackVisibleDays = Array.from({ length: FALLBACK_DAYS_PER_VIEW }, (_, index) =>
+  shiftFallbackDay(fallbackStartDay, index)
+);
+const fallbackTimes: string[] = [];
+for (let value = FALLBACK_OPEN_HOUR * 60; value <= FALLBACK_CLOSE_HOUR * 60; value += FALLBACK_TIME_STEP_MINUTES) {
+  fallbackTimes.push(fallbackTimeLabel(value));
+}
 ---
 
 <MainLayout
@@ -58,8 +108,30 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
 
           <div class="booking-table-wrap">
             <table class="booking-table">
-              <thead id="booking-table-head"></thead>
-              <tbody id="booking-table-body"></tbody>
+              <thead id="booking-table-head">
+                <tr>
+                  <th>Čas</th>
+                  {fallbackVisibleDays.map((dayKey) => (
+                    <th>{fallbackDayLabel(dayKey)}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody id="booking-table-body">
+                {fallbackTimes.map((timeKey) => (
+                  <tr>
+                    <td class="booking-time-cell">{timeKey}</td>
+                    {fallbackVisibleDays.map((dayKey) => (
+                      <td class={`booking-cell ${isFallbackWeekend(dayKey) ? 'booking-cell--closed' : 'booking-cell--free'}`}>
+                        {isFallbackWeekend(dayKey) ? (
+                          <span class="booking-slot-closed">ZATVORENÉ</span>
+                        ) : (
+                          <span class="booking-slot-btn">VOĽNÉ</span>
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
 
