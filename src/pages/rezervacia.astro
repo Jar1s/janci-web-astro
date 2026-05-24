@@ -201,15 +201,14 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
   </section>
 
   <Footer slot="footer" />
-</MainLayout>
 
-{recaptchaSiteKey && recaptchaMode === 'v3' && (
-  <script src={`https://www.google.com/recaptcha/api.js?render=${encodeURIComponent(recaptchaSiteKey)}`} async defer></script>
-)}
+  {recaptchaSiteKey && recaptchaMode === 'v3' && (
+    <script src={`https://www.google.com/recaptcha/api.js?render=${encodeURIComponent(recaptchaSiteKey)}`} async defer></script>
+  )}
 
-{recaptchaSiteKey && recaptchaMode === 'v2' && (
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-)}
+  {recaptchaSiteKey && recaptchaMode === 'v2' && (
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  )}
 
 <script is:inline>
   const RECAPTCHA_SITE_KEY = {JSON.stringify(recaptchaSiteKey)};
@@ -1847,3 +1846,4 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
     overflow: hidden;
   }
 </style>
+</MainLayout>
