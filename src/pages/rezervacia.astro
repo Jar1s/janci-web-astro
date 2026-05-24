@@ -525,6 +525,25 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
     });
   }
 
+  function buildClientMockSlots(serviceType) {
+    const times = buildDefaultTimeGrid(serviceType);
+    const slots = [];
+    visibleDays.forEach((dayKey) => {
+      if (isWeekend(dayKey)) return;
+      times.forEach((timeKey) => {
+        const startAt = new Date(`${dayKey}T${timeKey}:00`);
+        const slotId = `ui-mock-${dayKey}-${timeKey.replace(':', '')}-${serviceType}`;
+        slots.push({
+          id: slotId,
+          startAt: startAt.toISOString(),
+          endAt: new Date(startAt.getTime() + TIME_STEP_MINUTES * 60 * 1000).toISOString(),
+          available: true
+        });
+      });
+    });
+    return slots;
+  }
+
   function updateSelectedSlotLabel(label) {
     if (!selectedSlotText) return;
     selectedSlotText.textContent = label ? `${t('selectedSlotPrefix')} ${label}` : `${t('selectedSlotPrefix')} ${t('selectedSlotNone')}`;
@@ -790,7 +809,14 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
       allTimes = buildTimeGrid(serviceType);
       renderTable();
     } catch (error) {
-      allTimes = buildDefaultTimeGrid(serviceType);
+      const fallbackSlots = buildClientMockSlots(serviceType);
+      fallbackSlots.forEach((slot) => {
+        const dayKey = formatDayKey(slot.startAt);
+        const timeKey = formatTime(slot.startAt);
+        if (!slotMatrix.has(dayKey)) slotMatrix.set(dayKey, new Map());
+        slotMatrix.get(dayKey).set(timeKey, slot);
+      });
+      allTimes = buildTimeGrid(serviceType);
       renderTable();
       if (error?.message === '__PHONE_FALLBACK__') {
         setMessage(t('slotsUnavailablePhone'), false, true);
