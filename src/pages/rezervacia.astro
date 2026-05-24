@@ -229,7 +229,7 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
   const bookingModal = document.getElementById('booking-modal');
   const bookingModalClose = document.getElementById('booking-modal-close');
   const bookingModalBackdrop = document.getElementById('booking-modal-backdrop');
-  const bookingModalDialog = bookingModal?.querySelector('.booking-modal__dialog');
+  const bookingModalDialog = bookingModal ? bookingModal.querySelector('.booking-modal__dialog') : null;
   const tableHead = document.getElementById('booking-table-head');
   const tableBody = document.getElementById('booking-table-body');
   const mobileDaysContainer = document.getElementById('booking-mobile-days');
@@ -331,14 +331,17 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
 
   function t(key) {
     const lang = getLang();
-    return i18nMessages[lang]?.[key] ?? i18nMessages.sk[key] ?? key;
+    const langMessages = i18nMessages[lang] || null;
+    if (langMessages && Object.prototype.hasOwnProperty.call(langMessages, key)) return langMessages[key];
+    if (Object.prototype.hasOwnProperty.call(i18nMessages.sk, key)) return i18nMessages.sk[key];
+    return key;
   }
 
   function getOrCreateClientRequestId() {
     try {
       const existing = sessionStorage.getItem(BOOKING_REQUEST_ID_KEY);
       if (existing && existing.length >= 8) return existing;
-      const generated = (window.crypto?.randomUUID?.() || `req-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`)
+      const generated = (((window.crypto && typeof window.crypto.randomUUID === 'function') ? window.crypto.randomUUID() : '') || `req-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`)
         .replace(/[^a-zA-Z0-9._:-]/g, '')
         .slice(0, 80);
       sessionStorage.setItem(BOOKING_REQUEST_ID_KEY, generated);
@@ -443,9 +446,12 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
 
       if (typeof formatter.formatToParts === 'function') {
         const parts = formatter.formatToParts(date);
-        const year = parts.find((part) => part.type === 'year')?.value;
-        const month = parts.find((part) => part.type === 'month')?.value;
-        const day = parts.find((part) => part.type === 'day')?.value;
+        const yearPart = parts.find((part) => part.type === 'year');
+        const monthPart = parts.find((part) => part.type === 'month');
+        const dayPart = parts.find((part) => part.type === 'day');
+        const year = yearPart ? yearPart.value : '';
+        const month = monthPart ? monthPart.value : '';
+        const day = dayPart ? dayPart.value : '';
         if (year && month && day) return `${year}-${month}-${day}`;
       }
 
@@ -555,9 +561,11 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
     );
     const all = new Set([...predefined, ...fromSlots]);
     return Array.from(all).sort((a, b) => {
-      const left = parseTimeToMinutes(a) ?? 0;
-      const right = parseTimeToMinutes(b) ?? 0;
-      return left - right;
+      const left = parseTimeToMinutes(a);
+      const right = parseTimeToMinutes(b);
+      const safeLeft = Number.isInteger(left) ? left : 0;
+      const safeRight = Number.isInteger(right) ? right : 0;
+      return safeLeft - safeRight;
     });
   }
 
@@ -591,7 +599,7 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
     if (!selectedSlotId) return null;
     for (const dayMap of slotMatrix.values()) {
       for (const slot of dayMap.values()) {
-        if (slot?.id === selectedSlotId) return slot;
+        if (slot && slot.id === selectedSlotId) return slot;
       }
     }
     return null;
@@ -687,11 +695,13 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
 
     const dayMap = slotMatrix.get(activeMobileDayKey) || new Map();
     const dayAvailableSlots = Array.from(dayMap.values())
-      .filter((slot) => slot?.available !== false)
+      .filter((slot) => slot && slot.available !== false)
       .sort((a, b) => {
-        const left = parseTimeToMinutes(formatTime(a.startAt)) ?? 0;
-        const right = parseTimeToMinutes(formatTime(b.startAt)) ?? 0;
-        return left - right;
+        const left = parseTimeToMinutes(formatTime(a.startAt));
+        const right = parseTimeToMinutes(formatTime(b.startAt));
+        const safeLeft = Number.isInteger(left) ? left : 0;
+        const safeRight = Number.isInteger(right) ? right : 0;
+        return safeLeft - safeRight;
       });
 
     if (!dayAvailableSlots.length) {
@@ -843,15 +853,15 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
         if (res.status === 503) {
           throw new Error('__PHONE_FALLBACK__');
         }
-        throw new Error(data?.detail || data?.error || t('loadSlotsError'));
+        throw new Error((data && (data.detail || data.error)) || t('loadSlotsError'));
       }
 
-      const slots = Array.isArray(data?.slots) ? data.slots : [];
-      const hasAnyAvailableSlot = slots.some((slot) => slot?.available !== false && slot?.startAt);
+      const slots = Array.isArray(data && data.slots) ? data.slots : [];
+      const hasAnyAvailableSlot = slots.some((slot) => slot && slot.available !== false && slot.startAt);
       if (slots.length > 0 && hasAnyAvailableSlot) {
         const apiMatrix = new Map();
         slots.forEach((slot) => {
-          if (!slot?.startAt) return;
+          if (!slot || !slot.startAt) return;
           const dayKey = formatDayKey(slot.startAt);
           const timeKey = formatTime(slot.startAt);
           if (!apiMatrix.has(dayKey)) apiMatrix.set(dayKey, new Map());
@@ -871,34 +881,34 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
       });
       allTimes = buildTimeGrid(serviceType);
       renderTable();
-      if (error?.message === '__PHONE_FALLBACK__') {
+      if (error && error.message === '__PHONE_FALLBACK__') {
         setMessage(t('slotsUnavailablePhone'), false, true);
       } else {
-        setMessage(error?.message || t('loadSlotsFallbackError'), false);
+        setMessage((error && error.message) || t('loadSlotsFallbackError'), false);
       }
     }
   }
 
-  serviceSelect?.addEventListener('change', loadSlots);
-  rangeStartInput?.addEventListener('change', loadSlots);
-  prevRangeBtn?.addEventListener('click', () => {
-    currentStartDate = sanitizeDayKey(rangeStartInput?.value || currentStartDate || getTodayDayKey());
+  if (serviceSelect) serviceSelect.addEventListener('change', loadSlots);
+  if (rangeStartInput) rangeStartInput.addEventListener('change', loadSlots);
+  if (prevRangeBtn) prevRangeBtn.addEventListener('click', () => {
+    currentStartDate = sanitizeDayKey((rangeStartInput && rangeStartInput.value) || currentStartDate || getTodayDayKey());
     rangeStartInput.value = shiftDayKey(currentStartDate, -DAYS_PER_VIEW);
     loadSlots();
   });
-  nextRangeBtn?.addEventListener('click', () => {
-    currentStartDate = sanitizeDayKey(rangeStartInput?.value || currentStartDate || getTodayDayKey());
+  if (nextRangeBtn) nextRangeBtn.addEventListener('click', () => {
+    currentStartDate = sanitizeDayKey((rangeStartInput && rangeStartInput.value) || currentStartDate || getTodayDayKey());
     rangeStartInput.value = shiftDayKey(currentStartDate, DAYS_PER_VIEW);
     loadSlots();
   });
 
-  bookingModalClose?.addEventListener('click', closeBookingModal);
-  bookingModalBackdrop?.addEventListener('click', closeBookingModal);
+  if (bookingModalClose) bookingModalClose.addEventListener('click', closeBookingModal);
+  if (bookingModalBackdrop) bookingModalBackdrop.addEventListener('click', closeBookingModal);
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closeBookingModal();
   });
-  bookingModalDialog?.addEventListener('keydown', (event) => {
-    if (event.key !== 'Tab' || bookingModal?.hidden) return;
+  if (bookingModalDialog) bookingModalDialog.addEventListener('keydown', (event) => {
+    if (event.key !== 'Tab' || (bookingModal && bookingModal.hidden)) return;
     const focusable = bookingModalDialog.querySelectorAll(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     );
@@ -930,16 +940,17 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
     attributeFilter: ['lang']
   });
 
-  form?.addEventListener('submit', async (event) => {
+  if (form) form.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form || !submitBtn || !slotInput || !slotStartInput) return;
     if (message) message.hidden = true;
     if (inlineMessage) inlineMessage.hidden = true;
-    const inspectionType = String(form.inspectionType?.value || '').trim();
-    const controlLabel = String(form.serviceTypeModal?.selectedOptions?.[0]?.textContent || '').trim();
-    const vehicleType = String(form.vehicleType?.value || '').trim();
-    const vehicleModel = String(form.vehicleModel?.value || '').trim();
-    const fuelType = String(form.fuelType?.value || '').trim();
+    const inspectionType = String((form.inspectionType && form.inspectionType.value) || '').trim();
+    const controlSelectedOption = form.serviceTypeModal && form.serviceTypeModal.selectedOptions ? form.serviceTypeModal.selectedOptions[0] : null;
+    const controlLabel = String((controlSelectedOption && controlSelectedOption.textContent) || '').trim();
+    const vehicleType = String((form.vehicleType && form.vehicleType.value) || '').trim();
+    const vehicleModel = String((form.vehicleModel && form.vehicleModel.value) || '').trim();
+    const fuelType = String((form.fuelType && form.fuelType.value) || '').trim();
     const baseNote = String(form.note.value || '').trim();
     const extraDetails = [
       controlLabel ? `${t('detailsControl')}: ${controlLabel}` : null,
@@ -960,7 +971,7 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
     const recaptchaToken = await getRecaptchaToken();
 
     const payload = {
-      serviceType: serviceSelect?.value || 'tk_ek',
+      serviceType: (serviceSelect && serviceSelect.value) || 'tk_ek',
       slotId: slotInput.value,
       slotStartAt: slotStartInput.value || null,
       name: String(form.name.value || '').trim(),
@@ -1002,7 +1013,7 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
         if (res.status === 503) {
           throw new Error('__PHONE_FALLBACK__');
         }
-        const msg = data?.errors?.join(' ') || data?.detail || data?.error || t('submitError');
+        const msg = (data && Array.isArray(data.errors) && data.errors.join(' ')) || (data && (data.detail || data.error)) || t('submitError');
         throw new Error(msg);
       }
 
@@ -1013,10 +1024,10 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
       setMessage(t('submitSuccess'), true);
       closeBookingModal();
     } catch (error) {
-      if (error?.message === '__PHONE_FALLBACK__') {
+      if (error && error.message === '__PHONE_FALLBACK__') {
         setMessage(t('slotsUnavailablePhone'), false, true);
       } else {
-        setMessage(error?.message || t('submitError'), false);
+        setMessage((error && error.message) || t('submitError'), false);
       }
     } finally {
       submitBtn.disabled = false;
