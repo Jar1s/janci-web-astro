@@ -785,6 +785,18 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
     rangeStartInput.value = currentStartDate;
     updateRangeLabel();
 
+    // Show provisional client-side slots immediately so UI is never empty
+    // while API is pending or unavailable.
+    const provisionalSlots = buildClientMockSlots(serviceType);
+    provisionalSlots.forEach((slot) => {
+      const dayKey = formatDayKey(slot.startAt);
+      const timeKey = formatTime(slot.startAt);
+      if (!slotMatrix.has(dayKey)) slotMatrix.set(dayKey, new Map());
+      slotMatrix.get(dayKey).set(timeKey, slot);
+    });
+    allTimes = buildTimeGrid(serviceType);
+    renderTable();
+
     try {
       const res = await fetch(
         `/api/booking/slots?serviceType=${encodeURIComponent(serviceType)}&days=${DAYS_PER_VIEW}&startDate=${encodeURIComponent(currentStartDate)}`
@@ -798,6 +810,7 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
       }
 
       const slots = Array.isArray(data?.slots) ? data.slots : [];
+      slotMatrix = new Map();
       slots.forEach((slot) => {
         if (!slot?.startAt) return;
         const dayKey = formatDayKey(slot.startAt);
