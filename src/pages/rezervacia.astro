@@ -322,7 +322,11 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
   function getLang() {
     const htmlLang = String(document.documentElement.lang || '').toLowerCase();
     if (htmlLang.startsWith('en')) return 'en';
-    return localStorage.getItem('language') === 'en' ? 'en' : 'sk';
+    try {
+      return localStorage.getItem('language') === 'en' ? 'en' : 'sk';
+    } catch {
+      return 'sk';
+    }
   }
 
   function t(key) {
@@ -564,6 +568,7 @@ const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLo
       if (isWeekend(dayKey)) return;
       times.forEach((timeKey) => {
         const startAt = new Date(`${dayKey}T${timeKey}:00`);
+        if (Number.isNaN(startAt.getTime())) return;
         const slotId = `ui-mock-${dayKey}-${timeKey.replace(':', '')}-${serviceType}`;
         slots.push({
           id: slotId,
