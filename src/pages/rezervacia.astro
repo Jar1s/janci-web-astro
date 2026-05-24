@@ -288,8 +288,10 @@ for (let value = FALLBACK_OPEN_HOUR * 60; value <= FALLBACK_CLOSE_HOUR * 60; val
   {recaptchaSiteKey && recaptchaMode === 'v2' && (
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   )}
+  <script defer src="../scripts/booking-modal-fallback.js"></script>
 
 <script is:inline>
+  window.__bookingInlineReady = true;
   const RECAPTCHA_SITE_KEY = {JSON.stringify(recaptchaSiteKey)};
   const RECAPTCHA_MODE = {JSON.stringify(recaptchaMode)};
   const form = document.getElementById('booking-form');
