@@ -1,6 +1,7 @@
 ## Learned User Preferences
 
 - Prefers Slovak for on-site copy and most change requests for this project.
+- Expects EN locale/pages to be fully translated with no leftover Slovak labels or strings.
 - Often asks to push completed work to GitHub on `main`; `.cursor/` is ignored via `.gitignore` and should stay out of commits.
 - Never commit `.env` or other secret files; use `.env.example` for templates only.
 

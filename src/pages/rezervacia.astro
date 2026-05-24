@@ -3,7 +3,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '');
-const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLowerCase() === 'v2' ? 'v2' : 'v3';
+const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v2').toLowerCase() === 'v3' ? 'v3' : 'v2';
 
 const FALLBACK_DAYS_PER_VIEW = 8;
 const FALLBACK_TIME_STEP_MINUTES = 15;
@@ -54,6 +54,7 @@ const fallbackTimes: string[] = [];
 for (let value = FALLBACK_OPEN_HOUR * 60; value <= FALLBACK_CLOSE_HOUR * 60; value += FALLBACK_TIME_STEP_MINUTES) {
   fallbackTimes.push(fallbackTimeLabel(value));
 }
+const fallbackMobileActiveDay = fallbackVisibleDays.find((dayKey) => !isFallbackWeekend(dayKey)) || fallbackVisibleDays[0] || '';
 ---
 
 <MainLayout
@@ -144,9 +145,43 @@ for (let value = FALLBACK_OPEN_HOUR * 60; value <= FALLBACK_CLOSE_HOUR * 60; val
 
           <div class="booking-mobile-scheduler">
             <p class="booking-mobile-scheduler__label" data-translate="booking-mobile-days-label">Dni v rozsahu:</p>
-            <div id="booking-mobile-days" class="booking-mobile-days" role="tablist" aria-label="Dni termínov"></div>
+            <div id="booking-mobile-days" class="booking-mobile-days" role="tablist" aria-label="Dni termínov">
+              {fallbackVisibleDays.map((dayKey) => (
+                <button
+                  type="button"
+                  class={`booking-mobile-day-btn booking-mobile-day-btn--fallback ${dayKey === fallbackMobileActiveDay ? 'is-active' : ''}`}
+                  data-fallback-day={dayKey}
+                  aria-selected={dayKey === fallbackMobileActiveDay ? 'true' : 'false'}
+                >
+                  {fallbackDayLabel(dayKey)}
+                </button>
+              ))}
+            </div>
             <p class="booking-mobile-scheduler__label" data-translate="booking-mobile-slots-label">Voľné termíny pre vybraný deň:</p>
-            <div id="booking-mobile-slots" class="booking-mobile-slots"></div>
+            <div id="booking-mobile-slots" class="booking-mobile-slots">
+              {fallbackVisibleDays.map((dayKey) => (
+                <div
+                  class="booking-mobile-slot-list booking-mobile-slot-list--fallback"
+                  data-fallback-day={dayKey}
+                  hidden={dayKey !== fallbackMobileActiveDay}
+                >
+                  {isFallbackWeekend(dayKey) ? (
+                    <p class="booking-mobile-empty">Tento deň je pracovisko zatvorené.</p>
+                  ) : (
+                    fallbackTimes.map((timeKey) => (
+                      <button
+                        type="button"
+                        class="booking-mobile-slot-btn booking-mobile-slot-btn--fallback"
+                        data-fallback-day={dayKey}
+                        data-fallback-time={timeKey}
+                      >
+                        {timeKey}
+                      </button>
+                    ))
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -1218,11 +1253,17 @@ for (let value = FALLBACK_OPEN_HOUR * 60; value <= FALLBACK_CLOSE_HOUR * 60; val
 
   .booking-toolbar {
     display: grid;
-    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    grid-template-columns: 1fr;
     justify-content: center;
     align-items: start;
     gap: 0.8rem;
     margin-bottom: 1rem;
+  }
+
+  @media (min-width: 900px) {
+    .booking-toolbar {
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+    }
   }
 
   .booking-toolbar .booking-field {

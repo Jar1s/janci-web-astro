@@ -11,6 +11,8 @@
   function bindFallbackModalHandlers() {
     var form = document.getElementById('booking-form');
     var tableBody = document.getElementById('booking-table-body');
+    var mobileDays = document.getElementById('booking-mobile-days');
+    var mobileSlots = document.getElementById('booking-mobile-slots');
     var slotInput = document.getElementById('slotId');
     var slotStartInput = document.getElementById('slotStartAt');
     var selectedSlotText = document.getElementById('selected-slot');
@@ -18,7 +20,7 @@
     var bookingModalClose = document.getElementById('booking-modal-close');
     var bookingModalBackdrop = document.getElementById('booking-modal-backdrop');
 
-    if (!form || !tableBody || !bookingModal || !slotInput || !slotStartInput) return;
+    if (!form || !bookingModal || !slotInput || !slotStartInput) return;
 
     function closeModal() {
       bookingModal.hidden = true;
@@ -45,8 +47,9 @@
       if (event.key === 'Escape') closeModal();
     });
 
-    function bindButtons() {
-      var buttons = tableBody.querySelectorAll('.booking-slot-btn--fallback');
+    function bindButtons(root) {
+      if (!root) return;
+      var buttons = root.querySelectorAll('.booking-slot-btn--fallback, .booking-mobile-slot-btn--fallback');
       buttons.forEach(function (button) {
         if (button.dataset.fallbackBound === '1') return;
         button.dataset.fallbackBound = '1';
@@ -76,7 +79,7 @@
         });
 
         var cell = findParentCell(button);
-        if (cell) {
+        if (cell && button.classList.contains('booking-slot-btn--fallback')) {
           cell.classList.add('booking-cell--clickable');
           cell.addEventListener('click', function () {
             selectFallbackSlot();
@@ -85,11 +88,41 @@
       });
     }
 
-    bindButtons();
-    var observer = new MutationObserver(function () {
-      bindButtons();
+    function bindMobileDayTabs() {
+      if (!mobileDays || !mobileSlots) return;
+      var dayButtons = mobileDays.querySelectorAll('.booking-mobile-day-btn--fallback');
+      dayButtons.forEach(function (dayButton) {
+        if (dayButton.dataset.fallbackBound === '1') return;
+        dayButton.dataset.fallbackBound = '1';
+        dayButton.addEventListener('click', function () {
+          var selectedDay = dayButton.getAttribute('data-fallback-day') || '';
+          dayButtons.forEach(function (btn) {
+            var isActive = btn === dayButton;
+            btn.classList.toggle('is-active', isActive);
+            btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          });
+          var slotLists = mobileSlots.querySelectorAll('.booking-mobile-slot-list--fallback');
+          slotLists.forEach(function (list) {
+            var dayKey = list.getAttribute('data-fallback-day') || '';
+            list.hidden = dayKey !== selectedDay;
+          });
+        });
+      });
+    }
+
+    bindButtons(tableBody);
+    bindButtons(mobileSlots);
+    bindMobileDayTabs();
+
+    var observerTargets = [tableBody, mobileSlots, mobileDays].filter(Boolean);
+    observerTargets.forEach(function (target) {
+      var observer = new MutationObserver(function () {
+        bindButtons(tableBody);
+        bindButtons(mobileSlots);
+        bindMobileDayTabs();
+      });
+      observer.observe(target, { childList: true, subtree: true });
     });
-    observer.observe(tableBody, { childList: true, subtree: true });
   }
 
   if (document.readyState === 'loading') {
