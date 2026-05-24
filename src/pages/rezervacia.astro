@@ -3,6 +3,7 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '');
+const recaptchaMode = String(import.meta.env.PUBLIC_RECAPTCHA_MODE || 'v3').toLowerCase() === 'v2' ? 'v2' : 'v3';
 ---
 
 <MainLayout
@@ -179,7 +180,14 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
 
             <p id="booking-msg" class="booking-msg" hidden></p>
 
-            {recaptchaSiteKey && (
+            {recaptchaSiteKey && recaptchaMode === 'v2' && (
+              <div class="booking-recaptcha-wrap">
+                <span class="booking-recaptcha-label" data-translate="booking-recaptcha-label">Bezpečnostné overenie *</span>
+                <div class="g-recaptcha" data-sitekey={recaptchaSiteKey}></div>
+              </div>
+            )}
+
+            {recaptchaSiteKey && recaptchaMode === 'v3' && (
               <p class="booking-recaptcha-note" data-translate="booking-recaptcha-note">
                 Formulár je chránený službou reCAPTCHA v3.
               </p>
@@ -195,12 +203,17 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
   <Footer slot="footer" />
 </MainLayout>
 
-{recaptchaSiteKey && (
+{recaptchaSiteKey && recaptchaMode === 'v3' && (
   <script src={`https://www.google.com/recaptcha/api.js?render=${encodeURIComponent(recaptchaSiteKey)}`} async defer></script>
+)}
+
+{recaptchaSiteKey && recaptchaMode === 'v2' && (
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 )}
 
 <script is:inline>
   const RECAPTCHA_SITE_KEY = {JSON.stringify(recaptchaSiteKey)};
+  const RECAPTCHA_MODE = {JSON.stringify(recaptchaMode)};
   const form = document.getElementById('booking-form');
   const message = document.getElementById('booking-msg');
   const inlineMessage = document.getElementById('booking-inline-msg');
@@ -343,7 +356,14 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
   async function getRecaptchaToken() {
     if (!RECAPTCHA_SITE_KEY) return '';
     const recaptcha = window.grecaptcha;
-    if (!recaptcha || typeof recaptcha.ready !== 'function' || typeof recaptcha.execute !== 'function') {
+    if (!recaptcha) return '';
+
+    if (RECAPTCHA_MODE === 'v2') {
+      if (typeof recaptcha.getResponse !== 'function') return '';
+      return String(recaptcha.getResponse() || '').trim();
+    }
+
+    if (typeof recaptcha.ready !== 'function' || typeof recaptcha.execute !== 'function') {
       return '';
     }
     return new Promise((resolve) => {
@@ -357,6 +377,9 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
   }
 
   function resetRecaptcha() {
+    if (RECAPTCHA_MODE === 'v2' && window.grecaptcha && typeof window.grecaptcha.reset === 'function') {
+      window.grecaptcha.reset();
+    }
     // v3 is token-based per action, no widget reset is needed.
   }
 
@@ -852,7 +875,7 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
       .trim();
     const combinedNote = combinedNoteRaw.slice(0, 1000);
 
-    if (RECAPTCHA_SITE_KEY) {
+    if (RECAPTCHA_SITE_KEY && RECAPTCHA_MODE === 'v3') {
       submitBtn.textContent = t('recaptchaLoading');
     }
     const recaptchaToken = await getRecaptchaToken();
@@ -1511,6 +1534,18 @@ const recaptchaSiteKey = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || '')
     margin: 1rem 0 0;
     color: #475569;
     font-size: 0.9rem;
+  }
+
+  .booking-recaptcha-wrap {
+    margin-top: 0.9rem;
+  }
+
+  .booking-recaptcha-label {
+    display: inline-block;
+    margin-bottom: 0.45rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #334155;
   }
 
   .booking-recaptcha-note {

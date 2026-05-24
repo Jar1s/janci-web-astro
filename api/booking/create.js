@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { loadKvAuthCorsValidation } from '../deps.js';
 import { createExternalBooking, getAvailableSlots } from '../../lib/booking-provider.js';
-import { isRecaptchaEnabled, verifyRecaptchaToken } from '../../lib/recaptcha.js';
+import { getRecaptchaMode, isRecaptchaEnabled, verifyRecaptchaToken } from '../../lib/recaptcha.js';
 
 export default async function handler(req, res) {
   const {
@@ -81,7 +81,8 @@ export default async function handler(req, res) {
   if (isRecaptchaEnabled()) {
     const forwardedFor = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim();
     const remoteIp = forwardedFor || req.socket?.remoteAddress || '';
-    const recaptcha = await verifyRecaptchaToken(payload.recaptchaToken, remoteIp, 'booking_submit');
+    const expectedAction = getRecaptchaMode() === 'v3' ? 'booking_submit' : null;
+    const recaptcha = await verifyRecaptchaToken(payload.recaptchaToken, remoteIp, expectedAction);
     if (!recaptcha.ok) {
       return res.status(400).json({
         error: 'Nepodarilo sa overiť reCAPTCHA',
