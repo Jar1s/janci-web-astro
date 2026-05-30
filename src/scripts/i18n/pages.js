@@ -84,6 +84,11 @@ export const sk = {
   'team-title': 'Náš tím',
   'team-admin': 'Administratíva',
   'team-technicians': 'Technici',
+  'team-towing': 'Odťahová služba',
+  'team-role-technical': 'Technická kontrola',
+  'team-role-lead-technical-originality': '(vedúci)<br/>Technická kontrola, kontrola originality',
+  'team-role-technical-emission': 'Technická a emisná kontrola',
+  'team-role-technical-emission-originality': 'Technická a emisná kontrola, kontrola originality',
 
   'legislation-hero-title': 'Platná legislatíva',
   'legislation-hero-subtitle': 'Zákony, vyhlášky a metodické pokyny v oblasti kontroly vozidiel',
@@ -487,6 +492,11 @@ export const en = {
   'team-title': 'Our team',
   'team-admin': 'Administration',
   'team-technicians': 'Technicians',
+  'team-towing': 'Towing service',
+  'team-role-technical': 'Technical inspection',
+  'team-role-lead-technical-originality': '(lead technician)<br/>Technical inspection, originality check',
+  'team-role-technical-emission': 'Technical and emission inspection',
+  'team-role-technical-emission-originality': 'Technical and emission inspection, originality check',
 
   'legislation-hero-title': 'Current legislation',
   'legislation-hero-subtitle': 'Laws, decrees, and methodological guidelines in the field of vehicle inspection',
