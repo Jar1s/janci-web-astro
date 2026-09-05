@@ -1,15 +1,9 @@
-import { supabase, hasSupabase, hasServiceRole } from '../../lib/supabase.js';
+import { hasSupabase, hasServiceRole, storageEnsureBucket, storageUpload } from '../../lib/supabase.js';
 import { requireAdmin } from '../../lib/auth.js';
 import { getCorsHeaders, handleCorsPreflight } from '../../lib/cors.js';
 
 const BUCKET = 'partners';
 const MAX_SIZE = 5 * 1024 * 1024; // 5MB
-
-async function ensureBucket() {
-  const { data: bucket, error } = await supabase.storage.getBucket(BUCKET);
-  if (bucket && !error) return;
-  await supabase.storage.createBucket(BUCKET, { public: true });
-}
 
 export const config = {
   api: {
@@ -49,27 +43,28 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'File too large (max 5MB)' });
     }
 
-    await ensureBucket();
+    const { error: bucketError } = await storageEnsureBucket(BUCKET, { public: true });
+    if (bucketError) {
+      console.error('Bucket error:', bucketError);
+      return res.status(500).json({ error: 'Bucket setup failed', detail: bucketError.message });
+    }
 
     const safeName = fileName.replace(/[^a-zA-Z0-9._-]/g, '_');
     const path = `${Date.now()}_${safeName}`;
 
-    const { error: uploadError } = await supabase
-      .storage
-      .from(BUCKET)
-      .upload(path, buffer, {
-        contentType: fileType || 'application/octet-stream',
-        upsert: true
-      });
+    const { error: uploadError, publicUrl } = await storageUpload(
+      BUCKET,
+      path,
+      buffer,
+      fileType || 'application/octet-stream'
+    );
 
     if (uploadError) {
       console.error('Upload error:', uploadError);
       return res.status(500).json({ error: 'Upload failed', detail: uploadError.message });
     }
 
-    const { data: publicUrl } = supabase.storage.from(BUCKET).getPublicUrl(path);
-
-    return res.status(200).json({ url: publicUrl.publicUrl });
+    return res.status(200).json({ url: publicUrl });
   } catch (err) {
     console.error('Upload exception:', err);
     return res.status(500).json({ error: 'Upload exception', detail: err.message });

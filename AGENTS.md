@@ -11,5 +11,8 @@
 - Hero background `<video>` uses `preload="metadata"` (not `auto`) to avoid pulling full MP4 bytes immediately; `MainLayout.astro` loads site scripts with `defer` so parsing is not blocked.
 - Avoid hiding `.hero-video` with `opacity: 0` until JS “reveal” — if the script fails or races, the video can stay invisible; keep the element visible and use a dark `.hero` background plus optional `poster` only when it matches the clip.
 - Re-encode large hero MP4s for web (e.g. `ffmpeg` H.264, `crf` ~27, max width 1920, no audio for muted loops, `+faststart`); commit optimized assets so deploys stay fast.
-- Homepage “Odvoz/dovoz zadarmo” advantage card uses `/images/odvoz-dovoz.png` in `src/pages/index.astro`.
+- Homepage “Výhody u nás” advantage cards use custom PNGs under `public/images/` referenced inline in `src/pages/index.astro` (e.g. `odvoz-dovoz.png`, `prideme-pre-vozidlo.png`, `nonstop-nakladne-vozidla.png`, `pozicanie-spz.png`).
+- Canonical site URL is `https://www.kontrolavozidiel.sk` (`astro.config.mjs` `site`); `www.kontrolavozidiel.sk` is served by Microsoft IIS/ASP.NET, so pushing `main` updates GitHub/Vercel but the live domain needs a separate IIS deploy or DNS cutover to Vercel.
+- Backend data uses Supabase via `lib/kv.js` when `SUPABASE_*` env vars are set; schema lives in `supabase/schema.sql`; verify locally with `bun run db:check`; run API routes locally with `bun run dev:api` (`vercel dev`).
+- `AnnouncementBar` is wired only on the homepage (`index.astro` `slot="announcement"`) and loads active items from `/api/notifications`.
 - Git remote `origin` points at `github.com/Jar1s/janci-web-astro`; default integration branch is `main`.
