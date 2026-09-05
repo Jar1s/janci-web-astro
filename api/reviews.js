@@ -30,6 +30,22 @@ function extractId(req) {
   return null;
 }
 
+function reviewDateValue(review) {
+  const value = review?.relative_time_description;
+  const match = typeof value === 'string' ? value.match(/^(\d{2})\.(\d{2})\.(\d{4})$/) : null;
+  if (!match) return 0;
+  const [, day, month, year] = match;
+  return Date.UTC(Number(year), Number(month) - 1, Number(day));
+}
+
+function sortReviewsNewestFirst(reviews) {
+  return [...reviews].sort((a, b) => {
+    const dateDiff = reviewDateValue(b) - reviewDateValue(a);
+    if (dateDiff !== 0) return dateDiff;
+    return Number(b.id || 0) - Number(a.id || 0);
+  });
+}
+
 async function fetchGoogleReviews(placeId, apiKey, limit = 5) {
   const url = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${encodeURIComponent(placeId)}&fields=reviews,rating,user_ratings_total&language=sk&key=${apiKey}`;
   const response = await fetch(url, { signal: AbortSignal.timeout(8000) });
@@ -75,7 +91,7 @@ export default async function handler(req, res) {
   }
 
   const id = extractId(req);
-  const limit = Math.min(200, Math.max(1, Number(req.query?.limit) || 50));
+  const limit = Math.min(200, Math.max(1, Number(req.query?.limit) || 200));
 
   if (req.method === 'GET') {
     const isAdmin = isAdminRequest(req);
@@ -83,8 +99,9 @@ export default async function handler(req, res) {
 
     if (reviews.length > 0) {
       const stats = await getManualReviewStats(!isAdmin);
+      const sortedReviews = isAdmin ? reviews : sortReviewsNewestFirst(reviews);
       return res.status(200).json({
-        reviews: reviews.map(({ author_name, rating, text, relative_time_description, id: reviewId, approved, source }) => ({
+        reviews: sortedReviews.map(({ author_name, rating, text, relative_time_description, id: reviewId, approved, source }) => ({
           id: reviewId,
           author_name,
           rating,

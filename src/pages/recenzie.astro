@@ -152,7 +152,7 @@ const fallbackReviews = [
     const countEl = document.getElementById('reviews-count');
 
     try {
-      const response = await fetch('/api/reviews?limit=100');
+      const response = await fetch('/api/reviews?limit=200');
       if (!response.ok) throw new Error('Failed to load reviews');
       const data = await response.json();
 

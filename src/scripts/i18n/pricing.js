@@ -153,7 +153,7 @@ export const en = {
   'price-row-065': 'Special emission test – LPG/CNG registration',
   'price-row-066': 'Vehicle pickup within Pezinok',
   'price-row-067': 'Vehicle pickup – surrounding towns up to 10 km',
-  'price-row-068': 'Loan of trade registration plates',
+  'price-row-068': 'Temporary licence plate rental',
   'price-table-01': 'Mandatory inspection under Slovak law – most common vehicles at our station',
   'price-table-02': 'Passenger vehicle (M1, N1)',
   'price-table-03': 'Motorcycles, tricycles and quadricycles (L1e–L7e)',
